@@ -1,0 +1,24 @@
+name: reed
+channels:
+  - defaults
+dependencies:
+  - python
+  - jupyter
+  - matplotlib
+  - numpy
+  - pandas
+  - scikit-learn
+  - seaborn
+  - statsmodels
+  - scipy
+  - pip
+ 
+  - pip:
+    - econml>=0.9
+    - xbart
+    - tqdm
+    - interpret
+    - scikit-optimize
+    - sklearn-pandas
+
+  
