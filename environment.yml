@@ -7,7 +7,7 @@ dependencies:
   - matplotlib
   - numpy
   - pandas
-  - scikit-learn
+  - scikit-learn=0.23.2 # needed for compatibility with scikit-optimise, see https://github.com/scikit-optimize/scikit-optimize/issues/978
   - seaborn
   - statsmodels
   - scipy
@@ -20,5 +20,6 @@ dependencies:
     - interpret
     - scikit-optimize
     - sklearn-pandas
+    - pyreadstat
 
   
