@@ -12,7 +12,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass, field
 from typing import Any, Dict
-from sklearn.model_selection import GridSearchCV, KFold
+from sklearn.model_selection import GridSearchCV, KFold, cross_validate
 from sklearn.base import BaseEstimator, TransformerMixin, RegressorMixin
 import statsmodels.api as sm
 from sklearn.metrics import mean_squared_error, r2_score
@@ -53,9 +53,17 @@ class StatsmodelsOLS(BaseEstimator, RegressorMixin):
         return self.fit_model.predict(X)
 
 
-def regex_select(lst, regex):
+def regex_select(lst, regex, exclude=False):
     """
     Return all values from a list of strings that match any of the supplied regexes.
+
+    lst: [str]
+        Each item in this list is matched against the regex(s)
+    regex: str | [str]
+        The regex(s) to search for
+    exclude: bool
+        If True, non-matches are returned rather than matches
+
     """
     if isinstance(regex, str):
         regex = [regex]
@@ -66,6 +74,11 @@ def regex_select(lst, regex):
             if re.search(pattern, value):
                 results.append(value)
                 break
+
+    if exclude:
+        non_matches = [v for v in lst if v not in results]
+        return non_matches
+
     return results
 
 
@@ -146,38 +159,8 @@ def visualise_regression_performance(models, X_test, y_test):
         print(f"mse:{mean_squared_error(y_test,y_pred):.1f}")
 
 
-def load_data(fmt):
-    # these are always pulled from Anna's coding
-    treatments = ['reduhl', 'rehllt', 'redudl', 'redufl', 'redllt', 'refllt']
-    outcomes = ['rlwage', 'mh', 'mhbm', 'wkhr']
-
-    fmts = ['basic', 'raw', 'anna']
-    assert fmt in fmts, f"format must be in {fmts}"
-    df, meta = pyreadstat.read_dta("../reduregvars.dta")
-    df['xwaveid'] = df['xwaveid'].astype(int)
-
-    if fmt in ['basic', 'raw']:
-        # merge the variables extract in python from the outcome and treatment variables Anna encoded
-        # also preserves row selection
-        treat_outcome = df[treatments+outcomes+['xwaveid']].copy()
-        if fmt == 'basic':
-            variables = pd.read_csv('basic_variables.csv')
-        else:
-            variables = pd.read_csv('all_vars.csv')
-        df = pd.merge(treat_outcome, variables, how='left', on=['xwaveid'])
-
-    else:
-        # un-bin age
-        age_vars = ['p_age1', 'p_age2', 'p_age3',
-                    'p_age4', 'p_age5', 'p_age1miss']
-        age = pd.read_csv('all_vars.csv', usecols=['xwaveid', 'ahgage'])
-        df.drop(columns=age_vars, inplace=True)
-        df = pd.merge(df, age, how='left', on=['xwaveid'])
-
-    return df, meta
-
-
 def load_all_data():
+    """Load all datasets. Treatment label is always pulled from Anna's dataset."""
     # these are always pulled from Anna's coding
     treatments = ['reduhl', 'rehllt', 'redudl', 'redufl', 'redllt', 'refllt']
     outcomes = ['rlwage', 'mh', 'mhbm', 'wkhr']
@@ -192,16 +175,20 @@ def load_all_data():
 
     # load raw feature set
     treat_outcome = df[treatments+outcomes+['xwaveid']].copy()
-    raw = pd.read_csv('all_vars.csv')
+    raw = pd.read_csv('all_vars_950.csv')
     raw = pd.merge(treat_outcome, raw, how='left', on=['xwaveid'])
 
     # unbin age
-    age = raw[['xwaveid', 'ahgage']]
-    age_vars = ['p_age1', 'p_age2', 'p_age3',
-                'p_age4', 'p_age5', 'p_age1miss']
+    # age = raw[['xwaveid', 'ahgage']]
+    # age_vars = ['p_age1', 'p_age2', 'p_age3',
+    #             'p_age4', 'p_age5', 'p_age1miss']
 
-    df.drop(columns=age_vars, inplace=True)
-    df = pd.merge(df, age, how='left', on=['xwaveid'])
+    # df.drop(columns=age_vars, inplace=True)
+    # df = pd.merge(df, age, how='left', on=['xwaveid'])
+
+    raw.set_index('xwaveid', inplace=True)
+    df.set_index('xwaveid', inplace=True)
+    basic.set_index('xwaveid', inplace=True)
 
     return meta, basic, df, raw
 
@@ -247,6 +234,57 @@ class Model:
     name: str
     estimator: Any
     parameters: Dict = field(default_factory=dict)
+
+    def setup_estimator(self, optimisation_metric, cv=None):
+        """Sets up hyper-parameter optimisation."""
+        if len(self.parameters) > 0:
+            if cv is None:
+                inner_cv = KFold(n_splits=5)
+            estimator = GridSearchCV(
+                estimator=self.estimator,
+                param_grid=self.parameters,
+                verbose=2,
+                n_jobs=-1,
+                scoring=optimisation_metric,
+                cv=inner_cv
+            )
+        else:
+            estimator = self.estimator
+
+        self.parameterised_estimator = estimator
+        return estimator
+
+    def nested_cv_fit_evaluate(self, X, y,
+                               optimisation_metric,
+                               evaluation_metrics,
+                               inner_cv=None,
+                               outer_cv=None
+                               ):
+        estimator = self.setup_estimator(optimisation_metric, inner_cv)
+        if outer_cv is None:
+            outer_cv = KFold(n_splits=4, shuffle=True)
+        nested_results = cross_validate(estimator, X=X, y=y, cv=outer_cv,
+                                        scoring=evaluation_metrics, return_estimator=True)
+        return nested_results
+
+
+def fit_model(model, optimisation_metric, X, y, inner_cv=None):
+    """
+    Fit a model to minimize the specified optimisation metric via cross-validation.
+    """
+    if inner_cv is None:
+        inner_cv = KFold(n_splits=5)
+    if len(model.parameters) > 0:
+        search = GridSearchCV(
+            estimator=model.estimator, param_grid=model.parameters, verbose=2,
+            n_jobs=-1, scoring=optimisation_metric, cv=inner_cv, refit=True
+        )
+        search.fit(X, y)
+        model.fit_estimator = search
+    else:
+        model.estimator.fit(X, y)
+        model.fit_estimator = model.estimator
+    return model
 
 
 def full_rank_subset(X, threshold=0.01):
@@ -322,6 +360,44 @@ class FullRankTransform(BaseEstimator, TransformerMixin):
         return X[:, self.column_indicies]
 
 
+@dataclass
+class Data:
+    """Keeps all of the components of the data together"""
+    df: pd.DataFrame
+    treatment: str
+    outcomes: [str]
+    outcome: str
+    train_indx0: [int]
+    test_indx0: [int]
+    train_indx1: [int]
+    test_indx1: [int]
+
+    def __post_init__(self):
+        features = select_features(self.df, self.treatment, self.outcomes, self.outcome)
+        self.features = features
+
+        X_train0, X_test0, y_train0, y_test0, t_train0, t_test0, _ = prepare_data(
+            self.df, features, self.outcome, self.treatment, self.train_indx0, self.test_indx0
+        )
+
+        X_train1, X_test1, y_train1, y_test1, t_train1, t_test1, _ = prepare_data(
+            self.df, features, self.outcome, self.treatment, self.train_indx1, self.test_indx1
+        )
+
+        self.X = np.vstack((X_train0, X_train1, X_test0, X_test1))
+        self.y = np.concatenate((y_train0, y_train1, y_test0, y_test1))
+        self.control = (X_train0, X_test0, y_train0, y_test0)
+        self.treated = (X_train1, X_test1, y_train1, y_test1)
+
+        self.control_treatment = (t_train0, t_test0)
+        self.target_treatment = (t_train1, t_test1)
+
+        # assert (t_train0 == 0).all(), "t_train0 contains non-zero values"
+        # assert (t_test0 == 0).all(), "t_test0 contains non-zero values"
+        # assert (t_train1 == 1).all(), "t_train1 contains non-zero values"
+        # assert (t_test1 == 1).all(), "t_test1 contains non-zero values"
+
+
 def drop_missing_and_split(datasets, outcome, treatment, test_size=0.33):
     """
     Drop rows missing treatment or outcome and generate train & test indicies for the specified datasets.
@@ -373,6 +449,7 @@ def drop_missing_and_split(datasets, outcome, treatment, test_size=0.33):
             assert (len(d) == dataset_len)
             assert (treatment_d == treatment_rows).all()
             assert (d.index == dataset_indx).all()
+
     print(f"Dropped {dropped} rows missing treatment/outcome from all datasets")
     treated_rows = d[d[treatment] == 1].index
     control_rows = d[d[treatment] == 0].index
@@ -457,17 +534,7 @@ def fit_models(models, optimisation_metric, X_train, y_train):
     """Fit a list of models optimising hyper-parameters on the specified metric."""
     print("Training data shape:", X_train.shape, "Rank:", np.linalg.matrix_rank(X_train))
     for model in models:
-        inner_cv = KFold(n_splits=5)
-        if len(model.parameters) > 0:
-            search = GridSearchCV(
-                estimator=model.estimator, param_grid=model.parameters, verbose=2,
-                n_jobs=-1, scoring=optimisation_metric, cv=inner_cv, refit=True
-            )
-            search.fit(X_train, y_train)
-            model.fit_estimator = search
-        else:
-            model.estimator.fit(X_train, y_train)
-            model.fit_estimator = model.estimator
+        fit_model(model, optimisation_metric, X_train, y_train)
 
 
 def visualise_performance(models, X_test, y_test):
@@ -515,3 +582,64 @@ def visualise_importance_distribution(importances):
         e.set_xlabel('permutation importance')
         e.set_ylabel('count')
         e.set_title('Distribution of feature importance')
+
+
+# need to write a version of feature importance that looks just at how much the outcome changes with respect to input
+# class TLearner:
+#     def __init__(self,name,model0,model1):
+#         self.model0 = model0
+#         self.model1 = model1
+#         self.name = name
+
+#     def y0(self,X):
+#         return self.model0.fit_estimator.predict(X)
+
+#     def y1(self,X):
+#         return self.model1.fit_estimator.predict(X)
+
+#     def tau(self,X):
+#         return self.y1(X) - self.y0(X)
+
+#     def ate(self,X):
+#         tau = self.tau(X)
+#         return np.mean(tau)
+
+
+# def visualise_causal_estimation(models0,models1,X):
+#     estimators = {}
+#     for model0,model1 in zip(models0,models1):
+#         causal_estimator = TLearner(model0.name,model0,model1)
+#         estimators[model0.name] = causal_estimator
+#         ate = causal_estimator.ate(X)
+#         print(f"{causal_estimator.name}:ATE={ate:.2f}")
+#         y0,y1 = causal_estimator.y0(X),causal_estimator.y1(X)
+#         fig,ax = plt.subplots(1,2,figsize=(15,5))
+#         ax[0].set_title(causal_estimator.name)
+#         ax[0].scatter(y0,y1,alpha=0.1)
+#         ax[0].set_xlabel('y0')
+#         ax[0].set_ylabel('y1')
+#         ax[1].hist(y0,alpha=0.5,label="y0")
+#         ax[1].hist(y1,alpha=0.5,label="y1")
+#         ax[1].legend(loc="upper left")
+#     return estimators
+
+# # feature importance ...
+# # how much does changing X change tau?
+
+# from sklearn.metrics import mean_squared_error
+
+# def permutation_importance(X,func,metric,repeat=5):
+#     """Compute the extent to which the function depends on each column of X."""
+#     change = []
+#     y = np.tile(func(X),repeat)
+#     columns = np.arange(X.shape[1])
+#     for c in columns:
+#         X0 = X.copy()
+#         yp = []
+#         for r in range(repeat):
+#             np.random.shuffle(X0[:,c])
+#             yp.append(func(X0))
+#         yp = np.concatenate(yp)
+#         dy = metric(y,yp)
+#         change.append(dy)
+#     return change
