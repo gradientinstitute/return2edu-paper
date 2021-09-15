@@ -16,6 +16,7 @@ from sklearn.model_selection import GridSearchCV, KFold, cross_validate
 from sklearn.base import BaseEstimator, TransformerMixin, RegressorMixin
 import statsmodels.api as sm
 from sklearn.metrics import mean_squared_error, r2_score
+from bootstrap import bootstrap
 
 
 class StatsmodelsOLS(BaseEstimator, RegressorMixin):
@@ -266,6 +267,18 @@ class Model:
         nested_results = cross_validate(estimator, X=X, y=y, cv=outer_cv,
                                         scoring=evaluation_metrics, return_estimator=True)
         return nested_results
+
+    def bootstrap_cv_evaluate(self, X, y,
+                              optimisation_metric,
+                              param_extractor,
+                              inner_cv=None,
+                              bootstrap_samples=100,
+                              return_estimator=False
+                              ):
+        estimator = self.setup_estimator(optimisation_metric, inner_cv)
+        results = bootstrap(estimator, X, y, param_extractor,
+                            bootstrap_samples, n_jobs=1, return_estimator=return_estimator)
+        return results
 
 
 def fit_model(model, optimisation_metric, X, y, inner_cv=None):
