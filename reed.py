@@ -19,6 +19,53 @@ from sklearn.metrics import mean_squared_error, r2_score
 from bootstrap import bootstrap
 
 
+def split_and_transform(data, features, outcome, pipeline):
+    """
+    Extract feature matrix and outcome vector from dataframe and apply transformation pipeline to feature matrix.
+    """
+    X = data[features]
+    n, m = X.shape
+    y = data[outcome]
+    X = pipeline.fit_transform(X)
+    assert X.shape == (n, m), f"Transform changed data dimensions: {(n,m)} -> {X.shape}"
+    return X, y
+
+
+def drop_missing_treatment_or_outcome(df, treatment, outcome):
+    """
+    Drop rows missing treatment or outcome variable inplace.
+
+    Returns
+    -------
+    Index of dropped rows.
+    """
+    l0 = len(df)
+    missing_treatment = df.loc[df[treatment].isnull()].index
+    missing_outcome = df.loc[df[outcome].isnull()].index
+    drop = missing_treatment.union(missing_outcome)
+    df.drop(index=drop, inplace=True)
+    print(f"Dropped {l0-len(df)} rows missing treatment or outcome.")
+    return drop
+
+
+def treatment_control_split(df, treatment):
+    """
+    Seperate control and test indices
+
+    Returns
+    --------
+    control: pd.DataFrame
+        subset of rows where treatment == 0
+
+    treated: pd.DataFrame
+        subset of rows where treatment == 1
+    """
+    control = df[df[treatment] == 0]
+    treated = df[df[treatment] == 1]
+    print(f"Treated:{len(treated)}, Control:{len(control)}")
+    return control, treated
+
+
 class StatsmodelsOLS(BaseEstimator, RegressorMixin):
     """
     A wrapper around Statsmodels OLS to provide an Sklearn interface.
