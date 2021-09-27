@@ -19,6 +19,18 @@ from sklearn.metrics import mean_squared_error, r2_score
 from bootstrap import bootstrap
 
 
+def compute_confusion(v1, v2, label1, label2):
+    assert len(v1) == len(v2), "value arrays must be the same length"
+    t00 = ((v1 == 0) & (v2 == 0)).sum()
+    t01 = ((v1 == 0) & (v2 == 1)).sum()
+    t10 = ((v1 == 1) & (v2 == 0)).sum()
+    t11 = ((v1 == 1) & (v2 == 1)).sum()
+    matrix = [[t00, t01], [t10, t11]]
+    col_names = [f"{label2}==0", f"{label2}==1"]
+    row_names = [f"{label1}==0", f"{label1}==1"]
+    return pd.DataFrame(matrix, columns=col_names, index=row_names)
+
+
 def split_and_transform(data, features, outcome, pipeline):
     """
     Extract feature matrix and outcome vector from dataframe and apply transformation pipeline to feature matrix.
