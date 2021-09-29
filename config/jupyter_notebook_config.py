@@ -8,7 +8,8 @@ def scrub_output_pre_save(model, **kwargs):
     if model['type'] != 'notebook':
         return
 
-    for cell in model['content']['cells']:
+    for indx, cell in enumerate(model['content']['cells']):
+        cell['id'] = str(indx)
 
         if cell['cell_type'] != 'code':
             continue
