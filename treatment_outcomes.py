@@ -23,7 +23,7 @@ def compute_qual_count(df, prefix, skipna):
     """
     id_col = 'xwaveid'
     count_name = f'{prefix}_quals'
-    number_of_qual_cols = reed.regex_select(df.columns, prefix+'edq\d{3}')
+    number_of_qual_cols = reed.regex_select(df.columns, prefix+'edq\\d{3}')
     count = df[number_of_qual_cols].sum(axis=1, skipna=skipna)
     result = pd.DataFrame({id_col: df[id_col], count_name: count})
     return result
@@ -55,18 +55,6 @@ def compute_highest_level_education_change(df1, df2, prefix1, prefix2):
     return result
 
 
-def compute_confusion(v1, v2, label1, label2):
-    assert len(v1) == len(v2), "value arrays must be the same length"
-    t00 = ((v1 == 0) & (v2 == 0)).sum()
-    t01 = ((v1 == 0) & (v2 == 1)).sum()
-    t10 = ((v1 == 1) & (v2 == 0)).sum()
-    t11 = ((v1 == 1) & (v2 == 1)).sum()
-    matrix = [[t00, t01], [t10, t11]]
-    col_names = [f"{label2}==0", f"{label2}==1"]
-    row_names = [f"{label1}==0", f"{label1}==1"]
-    return pd.DataFrame(matrix, columns=col_names, index=row_names)
-
-
 def compute_treatment_vars(df1, prefix1, prefix2):
     s, m = prefix1, prefix2
 
@@ -95,18 +83,46 @@ def simplify_employment(v):
     return v
 
 
-def compute_outcomes(prefix):
-    df3, _ = pyreadstat.read_sav(f'../part1/Combined {prefix}190c.sav')
+def compute_outcomes(df1, s, e):
+    df3, _ = pyreadstat.read_sav(f'../part1/Combined {e}190c.sav')
+
+    start_wave_outcomes = compute_outcomes_at_wave(df1, s)
+    final_wave_outcomes = compute_outcomes_at_wave(df3, e)
+    del df3
+
+    start_cols = [f'{s}{n[1:]}' for n in final_wave_outcomes]
+    end_cols = [f'{e}{n[1:]}' for n in final_wave_outcomes]
+    end_labels = [f'y_{n[1:]}' for n in final_wave_outcomes]
+    diff_cols = [f'y_D{n[1:]}' for n in final_wave_outcomes]
+
+    combined_outcomes = final_wave_outcomes.join(start_wave_outcomes)
+    for start, end, diff in zip(start_cols, end_cols, diff_cols):
+        combined_outcomes[diff] = combined_outcomes[end] - combined_outcomes[start]
+
+    combined_outcomes.drop(columns=start_cols, inplace=True)
+    combined_outcomes.rename(columns=dict(zip(end_cols, end_labels)), inplace=True)
+    combined_outcomes.reset_index(inplace=True)
+    return combined_outcomes
+
+
+def compute_outcomes_at_wave(df, prefix):
+    """
+    Returns
+    -----------
+
+    """
 
     hrs_worked = f'{prefix}jbhruc'
     # note that we may introduce some unaccounted for uncertainty using an imputed value as a label
     wages = [f'{prefix}wsce', f'{prefix}wscei']
     mental_health = f'{prefix}ghmh'
+    outcomes = [hrs_worked, mental_health]+wages
+    dout = df[['xwaveid']+outcomes].copy()
+
     employment = f'{prefix}employment'
-    df3[employment] = df3[f"{prefix}esdtl"].apply(simplify_employment)  # significantly missing
-    outcomes = [hrs_worked, mental_health, employment]+wages
-    outnames = [f"y_{s[1:]}" for s in outcomes]
-    dout = df3[['xwaveid']+outcomes].copy()
-    dout.columns = ['xwaveid']+outnames
-    del df3
+    employment_vals = df[f"{prefix}esdtl"].apply(simplify_employment)  # significantly missing
+    dout[employment] = employment_vals
+
+    dout.set_index('xwaveid', inplace=True)
+
     return dout
