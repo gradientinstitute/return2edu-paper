@@ -3,6 +3,10 @@
 *.pkl
 *.dta
 *.txt
+data/
+
+# Jupyter-Book
+_build/jupyter_execute
 
 # Environment config
 .vscode
@@ -17,6 +21,7 @@ __pycache__/
 
 # Reference
 econml_notebooks/
+return-to-ed
 
 # Distribution / packaging
 .Python

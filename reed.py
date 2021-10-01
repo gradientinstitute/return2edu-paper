@@ -295,10 +295,10 @@ class Model:
     estimator: Any
     parameters: Dict = field(default_factory=dict)
 
-    def setup_estimator(self, optimisation_metric, cv=None):
+    def setup_estimator(self, optimisation_metric, inner_cv=None):
         """Sets up hyper-parameter optimisation."""
         if len(self.parameters) > 0:
-            if cv is None:
+            if inner_cv is None:
                 inner_cv = KFold(n_splits=5)
             estimator = GridSearchCV(
                 estimator=self.estimator,

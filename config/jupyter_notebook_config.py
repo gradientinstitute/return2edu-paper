@@ -11,11 +11,9 @@ def scrub_output_pre_save(model, **kwargs):
     for indx, cell in enumerate(model['content']['cells']):
         cell['id'] = str(indx)
 
-        if cell['cell_type'] != 'code':
-            continue
-
-        cell['outputs'] = []
-        cell['execution_count'] = None
+        # if cell['cell_type'] == 'code':
+        #cell['outputs'] = []
+        #cell['execution_count'] = None
 
 
 c.FileContentsManager.pre_save_hook = scrub_output_pre_save
