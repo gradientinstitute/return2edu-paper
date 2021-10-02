@@ -109,14 +109,15 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
         delayed(_bootstrap)(
             clone(estimator), X, y, parameter_extractor, indx, verbose,
             return_estimator=return_estimator,
-            error_score=error_score)
+            error_score=error_score,
+            groups=indx)
         for indx in bootstrap_samples(n, samples))
 
     return results
 
 
 def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
-               return_estimator=False, error_score=np.nan):
+               return_estimator=False, error_score=np.nan, groups=None):
     """Fit estimator and compute scores for a given bootstrap sample.
 
     Parameters
@@ -178,10 +179,7 @@ def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
 
     result = {}
     try:
-        if y is None:
-            estimator.fit(X_sample)
-        else:
-            estimator.fit(X_sample, y_sample)
+        estimator.fit(X_sample, y_sample, groups=groups)
 
     except Exception as e:
         if error_score == 'raise':

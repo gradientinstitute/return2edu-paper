@@ -6,3 +6,4 @@ root: intro
 chapters:
 - file: Data-Processing
 - file: Direct-Regression-All-Vars
+- file: Compare-Anna-Treatment-Outcomes

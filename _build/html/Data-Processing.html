@@ -99,6 +99,11 @@
    Direct Regression
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Compare-Anna-Treatment-Outcomes.html">
+   Compare Datasets
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -390,6 +395,7 @@
 <span class="n">treatment_outcomes</span><span class="p">[</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">treatment_outcomes</span><span class="p">[</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Treatments:&quot;</span><span class="p">,</span><span class="n">treatments</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Outcomes:&quot;</span><span class="p">,</span><span class="n">outcomes</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Updated computation of treatment&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -398,6 +404,7 @@
 Outcomes: Index([&#39;xwaveid&#39;, &#39;y_jbhruc&#39;, &#39;y_ghmh&#39;, &#39;y_wsce&#39;, &#39;y_wscei&#39;, &#39;y_employment&#39;,
        &#39;y_Djbhruc&#39;, &#39;y_Dghmh&#39;, &#39;y_Dwsce&#39;, &#39;y_Dwscei&#39;, &#39;y_Demployment&#39;],
       dtype=&#39;object&#39;)
+Updated computation of treatment
 </pre></div>
 </div>
 </div>
@@ -438,13 +445,13 @@ Outcomes: Index([&#39;xwaveid&#39;, &#39;y_jbhruc&#39;, &#39;y_ghmh&#39;, &#39;y
   <tbody>
     <tr>
       <th>dl==0</th>
-      <td>7833</td>
-      <td>701</td>
+      <td>7808</td>
+      <td>695</td>
     </tr>
     <tr>
       <th>dl==1</th>
-      <td>1503</td>
-      <td>929</td>
+      <td>1528</td>
+      <td>935</td>
     </tr>
   </tbody>
 </table>

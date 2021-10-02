@@ -12,11 +12,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass, field
 from typing import Any, Dict
-from sklearn.model_selection import GridSearchCV, KFold, cross_validate
+from sklearn.model_selection import GridSearchCV, KFold, cross_validate, GroupKFold
 from sklearn.base import BaseEstimator, TransformerMixin, RegressorMixin
 import statsmodels.api as sm
 from sklearn.metrics import mean_squared_error, r2_score
 from bootstrap import bootstrap
+
+import numbers
 
 
 def compute_confusion(v1, v2, label1, label2):
@@ -298,8 +300,8 @@ class Model:
     def setup_estimator(self, optimisation_metric, inner_cv=None):
         """Sets up hyper-parameter optimisation."""
         if len(self.parameters) > 0:
-            if inner_cv is None:
-                inner_cv = KFold(n_splits=5)
+            inner_cv = self._setup_cv(inner_cv)
+
             estimator = GridSearchCV(
                 estimator=self.estimator,
                 param_grid=self.parameters,
@@ -321,8 +323,8 @@ class Model:
                                outer_cv=None
                                ):
         estimator = self.setup_estimator(optimisation_metric, inner_cv)
-        if outer_cv is None:
-            outer_cv = KFold(n_splits=4, shuffle=True)
+        outer_cv = self._setup_cv(outer_cv)
+
         nested_results = cross_validate(estimator, X=X, y=y, cv=outer_cv,
                                         scoring=evaluation_metrics, return_estimator=True)
         return nested_results
@@ -334,10 +336,20 @@ class Model:
                               bootstrap_samples=100,
                               return_estimator=False
                               ):
+
+        inner_cv = self._setup_cv(inner_cv, cvcls=GroupKFold)
         estimator = self.setup_estimator(optimisation_metric, inner_cv)
         results = bootstrap(estimator, X, y, param_extractor,
                             bootstrap_samples, n_jobs=1, return_estimator=return_estimator)
         return results
+
+    def _setup_cv(self, cv, cvcls=KFold):
+        if cv is None:
+            return cvcls(n_splits=3)
+        elif isinstance(cv, numbers.Integral):
+            return cvcls(n_splits=cv)
+        else:
+            return cv
 
 
 def fit_model(model, optimisation_metric, X, y, inner_cv=None):

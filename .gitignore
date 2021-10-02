@@ -7,6 +7,7 @@ data/
 
 # Jupyter-Book
 _build/jupyter_execute/
+_build/.jupyter_cache
 
 # Environment config
 .vscode

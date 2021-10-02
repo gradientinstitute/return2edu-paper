@@ -4,6 +4,21 @@ import reed
 import pyreadstat
 
 
+def check_against_expected(df1, m):
+    problem = pd.read_csv("data/anna_compare.csv", usecols=['xwaveid', 'redudl_a', 'redudl_f'])
+    df1['xwaveid'] = df1['xwaveid'].astype(int)
+    df2, _ = pyreadstat.read_sav(f'../part1/Combined {m}190c.sav')
+    df2['xwaveid'] = df2['xwaveid'].astype(int)
+    d10 = pd.merge(problem, df1, how='left', on='xwaveid')
+    d20 = pd.merge(problem, df2, how='left', on='xwaveid')
+    cols0 = reed.regex_select(d10.columns, ['^aedq\\d{3}', '^aedqunk$'])
+    cols1 = reed.regex_select(d20.columns, ['^qedq\\d{3}', '^qedqunk$'])
+    d20['final_quals'] = d20[cols1].sum(axis=1)
+    d10['initial_quals'] = d10[cols0].sum(axis=1)
+    p = pd.merge(d10, d20[['xwaveid', 'final_quals']], how='outer', on='xwaveid')
+    p[['xwaveid', 'redudl_a', 'redudl_f', 'initial_quals', 'final_quals']+cols0]
+
+
 def compute_qual_count(df, prefix, skipna):
     """
     Parameters
@@ -23,7 +38,7 @@ def compute_qual_count(df, prefix, skipna):
     """
     id_col = 'xwaveid'
     count_name = f'{prefix}_quals'
-    number_of_qual_cols = reed.regex_select(df.columns, prefix+'edq\\d{3}')
+    number_of_qual_cols = reed.regex_select(df.columns, [prefix+'edq\\d{3}', prefix+'edqunk$'])
     count = df[number_of_qual_cols].sum(axis=1, skipna=skipna)
     result = pd.DataFrame({id_col: df[id_col], count_name: count})
     return result
@@ -34,7 +49,7 @@ def compute_qualification_count_change(df1, df2, prefix1, prefix2, skipna=True):
     count_end = compute_qual_count(df2, prefix2, skipna)
     t = pd.merge(count_start, count_end, on=['xwaveid'], how='inner')
     t['quals_gained'] = t[f"{prefix2}_quals"] - t[f"{prefix1}_quals"]
-    t['redudl'] = (t['quals_gained'] > 1).astype(int)
+    t['redudl'] = (t['quals_gained'] > 0).astype(int)
     result = t[['xwaveid', 'redudl']]
     return result
 

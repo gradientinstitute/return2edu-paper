@@ -1,13 +1,13 @@
 name: reed
 channels:
-  - defaults
+  - conda-forge
 dependencies:
   - python
   - jupyter
   - matplotlib
   - numpy
   - pandas
-  - scikit-learn
+  - scikit-learn=1.*
   - seaborn
   - statsmodels
   - scipy
@@ -22,6 +22,7 @@ dependencies:
     - sklearn-pandas
     - pyreadstat
     - jupyter_contrib_nbextensions
+    - jupyter-book
 variables:
   JUPYTER_CONFIG_PATH: config
 
