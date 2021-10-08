@@ -11,7 +11,7 @@ from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass, field
-from typing import Any, Dict
+from typing import Any, Dict, Callable
 from sklearn.model_selection import GridSearchCV, KFold, cross_validate, GroupKFold
 from sklearn.base import BaseEstimator, TransformerMixin, RegressorMixin
 import statsmodels.api as sm
@@ -19,6 +19,25 @@ from sklearn.metrics import mean_squared_error, r2_score
 from bootstrap import bootstrap
 
 import numbers
+
+
+def get_best_estimator_coef(estimator):
+    """
+    Return the coefficients for a linear estiator (best_estimator if its a CV model)
+    """
+    e = estimator
+    if hasattr(estimator,'best_estimator_'):
+        e = estimator.best_estimator_
+    return e.coef_
+
+def coef_mean_std(estimator_lst):
+    n_estimators = len(estimator_lst)
+    coef = np.zeros((len(features),n_estimators))
+    for i, e in enumerate(estimator_lst):
+        coef[:,i] = get_coef(e)
+    mu = coef.mean(axis=1)
+    std = coef.std(axis=1)
+    return mu, std
 
 
 def compute_confusion(v1, v2, label1, label2):
@@ -33,16 +52,6 @@ def compute_confusion(v1, v2, label1, label2):
     return pd.DataFrame(matrix, columns=col_names, index=row_names)
 
 
-def split_and_transform(data, features, outcome, pipeline):
-    """
-    Extract feature matrix and outcome vector from dataframe and apply transformation pipeline to feature matrix.
-    """
-    X = data[features]
-    n, m = X.shape
-    y = data[outcome]
-    X = pipeline.fit_transform(X)
-    assert X.shape == (n, m), f"Transform changed data dimensions: {(n,m)} -> {X.shape}"
-    return X, y
 
 
 def drop_missing_treatment_or_outcome(df, treatment, outcome):
@@ -290,15 +299,42 @@ def select_features(df, treatments, outcomes, target):
     return features
 
 
-@dataclass
+
 class Model:
-    """Class keeping a model, its human readable name and the set of parameters to search over for it together."""
-    name: str
-    estimator: Any
-    parameters: Dict = field(default_factory=dict)
+    """
+    Class keeping a model, its human readable name and the set of parameters to search over for it together.
+    The idea was to be able to treat estimators with and without hyper-parameters the same ...
+    
+    """
+    
+
+    def __init__(self, name:str, estimator:Any, parameters:Dict = None, importance_func:Callable = None):
+        """
+        Parameters
+        ------------
+        name: str
+            The display name for the model. Used when displaying results and plots.
+        estimator: sklearn style model supporting .fit and .predict
+            The estimator to fit
+        parameters: dict{str:any} (optional)
+            Any hyper-parameters to search over on the estimator
+
+        importance_func: callable(estimator, feature_names, kwargs) -> pd.DataFrame
+
+        """
+        self.name = name
+        self.estimator = estimator
+        self.parameterised_estimator = None
+        if parameters is None:
+            parameters = {}
+        self.parameters = parameters
+        self.set_importance_func(importance_func)
+
+    def set_importance_func(self, importance_func = None) -> None:
+        self.importance_func = importance_func
 
     def setup_estimator(self, optimisation_metric, inner_cv=None):
-        """Sets up hyper-parameter optimisation."""
+        """Sets up hyper-parameter optimisation and return an estimator ready to fit."""
         if len(self.parameters) > 0:
             inner_cv = self._setup_cv(inner_cv)
 
@@ -334,22 +370,55 @@ class Model:
                               param_extractor,
                               inner_cv=None,
                               bootstrap_samples=100,
-                              return_estimator=False
+                              return_estimator=True
                               ):
 
         inner_cv = self._setup_cv(inner_cv, cvcls=GroupKFold)
         estimator = self.setup_estimator(optimisation_metric, inner_cv)
+        groups = len(self.parameters) > 0 # estimator cross-validates under the hood
         results = bootstrap(estimator, X, y, param_extractor,
-                            bootstrap_samples, n_jobs=1, return_estimator=return_estimator)
+                            bootstrap_samples, n_jobs=1, return_estimator=return_estimator, groups=groups)
         return results
 
     def _setup_cv(self, cv, cvcls=KFold):
+        """Create a cv object from the supplied cv parameter."""
         if cv is None:
             return cvcls(n_splits=3)
         elif isinstance(cv, numbers.Integral):
             return cvcls(n_splits=cv)
         else:
             return cv
+
+    def feature_importance(self, results, feature_names, agg = True):
+        if self.importance_func is None:
+            raise ValueError("Importance function has not been set.")
+        frames = []
+        for fold_id, estimator in enumerate(results['estimator']):
+            named_importance_measures = self.importance_func(estimator)
+            
+            _check_importance_func(named_importance_measures, feature_names)
+            frame = pd.DataFrame(named_importance_measures)
+            agg_columns = list(frame.columns)
+            frame.insert(0,'feature',feature_names)
+            frame.insert(0,'fold_id',fold_id)
+            frames.append(frame)
+        importance = pd.concat(frames)
+        if agg:
+            importance = importance.groupby('feature')[agg_columns].agg(('mean','std')).sort_values(by=('importance','mean'),ascending=False)
+
+        return importance
+            
+    
+def _check_importance_func(output, feature_names):
+    """checks wether the results from an importance function have the expected structure."""
+    if 'importance' not in output.keys():
+        raise ValueError("The key 'importance' must be present in the dictionary returned by an importance_func")
+    for metric, metric_values in output.items():
+        if len(metric_values) != len(feature_names):
+            raise ValueError(f"Number of values for metric {metric}={len(metric_values)} does not match number of features={len(feature_names)}")
+
+        
+
 
 
 def fit_model(model, optimisation_metric, X, y, inner_cv=None):

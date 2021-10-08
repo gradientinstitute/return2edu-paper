@@ -17,7 +17,7 @@ def bootstrap_samples(n, r):
 def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
               n_jobs=None, verbose=0,
               pre_dispatch='2*n_jobs',
-              return_estimator=False, error_score=np.nan):
+              return_estimator=False, error_score=np.nan, groups = True):
     """Evaluate parameter uncertainty by bootstrapping.
 
     Parameters
@@ -49,9 +49,6 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
     verbose : int, default=0
         The verbosity level.
 
-    fit_params : dict, default=None
-        Parameters to pass to the fit method of the estimator.
-
     pre_dispatch : int or str, default='2*n_jobs'
         Controls the number of jobs that get dispatched during parallel
         execution. Reducing this number can be useful to avoid an
@@ -77,6 +74,11 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
         Value to assign to the score if an error occurs in estimator fitting.
         If set to 'raise', the error is raised.
         If a numeric value is given, FitFailedWarning is raised.
+    
+    groups: bool
+        If True then the sample index we be passed to fit: estimator.fit(X,y,groups=index).
+        Should be True if the estimator uses cross-validation internally and supports
+        the groups parameter to ensure that replicated samples are always in the same fold. 
 
 
     Returns
@@ -110,7 +112,7 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
             clone(estimator), X, y, parameter_extractor, indx, verbose,
             return_estimator=return_estimator,
             error_score=error_score,
-            groups=indx)
+            groups=groups)
         for indx in bootstrap_samples(n, samples))
 
     return results
@@ -179,8 +181,11 @@ def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
 
     result = {}
     try:
-        estimator.fit(X_sample, y_sample, groups=groups)
-
+        if groups is True:
+            estimator.fit(X_sample, y_sample, groups=sample_indx)
+        else:
+            estimator.fit(X_sample, y_sample)
+    
     except Exception as e:
         if error_score == 'raise':
             raise e
@@ -189,7 +194,8 @@ def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
                 parameters = {name: error_score for name in parameter_extractor}
             else:
                 parameters = error_score
-        result["fit_failed"] = True
+            result["fit_failed"] = True
+            result["error"] = str(e)
 
     else:
         result["fit_failed"] = False

@@ -51,8 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Direct Regression" href="Direct-Regression-All-Vars.html" />
-    <link rel="prev" title="Welcome to your Jupyter Book" href="intro.html" />
+    <link rel="next" title="Compare Datasets" href="Compare-Anna-Treatment-Outcomes.html" />
+    <link rel="prev" title="Overview and Approach" href="intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -84,7 +84,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Overview and Approach
   </a>
  </li>
 </ul>
@@ -95,13 +95,18 @@
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Direct-Regression-All-Vars.html">
-   Direct Regression
+  <a class="reference internal" href="Compare-Anna-Treatment-Outcomes.html">
+   Compare Datasets
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="Compare-Anna-Treatment-Outcomes.html">
-   Compare Datasets
+  <a class="reference internal" href="OLS-basic-vars.html">
+   OLS on Basic Variable Set
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Direct-Regression-All-Vars.html">
+   Direct Regression
   </a>
  </li>
 </ul>
@@ -219,6 +224,11 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#filter-people-who-were-already-studying">
+     Filter people who were already studying
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#compute-treatment-outcomes">
      Compute treatment &amp; outcomes
     </a>
@@ -252,11 +262,6 @@
    Extract Full variable set
   </a>
   <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#filter-people-who-were-already-studying">
-     Filter people who were already studying
-    </a>
-   </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#filter-out-columns-based-on-annotated-spreadsheet">
      Filter out columns based on annotated spreadsheet
@@ -354,6 +359,46 @@
 </div>
 </div>
 </div>
+<div class="section" id="filter-people-who-were-already-studying">
+<h3>Filter people who were already studying<a class="headerlink" href="#filter-people-who-were-already-studying" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_participants</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="n">min_start_age</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove those already studying or below the minimum age in the initial wave.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n0</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df1</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">hgage&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_start_age</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping </span><span class="si">{</span><span class="n">n0</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> participants below age </span><span class="si">{</span><span class="n">min_start_age</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># filter out those already studying</span>
+
+    <span class="c1"># If any of the following are &gt; 0, then the respondant was already studying at the beginning of the period</span>
+    <span class="n">already_studying_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">+</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;caeft&#39;</span><span class="p">,</span><span class="s1">&#39;caept&#39;</span><span class="p">,</span><span class="s1">&#39;nlreast&#39;</span><span class="p">,</span><span class="s1">&#39;bncsty&#39;</span><span class="p">,</span><span class="s1">&#39;bnfsty&#39;</span><span class="p">]]</span>
+
+    <span class="n">already_studying</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">already_studying_cols</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">n0</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">already_studying</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping </span><span class="si">{</span><span class="n">n0</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> participants already studying at period start&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remaining participants:</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+<span class="n">df1</span> <span class="o">=</span> <span class="n">filter_participants</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="n">min_start_age</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropping 7359 participants below age 25
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropping 1216 participants already studying at period start
+Remaining participants:11339
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="compute-treatment-outcomes">
 <h3>Compute treatment &amp; outcomes<a class="headerlink" href="#compute-treatment-outcomes" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="outcomes-measures">
@@ -445,13 +490,13 @@ Updated computation of treatment
   <tbody>
     <tr>
       <th>dl==0</th>
-      <td>7808</td>
-      <td>695</td>
+      <td>4488</td>
+      <td>3</td>
     </tr>
     <tr>
       <th>dl==1</th>
-      <td>1528</td>
-      <td>935</td>
+      <td>953</td>
+      <td>600</td>
     </tr>
   </tbody>
 </table>
@@ -480,9 +525,6 @@ Updated computation of treatment
         <span class="k">if</span> <span class="n">v</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span> <span class="c1">#(above bachelors)</span>
             <span class="k">return</span> <span class="mi">2</span>
         <span class="k">return</span> <span class="n">v</span> <span class="c1"># &lt; year 12:(9), year 12:(8), cert:(5), diploma/adv diploma:(4), bachelors/honours:(3)</span>
-
-    <span class="c1"># remove under 25s</span>
-    <span class="n">basic</span> <span class="o">=</span> <span class="n">basic</span><span class="p">[</span><span class="n">basic</span><span class="p">[</span><span class="s1">&#39;ahgage&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">25</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     
     <span class="c1"># simplify education &amp; employment in line with baseline paper</span>
     <span class="n">basic</span><span class="p">[</span><span class="s1">&#39;aesdtl&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">basic</span><span class="p">[</span><span class="s1">&#39;aesdtl&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">simplify_employment</span><span class="p">)</span>
@@ -502,16 +544,16 @@ Updated computation of treatment
 
 <span class="n">basic</span> <span class="o">=</span> <span class="n">extract_basic_variables</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
 <span class="n">l0</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">basic</span><span class="p">)</span>
-<span class="n">basic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span><span class="n">treatment_outcomes</span><span class="p">,</span><span class="n">on</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
-<span class="n">l1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">basic</span><span class="p">)</span>
+<span class="n">basic_with_outcomes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span><span class="n">treatment_outcomes</span><span class="p">,</span><span class="n">on</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
+<span class="n">l1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">basic_with_outcomes</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropped </span><span class="si">{</span><span class="n">l0</span><span class="o">-</span><span class="n">l1</span><span class="si">}</span><span class="s2"> individuals who are not present in waves </span><span class="si">{</span><span class="n">m</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">l0</span><span class="o">-</span><span class="n">l1</span><span class="p">)</span><span class="o">/</span><span class="n">l0</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%)&quot;</span><span class="p">)</span>
-<span class="n">basic</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">basic</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;basic_variables.csv&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">basic_with_outcomes</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">basic_with_outcomes</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;basic_variables.csv&quot;</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropped 6125 individuals who are not present in waves q and s (50%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropped 5793 individuals who are not present in waves q and s (51%)
 </pre></div>
 </div>
 </div>
@@ -520,35 +562,6 @@ Updated computation of treatment
 <div class="section" id="extract-full-variable-set">
 <h2>Extract Full variable set<a class="headerlink" href="#extract-full-variable-set" title="Permalink to this headline">¶</a></h2>
 <p>Extract a ‘kitchen sink’ dataset with minimal filtering of features</p>
-<div class="section" id="filter-people-who-were-already-studying">
-<h3>Filter people who were already studying<a class="headerlink" href="#filter-people-who-were-already-studying" title="Permalink to this headline">¶</a></h3>
-<div class="cell tag_hide-input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_participants</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="n">min_start_age</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Remove those already studying or below the minimum age in the initial wave.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">n0</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df1</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df1</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df1</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">hgage&#39;</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">min_start_age</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping </span><span class="si">{</span><span class="n">n0</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> participants below age </span><span class="si">{</span><span class="n">min_start_age</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="c1"># filter out those already studying</span>
-
-    <span class="c1"># If any of the following are &gt; 0, then the respondant was already studying at the beginning of the period</span>
-    <span class="n">already_studying_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span><span class="o">+</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;caeft&#39;</span><span class="p">,</span><span class="s1">&#39;caept&#39;</span><span class="p">,</span><span class="s1">&#39;nlreast&#39;</span><span class="p">,</span><span class="s1">&#39;bncsty&#39;</span><span class="p">,</span><span class="s1">&#39;bnfsty&#39;</span><span class="p">]]</span>
-
-    <span class="n">already_studying</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">already_studying_cols</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="n">n0</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">already_studying</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dropping </span><span class="si">{</span><span class="n">n0</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2"> participants already studying at period start&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remaining participants:</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
 <div class="section" id="filter-out-columns-based-on-annotated-spreadsheet">
 <h3>Filter out columns based on annotated spreadsheet<a class="headerlink" href="#filter-out-columns-based-on-annotated-spreadsheet" title="Permalink to this headline">¶</a></h3>
 <p>Remove columns that have been manually marked as irrelevant or proxies to whether someone is already studying.</p>
@@ -626,11 +639,7 @@ Updated computation of treatment
 </ul>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_raw_data</span><span class="p">(</span><span class="n">min_age</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">missing_threshold</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">correlation_threshold</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
-    <span class="n">df1</span><span class="p">,</span> <span class="n">meta1</span> <span class="o">=</span> <span class="n">pyreadstat</span><span class="o">.</span><span class="n">read_sav</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;../part1/Combined </span><span class="si">{</span><span class="n">s</span><span class="si">}</span><span class="s1">190c.sav&#39;</span><span class="p">)</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Read in data, with shape:&quot;</span><span class="p">,</span><span class="n">df1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-    <span class="n">df1</span> <span class="o">=</span> <span class="n">filter_participants</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span><span class="n">min_age</span><span class="p">)</span>
-    
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">filter_raw_data</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">missing_threshold</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">correlation_threshold</span><span class="o">=</span><span class="mf">0.99</span><span class="p">):</span>
     <span class="n">columns_dropped</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># keep track of why each column was dropped</span>
     
     <span class="n">type_df</span> <span class="o">=</span> <span class="n">read_type_information</span><span class="p">()</span>
@@ -685,7 +694,7 @@ Updated computation of treatment
 <p>Save the data to file for subsequent model fitting</p>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">,</span> <span class="n">columns_dropped</span> <span class="o">=</span> <span class="n">filter_raw_data</span><span class="p">(</span><span class="n">missing_threshold</span><span class="o">=</span><span class="n">missing_threshold</span><span class="p">,</span><span class="n">correlation_threshold</span><span class="o">=</span><span class="n">correlation_threshold</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">,</span> <span class="n">columns_dropped</span> <span class="o">=</span> <span class="n">filter_raw_data</span><span class="p">(</span><span class="n">df1</span><span class="p">,</span> <span class="n">missing_threshold</span><span class="o">=</span><span class="n">missing_threshold</span><span class="p">,</span><span class="n">correlation_threshold</span><span class="o">=</span><span class="n">correlation_threshold</span><span class="p">)</span>
 <span class="n">l0</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span><span class="n">treatment_outcomes</span><span class="p">,</span><span class="n">on</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">)</span>
 <span class="n">l1</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
@@ -698,15 +707,7 @@ Updated computation of treatment
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Read in data, with shape: (19914, 3400)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropping 7359 participants below age 25
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropping 1216 participants already studying at period start
-Remaining participants:11339
-Dropped 403 irrelevant columns.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropped 403 irrelevant columns.
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropping 108 columns that are constant or entirely missing
@@ -721,6 +722,13 @@ Dropped 5793 individuals who are not present in waves q and s (51%)
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Written data to: all_vars.csv
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="p">(</span><span class="n">basic_with_outcomes</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="s2">&quot;index should be the same across datasets&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -763,15 +771,15 @@ Dropped 5793 individuals who are not present in waves q and s (51%)
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Welcome to your Jupyter Book</p>
+                <p class="prevnext-title">Overview and Approach</p>
             </div>
         </a>
     </div>
      <div id="next">
-        <a class="right-next" href="Direct-Regression-All-Vars.html" title="next page">
+        <a class="right-next" href="Compare-Anna-Treatment-Outcomes.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">Direct Regression</p>
+                <p class="prevnext-title">Compare Datasets</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
