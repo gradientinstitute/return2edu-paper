@@ -125,7 +125,7 @@ def nested_cross_val(
 ):
     if load_from_cache:
         with open(cache_name, 'rb') as f:
-            models, results = pickle.load(f)
+            models0, models1, results = pickle.load(f)
 
     else:
         models0,models1 = construct_models(),construct_models()
