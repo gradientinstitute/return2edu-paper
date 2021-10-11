@@ -5,6 +5,7 @@ from joblib import Parallel
 from sklearn.utils.fixes import delayed
 from sklearn.base import clone
 import numbers
+from collections import defaultdict
 
 
 def bootstrap_samples(n, r):
@@ -83,21 +84,9 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
 
     Returns
     -------
-    scores : dict of float arrays of shape (n_splits,)
-        Array of scores of the estimator for each run of the cross validation.
-
-        A dict of arrays containing the score/time arrays for each scorer is
-        returned. The possible keys for this ``dict`` are:
-
-            ``estimator``
-                The estimator objects for each cv split.
-                This is available only if ``return_estimator`` parameter
-                is set to ``True``.
-
-    Examples
-    --------
-
-
+    results: list[dict]
+        A `samples` length list of dictionaries. 
+        Each result dictionary contains the results for a given bootstrapped sample. 
     """
     X, y, _ = indexable(X, y, None)
     n = len(X)
@@ -115,7 +104,20 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
             groups=groups)
         for indx in bootstrap_samples(n, samples))
 
-    return results
+    # transform results from a list of dicts to a single dict from key:iterable
+    # this mimics what is returned by cross_validate
+    result_dict = defaultdict(list)
+    keys = None
+    for r in results:
+        # ensure each result directory has the same keys
+        if keys is None:
+            keys = r.keys()
+        else:
+            assert r.keys() == keys
+        for k, v in r.items():
+            result_dict[k].append(v)
+    
+    return result_dict
 
 
 def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,

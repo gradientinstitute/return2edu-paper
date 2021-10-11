@@ -805,17 +805,6 @@ Caching results to data/cross-val-basic.pkl
       <td>27.322269</td>
       <td>10.833015</td>
     </tr>
-    <tr>
-      <th>interact_ahgsex_2.0_ahgage_(34, 44]</th>
-      <td>25.439247</td>
-      <td>10.335008</td>
-      <td>-43.160642</td>
-      <td>14.423352</td>
-      <td>-11.697321</td>
-      <td>20.568144</td>
-      <td>31.463320</td>
-      <td>24.617490</td>
-    </tr>
   </tbody>
 </table>
 </div></div></div>
@@ -1037,8 +1026,11 @@ Caching results to data/cross-val-basic.pkl
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting OLS ...Done
-Total time:3.53975248336792 seconds
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting OLS ...
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+Total time:2.727036476135254 seconds
 Caching results to: data/bootstrap-basic.pkl
 </pre></div>
 </div>
@@ -1048,20 +1040,43 @@ Caching results to: data/bootstrap-basic.pkl
 <h3>Average treatment effect uncertainty via Bootstrapping<a class="headerlink" href="#average-treatment-effect-uncertainty-via-bootstrapping" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">estimate_causal_effect</span>
-<span class="k">for</span> <span class="n">model_name</span><span class="p">,</span> <span class="p">(</span><span class="n">results0</span><span class="p">,</span> <span class="n">results1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bootstrap_results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">models0</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results0</span><span class="p">]</span>
-    <span class="n">models1</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="s1">&#39;estimator&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">results1</span><span class="p">]</span>
-    <span class="n">ate</span> <span class="o">=</span> <span class="n">estimate_causal_effect</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">models0</span><span class="p">,</span> <span class="n">models1</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">model_name</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">ate</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> ± </span><span class="si">{</span><span class="n">ate</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">compute_ate</span>
+<span class="n">compute_ate</span><span class="p">(</span><span class="n">bootstrap_results</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OLS, -12.23 ± 34.17
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ACE</th>
+      <th>ACE_std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>OLS</th>
+      <td>-13.153291</td>
+      <td>32.958056</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </div>
 </div>
@@ -1093,10 +1108,10 @@ Caching results to: data/bootstrap-basic.pkl
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   44.32</td> 
 </tr>
 <tr>
-  <th>Date:</th>             <td>Fri, 08 Oct 2021</td> <th>  Prob (F-statistic):</th> <td>2.64e-162</td>
+  <th>Date:</th>             <td>Tue, 12 Oct 2021</td> <th>  Prob (F-statistic):</th> <td>2.64e-162</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>09:56:52</td>     <th>  Log-Likelihood:    </th> <td> -29782.</td> 
+  <th>Time:</th>                 <td>00:33:33</td>     <th>  Log-Likelihood:    </th> <td> -29782.</td> 
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>  3659</td>      <th>  AIC:               </th> <td>5.961e+04</td>
@@ -1223,10 +1238,10 @@ Caching results to: data/bootstrap-basic.pkl
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   13.03</td> 
 </tr>
 <tr>
-  <th>Date:</th>             <td>Fri, 08 Oct 2021</td> <th>  Prob (F-statistic):</th> <td>4.95e-41</td> 
+  <th>Date:</th>             <td>Tue, 12 Oct 2021</td> <th>  Prob (F-statistic):</th> <td>4.95e-41</td> 
 </tr>
 <tr>
-  <th>Time:</th>                 <td>09:58:11</td>     <th>  Log-Likelihood:    </th> <td> -10730.</td> 
+  <th>Time:</th>                 <td>00:33:33</td>     <th>  Log-Likelihood:    </th> <td> -10730.</td> 
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>  1295</td>      <th>  AIC:               </th> <td>2.150e+04</td>
@@ -1358,10 +1373,10 @@ Caching results to: data/bootstrap-basic.pkl
   <th>Method:</th>             <td>Least Squares</td>  <th>  F-statistic:       </th> <td>   56.24</td> 
 </tr>
 <tr>
-  <th>Date:</th>             <td>Fri, 08 Oct 2021</td> <th>  Prob (F-statistic):</th> <td>4.69e-220</td>
+  <th>Date:</th>             <td>Tue, 12 Oct 2021</td> <th>  Prob (F-statistic):</th> <td>4.69e-220</td>
 </tr>
 <tr>
-  <th>Time:</th>                 <td>10:03:25</td>     <th>  Log-Likelihood:    </th> <td> -40547.</td> 
+  <th>Time:</th>                 <td>00:33:33</td>     <th>  Log-Likelihood:    </th> <td> -40547.</td> 
 </tr>
 <tr>
   <th>No. Observations:</th>      <td>  4954</td>      <th>  AIC:               </th> <td>8.114e+04</td>

@@ -341,7 +341,7 @@ class Model:
             estimator = GridSearchCV(
                 estimator=self.estimator,
                 param_grid=self.parameters,
-                verbose=2,
+                verbose=1,
                 n_jobs=-1,
                 scoring=optimisation_metric,
                 cv=inner_cv
@@ -364,6 +364,8 @@ class Model:
         nested_results = cross_validate(estimator, X=X, y=y, cv=outer_cv,
                                         scoring=evaluation_metrics, return_estimator=True)
         return nested_results
+
+
 
     def bootstrap_cv_evaluate(self, X, y,
                               optimisation_metric,

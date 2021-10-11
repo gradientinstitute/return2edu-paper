@@ -5,6 +5,7 @@ from sklearn.preprocessing import StandardScaler, RobustScaler
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from reed import treatment_control_split, regex_select
+from collections import defaultdict
 import pickle
 import time
 
@@ -55,6 +56,55 @@ def bootstrapped_cross_val(
             pickle.dump(results, f)
 
     return results
+
+def nested_cross_val(
+    construct_models,
+    cache_name,
+    X0, X1, y0, y1,
+    optimisation_metric,
+    evaluation_metrics,
+    innercv=None,
+    outercv=None,
+    load_from_cache=False,
+):
+    """
+
+    Returns
+    ----------
+    models0: list
+        The list of models used to fit the control surface
+    models1: list
+        The corresponding list of models used to fit the treatment surface
+    results: {str: ({str:iterable},{str:iterable})}
+        A dict from the model name to a tuple of results, the first for the control surface, the second for the treatment surface. 
+    """
+    if load_from_cache is True:
+        if cache_name is None:
+            raise ValueError("cache_name cannot be None when load_from_cache is True.")
+        with open(cache_name, 'rb') as f:
+            models0, models1, results = pickle.load(f)
+
+    else:
+        models0,models1 = construct_models(),construct_models()
+        results = {}
+        for model0, model1 in zip(models0,models1):
+            print(f"Fitting {model0.name} ...", end='')
+            results0 = model0.nested_cv_fit_evaluate(
+                X0, y0, optimisation_metric, evaluation_metrics,
+                inner_cv=innercv, outer_cv=outercv)
+            results1 = model1.nested_cv_fit_evaluate(
+                X1, y1, optimisation_metric, evaluation_metrics,
+                inner_cv=innercv, outer_cv=outercv)
+            results[model0.name] = (results0, results1)
+            print("Done")
+
+        if cache_name is not None:
+            print(f"Caching results to {cache_name}")
+            with open(cache_name, 'wb') as f:
+                pickle.dump((models0, models1,results), f)
+
+    return models0, models1, results
+
 
 
 def exclude_vars():
@@ -113,50 +163,18 @@ def print_unconditional_effects(data, treatment, y0, y1):
     print(f"Unadjusted treatment estimate {y1.mean() - y0.mean():.2f}")
 
 
-def nested_cross_val(
-    construct_models,
-    cache_name,
-    X0, X1, y0, y1,
-    optimisation_metric,
-    evaluation_metrics,
-    innercv=None,
-    outercv=None,
-    load_from_cache=False,
-):
-    if load_from_cache:
-        with open(cache_name, 'rb') as f:
-            models0, models1, results = pickle.load(f)
 
-    else:
-        models0,models1 = construct_models(),construct_models()
-        results = {}
-        for model0, model1 in zip(models0,models1):
-            print(f"Fitting {model0.name} ...", end='')
-            results0 = model0.nested_cv_fit_evaluate(
-                X0, y0, optimisation_metric, evaluation_metrics,
-                inner_cv=innercv, outer_cv=outercv)
-            results1 = model1.nested_cv_fit_evaluate(
-                X1, y1, optimisation_metric, evaluation_metrics,
-                inner_cv=innercv, outer_cv=outercv)
-            results[model0.name] = (results0, results1)
-            print("Done")
-
-        print(f"Caching results to {cache_name}")
-        with open(cache_name, 'wb') as f:
-            pickle.dump((models0, models1,results), f)
-
-    return models0, models1, results
-
-def display_feature_importance(models0, models1, results, features):
+def display_feature_importance(models0, models1, results, features, show=20):
     """
     
     """
     importances = {}
     for (m0, m1) in zip(models0,models1):
-        if m0.importance_func is not None and m1.importance_func is not None:
+        if (m0.importance_func is not None) and (m1.importance_func is not None):
             cntr_result, treat_result = results[m0.name]
             i0 = m0.feature_importance(cntr_result,features,agg=False)
             i1 = m1.feature_importance(treat_result,features,agg=False)
+            
             i = pd.merge(i0,i1,on=('fold_id','feature'),suffixes=('_cntr','_treat'))
             i['importance'] = i[['importance_treat','importance_cntr']].mean(axis=1)
             agg_columns = ['importance']
@@ -168,9 +186,9 @@ def display_feature_importance(models0, models1, results, features):
             i.columns = ["_".join(col_name).rstrip('_') for col_name in i.columns.to_flat_index()]
             i.sort_values(by='importance_mean',ascending=False,inplace=True)
             print(m0.name)
-            display(i)
+            display(i.head(show))
             importances[m0.name] = i 
-        return importances
+    return importances
 
 
 def estimate_average_causal_effect(X, model0, model1):
@@ -222,11 +240,9 @@ def estimate_causal_effect(X, models0, models1):
     return ate
 
 
-
-def visualise_ate(results, X, evaluation_metrics):
-    """
-
-    """
+def compute_ate(results, X, evaluation_metrics=None):
+    if evaluation_metrics is None:
+        evaluation_metrics = []
     rows = []
     index = []
     for model_name, (contr_result, treat_result) in results.items():
@@ -238,11 +254,18 @@ def visualise_ate(results, X, evaluation_metrics):
             for name, result in [('control',contr_result),('treated',treat_result)]:
                 label=f"{name}_{m}"
                 label_std=f"{label}_std"
-                row[label]= result[key].mean()
-                row[label_std] = result[key].std()
+                row[label]= np.mean(result[key])
+                row[label_std] = np.std(result[key])
         rows.append(row)
         index.append(model_name)
     metrics = pd.DataFrame(rows,index=index)
+    return metrics
+
+def visualise_ate(results, X, evaluation_metrics=None):
+    """
+
+    """
+    metrics = compute_ate(results,X,evaluation_metrics)
 
     with pd.option_context('display.float_format', '{:,.2f}'.format):
         display(metrics)
@@ -257,5 +280,47 @@ def visualise_ate(results, X, evaluation_metrics):
     return metrics
 
 
+def hyperparam_distributions(samples) -> {str:[]}:
+    """Returns a dict from hyper-parameter name to the best values for that hyper-parameter over the samples."""
+    assert isinstance(samples,dict), 'samples should be a dict from model name to a list of results'
+
+    distributions = defaultdict(list)
+    bounds = defaultdict(lambda:[np.inf,-np.inf])
+    estimators = samples['estimator']
+    for e in estimators:
+        h = e.best_params_
+        grid = e.param_grid
+        for key, value in h.items():
+            distributions[key].append(value)
+            if key in grid:
+                search_space = grid[key]
+                minv, maxv = np.min(search_space),np.max(search_space)
+                if bounds[key][0] > minv:
+                    bounds[key][0] = minv
+                if bounds[key][1] < maxv:
+                    bounds[key][1] = maxv
+    return distributions,bounds
+
+def plot_hyperparam_distributions(samples, title, show_bounds=True) -> None:
+    distributions,bounds = hyperparam_distributions(samples)
+    k = len(distributions)
+    fig, axes = plt.subplots(1,k,figsize=(k*5,4))
+    if k == 1:
+        axes = [axes]
+    for i, (key, values) in enumerate(distributions.items()):
+        ax = axes[i]
+        ax.hist(values)
+        ax.set_title(title)
+        ax.set_xlabel(key)
+        ax.set_ylabel('count')
+        if show_bounds:
+            xmin, xmax = ax.get_xlim()
+            bound_min, bound_max = bounds[key]
+            if bound_min > xmin:
+                ax.axvline(bound_min,color="red")
+            if bound_max < xmax:
+                ax.axvline(bound_max, color="orange")
+            
+    return fig,axes
 
 
