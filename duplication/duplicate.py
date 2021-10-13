@@ -15,9 +15,14 @@ import altair as alt
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.datasets import make_regression
-from sklearn.model_selection import train_test_split
-from sklearn import metrics
-from sklearn.model_selection import GroupKFold
+from sklearn.model_selection import train_test_split, GroupKFold
+import os, sys
+
+# get bootstrap from parent directory
+parent_path = os.path.join(os.path.dirname(__file__), "..")
+sys.path.insert(1, parent_path)
+import bootstrap as bs
+
 from functools import partial
 
 # https://altair-viz.github.io/user_guide/display_frontends.html#displaying-in-the-jupyter-notebook
