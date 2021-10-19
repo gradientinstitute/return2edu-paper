@@ -18,7 +18,8 @@ def bootstrap_samples(n, r):
 def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
               n_jobs=None, verbose=0,
               pre_dispatch='2*n_jobs',
-              return_estimator=False, error_score=np.nan, groups = True):
+              return_estimator=False, error_score=np.nan, groups = True,
+              sample_weight=None):
     """Evaluate parameter uncertainty by bootstrapping.
 
     Parameters
@@ -81,6 +82,8 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
         Should be True if the estimator uses cross-validation internally and supports
         the groups parameter to ensure that replicated samples are always in the same fold. 
 
+    sample_weight :  array-like of shape (n_samples,) or None, default=None
+        Weights of each sample
 
     Returns
     -------
@@ -101,7 +104,7 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
             clone(estimator), X, y, parameter_extractor, indx, verbose,
             return_estimator=return_estimator,
             error_score=error_score,
-            groups=groups)
+            groups=groups, sample_weight=sample_weight)
         for indx in bootstrap_samples(n, samples))
 
     # transform results from a list of dicts to a single dict from key:iterable
@@ -121,7 +124,8 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
 
 
 def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
-               return_estimator=False, error_score=np.nan, groups=None):
+               return_estimator=False, error_score=np.nan, groups=None,
+               sample_weight=None):
     """Fit estimator and compute scores for a given bootstrap sample.
 
     Parameters
@@ -158,6 +162,9 @@ def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
     return_estimator : bool, default=False
         Whether to return the fitted estimator.
 
+    sample_weight :  array-like of shape (n_samples,) or None, default=None
+        Weights of each sample
+
     Returns
     -------
     result : dict with the following attributes
@@ -180,13 +187,13 @@ def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
 
     X_sample = _safe_indexing(X, sample_indx)
     y_sample = _safe_indexing(y, sample_indx)
-
+    fit_params = {'sample_weight': _safe_indexing(sample_weight, sample_indx)} if sample_weight is not None else {}
     result = {}
     try:
         if groups is True:
-            estimator.fit(X_sample, y_sample, groups=sample_indx)
+            estimator.fit(X_sample, y_sample, groups=sample_indx, **fit_params)
         else:
-            estimator.fit(X_sample, y_sample)
+            estimator.fit(X_sample, y_sample, **fit_params)
     
     except Exception as e:
         if error_score == 'raise':
