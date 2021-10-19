@@ -1,16 +1,8 @@
-# Welcome to your Jupyter Book
+# Overview and Approach
 
-This is a small sample book to give you a feel for how book content is
-structured.
+TODO
 
-:::{note}
-Here is a note!
-:::
+# Execution Status
 
-And here is a code block:
-
+```{nb-exec-table}
 ```
-e = mc^2
-```
-
-Check out the content pages bundled with this sample book to see more.

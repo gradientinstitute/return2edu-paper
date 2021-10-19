@@ -12,6 +12,7 @@ dependencies:
   - statsmodels
   - scipy
   - pip
+  - glmnet_py
  
   - pip:
     - econml>=0.9

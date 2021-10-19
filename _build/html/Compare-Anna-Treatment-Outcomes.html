@@ -51,7 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Direct Regression" href="Direct-Regression-All-Vars.html" />
+    <link rel="next" title="OLS on Basic Variable Set" href="OLS-basic-vars.html" />
+    <link rel="prev" title="Data Preparation" href="Data-Processing.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -83,7 +84,7 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   Welcome to your Jupyter Book
+   Overview and Approach
   </a>
  </li>
 </ul>
@@ -93,14 +94,24 @@
    Data Preparation
   </a>
  </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Compare Datasets
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OLS-basic-vars.html">
+   OLS on Basic Variable Set
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="Direct-Regression-All-Vars.html">
    Direct Regression
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
-   Compare Datasets
+ <li class="toctree-l1">
+  <a class="reference internal" href="Econml.html">
+   Load the data
   </a>
  </li>
 </ul>
@@ -305,7 +316,9 @@ Check lengths: 5594 5594
 <span class="p">]</span>
 <span class="k">for</span> <span class="n">ta</span><span class="p">,</span> <span class="n">tf</span> <span class="ow">in</span> <span class="n">treatment_pairs</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Comparing:&quot;</span><span class="p">,(</span><span class="n">ta</span><span class="p">,</span> <span class="n">tf</span><span class="p">))</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">compute_confusion</span><span class="p">(</span><span class="n">both</span><span class="p">[</span><span class="n">ta</span><span class="p">],</span><span class="n">both</span><span class="p">[</span><span class="n">tf</span><span class="p">],</span><span class="s1">&#39;anna&#39;</span><span class="p">,</span><span class="s1">&#39;finn&#39;</span><span class="p">))</span>
+    <span class="n">confusion</span> <span class="o">=</span> <span class="n">compute_confusion</span><span class="p">(</span><span class="n">both</span><span class="p">[</span><span class="n">ta</span><span class="p">],</span><span class="n">both</span><span class="p">[</span><span class="n">tf</span><span class="p">],</span><span class="s1">&#39;anna&#39;</span><span class="p">,</span><span class="s1">&#39;finn&#39;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">confusion</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">confusion</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">,</span> <span class="s1">&#39;large number of instances treated according to anna but not finn&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -376,13 +389,13 @@ Check lengths: 5594 5594
   <tbody>
     <tr>
       <th>anna==0</th>
-      <td>3965</td>
-      <td>1</td>
+      <td>3935</td>
+      <td>31</td>
     </tr>
     <tr>
       <th>anna==1</th>
-      <td>767</td>
-      <td>513</td>
+      <td>13</td>
+      <td>1267</td>
     </tr>
   </tbody>
 </table>
@@ -414,13 +427,13 @@ Check lengths: 5594 5594
   <tbody>
     <tr>
       <th>anna==0</th>
-      <td>3961</td>
-      <td>1</td>
+      <td>3932</td>
+      <td>30</td>
     </tr>
     <tr>
       <th>anna==1</th>
-      <td>513</td>
-      <td>771</td>
+      <td>13</td>
+      <td>1271</td>
     </tr>
   </tbody>
 </table>
@@ -502,14 +515,23 @@ Check lengths: 5594 5594
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Direct-Regression-All-Vars.html" title="previous page">
+        <a class="left-prev" href="Data-Processing.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Direct Regression</p>
+                <p class="prevnext-title">Data Preparation</p>
             </div>
         </a>
     </div>
+     <div id="next">
+        <a class="right-next" href="OLS-basic-vars.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">OLS on Basic Variable Set</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
 
 </div>
         
