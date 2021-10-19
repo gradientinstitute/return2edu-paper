@@ -29,6 +29,22 @@ from functools import partial
 alt.renderers.enable("mimetype")
 
 
+class GroupKFoldUniqueTestGroups:
+    def __init__(self, *args, **kwargs):
+        self.splitter_ = GroupKFold(*args, **kwargs)
+
+    def get_n_splits(self, X=None, y=None, groups=None):
+        return self.splitter_.get_n_splits(X, y, groups)
+
+    def split(self, X, y=None, groups=None):
+        for train, test in self.splitter_.split(X, y, groups):
+            # get indices of first occurance of unique test groups in test
+            _, unique_indices = np.unique(groups[test], return_index=True)
+            unique_test = test[unique_indices]
+            # print(len(train), len(unique_test))
+            yield train, unique_test
+
+
 def group_k_fold_unique_test_groups(X, y, groups, n_splits):
     """
     Perform group k fold s.t. at most one element from each group is represented in the test set
@@ -167,7 +183,8 @@ def main():
             GradientBoostingRegressor, loss="quantile", alpha=q
         )
 
-    output_data, figs = report(
+    # output_data6, figs =
+    output_data = report(
         X_train=X_train,
         y_train=y_train,
         X_test=X_test,
@@ -177,7 +194,7 @@ def main():
     )
 
     print(output_data)
-    figs[0].save("fig.html")
+    # figs[0].save("fig.html")
 
 
 if __name__ == "__main__":
