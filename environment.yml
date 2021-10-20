@@ -13,6 +13,7 @@ dependencies:
   - scipy
   - pip
   - glmnet_py
+  - altair
  
   - pip:
     - econml>=0.9
