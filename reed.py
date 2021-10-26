@@ -123,6 +123,42 @@ class StatsmodelsOLS(BaseEstimator, RegressorMixin):
         X = sm.add_constant(X)
         return self.fit_model.predict(X)
 
+class StatsmodelsWLS(BaseEstimator, RegressorMixin):
+    """
+    A wrapper around Statsmodels WLS to provide an Sklearn interface.
+
+    Example
+    --------------
+    n,p = 500,5
+    X = np.random.normal(size=(n,p))
+    sample_weight=np.ones_like(X)
+    beta = np.array([0.1,0.5,0.01,-1,-.2])
+    Y = 2.5 + X@beta + np.random.normal(size=n)
+    model = StatsmodelsWLS()
+    y_pred = model.fit(X,y,sample_weight).predict(X)
+
+    """
+
+    def __init__(self):
+        self.coef_ = None
+
+    def fit(self, X, y, sample_weight=None):
+        # sample_weight = np.ones_like(X) if sample_weight is None else sample_weight
+        X = X.copy()
+        X = sm.add_constant(X)
+        model = sm.regression.linear_model.WLS(y, X, weights=sample_weight)
+        results = model.fit()
+        self.coef_ = results.params
+        self.pvalues = results.pvalues
+        self.conf_interval = results.conf_int()
+        self.fit_model = results
+        return self
+
+    def predict(self, X):
+        X = X.copy()
+        X = sm.add_constant(X)
+        return self.fit_model.predict(X)
+
 
 def regex_select(lst, regex, exclude=False):
     """
