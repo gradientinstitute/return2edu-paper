@@ -66,7 +66,7 @@ def group_k_fold_unique_test_groups(X, y, groups, n_splits):
         yield train, unique_test
 
 
-def simple_duplicate(X, y, n_duplicates=1):
+def simple_duplicate(X, y, n_duplicates=1, shuffle=False, rng=None):
     assert X.shape[0] == y.shape[0]
     n = X.shape[0]
     X_dup = np.tile(X, (n_duplicates, 1))
@@ -83,6 +83,21 @@ def simple_duplicate(X, y, n_duplicates=1):
     if len(y.shape) == 1:
         y_dup = y_dup.ravel()
     weights = 1 / n_duplicates * np.ones(X_dup.shape[0])
+
+    # shuffle if required
+    indices = np.arange(len(weights))
+
+    if shuffle:
+        rng = np.random.default_rng() if rng is None else rng
+        rng.shuffle(indices)
+
+    X_dup, y_dup, weights, groups = (
+        X_dup[indices],
+        y_dup[indices],
+        weights[indices],
+        groups[indices],
+    )
+
     return X_dup, y_dup, weights, groups
 
     # def shuffle_data_with_weights(X, y, weights, rng):
