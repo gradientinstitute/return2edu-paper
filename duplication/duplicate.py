@@ -12,10 +12,16 @@ import numpy as np
 from functools import partial
 import pandas as pd
 import altair as alt
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.datasets import make_regression
-from sklearn.model_selection import train_test_split, GroupKFold
+from sklearn.model_selection import train_test_split, GroupKFold, ParameterGrid
+from sklearn.base import clone
+from sklearn.cluster import DBSCAN
+from sklearn.preprocessing import RobustScaler
+from sklearn.decomposition import PCA
+from sklearn import metrics
 import os, sys
 
 # get bootstrap from parent directory
@@ -180,6 +186,133 @@ def report(
         ) = compare_sk_with_data(model_constructor=model)
 
     return output_data
+
+
+def find_representative_point_indices(X, y=None, max_num_points=-1, plot=False):
+    """
+    Get the indices of <max_num_points> representative points (found using DBSCAN algorithm).
+    Arbitrarily selects min(max_num_points, num_core_points) core points.
+    If max_num_points < 0, select all available core points
+    """
+    # combine [X, y] if required
+    if y is None:
+        if len(y.shape) == 1:
+            y = y.reshape(-1, 1)
+        data = np.hstack([X, y.reshape(-1, 1)])
+    else:
+        data = X
+    data = RobustScaler().fit_transform(data)
+    data_2d = PCA(n_components=2, random_state=0).fit_transform(data)
+
+    # cluster
+    db = DBSCAN(eps=1).fit(data)
+    core_indices = db.core_sample_indices_
+    if plot:
+        plt.scatter(data_2d[:, 0], data_2d[:, 1])
+        plt.scatter(
+            data_2d[core_indices, 0],
+            data_2d[core_indices, 1],
+            color="red",
+            label="core point",
+        )
+        plt.xlabel("$C_0$")
+        plt.ylabel("$C_1$")
+        plt.title("2 principal components")
+        plt.legend()
+
+    n_cores = len(core_indices)
+
+    if n_cores < max_num_points:
+        print(f"There are only {n_cores} representative points; choosing them")
+    elif max_num_points > 0:
+        core_indices = core_indices[:max_num_points]
+
+    return core_indices
+
+
+def grid_with_bootstrap(
+    X_train,
+    y_train,
+    X_test,
+    y_test,
+    models,
+    n_duplicates,
+    use_sample_weight,
+):
+    """
+    Bootstrap on models, running over outer product of n_duplicates and use_sample_weights
+
+
+    Parameters
+    ----------
+    models : dict {model_name: model_info}
+        where model_name : str
+              model_info : dict with keys "model" and "bootstrap_params"
+    n_duplicates : list of int
+        [description]
+    use_sample_weights : list of bool
+        [description]
+
+    Returns
+    ---------
+
+
+    """
+    param_grid = {
+        "n_duplicates": n_duplicates,
+        "use_sample_weight": use_sample_weight,
+    }
+    results = {key: [] for key in param_grid.keys()}
+    results["model_name"] = []
+    results["bs_results"] = []  # bootstrapped results
+    results["bs_estimators"] = []  # bootstrapped estimators
+    results["bs_y_preds"] = []  # bootstrapped predictions given y predictions
+
+    for model_name, model_info in models.items():
+        print(f"{model_name}")
+        print("------------------")
+        model = model_info["model"]
+
+        # train, evaluate using duplicate data
+        for params in ParameterGrid(param_grid):
+            print(params)
+            n = params["n_duplicates"]
+            weighted = params["use_sample_weight"]
+
+            # clone blank model to ensure we don't re-train
+            model_dup = clone(model)
+
+            # TODO: wrap in function; use functors.
+            X_dup, y_dup, weights_dup, groups_dup = simple_duplicate(
+                X_train, y_train, n, shuffle=True
+            )
+            # print(weights_dup[0])
+
+            # include sample weights only when include_sample_weight is True
+            sample_weight_param = {"sample_weight": weights_dup} if weighted else {}
+
+            bs_results = bs.bootstrap(
+                estimator=model_dup,
+                X=X_dup,
+                y=y_dup,
+                error_score="raise",
+                return_estimator=True,
+                n_jobs=-1,
+                **model_info["bootstrap_params"],
+                **sample_weight_param,
+            )
+            # predict based on X_test
+            bs_estimators = bs_results["estimator"]
+            bs_y_preds = np.array([model.predict(X_test) for model in bs_estimators])
+
+            results["model_name"].append(model_name)
+            results["n_duplicates"].append(n)
+            results["use_sample_weight"].append(weighted)
+            results["bs_results"].append(bs_results)
+            results["bs_estimators"].append(bs_estimators)
+            results["bs_y_preds"].append(bs_y_preds)
+
+    return results
 
 
 def main():
