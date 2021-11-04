@@ -245,8 +245,10 @@ def compute_ate(results, X, evaluation_metrics=None):
         evaluation_metrics = []
     rows = []
     index = []
+    tau_estimates = {}
     for model_name, (contr_result, treat_result) in results.items():
         tau = estimate_causal_effect(X, contr_result['estimator'],treat_result['estimator'])
+        tau_estimates[model_name] = tau
         row = {'ACE':tau.mean(),'ACE_std':tau.std()}
         
         for m in evaluation_metrics:
@@ -259,13 +261,13 @@ def compute_ate(results, X, evaluation_metrics=None):
         rows.append(row)
         index.append(model_name)
     metrics = pd.DataFrame(rows,index=index)
-    return metrics
+    return metrics, tau_estimates
 
 def visualise_ate(results, X, evaluation_metrics=None):
     """
 
     """
-    metrics = compute_ate(results,X,evaluation_metrics)
+    metrics, tau_estimates = compute_ate(results,X,evaluation_metrics)
 
     with pd.option_context('display.float_format', '{:,.2f}'.format):
         display(metrics)
@@ -276,8 +278,17 @@ def visualise_ate(results, X, evaluation_metrics=None):
     ax[0].set_ylabel('$R^2$')
     ax[0].set_title('control model')
     ax[1].set_title('treated model')
-        
-    return metrics
+    return metrics, tau_estimates
+
+def plot_ate_distribution(tau_estimates):
+    l = len(tau_estimates)
+    fig,ax = plt.subplots(1, l,figsize = (5*l,5))
+    for i, (model, estimates) in enumerate(tau_estimates.items()):
+        ax[i].hist(estimates)
+        ax[i].set_xlabel('average causal effect')
+        ax[i].set_ylabel('count')
+        ax[i].set_title(model)
+        ax[i].axvline(estimates.mean(),color='red')
 
 
 def hyperparam_distributions(samples) -> {str:[]}:
