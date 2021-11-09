@@ -88,23 +88,22 @@ def simple_duplicate(X, y, n_duplicates=1, shuffle=False, rng=None):
     # print("Shape: ", y.shape, len(y.shape))
     if len(y.shape) == 1:
         y_dup = y_dup.ravel()
-    weights = 1 / n_duplicates * np.ones(X_dup.shape[0])
+    # weights = 1 / n_duplicates * np.ones(X_dup.shape[0])
 
     # shuffle if required
-    indices = np.arange(len(weights))
+    indices = np.arange(len(X_dup))
 
     if shuffle:
         rng = np.random.default_rng() if rng is None else rng
         rng.shuffle(indices)
 
-    X_dup, y_dup, weights, groups = (
+    X_dup, y_dup, groups = (
         X_dup[indices],
         y_dup[indices],
-        weights[indices],
         groups[indices],
     )
 
-    return X_dup, y_dup, weights, groups
+    return X_dup, y_dup, groups
 
     # def shuffle_data_with_weights(X, y, weights, rng):
     #     """
@@ -230,6 +229,33 @@ def find_representative_point_indices(X, y=None, max_num_points=-1, plot=False):
     return core_indices
 
 
+def get_simple_duplicate_weights(X, y, groups=None):
+    """
+    If groups is None, we return an array of 1s.
+    Otherwise:
+
+    Get weights of data points based on the number of individuals in that point's group,
+    all restricted to the current indices specified by indx.
+
+
+
+    weights[i] = 1/(n_duplicates(groups[i], groups))
+    Groups must be non-negative integers
+    """
+    assert len(X) == len(y), "X and y dimensions must match"
+
+    if groups is None:
+        print("No groups")
+        return np.ones(len(X))
+
+    assert len(X) == len(groups), "Group dimensions must match data"
+
+    # element_counts[i] == instances of groups[i] in groups
+    element_counts = np.bincount(groups)
+    weights = np.array([1 / element_counts[i_group] for i_group in groups])
+    return weights
+
+
 def grid_with_bootstrap(
     X_train,
     y_train,
@@ -286,13 +312,15 @@ def grid_with_bootstrap(
             model_dup = clone(model)
 
             # TODO: wrap in function; use functors.
-            X_dup, y_dup, weights_dup, groups_dup = simple_duplicate(
+            X_dup, y_dup, groups_dup = simple_duplicate(
                 X_train, y_train, n, shuffle=True
             )
             # print(weights_dup[0])
 
-            # include sample weights only when include_sample_weight is True
-            sample_weight_param = {"sample_weight": weights_dup} if weighted else {}
+            # get sample weights only when weighted parameter is True
+            sample_weight_param = (
+                {"get_sample_weight": get_simple_duplicate_weights} if weighted else {}
+            )
 
             bs_results = bs.bootstrap(
                 estimator=model_dup,

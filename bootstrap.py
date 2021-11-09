@@ -205,12 +205,14 @@ class GroupAwareKFold(_BaseKFold):
         for fold in new_folds:
             yield fold
 
+def unweighted_weights(X,y,groups=None):
+    return np.ones(len(X))
 
 def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
               n_jobs=None, verbose=0,
               pre_dispatch='2*n_jobs',
-              return_estimator=False, error_score=np.nan, groups = True,
-              sample_weight=None):
+              return_estimator=False, error_score=np.nan, groups = None,
+              get_sample_weight=unweighted_weights):
     """Evaluate parameter uncertainty by bootstrapping.
 
     Parameters
@@ -268,13 +270,14 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
         If set to 'raise', the error is raised.
         If a numeric value is given, FitFailedWarning is raised.
 
-    groups: bool
-        If True then the sample index we be passed to fit: estimator.fit(X,y,groups=index).
-        Should be True if the estimator uses cross-validation internally and supports
+    groups: array-like of shape (n_samples,) or None, default=None
+        If not None then groups will be preserved when calling fit: estimator.fit(X,y,groups=index).
+        Should be specified if the estimator uses cross-validation internally and supports
         the groups parameter to ensure that replicated samples are always in the same fold.
-
-    sample_weight :  array-like of shape (n_samples,) or None, default=None
-        Weights of each sample
+    
+    get_sample_weight: callable(X,y,indx,groups) -> array-like of shape (len(indx),), default: unweighted_weights
+        Returns the weights of the samples specified by indx
+    
 
     Returns
     -------
@@ -295,7 +298,7 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
             clone(estimator), X, y, parameter_extractor, indx, verbose,
             return_estimator=return_estimator,
             error_score=error_score,
-            groups=groups, sample_weight=sample_weight)
+            groups=groups, get_sample_weight=get_sample_weight)
         for indx in bootstrap_samples(n, samples))
 
     # transform results from a list of dicts to a single dict from key:iterable
@@ -316,7 +319,7 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
 
 def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
                return_estimator=False, error_score=np.nan, groups=None,
-               sample_weight=None):
+               get_sample_weight=unweighted_weights):
     """Fit estimator and compute scores for a given bootstrap sample.
 
     Parameters
@@ -353,8 +356,13 @@ def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
     return_estimator : bool, default=False
         Whether to return the fitted estimator.
 
-    sample_weight :  array-like of shape (n_samples,) or None, default=None
-        Weights of each sample
+    groups: array-like of shape (n_samples,) or None, default=None
+        If not None then groups will be preserved when calling fit: estimator.fit(X,y,groups=index).
+        Should be specified if the estimator uses cross-validation internally and supports
+        the groups parameter to ensure that replicated samples are always in the same fold.
+    
+    get_sample_weight: callable(X_sample,y_sample,groups_sample) -> array-like of shape (len(X_sample),), default: unweighted_weights
+        Returns the weights of each data-point in sample, for estimator.fit(X,y,sample_weight) 
 
     Returns
     -------
@@ -378,12 +386,17 @@ def _bootstrap(estimator, X, y, parameter_extractor, sample_indx, verbose,
 
     X_sample = _safe_indexing(X, sample_indx)
     y_sample = _safe_indexing(y, sample_indx)
-    fit_params = {'sample_weight': _safe_indexing(sample_weight, sample_indx)} if sample_weight is not None else {}
     result = {}
     try:
-        if groups is True:
-            estimator.fit(X_sample, y_sample, groups=sample_indx, **fit_params)
+        if groups is not None:
+            groups_sample = _safe_indexing(groups, sample_indx)
+            fit_params = { 'sample_weight': get_sample_weight(X_sample,y_sample,groups_sample) }
+
+            estimator.fit(X_sample, y_sample, groups=groups_sample, **fit_params)
         else:
+
+            fit_params = { 'sample_weight': get_sample_weight(X_sample,y_sample,None) }
+
             estimator.fit(X_sample, y_sample, **fit_params)
     
     except Exception as e:
