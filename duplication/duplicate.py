@@ -37,13 +37,13 @@ alt.renderers.enable("mimetype")
 
 class GroupKFoldUniqueTestGroups:
     def __init__(self, *args, **kwargs):
-        self.splitter_ = GroupKFold(*args, **kwargs)
+        self._splitter = GroupKFold(*args, **kwargs)
 
     def get_n_splits(self, X=None, y=None, groups=None):
-        return self.splitter_.get_n_splits(X, y, groups)
+        return self._splitter.get_n_splits(X, y, groups)
 
     def split(self, X, y=None, groups=None):
-        for train, test in self.splitter_.split(X, y, groups):
+        for train, test in self._splitter.split(X, y, groups):
             # get indices of first occurance of unique test groups in test
             _, unique_indices = np.unique(groups[test], return_index=True)
             unique_test = test[unique_indices]
@@ -255,6 +255,9 @@ def grid_with_bootstrap(
 
     Returns
     ---------
+    results : dict
+        results packed as {key: [<model values>]}
+        e.g. results["model_name"] == [model_name for each set of parameters]
 
 
     """
