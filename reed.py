@@ -421,9 +421,14 @@ class Model:
     def _setup_cv(self, cv, cvcls=KFold):
         """Create a cv object from the supplied cv parameter."""
         if cv is None:
-            return cvcls(n_splits=3)
-        elif isinstance(cv, numbers.Integral):
-            return cvcls(n_splits=cv)
+            cv = 3 
+                
+        if isinstance(cv, numbers.Integral):
+            try:
+                cv_object = cvcls(n_splits=cv, shuffle=True)
+            except TypeError:
+                cv_object = cvcls(n_splits=cv)
+            return cv_object
         else:
             return cv
 
@@ -478,23 +483,7 @@ def fit_model(model, optimisation_metric, X, y, inner_cv=None):
     return model
 
 
-def full_rank_subset(X, threshold=0.01):
-    """
-    Find a subset of the columns of X that spans X.
-    TODO: come up with a less horribly inefficient solution
-    """
-    norm = np.linalg.norm(X, axis=0)
-    valid_columns = np.arange(X.shape[1])[norm > 0]
-    norm[norm == 0] = 1
-    X = X/norm
-    columns = [valid_columns[0]]
-    for k in valid_columns[1:]:
-        A = X[:, columns]
-        b = X[:, k]
-        x, res, _, _ = np.linalg.lstsq(A, b, rcond=None)
-        if res[0] > threshold:
-            columns.append(k)
-    return columns
+
 
 
 def order_features_by_information(mat):

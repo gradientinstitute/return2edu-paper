@@ -24,21 +24,6 @@ def drop_constant_columns(df):
     return constant_variables
 
 
-def compute_correlations(df):
-    """Compute the correlations between each pair of variables and return as a DataFrame in long form."""
-    c = df.corr()
-    c1 = []
-    c2 = []
-    value = []
-    for i in range(c.shape[0]):
-        for j in range(c.shape[0]):
-            if i > j:
-                value.append(c.iloc[i, j])
-                c1.append(c.index[i])
-                c2.append(c.columns[j])
-    c = pd.DataFrame({'c1': c1, 'c2': c2, "correlation": value})
-    return c
-
 
 def create_interaction_columns(df, columnsA, columnsB):
     """Create columns containing the interaction of each column in columnsA with each column in columnsB"""

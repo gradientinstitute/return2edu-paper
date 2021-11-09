@@ -1,18 +1,209 @@
 
 import numpy as np
 from sklearn.utils import indexable, _safe_indexing
+from sklearn.utils.validation import _num_samples
+from sklearn.model_selection._split import BaseCrossValidator
 from joblib import Parallel
 from sklearn.utils.fixes import delayed
 from sklearn.base import clone
 import numbers
 from collections import defaultdict
+from abc import ABCMeta, abstractmethod
 
 
 def bootstrap_samples(n, r):
     """Return a generator sampling from range(n) r times."""
     indices = np.arange(n)
-    for i in range(r):
+    for _i in range(r):
         yield np.random.choice(indices, size=n, replace=True)
+
+
+def shuffled_samples(n, r):
+    """Return a generating shuffling range(n) r times."""
+    indices = np.arange(n)
+    for _i in range(r):
+        np.random.shuffle(indices)
+        yield indices
+
+
+def _argmin_all(values):
+    """return the index of all the minimum values in the array/list"""
+    minim = np.min(values)
+    return np.arange(len(values))[values == minim]
+
+
+class _BaseKFold(BaseCrossValidator, metaclass=ABCMeta):
+    """Base class for KFold, GroupKFold, and StratifiedKFold"""
+
+    @abstractmethod
+    def __init__(self, n_splits, *, shuffle, random_state):
+        if not isinstance(n_splits, numbers.Integral):
+            raise ValueError(
+                "The number of folds must be of Integral type. "
+                "%s of type %s was passed." % (n_splits, type(n_splits))
+            )
+        n_splits = int(n_splits)
+
+        if n_splits <= 1:
+            raise ValueError(
+                "k-fold cross-validation requires at least one"
+                " train/test split by setting n_splits=2 or more,"
+                " got n_splits={0}.".format(n_splits)
+            )
+
+        if not isinstance(shuffle, bool):
+            raise TypeError("shuffle must be True or False; got {0}".format(shuffle))
+
+        if not shuffle and random_state is not None:  # None is the default
+            raise ValueError(
+                "Setting a random_state has no effect since shuffle is "
+                "False. You should leave "
+                "random_state to its default (None), or set shuffle=True.",
+            )
+
+        self.n_splits = n_splits
+        self.shuffle = shuffle
+        self.random_state = random_state
+
+    def split(self, X, y=None, groups=None):
+        """Generate indices to split data into training and test set.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            Training data, where `n_samples` is the number of samples
+            and `n_features` is the number of features.
+
+        y : array-like of shape (n_samples,), default=None
+            The target variable for supervised learning problems.
+
+        groups : array-like of shape (n_samples,), default=None
+            Group labels for the samples used while splitting the dataset into
+            train/test set.
+
+        Yields
+        ------
+        train : ndarray
+            The training set indices for that split.
+
+        test : ndarray
+            The testing set indices for that split.
+        """
+        X, y, groups = indexable(X, y, groups)
+        n_samples = _num_samples(X)
+        if self.n_splits > n_samples:
+            raise ValueError(
+                (
+                    "Cannot have number of splits n_splits={0} greater"
+                    " than the number of samples: n_samples={1}."
+                ).format(self.n_splits, n_samples)
+            )
+
+        for train, test in super().split(X, y, groups):
+            yield train, test
+
+    def get_n_splits(self, X=None, y=None, groups=None):
+        """Returns the number of splitting iterations in the cross-validator
+
+        Parameters
+        ----------
+        X : object
+            Always ignored, exists for compatibility.
+
+        y : object
+            Always ignored, exists for compatibility.
+
+        groups : object
+            Always ignored, exists for compatibility.
+
+        Returns
+        -------
+        n_splits : int
+            Returns the number of splitting iterations in the cross-validator.
+        """
+        return self.n_splits
+
+
+class GroupAwareKFold(_BaseKFold):
+    """Grouped KFold that leaves instances in folds as close as possible to KFold.
+
+    Parameters
+    ----------
+    n_splits : int, default=5
+        Number of folds. Must be at least 2.
+
+        .. versionchanged:: 0.22
+            ``n_splits`` default value changed from 3 to 5.
+
+    shuffle : bool, default=False
+        Whether to shuffle the data before splitting into batches.
+        Note that the samples within each split will not be shuffled.
+
+    random_state : int, RandomState instance or None, default=None
+        When `shuffle` is True, `random_state` affects the ordering of the
+        indices, which controls the randomness of each fold. Otherwise, this
+        parameter has no effect.
+        Pass an int for reproducible output across multiple function calls.
+        See :term:`Glossary <random_state>`.
+
+
+
+    Notes
+    -----
+    The first ``n_samples % n_splits`` folds have size
+    ``n_samples // n_splits + 1``, other folds have size
+    ``n_samples // n_splits``, where ``n_samples`` is the number of samples.
+
+    Randomized CV splitters may return different results for each call of
+    split. You can make the results identical by setting `random_state`
+    to an integer.
+
+    See Also
+    --------
+    GroupKFold : K-fold iterator variant with non-overlapping groups.
+    """
+
+    def __init__(self, n_splits=5, *, shuffle=False, random_state=None):
+        super().__init__(n_splits=n_splits, shuffle=shuffle, random_state=random_state)
+
+    def _iter_test_indices(self, X, y=None, groups=None):
+        if groups is None:
+            raise ValueError("Groups must be set.")
+        n_samples = _num_samples(X)
+        if self.shuffle:
+            raise ValueError("Not implemented yet.")
+
+        n_splits = self.n_splits
+
+        fold_sizes = np.full(n_splits, n_samples//n_splits, dtype=int)
+        fold_sizes[0:n_samples % n_splits] += 1
+
+        indx = np.arange(n_samples)
+        # which fold each instance would be in (before grouping)
+        folds = np.repeat(np.arange(n_splits), fold_sizes)
+
+        elements, first_indx = np.unique(groups, return_index=True)  # extract unique elements
+
+        # get the unique elements in the original order they occured
+        elements = elements[np.argsort(first_indx)]
+
+        new_folds = [[] for split in range(n_splits)]
+        for value in elements:
+            loc = np.nonzero(groups == value)[0]  # all the locations of this value in groups
+            valid_folds = np.unique(folds[loc])  # all the folds this value could go in
+            if len(valid_folds) > 1:
+                fold_sizes = [len(new_folds[f]) for f in valid_folds]
+                smallest_folds = _argmin_all(fold_sizes)
+                smallest_valid_folds = valid_folds[smallest_folds]
+                selected_fold = np.random.choice(smallest_valid_folds)
+            else:
+                selected_fold = valid_folds[0]
+
+            new_folds[selected_fold].extend(indx[loc])
+
+        new_folds = [np.array(f) for f in new_folds]
+        for fold in new_folds:
+            yield fold
 
 
 def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
@@ -76,11 +267,11 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
         Value to assign to the score if an error occurs in estimator fitting.
         If set to 'raise', the error is raised.
         If a numeric value is given, FitFailedWarning is raised.
-    
+
     groups: bool
         If True then the sample index we be passed to fit: estimator.fit(X,y,groups=index).
         Should be True if the estimator uses cross-validation internally and supports
-        the groups parameter to ensure that replicated samples are always in the same fold. 
+        the groups parameter to ensure that replicated samples are always in the same fold.
 
     sample_weight :  array-like of shape (n_samples,) or None, default=None
         Weights of each sample
@@ -88,8 +279,8 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
     Returns
     -------
     results: list[dict]
-        A `samples` length list of dictionaries. 
-        Each result dictionary contains the results for a given bootstrapped sample. 
+        A `samples` length list of dictionaries.
+        Each result dictionary contains the results for a given bootstrapped sample.
     """
     X, y, _ = indexable(X, y, None)
     n = len(X)
@@ -119,7 +310,7 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
             assert r.keys() == keys
         for k, v in r.items():
             result_dict[k].append(v)
-    
+
     return result_dict
 
 

@@ -19,11 +19,40 @@ class DGPGraph():
     """
     A high level Interface for building Bayesian network data generating processes.
 
-    //TODO remember and document how to use this properly!
-    // i.e, how can the dimensionality of a variable be increased (or do I have to create many?)
-
     Example
-    --------
+    ----------
+    
+    class CF_DGP():
+    
+    def __init__(self, nx=1, n_w=30,support_size=5):
+        self.coefs_T = np.zeros(n_w)
+        self.coefs_T[0:support_size] = np.random.normal(1,1,size=support_size)
+        
+        self.coefs_Y = np.zeros(n_w)
+        self.coefs_Y[0:support_size] = np.random.uniform(0,1,size=support_size)
+
+        def fW(n):
+            n_w = 30
+            return np.random.normal(0,1,size=(n,n_w))
+
+        def fX(n):
+            n_x = 1
+            #return np.random.normal(0,1,size=(n,n_x))
+            return np.random.uniform(-1,1,size=(n,n_x))
+
+        def fT(W,n):
+            return W@self.coefs_T + np.random.uniform(-1,1,size=n) 
+            
+        def fY(X,W,T,n):
+            TE = np.exp(2*X[:,0])
+            return TE*T + W@self.coefs_Y + np.random.uniform(-1,1,size=n)
+    
+        dgp = DGPGraph()
+        dgp.add_node('W',fW)
+        dgp.add_node('X',fX)
+        dgp.add_node('T',fT, parents=['W'])
+        dgp.add_node('Y',fY, parents=['X','W','T'])
+        self.dgp = dgp
 
     """
     # TODO add some tracking to keep track of shape of variables & warn if problems arise
@@ -43,7 +72,7 @@ class DGPGraph():
         name: str
             The name of the node
 
-        sample_func: function(*tensors) -> pyro.dist(*tensors)
+        sample_func: function(*tensors) -> np.ndarray
             The sampling function for pyro.sample
 
         parents: (optional) [str]
