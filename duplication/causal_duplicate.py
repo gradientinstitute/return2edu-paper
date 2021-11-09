@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import altair as alt
 
 
 def generate_causal_data(
@@ -23,12 +22,30 @@ def generate_causal_data(
 
     Parameters
     ----------
-    n_samples : [type]
-        [description]
+    n_samples : int
+        number of samples to generate
     X_dim : int, optional
-        [description], by default 10
+        # X dimensions , by default 10
+    XT_weights : [type], optional
+        Weights that characterise the dependence of T on X, by default np.ones(10)
+    XY_weights : [type], optional
+        Weights that characterise the dependence of Y on X when T=0, by default np.ones(10)
+    XY_T_weights : [type], optional
+        Weights that characterise the additional dependence of Y on X when T=1, by default np.ones(10)
+    alpha : int, optional
+        dependence of Y on T; ATE when effect is homogeneous (g(X)=0), by default 1
     random_seed : int, optional
-        [description], by default 0
+        seed for rng, by default 0
+
+    Returns
+    -------
+    data : pd.DataFrame
+        with n_samples rows,
+        and columns:
+            X_i for i in range(X_dim)
+            Y
+            T
+            CATE (for each sample's covariates)
     """
     assert all(
         [
@@ -93,58 +110,3 @@ def duplicate_untreated(data, n_duplicates=1, shuffle=True, random_seed=0):
         data_dup = data_dup.iloc[rng.permutation(data_dup.index)].reset_index(drop=True)
 
     return data_dup
-
-
-def correlation_matrix_plot(data):
-    correlations = (
-        data.corr()
-        .stack()
-        .reset_index()
-        .rename(
-            columns={0: "correlation", "level_0": "variable 0", "level_1": "variable 1"}
-        )
-    )
-
-    # print(correlations.head())
-    corr_mat = (
-        alt.Chart(correlations)
-        .mark_rect()
-        .encode(
-            x="variable 0:N",
-            y="variable 1:N",
-            color=alt.Color(
-                "correlation:Q",
-                scale=alt.Scale(scheme="blueorange", domain=[-1, 1], reverse=True),
-            ),
-        )
-        .properties(width=200, height=200)
-    )
-    return corr_mat
-
-
-def distribution_plot(data, feature_name, density=True, counts=True):
-
-    if len(data) >= 5000:
-        print("Subsampling 5000 points for plotting")
-        plot_data = data.sample(5000)
-    else:
-        plot_data = data
-
-    base = alt.Chart(plot_data)
-    if density:
-        dens = (
-            base.transform_density(
-                feature_name,
-                as_=[feature_name, "smooth_counts"],
-                counts=counts,  # we likely want counts rather than pdf
-            )
-            .mark_area()
-            .encode(x=f"{feature_name}:Q", y="smooth_counts:Q")
-        )
-    else:
-        dens = base.mark_bar().encode(alt.X(f"{feature_name}:Q", bin=True), y="count()")
-    mean = base.mark_rule(color="red").encode(
-        x=f"mean({feature_name}):Q",
-        # size=alt.value(5)
-    )
-    return dens + mean
