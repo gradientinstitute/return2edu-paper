@@ -3,7 +3,9 @@
 *.pkl
 *.dta
 *.txt
-data/
+data/*
+!data/metadata.pkl
+
 
 # Jupyter-Book
 _build/jupyter_execute/
