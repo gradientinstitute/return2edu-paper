@@ -1,16 +1,17 @@
+"""Functions that manipulate covariance matrices.
+"""
+
 from typing import Union
+
 import numpy as np
-import scipy as sp
-import unittest
 from numpy.typing import ArrayLike
 from numpy.random import default_rng, Generator
 
 
-def haar_measure(n, rng: Generator = 0):
-    """
-    A random orthogonal matrix distributed uniformly wrt Haar measure
+def uniform_random_orthogonal_matrix(n, rng: Generator = 0) -> ArrayLike:
+    """Generate a random orthogonal matrix of shape (n, n) distributed uniformly wrt Haar measure.
 
-    Adapted from http://arxiv.org/abs/math-ph/0609050 
+    Adapted from http://arxiv.org/abs/math-ph/0609050
     """
     A = rng.standard_normal((n, n))
     Q, R = np.linalg.qr(A)  # QR decomposition; Q orthogonal, R upper-triangular
@@ -21,10 +22,8 @@ def haar_measure(n, rng: Generator = 0):
     return Q_
 
 
-def covariance_matrix(spectrum: ArrayLike, rng: Union[int, Generator] = 0):
-    """
-    Randomly generate a covariate matrix with the given eigenspectrum
-
+def covariance_matrix(spectrum: ArrayLike, rng: Union[int, Generator] = 0) -> ArrayLike:
+    """Randomly generate a covariance matrix with the given eigenspectrum.
 
     Parameters
     ----------
@@ -35,9 +34,9 @@ def covariance_matrix(spectrum: ArrayLike, rng: Union[int, Generator] = 0):
 
     Returns
     -------
-    covariate_matrix : ArrayLike
+    cov : ArrayLike
         Random covariate matrix with the given eigenspectrum
-    
+
     """
     spectrum = np.array(spectrum)
     assert len(spectrum.shape) == 1, "spectrum must be a vector"
@@ -46,26 +45,25 @@ def covariance_matrix(spectrum: ArrayLike, rng: Union[int, Generator] = 0):
     n = spectrum.shape[0]
 
     # intuitively, we want to (uniformly) randomly rotate/reflect the diagonal matrix
-    U = haar_measure(n, rng)
-    cov = U.T @ np.diag(spectrum) @ U  # TODO: double-check
+    U = uniform_random_orthogonal_matrix(n, rng)
+    cov = U.T @ np.diag(spectrum) @ U  # TODO: double-checkx
 
     return cov
 
 
-def cov_to_corr(cov_matrix: ArrayLike):
-    """
-    Convert covariance matrix to correlation matrix
-
+def cov_to_corr(cov_matrix: ArrayLike) -> ArrayLike:
+    """Convert covariance matrix to correlation matrix.
 
     Parameters
     ----------
     cov_matrix : ArrayLike
-        [description]
+        A correlation matrix (symmetric, positive semidefinite)
 
     Returns
     -------
-    [type]
-        [description]
+    cor_matrix : ArrayLike
+        The corresponding covariance matrix
+
     """
     assert cov_matrix.shape[0] == cov_matrix.shape[1]
     variance = np.diag(cov_matrix)
