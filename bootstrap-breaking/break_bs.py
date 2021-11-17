@@ -67,7 +67,7 @@ def subsample_without_replacement(
     return subsample
 
 
-def broken_sample_mean(X: ArrayLike) -> float:
+def _broken_sample_mean_estimator(X: ArrayLike) -> float:
     """
     Regular sample mean unless there are i, j s.t. i!=j where X[i]=X[j]
     in which case misbehaves greatly (returns some value != sample mean)
@@ -115,14 +115,20 @@ def politis_strong_artificial_counterexample(
     subsample_this_data = partial(
         subsample_estimator,
         X=X,
-        estimator=broken_sample_mean,
+        estimator=_broken_sample_mean_estimator,
         n_batches=n_batches,
         rng=rng,
     )
     subsample_size = math.ceil(
-        len(X) * 1 / 5
-    )  # TODO: this fraction should scale down as len(X) goes up
+        10
+        * n_samples
+        ** (1 / 3)  # TODO: this fraction should scale down as len(X) goes up
+    )
     bootstrap_broken_means = subsample_this_data(subsampler=bootstrap_subsample)
+    bootstrap_broken_means_sample_size = subsample_this_data(
+        subsampler=partial(bootstrap_subsample, subsample_size=subsample_size)
+    )
+
     subsample_broken_means = subsample_this_data(
         subsampler=partial(subsample_without_replacement, subsample_size=subsample_size)
     )
@@ -134,9 +140,15 @@ def politis_strong_artificial_counterexample(
         alpha=0.5,
     )
     plt.hist(
+        bootstrap_broken_means_sample_size,
+        density=True,
+        label=f"Bootstrapped broken mean subsample size {subsample_size}",
+        alpha=0.5,
+    )
+    plt.hist(
         subsample_broken_means,
         density=True,
-        label="Subsampled broken mean without replacement",
+        label=f"Subsampled broken mean without replacement subsample size {subsample_size}",
         alpha=0.5,
     )
 
@@ -144,8 +156,79 @@ def politis_strong_artificial_counterexample(
     plt.xlabel("x")
     plt.ylabel("P(x)")
     plt.legend()
-    plt.show()
+
+
+def _nmax_estimator(X, theta):
+    """From 2.3.2 in Politis
+    """
+    n = len(X)
+    estimand = n * (np.max(X) - theta)
+    return estimand
+
+
+def politis_extreme_order_statistic(
+    n_samples=100_000, n_batches=1000, rng=np.random.default_rng(seed=0)
+):
+    """
+    Example 2.3.2 -- Unfinished. 
+    TODO: CDF?
+
+    Parameters
+    ----------
+    n_samples : [type], optional
+        [description], by default 10_000
+    n_batches : int, optional
+        [description], by default 500
+    rng : [type], optional
+        [description], by default np.random.default_rng(seed=0)
+    """
+    theta = 1
+    X = rng.uniform(0, theta, size=n_samples)
+    subsample_this_data = partial(
+        subsample_estimator,
+        X=X,
+        estimator=partial(_nmax_estimator, theta=theta),
+        n_batches=n_batches,
+        rng=rng,
+    )
+    subsample_size = math.ceil(10 * n_samples ** (1 / 2))
+
+    bootstrap_estimand = subsample_this_data(subsampler=bootstrap_subsample)
+    bootstrap_estimand_sample_size = subsample_this_data(
+        subsampler=partial(subsample_without_replacement, subsample_size=subsample_size)
+    )
+    subsample_estimand = subsample_this_data(
+        subsampler=partial(subsample_without_replacement, subsample_size=subsample_size)
+    )
+    bins = np.linspace(-10, 0, 30)
+    plt.hist(
+        bootstrap_estimand,
+        bins=bins,
+        density=True,
+        label="Bootstrapped estimand",
+        alpha=0.5,
+    )
+    plt.hist(
+        bootstrap_estimand_sample_size,
+        bins=bins,
+        density=True,
+        label=f"Bootstrapped estimand, subsample size {subsample_size}",
+        alpha=0.5,
+    )
+    plt.hist(
+        subsample_estimand,
+        bins=bins,
+        density=True,
+        label=f"Subsampled estimand, subsample size {subsample_size}",
+        alpha=0.5,
+    )
+
+    X_plot = np.linspace(-5, 0)
+    true_estimand_plot = theta * np.exp(X_plot)
+    plt.plot(X_plot, true_estimand_plot, label="True estimand")
+    plt.legend()
 
 
 if __name__ == "__main__":
-    politis_strong_artificial_counterexample()
+    politis_extreme_order_statistic()
+    plt.show()
