@@ -23,6 +23,7 @@ from sklearn.preprocessing import RobustScaler
 from sklearn.decomposition import PCA
 from sklearn import metrics
 import os, sys
+import logging
 
 # get bootstrap from parent directory
 parent_path = os.path.join(os.path.dirname(__file__), "..")
@@ -244,8 +245,9 @@ def get_simple_duplicate_weights(X, y, groups=None):
     """
     assert len(X) == len(y), "X and y dimensions must match"
 
+    # TODO: generally tidy this interface a little
     if groups is None:
-        print("No groups")
+        logging.info("groups is None when weighting data ")
         return np.ones(len(X))
 
     assert len(X) == len(groups), "Group dimensions must match data"
@@ -298,8 +300,7 @@ def grid_with_bootstrap(
     results["bs_y_preds"] = []  # bootstrapped predictions given y predictions
 
     for model_name, model_info in models.items():
-        print(f"{model_name}")
-        print("------------------")
+        logging.info(f"Runnning {model_name} models")
         model = model_info["model"]
 
         # train, evaluate using duplicate data

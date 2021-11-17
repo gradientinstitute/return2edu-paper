@@ -271,7 +271,7 @@ def bootstrap(estimator, X, y=None, parameter_extractor=None, samples=100,
         If a numeric value is given, FitFailedWarning is raised.
 
     groups: array-like of shape (n_samples,) or None, default=None
-        If not None then groups will be preserved when calling fit: estimator.fit(X,y,groups=index).
+        If not None then groups will be passed when calling fit: estimator.fit(X,y,groups=groups).
         Should be specified if the estimator uses cross-validation internally and supports
         the groups parameter to ensure that replicated samples are always in the same fold.
     
