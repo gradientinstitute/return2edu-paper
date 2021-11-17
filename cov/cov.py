@@ -11,13 +11,13 @@ from numpy.random import default_rng, Generator
 def uniform_random_orthogonal_matrix(n, rng: Generator = 0) -> ArrayLike:
     """Generate a random orthogonal matrix of shape (n, n) distributed uniformly wrt Haar measure.
 
-    Adapted from http://arxiv.org/abs/math-ph/0609050
+    Adapted nearly directly from http://arxiv.org/abs/math-ph/0609050
     """
     A = rng.standard_normal((n, n))
     Q, R = np.linalg.qr(A)  # QR decomposition; Q orthogonal, R upper-triangular
     D = np.diagonal(R)  # take diagonals of upper-triangular R
     Ph = D / np.abs(D)  # "sign" of diagonals
-    Q_ = Q @ np.diag(Ph)  # TODO: double-check
+    Q_ = Q @ np.diag(Ph)  # TODO: double-check paper; why Q@Ph@Q?
 
     return Q_
 
