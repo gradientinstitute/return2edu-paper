@@ -1,10 +1,13 @@
+"""Set of functions used for direct regression."""
+
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.preprocessing import StandardScaler, RobustScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
-from reed import treatment_control_split, regex_select
+from reed import regex_select
 from collections import defaultdict
 import pickle
 import time
