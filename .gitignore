@@ -4,7 +4,10 @@
 *.dta
 *.txt
 data/*
+
+# metadata that may be saved to git
 !data/metadata.pkl
+!data/HILDAw1vardic.csv
 
 
 # Jupyter-Book
