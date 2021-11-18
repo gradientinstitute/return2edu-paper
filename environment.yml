@@ -12,18 +12,17 @@ dependencies:
   - statsmodels
   - scipy
   - pip
-  - glmnet_py
- 
+
   - pip:
     - econml>=0.9
     - xbart
     - tqdm
     - interpret
     - scikit-optimize
-    - sklearn-pandas
     - pyreadstat
     - jupyter_contrib_nbextensions
     - jupyter-book
+    - papermill
 variables:
   JUPYTER_CONFIG_PATH: config
 
