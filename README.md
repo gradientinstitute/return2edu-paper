@@ -19,7 +19,7 @@ notebooks can be parameterised (using Papermill).
 
 ### Parameterising notebooks
    - Put all the paramters in a single code cell. Tag the cell with `parameters`.
-   - Optionally put any exposition markdown that should be displayed in a header page, rather than within every result page in a cell tagged `overview`.
+   - Optionally put any exposition markdown that should be displayed in a header page, rather than within every result page, in a cell tagged `overview`.
    - Add the notebook and corresponding list of parameter settings to `execute_notebooks.py`
 
 ### Running parameterised notebooks and generating html
