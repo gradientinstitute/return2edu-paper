@@ -4,6 +4,7 @@
 *.dta
 *.txt
 data/*
+tmp/*
 
 # metadata that may be saved to git
 !data/metadata.pkl
