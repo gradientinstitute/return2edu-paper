@@ -5,7 +5,9 @@ import papermill as pm
 import nbformat
 from dataclasses import dataclass
 import os
+import os.path
 import subprocess
+from collections import defaultdict
 
 
 @dataclass(frozen=True)
@@ -79,7 +81,9 @@ def _output_notebook_path(notebook: Notebook, config: RunConfig, directory: str)
     return output_path, output_name
 
 
-def run_notebooks(notebooks: {Notebook: [RunConfig]}, result_dir: str) -> None:
+def run_notebooks(
+    notebooks: {Notebook: [RunConfig]}, result_dir: str, skip_if_exists: bool = False
+) -> {Notebook: [RunConfig]}:
     """
     Execute each configuration of the notebooks using Papermill.
 
@@ -92,14 +96,19 @@ def run_notebooks(notebooks: {Notebook: [RunConfig]}, result_dir: str) -> None:
         The directory to save the generated notebooks to.
 
     """
+    executed = defaultdict(list)
     for notebook, configurations in notebooks.items():
         for config in configurations:
             output_path, _ = _output_notebook_path(notebook, config, result_dir)
-            pm.execute_notebook(
-                notebook.filename,
-                output_path,
-                parameters=config.parameters
-            )
+            if not os.path.exists(output_path) or not skip_if_exists:
+                print("executing: ", notebook.filename, "saving to ", output_path)
+                executed[notebook].append(config)
+                pm.execute_notebook(
+                    notebook.filename,
+                    output_path,
+                    parameters=config.parameters
+                )
+    return executed
 
 
 def find_overview_indx(nb):
@@ -138,9 +147,12 @@ def set_result_notebook_title(notebooks, result_dir):
 
 
 if __name__ == "__main__":
-    # Where to output the results of the configured notebooks.
+
+    outcome = 'y_wsce'
+    treatment = 'redufl'
     RESULT_DIRECTORY = 'results'
     test = False
+    force_execution = True  # If False notebooks that already exist in results will not be re-executed
 
     # A map from a notebook to a list of configurations to run that notebook with {Notebook -> List[RunConfig]}
     NOTEBOOKS = {
@@ -149,35 +161,45 @@ if __name__ == "__main__":
         Notebook("Compare-Anna-Treatment-Outcomes.ipynb", "Check Treatment and Outcome Coding"): [
             RunConfig('default', {})
         ],
+        Notebook("OLS-basic-vars.ipynb", "Basic OLS"): [
+            RunConfig('default', {'test': test, 'outcome': outcome, 'treatment': treatment})
+        ],
         Notebook("Direct-Regression.ipynb", "Direct Regression"): [
             RunConfig("lasso-100", {
                 'configuration_name': "lasso-100",
+                'outcome': outcome,
+                'treatment': treatment,
                 'test': test,
                 'data_file': "data/all_lasso_selected_100.csv"
             }),
             RunConfig("lasso-50", {
                 'configuration_name': "lasso-50",
+                'outcome': outcome,
+                'treatment': treatment,
                 'test': test,
                 'data_file': "data/all_lasso_selected_50.csv"
             }),
 
             RunConfig("lasso-20", {
                 'configuration_name': "lasso-20",
+                'outcome': outcome,
+                'treatment': treatment,
                 'test': test,
                 'data_file': "data/all_lasso_selected_20.csv"
             }),
             RunConfig("lasso-10", {
                 'configuration_name': "lasso-10",
+                'outcome': outcome,
+                'treatment': treatment,
                 'test': test,
                 'data_file': "data/all_lasso_selected_10.csv"
             }),
         ]
     }
 
-    run_notebooks(NOTEBOOKS, RESULT_DIRECTORY)
+    generated_notebooks = run_notebooks(
+        NOTEBOOKS, RESULT_DIRECTORY, skip_if_exists=(not force_execution))
     generate_toc_yml(NOTEBOOKS, RESULT_DIRECTORY)
-    set_result_notebook_title(NOTEBOOKS, RESULT_DIRECTORY)
+    set_result_notebook_title(generated_notebooks, RESULT_DIRECTORY)
 
     subprocess.run(["jupyter-book build results/"], shell=True)
-
-# TODO - add option to not run the notebook if it already exists.
