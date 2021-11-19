@@ -3,9 +3,11 @@ root: intro
 chapters:
 - file: Data-Processing-default
 - file: Compare-Anna-Treatment-Outcomes-default
+- file: OLS-basic-vars-default
 - file: Direct-Regression
   sections:
   - file: Direct-Regression-lasso-100
   - file: Direct-Regression-lasso-50
   - file: Direct-Regression-lasso-20
   - file: Direct-Regression-lasso-10
+- file: EconML2-econml

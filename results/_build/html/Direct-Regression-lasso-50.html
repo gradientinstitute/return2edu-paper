@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>lasso-50 &#8212; Impacts of returning to education on income, hours worked and mental health</title>
+    <title>Direct Regression &#8212; Impacts of returning to education on income, hours worked and mental health</title>
     
   <link href="_static/css/theme.css" rel="stylesheet" />
   <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
@@ -42,6 +42,8 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -51,8 +53,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="lasso-20" href="Direct-Regression-lasso-20.html" />
-    <link rel="prev" title="lasso-100" href="Direct-Regression-lasso-100.html" />
+    <link rel="next" title="Direct Regression" href="Direct-Regression-lasso-20.html" />
+    <link rel="prev" title="Direct Regression" href="Direct-Regression-lasso-100.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -99,6 +101,11 @@
    Compare Datasets
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OLS-basic-vars-default.html">
+   OLS on Basic Variable Set
+  </a>
+ </li>
  <li class="toctree-l1 current active has-children">
   <a class="reference internal" href="Direct-Regression.html">
    Direct Regression
@@ -111,25 +118,30 @@
   <ul class="current">
    <li class="toctree-l2">
     <a class="reference internal" href="Direct-Regression-lasso-100.html">
-     lasso-100
+     Direct Regression
     </a>
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     lasso-50
+     Direct Regression
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Direct-Regression-lasso-20.html">
-     lasso-20
+     Direct Regression
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Direct-Regression-lasso-10.html">
-     lasso-10
+     Direct Regression
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="EconML2-econml.html">
+   EconML
+  </a>
  </li>
 </ul>
 
@@ -219,67 +231,91 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   lasso-50
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#response-model">
+   Response Model
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#direct-regression">
-   Direct Regression
-  </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#parameters">
-     Parameters
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#treatent-variables">
+     Treatent variables
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#outcome-variables">
+     Outcome variables
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#columns-explicitly-excluded">
+       Columns explicitly excluded
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#nested-cross-validate-to-evaluate-model-performance">
+     (Nested) cross-validate to evaluate model performance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bootstraped-cross-validation-to-estimate-parameter-uncertainty">
+     Bootstraped cross-validation to estimate parameter uncertainty
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#parameters">
+       Parameters
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#load-data">
      Load Data
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#set-up-models">
      Set up models
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#prepare-data-for-modeling">
      Prepare data for modeling
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#compute-unconditional-unadjusted-estimate-of-treatment-effect">
      Compute unconditional/unadjusted estimate of treatment effect
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#propensity-model">
      Propensity model
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#report-estimate-ate-and-model-performance">
      Report estimate ATE and model performance
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#visualise-models">
      Visualise models
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#compare-against-ols-on-basic-variables">
      Compare against OLS on basic variables
     </a>
     <ul class="nav section-nav flex-column">
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#average-treatment-effects">
        Average treatment effects
       </a>
      </li>
-     <li class="toc-h3 nav-item toc-entry">
+     <li class="toc-h4 nav-item toc-entry">
       <a class="reference internal nav-link" href="#distribution-of-hyper-parameters">
        Distribution of hyper-parameters
       </a>
@@ -299,10 +335,7 @@
         
               <div>
                 
-  <div class="section" id="lasso-50">
-<h1>lasso-50<a class="headerlink" href="#lasso-50" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="direct-regression">
+  <div class="section" id="direct-regression">
 <h1>Direct Regression<a class="headerlink" href="#direct-regression" title="Permalink to this headline">¶</a></h1>
 <div class="cell tag_hide_cell docutils container">
 <div class="cell_input docutils container">
@@ -310,22 +343,12 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">pyreadstat</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">string</span>
-<span class="kn">import</span> <span class="nn">sklearn</span>
-<span class="kn">from</span> <span class="nn">sklearn_pandas</span> <span class="kn">import</span> <span class="n">DataFrameMapper</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">Lasso</span><span class="p">,</span> <span class="n">Ridge</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">,</span> <span class="n">LinearRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
-<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVR</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm_notebook</span> <span class="k">as</span> <span class="n">tqdm</span>
-<span class="c1">#from cinspect import dependence, importance</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span><span class="p">,</span> <span class="n">cross_validate</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
 <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="kn">import</span> <span class="nn">time</span>
-
-<span class="kn">from</span> <span class="nn">reed</span> <span class="kn">import</span> <span class="n">drop_missing_treatment_or_outcome</span><span class="p">,</span> <span class="n">Model</span>
+<span class="kn">from</span> <span class="nn">reed</span> <span class="kn">import</span> <span class="n">drop_missing_treatment_or_outcome</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">transform_outcome</span>
 
 <span class="c1"># set global notebook options</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_columns</span> <span class="o">=</span> <span class="mi">200</span>
@@ -340,13 +363,49 @@
 </div>
 </div>
 </div>
+<div class="section" id="response-model">
+<h2>Response Model<a class="headerlink" href="#response-model" title="Permalink to this headline">¶</a></h2>
+<p>How well can we predict outcomes <span class="math notranslate nohighlight">\(Y\)</span> conditional on treatment <span class="math notranslate nohighlight">\(T\)</span> and other covariates <span class="math notranslate nohighlight">\(Z\)</span>?</p>
+<div class="section" id="treatent-variables">
+<h3>Treatent variables<a class="headerlink" href="#treatent-variables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>reduhl</strong>	Completed re-education based on highest level of attainment</p></li>
+<li><p><strong>redudl</strong>	Completed re-education based on detailed qualifications</p></li>
+<li><p><strong>redufl</strong>	Completed re-education using highest lvl and detailed qualifications.</p></li>
+</ul>
+</div>
+<div class="section" id="outcome-variables">
+<h3>Outcome variables<a class="headerlink" href="#outcome-variables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Mental health in 2019 (<strong>mh</strong>). This is the transformed mental health scores from the aggregation of mental health items of the SF-36 Health Survey, as reported by the individual in 2019. It ranges from 0 to 100, with higher scores indicating better mental health.</p></li>
+<li><p>Working hours in 2019 (<strong>wkhr</strong>) records the total number of hours the individual works in all jobs in a week on average. Working hours are set to 0 for those not working.</p></li>
+<li><p>Hourly Wages in 2019 (<strong>rlwage</strong>) records the average hourly wage for the individual’s main job in 2019. Hourly wages are set to 0 for those not working and set to missing for those reporting working more than 100 hours a week.</p></li>
+</ul>
+<div class="section" id="columns-explicitly-excluded">
+<h4>Columns explicitly excluded<a class="headerlink" href="#columns-explicitly-excluded" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>xwaveid</strong> (unique identifier)</p></li>
+<li><p><strong>p_rcom</strong>* (timing of completion of re-education, proxies treatment) TODO think about how we would include this</p></li>
+<li><p><strong>p_cotrl</strong> (first avail 2003)</p></li>
+<li><p><strong>p_rdf</strong>* (first avail 2012)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="nested-cross-validate-to-evaluate-model-performance">
+<h3>(Nested) cross-validate to evaluate model performance<a class="headerlink" href="#nested-cross-validate-to-evaluate-model-performance" title="Permalink to this headline">¶</a></h3>
+<p><img alt="image.png" src="_images/nested_cross_val.png" /></p>
+</div>
+<div class="section" id="bootstraped-cross-validation-to-estimate-parameter-uncertainty">
+<h3>Bootstraped cross-validation to estimate parameter uncertainty<a class="headerlink" href="#bootstraped-cross-validation-to-estimate-parameter-uncertainty" title="Permalink to this headline">¶</a></h3>
+<p><img alt="image.png" src="_images/bootstrap_validation.png" /></p>
 <div class="section" id="parameters">
-<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<h4>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h4>
 <div class="cell tag_parameters docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimisation_metric</span> <span class="o">=</span> <span class="s1">&#39;neg_mean_squared_error&#39;</span>
 <span class="n">evaluation_metrics</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_mean_squared_error&#39;</span><span class="p">)</span>
-<span class="n">log_outcome</span><span class="o">=</span><span class="kc">False</span>
+<span class="n">log_outcome</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">standardize_outcome</span><span class="o">=</span><span class="kc">True</span>
 <span class="n">load_from_cache</span><span class="o">=</span><span class="kc">False</span>
 <span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;^reduhl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^rehllt$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redudl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redufl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redllt$&#39;</span><span class="p">,</span> <span class="s1">&#39;^refllt$&#39;</span><span class="p">,</span>
@@ -368,6 +427,8 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
 <span class="n">configuration_name</span> <span class="o">=</span> <span class="s2">&quot;lasso-50&quot;</span>
+<span class="n">outcome</span> <span class="o">=</span> <span class="s2">&quot;y_wsce&quot;</span>
+<span class="n">treatment</span> <span class="o">=</span> <span class="s2">&quot;redufl&quot;</span>
 <span class="n">test</span> <span class="o">=</span> <span class="kc">False</span>
 <span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/all_lasso_selected_50.csv&quot;</span>
 </pre></div>
@@ -387,8 +448,6 @@
     <span class="n">outer_cv</span> <span class="o">=</span> <span class="mi">10</span>
     <span class="n">bootstrap_samples</span> <span class="o">=</span> <span class="mi">50</span>
 
-<span class="n">filename</span> <span class="o">=</span> <span class="n">data_file</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;.csv&quot;</span><span class="p">)</span>
-
 <span class="n">cross_val_cache</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;data/cross-val-</span><span class="si">{</span><span class="n">configuration_name</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="c1">#&quot;data/cross-val-all.pkl&quot;</span>
 <span class="n">bootstrap_cache</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;data/bootstrap-</span><span class="si">{</span><span class="n">configuration_name</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="c1">#&quot;data/bootstrap-all.pkl&quot;</span>
 </pre></div>
@@ -396,8 +455,9 @@
 </div>
 </div>
 </div>
+</div>
 <div class="section" id="load-data">
-<h2>Load Data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h2>
+<h3>Load Data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>drop rows missing the specified treatment or outcome</p></li>
 </ul>
@@ -405,8 +465,13 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data_load_func</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
 <span class="n">drop_missing_treatment_or_outcome</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">log_outcome</span><span class="p">:</span>
-    <span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span><span class="o">+</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_outcome</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">],</span><span class="n">log_outcome</span><span class="p">,</span> <span class="n">standardize_outcome</span><span class="p">)</span>
+
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">outcome</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of outcomes&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -414,11 +479,12 @@
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropped 284 rows missing treatment or outcome.
 </pre></div>
 </div>
+<img alt="_images/Direct-Regression-lasso-50_8_1.png" src="_images/Direct-Regression-lasso-50_8_1.png" />
 </div>
 </div>
 </div>
 <div class="section" id="set-up-models">
-<h2>Set up models<a class="headerlink" href="#set-up-models" title="Permalink to this headline">¶</a></h2>
+<h3>Set up models<a class="headerlink" href="#set-up-models" title="Permalink to this headline">¶</a></h3>
 <p>Specify which models to use and the hyper-parameter space to search over for each</p>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
@@ -472,7 +538,7 @@
 </div>
 </div>
 <div class="section" id="prepare-data-for-modeling">
-<h2>Prepare data for modeling<a class="headerlink" href="#prepare-data-for-modeling" title="Permalink to this headline">¶</a></h2>
+<h3>Prepare data for modeling<a class="headerlink" href="#prepare-data-for-modeling" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>split into treated/control</p></li>
 <li><p>impute missing values and scale</p></li>
@@ -496,7 +562,7 @@ Treated data dimensions: (1368, 47)
 </div>
 </div>
 <div class="section" id="compute-unconditional-unadjusted-estimate-of-treatment-effect">
-<h2>Compute unconditional/unadjusted estimate of treatment effect<a class="headerlink" href="#compute-unconditional-unadjusted-estimate-of-treatment-effect" title="Permalink to this headline">¶</a></h2>
+<h3>Compute unconditional/unadjusted estimate of treatment effect<a class="headerlink" href="#compute-unconditional-unadjusted-estimate-of-treatment-effect" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">print_unconditional_effects</span>
@@ -506,16 +572,16 @@ Treated data dimensions: (1368, 47)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Proportion Treated:27%
-Average outcome under Control:509.12±16.55
-Average outcome under Treatment:852.67±27.99
-Unadjusted treatment estimate 343.55
+Average outcome under Control:-0.14±0.02
+Average outcome under Treatment:0.37±0.03
+Unadjusted treatment estimate 0.51
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="propensity-model">
-<h2>Propensity model<a class="headerlink" href="#propensity-model" title="Permalink to this headline">¶</a></h2>
+<h3>Propensity model<a class="headerlink" href="#propensity-model" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Run primarily to check for violations over overlap assumptions.</p></li>
 </ul>
@@ -589,122 +655,122 @@ Unadjusted treatment estimate 343.55
     <tr>
       <th>atcyng</th>
       <td>DV: Age youngest own child (excl. resident foster/step)</td>
-      <td>-0.283923</td>
-      <td>0.283923</td>
+      <td>-0.258415</td>
+      <td>0.258415</td>
     </tr>
     <tr>
       <th>ahgage1</th>
       <td>DV: Age last birthday at June 30 2001 - person 01</td>
-      <td>-0.218827</td>
-      <td>0.218827</td>
+      <td>-0.235326</td>
+      <td>0.235326</td>
     </tr>
     <tr>
       <th>awscoef</th>
       <td>DV: Imputation flag current weekly gross wages &amp; salary - other jobs</td>
-      <td>0.209429</td>
-      <td>0.209429</td>
+      <td>0.182449</td>
+      <td>0.182449</td>
     </tr>
     <tr>
       <th>atcnr</th>
       <td>DV: Number of own non-resident children</td>
-      <td>-0.164200</td>
-      <td>0.164200</td>
-    </tr>
-    <tr>
-      <th>ajsl4wk</th>
-      <td>F1 Looked for work in last 4 weeks</td>
-      <td>0.143363</td>
-      <td>0.143363</td>
-    </tr>
-    <tr>
-      <th>ahgms</th>
-      <td>HF8 Living circumstances</td>
-      <td>0.126235</td>
-      <td>0.126235</td>
-    </tr>
-    <tr>
-      <th>aehtjbyr</th>
-      <td>D3a1 Years in paid work</td>
-      <td>-0.120810</td>
-      <td>0.120810</td>
+      <td>-0.146909</td>
+      <td>0.146909</td>
     </tr>
     <tr>
       <th>ahgsex</th>
       <td>HF3 Sex</td>
-      <td>0.115205</td>
-      <td>0.115205</td>
+      <td>0.127557</td>
+      <td>0.127557</td>
     </tr>
     <tr>
-      <th>acpno</th>
-      <td>Q9 Uses child care while at work - Number of not yet at school children</td>
-      <td>-0.110774</td>
-      <td>0.110774</td>
+      <th>ajsl4wk</th>
+      <td>F1 Looked for work in last 4 weeks</td>
+      <td>0.114262</td>
+      <td>0.114262</td>
     </tr>
     <tr>
-      <th>amhn10yr</th>
-      <td>K12 How many homes lived in during last 10 years</td>
-      <td>0.102826</td>
-      <td>0.102826</td>
-    </tr>
-    <tr>
-      <th>ahiwscei</th>
-      <td>DV: Household current weekly gross wages &amp; salary - all jobs ($) [imputed] [weighted topcode]</td>
-      <td>0.094188</td>
-      <td>0.094188</td>
-    </tr>
-    <tr>
-      <th>awsfef</th>
-      <td>DV: Imputation flag financial year gross wages &amp; salary</td>
-      <td>0.077901</td>
-      <td>0.077901</td>
-    </tr>
-    <tr>
-      <th>ahiwsfei</th>
-      <td>DV: Household financial year gross wages &amp; salary ($) [imputed] [weighted topcode]</td>
-      <td>0.060328</td>
-      <td>0.060328</td>
-    </tr>
-    <tr>
-      <th>aoirntf</th>
-      <td>DV: Imputation flag financial year rental income including nil</td>
-      <td>0.059355</td>
-      <td>0.059355</td>
-    </tr>
-    <tr>
-      <th>agh3a</th>
-      <td>SCQ:A3a Physical Functioning: Vigorous activities</td>
-      <td>0.054277</td>
-      <td>0.054277</td>
-    </tr>
-    <tr>
-      <th>ahhd1014</th>
-      <td>DV: Number of dependent children aged 10-14 (includes partner's children)</td>
-      <td>0.053712</td>
-      <td>0.053712</td>
-    </tr>
-    <tr>
-      <th>aedqobd</th>
-      <td>C7a Qualifications obtained - Bachelor degree but not honours</td>
-      <td>-0.052597</td>
-      <td>0.052597</td>
-    </tr>
-    <tr>
-      <th>artiage1</th>
-      <td>E39 At what age do you plan to retire from the workforce</td>
-      <td>-0.051493</td>
-      <td>0.051493</td>
+      <th>aehtjbyr</th>
+      <td>D3a1 Years in paid work</td>
+      <td>-0.107796</td>
+      <td>0.107796</td>
     </tr>
     <tr>
       <th>ajbmwpsz</th>
       <td>E33 Number employed at place of work</td>
-      <td>0.050629</td>
-      <td>0.050629</td>
+      <td>0.106643</td>
+      <td>0.106643</td>
     </tr>
     <tr>
-      <th>atifditp</th>
-      <td>DV: Financial year disposable total income ($) Positive values [weighted topcode]</td>
-      <td>-0.045690</td>
-      <td>0.045690</td>
+      <th>amhn10yr</th>
+      <td>K12 How many homes lived in during last 10 years</td>
+      <td>0.100227</td>
+      <td>0.100227</td>
+    </tr>
+    <tr>
+      <th>agh3a</th>
+      <td>SCQ:A3a Physical Functioning: Vigorous activities</td>
+      <td>0.098223</td>
+      <td>0.098223</td>
+    </tr>
+    <tr>
+      <th>acpno</th>
+      <td>Q9 Uses child care while at work - Number of not yet at school children</td>
+      <td>-0.093945</td>
+      <td>0.093945</td>
+    </tr>
+    <tr>
+      <th>ahgms</th>
+      <td>HF8 Living circumstances</td>
+      <td>0.089645</td>
+      <td>0.089645</td>
+    </tr>
+    <tr>
+      <th>ahhd1014</th>
+      <td>DV: Number of dependent children aged 10-14 (includes partner's children)</td>
+      <td>0.084972</td>
+      <td>0.084972</td>
+    </tr>
+    <tr>
+      <th>ahelthyr</th>
+      <td>K5 Did condition first develop in last 12 months</td>
+      <td>-0.066081</td>
+      <td>0.066081</td>
+    </tr>
+    <tr>
+      <th>ajbmpgj</th>
+      <td>E29 Percent chance will find and accept job at least as good as current job</td>
+      <td>0.064787</td>
+      <td>0.064787</td>
+    </tr>
+    <tr>
+      <th>aedqobd</th>
+      <td>C7a Qualifications obtained - Bachelor degree but not honours</td>
+      <td>-0.061360</td>
+      <td>0.061360</td>
+    </tr>
+    <tr>
+      <th>abncapuf</th>
+      <td>DV: Imputation flag current weekly Australian public transfers excluding family benefits</td>
+      <td>0.058326</td>
+      <td>0.058326</td>
+    </tr>
+    <tr>
+      <th>aoirntf</th>
+      <td>DV: Imputation flag financial year rental income including nil</td>
+      <td>0.057908</td>
+      <td>0.057908</td>
+    </tr>
+    <tr>
+      <th>aedqoms</th>
+      <td>C7a Qualifications obtained - Masters degree</td>
+      <td>-0.057339</td>
+      <td>0.057339</td>
+    </tr>
+    <tr>
+      <th>ancsex1</th>
+      <td>H3c Sex of child - Non-resident child 0001</td>
+      <td>0.056499</td>
+      <td>0.056499</td>
     </tr>
   </tbody>
 </table>
@@ -898,7 +964,7 @@ Caching results to data/cross-val-lasso-50.pkl
 </div>
 </div>
 <div class="section" id="report-estimate-ate-and-model-performance">
-<h2>Report estimate ATE and model performance<a class="headerlink" href="#report-estimate-ate-and-model-performance" title="Permalink to this headline">¶</a></h2>
+<h3>Report estimate ATE and model performance<a class="headerlink" href="#report-estimate-ate-and-model-performance" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Mean and Std of prediction performance for each model (both treatment &amp; control surface)</p></li>
 <li><p>Mean and Std of average treatment effect for each model</p></li>
@@ -944,46 +1010,46 @@ Caching results to data/cross-val-lasso-50.pkl
   <tbody>
     <tr>
       <th>ridge</th>
-      <td>92.32</td>
-      <td>14.17</td>
-      <td>0.30</td>
-      <td>0.08</td>
+      <td>0.16</td>
+      <td>0.01</td>
+      <td>0.35</td>
+      <td>0.04</td>
       <td>0.19</td>
-      <td>0.09</td>
-      <td>-733,181.87</td>
-      <td>247,323.54</td>
-      <td>-865,647.06</td>
-      <td>352,531.15</td>
+      <td>0.06</td>
+      <td>-0.59</td>
+      <td>0.03</td>
+      <td>-0.82</td>
+      <td>0.08</td>
     </tr>
     <tr>
       <th>lasso</th>
-      <td>83.96</td>
-      <td>17.84</td>
-      <td>0.29</td>
-      <td>0.05</td>
-      <td>0.18</td>
-      <td>0.07</td>
-      <td>-740,303.32</td>
-      <td>243,134.95</td>
-      <td>-877,720.07</td>
-      <td>325,714.45</td>
+      <td>0.15</td>
+      <td>0.02</td>
+      <td>0.35</td>
+      <td>0.04</td>
+      <td>0.19</td>
+      <td>0.06</td>
+      <td>-0.59</td>
+      <td>0.04</td>
+      <td>-0.82</td>
+      <td>0.06</td>
     </tr>
     <tr>
       <th>gbr</th>
-      <td>71.04</td>
-      <td>15.75</td>
-      <td>0.36</td>
-      <td>0.08</td>
-      <td>0.21</td>
-      <td>0.07</td>
-      <td>-678,522.43</td>
-      <td>316,495.81</td>
-      <td>-837,550.02</td>
-      <td>295,041.02</td>
+      <td>0.15</td>
+      <td>0.02</td>
+      <td>0.45</td>
+      <td>0.03</td>
+      <td>0.24</td>
+      <td>0.06</td>
+      <td>-0.51</td>
+      <td>0.03</td>
+      <td>-0.77</td>
+      <td>0.06</td>
     </tr>
   </tbody>
 </table>
-</div></div><img alt="_images/Direct-Regression-lasso-50_22_1.png" src="_images/Direct-Regression-lasso-50_22_1.png" />
+</div></div><img alt="_images/Direct-Regression-lasso-50_21_1.png" src="_images/Direct-Regression-lasso-50_21_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -994,7 +1060,7 @@ Caching results to data/cross-val-lasso-50.pkl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Direct-Regression-lasso-50_23_0.png" src="_images/Direct-Regression-lasso-50_23_0.png" />
+<img alt="_images/Direct-Regression-lasso-50_22_0.png" src="_images/Direct-Regression-lasso-50_22_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1007,17 +1073,17 @@ Caching results to data/cross-val-lasso-50.pkl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Direct-Regression-lasso-50_24_0.png" src="_images/Direct-Regression-lasso-50_24_0.png" />
-<img alt="_images/Direct-Regression-lasso-50_24_1.png" src="_images/Direct-Regression-lasso-50_24_1.png" />
-<img alt="_images/Direct-Regression-lasso-50_24_2.png" src="_images/Direct-Regression-lasso-50_24_2.png" />
-<img alt="_images/Direct-Regression-lasso-50_24_3.png" src="_images/Direct-Regression-lasso-50_24_3.png" />
-<img alt="_images/Direct-Regression-lasso-50_24_4.png" src="_images/Direct-Regression-lasso-50_24_4.png" />
-<img alt="_images/Direct-Regression-lasso-50_24_5.png" src="_images/Direct-Regression-lasso-50_24_5.png" />
+<img alt="_images/Direct-Regression-lasso-50_23_0.png" src="_images/Direct-Regression-lasso-50_23_0.png" />
+<img alt="_images/Direct-Regression-lasso-50_23_1.png" src="_images/Direct-Regression-lasso-50_23_1.png" />
+<img alt="_images/Direct-Regression-lasso-50_23_2.png" src="_images/Direct-Regression-lasso-50_23_2.png" />
+<img alt="_images/Direct-Regression-lasso-50_23_3.png" src="_images/Direct-Regression-lasso-50_23_3.png" />
+<img alt="_images/Direct-Regression-lasso-50_23_4.png" src="_images/Direct-Regression-lasso-50_23_4.png" />
+<img alt="_images/Direct-Regression-lasso-50_23_5.png" src="_images/Direct-Regression-lasso-50_23_5.png" />
 </div>
 </div>
 </div>
 <div class="section" id="visualise-models">
-<h2>Visualise models<a class="headerlink" href="#visualise-models" title="Permalink to this headline">¶</a></h2>
+<h3>Visualise models<a class="headerlink" href="#visualise-models" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><p>Features responsible for treatment effect heterogeneity &amp; functional form (with uncertainty)
 - coefficeints for linear models
@@ -1076,223 +1142,223 @@ Caching results to data/cross-val-lasso-50.pkl
   <tbody>
     <tr>
       <th>ahgage1</th>
-      <td>105.098651</td>
-      <td>6.033087</td>
-      <td>-17.877045</td>
-      <td>12.833179</td>
-      <td>-114.037174</td>
-      <td>12.183919</td>
-      <td>-96.160129</td>
-      <td>2.587208</td>
-    </tr>
-    <tr>
-      <th>awscme</th>
-      <td>97.747884</td>
-      <td>15.484290</td>
-      <td>-72.864948</td>
-      <td>19.739461</td>
-      <td>61.315410</td>
-      <td>21.929562</td>
-      <td>134.180358</td>
-      <td>13.908413</td>
-    </tr>
-    <tr>
-      <th>aehtjbyr</th>
-      <td>94.297169</td>
-      <td>8.174296</td>
-      <td>10.348722</td>
-      <td>11.884111</td>
-      <td>-89.122808</td>
-      <td>13.436067</td>
-      <td>-99.471530</td>
-      <td>4.870971</td>
+      <td>0.169001</td>
+      <td>0.005353</td>
+      <td>-0.014434</td>
+      <td>0.017840</td>
+      <td>-0.176218</td>
+      <td>0.012403</td>
+      <td>-0.161784</td>
+      <td>0.007913</td>
     </tr>
     <tr>
       <th>atcyng</th>
-      <td>76.367718</td>
-      <td>6.886640</td>
-      <td>-24.407700</td>
-      <td>19.387086</td>
-      <td>-88.571568</td>
-      <td>16.408497</td>
-      <td>-64.163868</td>
-      <td>3.679999</td>
-    </tr>
-    <tr>
-      <th>ahgsex</th>
-      <td>61.673159</td>
-      <td>8.183869</td>
-      <td>-26.615143</td>
-      <td>17.202106</td>
-      <td>-74.980730</td>
-      <td>16.331665</td>
-      <td>-48.365587</td>
-      <td>3.896710</td>
-    </tr>
-    <tr>
-      <th>agh3a</th>
-      <td>60.118807</td>
-      <td>2.616295</td>
-      <td>-8.632486</td>
-      <td>3.340825</td>
-      <td>55.802564</td>
-      <td>3.931578</td>
-      <td>64.435050</td>
-      <td>1.952753</td>
+      <td>0.138880</td>
+      <td>0.002997</td>
+      <td>-0.040960</td>
+      <td>0.011687</td>
+      <td>-0.159360</td>
+      <td>0.007394</td>
+      <td>-0.118399</td>
+      <td>0.005619</td>
     </tr>
     <tr>
       <th>atcnr</th>
-      <td>58.893370</td>
-      <td>4.098299</td>
-      <td>-10.383081</td>
-      <td>6.211290</td>
-      <td>-64.084911</td>
-      <td>6.480215</td>
-      <td>-53.701830</td>
-      <td>3.299847</td>
+      <td>0.115540</td>
+      <td>0.004148</td>
+      <td>-0.051121</td>
+      <td>0.006657</td>
+      <td>-0.141101</td>
+      <td>0.006202</td>
+      <td>-0.089979</td>
+      <td>0.004256</td>
     </tr>
     <tr>
-      <th>aicprob</th>
-      <td>54.045791</td>
-      <td>5.391146</td>
-      <td>-5.973264</td>
-      <td>5.093327</td>
-      <td>51.059159</td>
-      <td>6.079822</td>
-      <td>57.032423</td>
-      <td>5.842573</td>
-    </tr>
-    <tr>
-      <th>awsfe</th>
-      <td>50.668572</td>
-      <td>9.470364</td>
-      <td>-78.779653</td>
-      <td>26.048551</td>
-      <td>6.364226</td>
-      <td>22.272128</td>
-      <td>85.143879</td>
-      <td>9.636013</td>
-    </tr>
-    <tr>
-      <th>ahiwsfei</th>
-      <td>49.746978</td>
-      <td>7.744232</td>
-      <td>99.493956</td>
-      <td>15.488464</td>
-      <td>74.248880</td>
-      <td>9.675688</td>
-      <td>-25.245076</td>
-      <td>8.944134</td>
-    </tr>
-    <tr>
-      <th>aedqodc</th>
-      <td>47.447903</td>
-      <td>7.064935</td>
-      <td>-94.895807</td>
-      <td>14.129870</td>
-      <td>-26.066053</td>
-      <td>14.054136</td>
-      <td>68.829754</td>
-      <td>12.743208</td>
-    </tr>
-    <tr>
-      <th>ajbmo6s</th>
-      <td>46.245862</td>
-      <td>6.347721</td>
-      <td>23.790898</td>
-      <td>14.454371</td>
-      <td>58.141311</td>
-      <td>12.703721</td>
-      <td>34.350413</td>
-      <td>4.864876</td>
-    </tr>
-    <tr>
-      <th>ahh0_4</th>
-      <td>44.948332</td>
-      <td>3.435413</td>
-      <td>-12.973293</td>
-      <td>6.815443</td>
-      <td>38.461685</td>
-      <td>5.670625</td>
-      <td>51.434979</td>
-      <td>3.830570</td>
-    </tr>
-    <tr>
-      <th>ajbmpgj</th>
-      <td>43.237516</td>
-      <td>5.376388</td>
-      <td>-45.087233</td>
-      <td>6.298715</td>
-      <td>20.693899</td>
-      <td>6.514005</td>
-      <td>65.781133</td>
-      <td>5.934284</td>
+      <th>aehtjbyr</th>
+      <td>0.098181</td>
+      <td>0.005866</td>
+      <td>-0.016539</td>
+      <td>0.010739</td>
+      <td>-0.106450</td>
+      <td>0.010441</td>
+      <td>-0.089911</td>
+      <td>0.004181</td>
     </tr>
     <tr>
       <th>ahifapti</th>
-      <td>39.181050</td>
-      <td>4.832425</td>
-      <td>-26.373283</td>
-      <td>5.811984</td>
-      <td>-52.367691</td>
-      <td>7.163105</td>
-      <td>-25.994409</td>
-      <td>3.504877</td>
+      <td>0.078116</td>
+      <td>0.007435</td>
+      <td>-0.020728</td>
+      <td>0.012094</td>
+      <td>-0.088480</td>
+      <td>0.013089</td>
+      <td>-0.067752</td>
+      <td>0.003517</td>
+    </tr>
+    <tr>
+      <th>awscme</th>
+      <td>0.066786</td>
+      <td>0.004966</td>
+      <td>-0.087917</td>
+      <td>0.013306</td>
+      <td>0.022827</td>
+      <td>0.009706</td>
+      <td>0.110745</td>
+      <td>0.006605</td>
+    </tr>
+    <tr>
+      <th>agh3a</th>
+      <td>0.066195</td>
+      <td>0.001937</td>
+      <td>0.003223</td>
+      <td>0.007906</td>
+      <td>0.067806</td>
+      <td>0.004883</td>
+      <td>0.064583</td>
+      <td>0.003860</td>
+    </tr>
+    <tr>
+      <th>ahh0_4</th>
+      <td>0.056434</td>
+      <td>0.004577</td>
+      <td>-0.031723</td>
+      <td>0.008140</td>
+      <td>0.040572</td>
+      <td>0.007144</td>
+      <td>0.072296</td>
+      <td>0.004898</td>
+    </tr>
+    <tr>
+      <th>aicprob</th>
+      <td>0.051805</td>
+      <td>0.005139</td>
+      <td>-0.022046</td>
+      <td>0.010812</td>
+      <td>0.040782</td>
+      <td>0.007234</td>
+      <td>0.062828</td>
+      <td>0.007678</td>
+    </tr>
+    <tr>
+      <th>ahiwsfei</th>
+      <td>0.044260</td>
+      <td>0.004612</td>
+      <td>0.088519</td>
+      <td>0.009223</td>
+      <td>0.049619</td>
+      <td>0.007385</td>
+      <td>-0.038901</td>
+      <td>0.008644</td>
     </tr>
     <tr>
       <th>atifditp</th>
-      <td>36.151473</td>
-      <td>10.418584</td>
-      <td>28.404438</td>
-      <td>13.666634</td>
-      <td>50.353692</td>
-      <td>16.192847</td>
-      <td>21.949254</td>
-      <td>6.947947</td>
+      <td>0.038493</td>
+      <td>0.005177</td>
+      <td>0.034258</td>
+      <td>0.013005</td>
+      <td>0.055622</td>
+      <td>0.011275</td>
+      <td>0.021364</td>
+      <td>0.003324</td>
     </tr>
     <tr>
-      <th>apashare</th>
-      <td>34.454585</td>
-      <td>3.181758</td>
-      <td>-25.103427</td>
-      <td>4.986032</td>
-      <td>21.902871</td>
-      <td>3.478189</td>
-      <td>47.006298</td>
-      <td>4.536477</td>
+      <th>awsfe</th>
+      <td>0.038237</td>
+      <td>0.009177</td>
+      <td>-0.043165</td>
+      <td>0.019664</td>
+      <td>0.016655</td>
+      <td>0.017213</td>
+      <td>0.059820</td>
+      <td>0.008092</td>
     </tr>
     <tr>
-      <th>ajbmwpsz</th>
-      <td>28.619163</td>
-      <td>3.794510</td>
-      <td>17.798713</td>
-      <td>10.863251</td>
-      <td>37.518520</td>
-      <td>6.792883</td>
-      <td>19.719807</td>
-      <td>6.454336</td>
+      <th>aoirntf</th>
+      <td>0.038091</td>
+      <td>0.006530</td>
+      <td>0.006569</td>
+      <td>0.011212</td>
+      <td>-0.034807</td>
+      <td>0.010623</td>
+      <td>-0.041376</td>
+      <td>0.005941</td>
     </tr>
     <tr>
-      <th>ahiwscei</th>
-      <td>28.083031</td>
-      <td>3.901877</td>
-      <td>27.932598</td>
-      <td>10.625117</td>
-      <td>41.255414</td>
-      <td>4.330023</td>
-      <td>13.322816</td>
-      <td>10.010697</td>
+      <th>aoidvryf</th>
+      <td>0.036718</td>
+      <td>0.003450</td>
+      <td>-0.011207</td>
+      <td>0.005778</td>
+      <td>-0.042321</td>
+      <td>0.005359</td>
+      <td>-0.031114</td>
+      <td>0.003433</td>
     </tr>
     <tr>
-      <th>ajbcasab</th>
-      <td>26.307597</td>
-      <td>2.397308</td>
-      <td>9.684654</td>
-      <td>3.382806</td>
-      <td>31.149924</td>
-      <td>3.094330</td>
-      <td>21.465271</td>
-      <td>2.764233</td>
+      <th>ajbmpgj</th>
+      <td>0.032481</td>
+      <td>0.004293</td>
+      <td>-0.030945</td>
+      <td>0.007638</td>
+      <td>0.016810</td>
+      <td>0.007773</td>
+      <td>0.047755</td>
+      <td>0.003926</td>
+    </tr>
+    <tr>
+      <th>abncapuf</th>
+      <td>0.031409</td>
+      <td>0.004220</td>
+      <td>0.062817</td>
+      <td>0.008441</td>
+      <td>0.045080</td>
+      <td>0.006907</td>
+      <td>-0.017738</td>
+      <td>0.005752</td>
+    </tr>
+    <tr>
+      <th>aoifinvp</th>
+      <td>0.031012</td>
+      <td>0.006174</td>
+      <td>-0.008937</td>
+      <td>0.010081</td>
+      <td>-0.035480</td>
+      <td>0.009710</td>
+      <td>-0.026543</td>
+      <td>0.005725</td>
+    </tr>
+    <tr>
+      <th>awscoef</th>
+      <td>0.029647</td>
+      <td>0.006626</td>
+      <td>0.051918</td>
+      <td>0.016439</td>
+      <td>0.054027</td>
+      <td>0.014030</td>
+      <td>0.002109</td>
+      <td>0.006448</td>
+    </tr>
+    <tr>
+      <th>afmagelh</th>
+      <td>0.029644</td>
+      <td>0.006149</td>
+      <td>-0.012233</td>
+      <td>0.008993</td>
+      <td>0.023527</td>
+      <td>0.009201</td>
+      <td>0.035760</td>
+      <td>0.005603</td>
+    </tr>
+    <tr>
+      <th>awscef</th>
+      <td>0.028703</td>
+      <td>0.006849</td>
+      <td>-0.057108</td>
+      <td>0.013911</td>
+      <td>-0.046894</td>
+      <td>0.011721</td>
+      <td>0.010214</td>
+      <td>0.006111</td>
     </tr>
   </tbody>
 </table>
@@ -1341,223 +1407,223 @@ Caching results to data/cross-val-lasso-50.pkl
   <tbody>
     <tr>
       <th>ahgage1</th>
-      <td>148.385627</td>
-      <td>7.576708</td>
-      <td>-85.110927</td>
-      <td>10.007436</td>
-      <td>-190.941091</td>
-      <td>9.887361</td>
-      <td>-105.830164</td>
-      <td>8.193137</td>
-    </tr>
-    <tr>
-      <th>awscme</th>
-      <td>147.907079</td>
-      <td>11.024003</td>
-      <td>-96.754214</td>
-      <td>25.851367</td>
-      <td>99.529972</td>
-      <td>15.014169</td>
-      <td>196.284186</td>
-      <td>18.755762</td>
-    </tr>
-    <tr>
-      <th>aehtjbyr</th>
-      <td>101.824276</td>
-      <td>10.745972</td>
-      <td>20.585057</td>
-      <td>20.780631</td>
-      <td>-91.531747</td>
-      <td>18.260303</td>
-      <td>-112.116804</td>
-      <td>10.650375</td>
+      <td>0.203809</td>
+      <td>0.005309</td>
+      <td>-0.030440</td>
+      <td>0.015861</td>
+      <td>-0.219029</td>
+      <td>0.011863</td>
+      <td>-0.188589</td>
+      <td>0.006435</td>
     </tr>
     <tr>
       <th>atcyng</th>
-      <td>78.595544</td>
-      <td>11.255339</td>
-      <td>-45.197191</td>
-      <td>17.989248</td>
-      <td>-101.194139</td>
-      <td>16.258000</td>
-      <td>-55.996948</td>
-      <td>12.282070</td>
-    </tr>
-    <tr>
-      <th>ahiwsfei</th>
-      <td>75.876894</td>
-      <td>12.149080</td>
-      <td>151.753789</td>
-      <td>24.298160</td>
-      <td>132.706886</td>
-      <td>22.967403</td>
-      <td>-19.046902</td>
-      <td>18.453422</td>
-    </tr>
-    <tr>
-      <th>ahgsex</th>
-      <td>68.135012</td>
-      <td>11.338672</td>
-      <td>-42.158926</td>
-      <td>16.527271</td>
-      <td>-89.214475</td>
-      <td>15.074178</td>
-      <td>-47.055549</td>
-      <td>12.902537</td>
-    </tr>
-    <tr>
-      <th>agh3a</th>
-      <td>53.217418</td>
-      <td>7.627611</td>
-      <td>-24.106646</td>
-      <td>11.953278</td>
-      <td>41.164095</td>
-      <td>11.924320</td>
-      <td>65.270741</td>
-      <td>6.753661</td>
-    </tr>
-    <tr>
-      <th>ajbmo6s</th>
-      <td>49.286064</td>
-      <td>8.870468</td>
-      <td>33.544739</td>
-      <td>10.654636</td>
-      <td>66.058434</td>
-      <td>12.570065</td>
-      <td>32.513695</td>
-      <td>7.491630</td>
-    </tr>
-    <tr>
-      <th>aicprob</th>
-      <td>47.150498</td>
-      <td>5.797266</td>
-      <td>-20.362687</td>
-      <td>11.846857</td>
-      <td>36.969155</td>
-      <td>11.017907</td>
-      <td>57.331841</td>
-      <td>3.999541</td>
-    </tr>
-    <tr>
-      <th>awsfe</th>
-      <td>45.292409</td>
-      <td>8.726421</td>
-      <td>-90.584818</td>
-      <td>17.452843</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>90.584818</td>
-      <td>17.452843</td>
-    </tr>
-    <tr>
-      <th>aedqodc</th>
-      <td>41.101106</td>
-      <td>9.103095</td>
-      <td>-82.202212</td>
-      <td>18.206190</td>
-      <td>-2.842085</td>
-      <td>6.247868</td>
-      <td>79.360128</td>
-      <td>16.294545</td>
-    </tr>
-    <tr>
-      <th>ajbmpgj</th>
-      <td>36.374232</td>
-      <td>6.510625</td>
-      <td>-67.454966</td>
-      <td>9.693743</td>
-      <td>2.646748</td>
-      <td>6.151744</td>
-      <td>70.101715</td>
-      <td>9.691071</td>
+      <td>0.163000</td>
+      <td>0.009681</td>
+      <td>-0.076343</td>
+      <td>0.022539</td>
+      <td>-0.201172</td>
+      <td>0.020277</td>
+      <td>-0.124829</td>
+      <td>0.005503</td>
     </tr>
     <tr>
       <th>atcnr</th>
-      <td>33.948141</td>
-      <td>9.142438</td>
-      <td>36.152934</td>
-      <td>13.718132</td>
-      <td>-15.871674</td>
-      <td>15.372388</td>
-      <td>-52.024608</td>
-      <td>4.995156</td>
+      <td>0.117742</td>
+      <td>0.006735</td>
+      <td>-0.065983</td>
+      <td>0.015528</td>
+      <td>-0.150733</td>
+      <td>0.014010</td>
+      <td>-0.084751</td>
+      <td>0.003876</td>
     </tr>
     <tr>
-      <th>ahh0_4</th>
-      <td>28.710344</td>
-      <td>6.455244</td>
-      <td>-48.247705</td>
-      <td>11.577617</td>
-      <td>4.586492</td>
-      <td>6.048641</td>
-      <td>52.834197</td>
-      <td>10.666531</td>
+      <th>aehtjbyr</th>
+      <td>0.080508</td>
+      <td>0.008312</td>
+      <td>-0.005006</td>
+      <td>0.018952</td>
+      <td>-0.083011</td>
+      <td>0.017081</td>
+      <td>-0.078005</td>
+      <td>0.005098</td>
     </tr>
     <tr>
-      <th>apashare</th>
-      <td>23.004356</td>
-      <td>4.578268</td>
-      <td>-44.241198</td>
-      <td>8.842149</td>
-      <td>0.883757</td>
-      <td>2.794686</td>
-      <td>45.124955</td>
-      <td>8.555852</td>
+      <th>awscme</th>
+      <td>0.072412</td>
+      <td>0.004198</td>
+      <td>-0.119977</td>
+      <td>0.019011</td>
+      <td>0.012423</td>
+      <td>0.009404</td>
+      <td>0.132401</td>
+      <td>0.011293</td>
     </tr>
     <tr>
       <th>ahifapti</th>
-      <td>20.494316</td>
-      <td>10.339487</td>
-      <td>-4.872301</td>
-      <td>12.088119</td>
-      <td>-22.930466</td>
-      <td>12.497091</td>
-      <td>-18.058165</td>
-      <td>11.432148</td>
+      <td>0.066971</td>
+      <td>0.007319</td>
+      <td>-0.018648</td>
+      <td>0.016303</td>
+      <td>-0.076295</td>
+      <td>0.014587</td>
+      <td>-0.057648</td>
+      <td>0.005219</td>
     </tr>
     <tr>
-      <th>awslya</th>
-      <td>18.042603</td>
-      <td>5.737875</td>
-      <td>-34.431850</td>
-      <td>10.820580</td>
-      <td>0.826678</td>
-      <td>2.282150</td>
-      <td>35.258528</td>
-      <td>10.916991</td>
+      <th>agh3a</th>
+      <td>0.059165</td>
+      <td>0.006267</td>
+      <td>-0.003132</td>
+      <td>0.011962</td>
+      <td>0.057599</td>
+      <td>0.011615</td>
+      <td>0.060731</td>
+      <td>0.003896</td>
     </tr>
     <tr>
-      <th>aoidvry</th>
-      <td>16.843314</td>
-      <td>15.210299</td>
-      <td>28.757169</td>
-      <td>33.098149</td>
-      <td>6.003152</td>
-      <td>28.708523</td>
-      <td>-22.754017</td>
-      <td>10.256194</td>
+      <th>aicprob</th>
+      <td>0.046086</td>
+      <td>0.004687</td>
+      <td>-0.025179</td>
+      <td>0.014120</td>
+      <td>0.033496</td>
+      <td>0.008870</td>
+      <td>0.058676</td>
+      <td>0.008058</td>
+    </tr>
+    <tr>
+      <th>ahiwsfei</th>
+      <td>0.036059</td>
+      <td>0.006343</td>
+      <td>0.072117</td>
+      <td>0.012686</td>
+      <td>0.042883</td>
+      <td>0.007982</td>
+      <td>-0.029234</td>
+      <td>0.007759</td>
+    </tr>
+    <tr>
+      <th>ahh0_4</th>
+      <td>0.035409</td>
+      <td>0.003896</td>
+      <td>-0.058238</td>
+      <td>0.009058</td>
+      <td>0.006290</td>
+      <td>0.005923</td>
+      <td>0.064528</td>
+      <td>0.006026</td>
+    </tr>
+    <tr>
+      <th>afmagelh</th>
+      <td>0.026269</td>
+      <td>0.004062</td>
+      <td>-0.013962</td>
+      <td>0.012028</td>
+      <td>0.019288</td>
+      <td>0.007721</td>
+      <td>0.033250</td>
+      <td>0.006763</td>
+    </tr>
+    <tr>
+      <th>awsfe</th>
+      <td>0.025963</td>
+      <td>0.008665</td>
+      <td>-0.041888</td>
+      <td>0.019102</td>
+      <td>0.005019</td>
+      <td>0.014940</td>
+      <td>0.046907</td>
+      <td>0.010459</td>
+    </tr>
+    <tr>
+      <th>aoirntf</th>
+      <td>0.024635</td>
+      <td>0.007432</td>
+      <td>0.029891</td>
+      <td>0.018979</td>
+      <td>-0.009689</td>
+      <td>0.014417</td>
+      <td>-0.039580</td>
+      <td>0.009095</td>
+    </tr>
+    <tr>
+      <th>ajbmpgj</th>
+      <td>0.024528</td>
+      <td>0.005240</td>
+      <td>-0.033824</td>
+      <td>0.007784</td>
+      <td>0.007615</td>
+      <td>0.007374</td>
+      <td>0.041440</td>
+      <td>0.005553</td>
+    </tr>
+    <tr>
+      <th>aoidvryf</th>
+      <td>0.019702</td>
+      <td>0.007723</td>
+      <td>0.009390</td>
+      <td>0.012942</td>
+      <td>-0.015008</td>
+      <td>0.013125</td>
+      <td>-0.024397</td>
+      <td>0.005547</td>
+    </tr>
+    <tr>
+      <th>aoifinvp</th>
+      <td>0.018882</td>
+      <td>0.012567</td>
+      <td>-0.004721</td>
+      <td>0.016278</td>
+      <td>-0.021243</td>
+      <td>0.019576</td>
+      <td>-0.016522</td>
+      <td>0.008071</td>
+    </tr>
+    <tr>
+      <th>ajsl4wk</th>
+      <td>0.017545</td>
+      <td>0.005136</td>
+      <td>-0.035090</td>
+      <td>0.010272</td>
+      <td>-0.034682</td>
+      <td>0.010258</td>
+      <td>0.000408</td>
+      <td>0.000806</td>
     </tr>
     <tr>
       <th>artiage1</th>
-      <td>16.806588</td>
-      <td>3.761121</td>
-      <td>-33.613176</td>
-      <td>7.522242</td>
+      <td>0.016945</td>
+      <td>0.002322</td>
+      <td>-0.033890</td>
+      <td>0.004643</td>
       <td>0.000000</td>
       <td>0.000000</td>
-      <td>33.613176</td>
-      <td>7.522242</td>
+      <td>0.033890</td>
+      <td>0.004643</td>
     </tr>
     <tr>
-      <th>apawkmfh</th>
-      <td>16.085227</td>
-      <td>4.368372</td>
-      <td>-32.170453</td>
-      <td>8.736744</td>
-      <td>0.000000</td>
-      <td>0.000000</td>
-      <td>32.170453</td>
-      <td>8.736744</td>
+      <th>ahgsex</th>
+      <td>0.016356</td>
+      <td>0.003303</td>
+      <td>-0.031398</td>
+      <td>0.007496</td>
+      <td>-0.032055</td>
+      <td>0.006844</td>
+      <td>-0.000657</td>
+      <td>0.001754</td>
+    </tr>
+    <tr>
+      <th>ahhd1014</th>
+      <td>0.015137</td>
+      <td>0.003059</td>
+      <td>-0.030273</td>
+      <td>0.006118</td>
+      <td>-0.006215</td>
+      <td>0.007710</td>
+      <td>0.024058</td>
+      <td>0.004565</td>
     </tr>
   </tbody>
 </table>
@@ -1565,13 +1631,13 @@ Caching results to data/cross-val-lasso-50.pkl
 </div>
 </div>
 <div class="section" id="compare-against-ols-on-basic-variables">
-<h2>Compare against OLS on basic variables<a class="headerlink" href="#compare-against-ols-on-basic-variables" title="Permalink to this headline">¶</a></h2>
+<h3>Compare against OLS on basic variables<a class="headerlink" href="#compare-against-ols-on-basic-variables" title="Permalink to this headline">¶</a></h3>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/basic_variables.csv&quot;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">)</span>
 <span class="n">drop_missing_treatment_or_outcome</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
-<span class="k">if</span> <span class="n">log_outcome</span><span class="p">:</span>
-    <span class="n">basic</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">basic</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span><span class="o">+</span><span class="n">basic</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="n">basic</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_outcome</span><span class="p">(</span><span class="n">basic</span><span class="p">[</span><span class="n">outcome</span><span class="p">],</span><span class="n">log_outcome</span><span class="p">,</span> <span class="n">standardize_outcome</span><span class="p">)</span>
+
     
 <span class="n">X0b</span><span class="p">,</span> <span class="n">X1b</span><span class="p">,</span> <span class="n">y0b</span><span class="p">,</span> <span class="n">y1b</span><span class="p">,</span> <span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">tb</span><span class="p">,</span> <span class="n">featuresb</span> <span class="o">=</span> <span class="n">seperate_and_transform_data</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
 
@@ -1620,7 +1686,7 @@ Caching results to data/tmp.pkl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Direct-Regression-lasso-50_29_0.png" src="_images/Direct-Regression-lasso-50_29_0.png" />
+<img alt="_images/Direct-Regression-lasso-50_28_0.png" src="_images/Direct-Regression-lasso-50_28_0.png" />
 </div>
 </div>
 <div class="cell tag_hide_input docutils container">
@@ -1640,14 +1706,15 @@ Caching results to data/tmp.pkl
     <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Treated (ridge), $R^2=</span><span class="si">{</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span><span class="n">y1a</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">);</span>
 
 <span class="c1"># think about why these r2 scores are higher than on the holdout set (and whether they are likely overfitting)</span>
+<span class="c1"># despite there being so few variables</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Direct-Regression-lasso-50_30_0.png" src="_images/Direct-Regression-lasso-50_30_0.png" />
+<img alt="_images/Direct-Regression-lasso-50_29_0.png" src="_images/Direct-Regression-lasso-50_29_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_hide_cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">bootstrapped_cross_val</span>
 <span class="k">def</span> <span class="nf">extract_params</span><span class="p">(</span><span class="n">estimator</span><span class="p">):</span>
@@ -1819,7 +1886,6 @@ Caching results to data/tmp.pkl
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
@@ -1918,7 +1984,8 @@ Fitting 5 folds for each of 30 candidates, totalling 150 fits
 Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Done
 Fitting lasso ...Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
@@ -2077,6 +2144,29 @@ Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
 Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
@@ -2101,32 +2191,11 @@ Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
 Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
 Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
@@ -2138,20 +2207,7 @@ Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
 Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
-Fitting 5 folds for each of 30 candidates, totalling 150 fits
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
@@ -2163,6 +2219,7 @@ Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
@@ -2483,15 +2540,15 @@ Fitting gbr ...Fitting 5 folds for each of 500 candidates, totalling 2500 fits
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
-Total time:7405.271872997284 seconds
+Total time:8001.203910589218 seconds
 Caching results to: data/bootstrap-lasso-50.pkl
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="average-treatment-effects">
-<h3>Average treatment effects<a class="headerlink" href="#average-treatment-effects" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
+<h4>Average treatment effects<a class="headerlink" href="#average-treatment-effects" title="Permalink to this headline">¶</a></h4>
+<div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">compute_ate</span>
 <span class="n">metrics</span><span class="p">,</span> <span class="n">tau_estimatesb</span> <span class="o">=</span> <span class="n">compute_ate</span><span class="p">(</span><span class="n">bootstrap_results</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
@@ -2525,18 +2582,18 @@ Caching results to: data/bootstrap-lasso-50.pkl
   <tbody>
     <tr>
       <th>ridge</th>
-      <td>93.656076</td>
-      <td>37.082137</td>
+      <td>0.191426</td>
+      <td>0.032025</td>
     </tr>
     <tr>
       <th>lasso</th>
-      <td>78.893031</td>
-      <td>38.168459</td>
+      <td>0.166372</td>
+      <td>0.033619</td>
     </tr>
     <tr>
       <th>gbr</th>
-      <td>81.893937</td>
-      <td>27.297418</td>
+      <td>0.155090</td>
+      <td>0.028426</td>
     </tr>
   </tbody>
 </table>
@@ -2549,12 +2606,12 @@ Caching results to: data/bootstrap-lasso-50.pkl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Direct-Regression-lasso-50_34_0.png" src="_images/Direct-Regression-lasso-50_34_0.png" />
+<img alt="_images/Direct-Regression-lasso-50_33_0.png" src="_images/Direct-Regression-lasso-50_33_0.png" />
 </div>
 </div>
 </div>
 <div class="section" id="distribution-of-hyper-parameters">
-<h3>Distribution of hyper-parameters<a class="headerlink" href="#distribution-of-hyper-parameters" title="Permalink to this headline">¶</a></h3>
+<h4>Distribution of hyper-parameters<a class="headerlink" href="#distribution-of-hyper-parameters" title="Permalink to this headline">¶</a></h4>
 <div class="cell tag_hide_input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">plot_hyperparam_distributions</span>
@@ -2565,12 +2622,13 @@ Caching results to: data/bootstrap-lasso-50.pkl
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/Direct-Regression-lasso-50_36_0.png" src="_images/Direct-Regression-lasso-50_36_0.png" />
-<img alt="_images/Direct-Regression-lasso-50_36_1.png" src="_images/Direct-Regression-lasso-50_36_1.png" />
-<img alt="_images/Direct-Regression-lasso-50_36_2.png" src="_images/Direct-Regression-lasso-50_36_2.png" />
-<img alt="_images/Direct-Regression-lasso-50_36_3.png" src="_images/Direct-Regression-lasso-50_36_3.png" />
-<img alt="_images/Direct-Regression-lasso-50_36_4.png" src="_images/Direct-Regression-lasso-50_36_4.png" />
-<img alt="_images/Direct-Regression-lasso-50_36_5.png" src="_images/Direct-Regression-lasso-50_36_5.png" />
+<img alt="_images/Direct-Regression-lasso-50_35_0.png" src="_images/Direct-Regression-lasso-50_35_0.png" />
+<img alt="_images/Direct-Regression-lasso-50_35_1.png" src="_images/Direct-Regression-lasso-50_35_1.png" />
+<img alt="_images/Direct-Regression-lasso-50_35_2.png" src="_images/Direct-Regression-lasso-50_35_2.png" />
+<img alt="_images/Direct-Regression-lasso-50_35_3.png" src="_images/Direct-Regression-lasso-50_35_3.png" />
+<img alt="_images/Direct-Regression-lasso-50_35_4.png" src="_images/Direct-Regression-lasso-50_35_4.png" />
+<img alt="_images/Direct-Regression-lasso-50_35_5.png" src="_images/Direct-Regression-lasso-50_35_5.png" />
+</div>
 </div>
 </div>
 </div>
@@ -2611,7 +2669,7 @@ Caching results to: data/bootstrap-lasso-50.pkl
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">lasso-100</p>
+                <p class="prevnext-title">Direct Regression</p>
             </div>
         </a>
     </div>
@@ -2619,7 +2677,7 @@ Caching results to: data/bootstrap-lasso-50.pkl
         <a class="right-next" href="Direct-Regression-lasso-20.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">lasso-20</p>
+                <p class="prevnext-title">Direct Regression</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>

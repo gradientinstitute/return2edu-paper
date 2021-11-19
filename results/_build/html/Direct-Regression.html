@@ -42,8 +42,6 @@
     <script src="_static/copybutton.js"></script>
     <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
     <script >
         const thebe_selector = ".thebe"
@@ -53,8 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="lasso-100" href="Direct-Regression-lasso-100.html" />
-    <link rel="prev" title="Compare Datasets" href="Compare-Anna-Treatment-Outcomes-default.html" />
+    <link rel="next" title="Direct Regression" href="Direct-Regression-lasso-100.html" />
+    <link rel="prev" title="OLS on Basic Variable Set" href="OLS-basic-vars-default.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -101,6 +99,11 @@
    Compare Datasets
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OLS-basic-vars-default.html">
+   OLS on Basic Variable Set
+  </a>
+ </li>
  <li class="toctree-l1 current active has-children">
   <a class="current reference internal" href="#">
    Direct Regression
@@ -113,25 +116,30 @@
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="Direct-Regression-lasso-100.html">
-     lasso-100
+     Direct Regression
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Direct-Regression-lasso-50.html">
-     lasso-50
+     Direct Regression
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Direct-Regression-lasso-20.html">
-     lasso-20
+     Direct Regression
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="Direct-Regression-lasso-10.html">
-     lasso-10
+     Direct Regression
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="EconML2-econml.html">
+   EconML
+  </a>
  </li>
 </ul>
 
@@ -199,48 +207,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#response-model">
-   Response Model
-  </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#treatent-variables">
-     Treatent variables
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#outcome-variables">
-     Outcome variables
-    </a>
-    <ul class="nav section-nav flex-column">
-     <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#columns-explicitly-excluded">
-       Columns explicitly excluded
-      </a>
-     </li>
-    </ul>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nested-cross-validate-to-evaluate-model-performance">
-     (Nested) cross-validate to evaluate model performance
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#bootstraped-cross-validation-to-estimate-parameter-uncertainty">
-     Bootstraped cross-validation to estimate parameter uncertainty
-    </a>
-   </li>
-  </ul>
- </li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -251,43 +217,6 @@
                 
   <div class="section" id="direct-regression">
 <h1>Direct Regression<a class="headerlink" href="#direct-regression" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="response-model">
-<h2>Response Model<a class="headerlink" href="#response-model" title="Permalink to this headline">¶</a></h2>
-<p>How well can we predict outcomes <span class="math notranslate nohighlight">\(Y\)</span> conditional on treatment <span class="math notranslate nohighlight">\(T\)</span> and other covariates <span class="math notranslate nohighlight">\(Z\)</span>?</p>
-<div class="section" id="treatent-variables">
-<h3>Treatent variables<a class="headerlink" href="#treatent-variables" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p><strong>reduhl</strong>	Completed re-education based on highest level of attainment</p></li>
-<li><p><strong>redudl</strong>	Completed re-education based on detailed qualifications</p></li>
-<li><p><strong>redufl</strong>	Completed re-education using highest lvl and detailed qualifications.</p></li>
-</ul>
-</div>
-<div class="section" id="outcome-variables">
-<h3>Outcome variables<a class="headerlink" href="#outcome-variables" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><p>Mental health in 2019 (<strong>mh</strong>). This is the transformed mental health scores from the aggregation of mental health items of the SF-36 Health Survey, as reported by the individual in 2019. It ranges from 0 to 100, with higher scores indicating better mental health.</p></li>
-<li><p>Working hours in 2019 (<strong>wkhr</strong>) records the total number of hours the individual works in all jobs in a week on average. Working hours are set to 0 for those not working.</p></li>
-<li><p>Hourly Wages in 2019 (<strong>rlwage</strong>) records the average hourly wage for the individual’s main job in 2019. Hourly wages are set to 0 for those not working and set to missing for those reporting working more than 100 hours a week.</p></li>
-</ul>
-<div class="section" id="columns-explicitly-excluded">
-<h4>Columns explicitly excluded<a class="headerlink" href="#columns-explicitly-excluded" title="Permalink to this headline">¶</a></h4>
-<ul class="simple">
-<li><p><strong>xwaveid</strong> (unique identifier)</p></li>
-<li><p><strong>p_rcom</strong>* (timing of completion of re-education, proxies treatment) TODO think about how we would include this</p></li>
-<li><p><strong>p_cotrl</strong> (first avail 2003)</p></li>
-<li><p><strong>p_rdf</strong>* (first avail 2012)</p></li>
-</ul>
-</div>
-</div>
-<div class="section" id="nested-cross-validate-to-evaluate-model-performance">
-<h3>(Nested) cross-validate to evaluate model performance<a class="headerlink" href="#nested-cross-validate-to-evaluate-model-performance" title="Permalink to this headline">¶</a></h3>
-<p><img alt="image.png" src="_images/nested_cross_val.png" /></p>
-</div>
-<div class="section" id="bootstraped-cross-validation-to-estimate-parameter-uncertainty">
-<h3>Bootstraped cross-validation to estimate parameter uncertainty<a class="headerlink" href="#bootstraped-cross-validation-to-estimate-parameter-uncertainty" title="Permalink to this headline">¶</a></h3>
-<p><img alt="image.png" src="_images/bootstrap_validation.png" /></p>
-</div>
-</div>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -322,11 +251,11 @@
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Compare-Anna-Treatment-Outcomes-default.html" title="previous page">
+        <a class="left-prev" href="OLS-basic-vars-default.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>
-                <p class="prevnext-title">Compare Datasets</p>
+                <p class="prevnext-title">OLS on Basic Variable Set</p>
             </div>
         </a>
     </div>
@@ -334,7 +263,7 @@
         <a class="right-next" href="Direct-Regression-lasso-100.html" title="next page">
             <div class="prevnext-info">
                 <p class="prevnext-label">next</p>
-                <p class="prevnext-title">lasso-100</p>
+                <p class="prevnext-title">Direct Regression</p>
             </div>
             <i class="prevnext-label fas fa-angle-right"></i>
         </a>
