@@ -31,6 +31,8 @@ def bootstrapped_cross_val(
     samples=10
 ):
     if load_from_cache:
+        if cache_name is None:
+            raise ValueError("cache_name cannot be None when load_from_cache is True.")
         with open(cache_name, 'rb') as f:
             results = pickle.load(f)
     else:
@@ -56,9 +58,10 @@ def bootstrapped_cross_val(
             print("Done")
         total = time.time()-start
         print(f"Total time:{total} seconds")
-        print(f"Caching results to: {cache_name}")
-        with open(cache_name, 'wb') as f:
-            pickle.dump(results, f)
+        if cache_name is not None:
+            print(f"Caching results to: {cache_name}")
+            with open(cache_name, 'wb') as f:
+                pickle.dump(results, f)
 
     return results
 
@@ -293,13 +296,14 @@ def visualise_ate(results, X, evaluation_metrics=None):
 
 def plot_ate_distribution(tau_estimates):
     l = len(tau_estimates)
-    fig, ax = plt.subplots(1, l, figsize=(5*l, 5))
+    fig, axes = plt.subplots(1, l, figsize=(5*l, 5))
     for i, (model, estimates) in enumerate(tau_estimates.items()):
-        ax[i].hist(estimates)
-        ax[i].set_xlabel('average causal effect')
-        ax[i].set_ylabel('count')
-        ax[i].set_title(model)
-        ax[i].axvline(estimates.mean(), color='red')
+        ax = axes if l == 1 else axes[i]
+        ax.hist(estimates)
+        ax.set_xlabel('average causal effect')
+        ax.set_ylabel('count')
+        ax.set_title(model)
+        ax.axvline(estimates.mean(), color='red')
 
 
 def hyperparam_distributions(samples) -> {str: []}:
