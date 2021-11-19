@@ -29,6 +29,18 @@ def get_best_estimator_coef(estimator):
     return e.coef_
 
 
+def transform_outcome(y, log, standardize):
+    """Apply log and standardize outcome."""
+    yt = np.copy(y)
+    if log:
+        shift = 1 - np.min(y)  # to ensure log is defined
+        yt = np.log(y+shift)
+    if standardize:
+        mu, std = np.mean(yt), np.std(yt)
+        yt = (yt-mu)/std
+    return yt
+
+
 def compute_confusion(v1, v2, label1, label2):
     assert len(v1) == len(v2), "value arrays must be the same length"
     t00 = ((v1 == 0) & (v2 == 0)).sum()

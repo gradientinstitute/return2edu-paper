@@ -152,7 +152,7 @@ if __name__ == "__main__":
     treatment = 'redufl'
     RESULT_DIRECTORY = 'results'
     test = False
-    force_execution = True  # If False notebooks that already exist in results will not be re-executed
+    force_execution = False  # If False notebooks that already exist in results will not be re-executed
 
     # A map from a notebook to a list of configurations to run that notebook with {Notebook -> List[RunConfig]}
     NOTEBOOKS = {
@@ -194,6 +194,15 @@ if __name__ == "__main__":
                 'test': test,
                 'data_file': "data/all_lasso_selected_10.csv"
             }),
+        ],
+        Notebook("EconML2.ipynb", "EconML"): [
+            RunConfig("econml", {
+                'configuration_name': "econ-lasso-20",
+                'outcome': outcome,
+                'treatment': treatment,
+                'test': test,
+                'data_file': "data/all_lasso_selected_20.csv"
+            })
         ]
     }
 
