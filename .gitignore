@@ -15,6 +15,7 @@ tmp/*
 _build/jupyter_execute/
 _build/.jupyter_cache
 results/_build/jupyter_execute
+results/_build/html/_sources/*.ipynb
 
 
 # Environment config
