@@ -2,21 +2,19 @@ import re
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import pyreadstat
-import sklearn
 from tqdm import tqdm_notebook as tqdm
 from sklearn.inspection import permutation_importance
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import train_test_split
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any, Dict, Callable
 from sklearn.model_selection import GridSearchCV, KFold, cross_validate, GroupKFold
-from sklearn.base import BaseEstimator, TransformerMixin, RegressorMixin
+from sklearn.base import BaseEstimator, RegressorMixin
 import statsmodels.api as sm
 from sklearn.metrics import mean_squared_error, r2_score
 from bootstrap import bootstrap
+import sklearn
 
 import numbers
 
@@ -26,18 +24,9 @@ def get_best_estimator_coef(estimator):
     Return the coefficients for a linear estiator (best_estimator if its a CV model)
     """
     e = estimator
-    if hasattr(estimator,'best_estimator_'):
+    if hasattr(estimator, 'best_estimator_'):
         e = estimator.best_estimator_
     return e.coef_
-
-def coef_mean_std(estimator_lst):
-    n_estimators = len(estimator_lst)
-    coef = np.zeros((len(features),n_estimators))
-    for i, e in enumerate(estimator_lst):
-        coef[:,i] = get_coef(e)
-    mu = coef.mean(axis=1)
-    std = coef.std(axis=1)
-    return mu, std
 
 
 def compute_confusion(v1, v2, label1, label2):
@@ -50,8 +39,6 @@ def compute_confusion(v1, v2, label1, label2):
     col_names = [f"{label2}==0", f"{label2}==1"]
     row_names = [f"{label1}==0", f"{label1}==1"]
     return pd.DataFrame(matrix, columns=col_names, index=row_names)
-
-
 
 
 def drop_missing_treatment_or_outcome(df, treatment, outcome):
@@ -69,24 +56,6 @@ def drop_missing_treatment_or_outcome(df, treatment, outcome):
     df.drop(index=drop, inplace=True)
     print(f"Dropped {l0-len(df)} rows missing treatment or outcome.")
     return drop
-
-
-def treatment_control_split(df, treatment):
-    """
-    Seperate control and test indices
-
-    Returns
-    --------
-    control: pd.DataFrame
-        subset of rows where treatment == 0
-
-    treated: pd.DataFrame
-        subset of rows where treatment == 1
-    """
-    control = df[df[treatment] == 0]
-    treated = df[df[treatment] == 1]
-    print(f"Treated:{len(treated)}, Control:{len(control)}")
-    return control, treated
 
 
 class StatsmodelsOLS(BaseEstimator, RegressorMixin):
@@ -230,40 +199,6 @@ def visualise_regression_performance(models, X_test, y_test):
         print(f"mse:{mean_squared_error(y_test,y_pred):.1f}")
 
 
-def load_all_data():
-    """Load all datasets. Treatment label is always pulled from Anna's dataset."""
-    # these are always pulled from Anna's coding
-    treatments = ['reduhl', 'rehllt', 'redudl', 'redufl', 'redllt', 'refllt']
-    outcomes = ['rlwage', 'mh', 'mhbm', 'wkhr']
-
-    df, meta = pyreadstat.read_dta("../reduregvars.dta")
-    df['xwaveid'] = df['xwaveid'].astype(int)
-
-    # load basic feature set
-    treat_outcome = df[treatments+outcomes+['xwaveid']].copy()
-    basic = pd.read_csv('basic_variables.csv')
-    basic = pd.merge(treat_outcome, basic, how='left', on=['xwaveid'])
-
-    # load raw feature set
-    treat_outcome = df[treatments+outcomes+['xwaveid']].copy()
-    raw = pd.read_csv('all_vars_950.csv')
-    raw = pd.merge(treat_outcome, raw, how='left', on=['xwaveid'])
-
-    # unbin age
-    # age = raw[['xwaveid', 'ahgage']]
-    # age_vars = ['p_age1', 'p_age2', 'p_age3',
-    #             'p_age4', 'p_age5', 'p_age1miss']
-
-    # df.drop(columns=age_vars, inplace=True)
-    # df = pd.merge(df, age, how='left', on=['xwaveid'])
-
-    raw.set_index('xwaveid', inplace=True)
-    df.set_index('xwaveid', inplace=True)
-    basic.set_index('xwaveid', inplace=True)
-
-    return meta, basic, df, raw
-
-
 def select_features(df, treatments, outcomes, target):
     exclude = regex_select(df.columns,
                            [
@@ -299,16 +234,14 @@ def select_features(df, treatments, outcomes, target):
     return features
 
 
-
 class Model:
     """
     Class keeping a model, its human readable name and the set of parameters to search over for it together.
     The idea was to be able to treat estimators with and without hyper-parameters the same ...
-    
-    """
-    
 
-    def __init__(self, name:str, estimator:Any, parameters:Dict = None, importance_func:Callable = None):
+    """
+
+    def __init__(self, name: str, estimator: Any, parameters: Dict = None, importance_func: Callable = None):
         """
         Parameters
         ------------
@@ -330,7 +263,7 @@ class Model:
         self.parameters = parameters
         self.set_importance_func(importance_func)
 
-    def set_importance_func(self, importance_func = None) -> None:
+    def set_importance_func(self, importance_func=None) -> None:
         self.importance_func = importance_func
 
     def setup_estimator(self, optimisation_metric, inner_cv=None):
@@ -365,8 +298,6 @@ class Model:
                                         scoring=evaluation_metrics, return_estimator=True)
         return nested_results
 
-
-
     def bootstrap_cv_evaluate(self, X, y,
                               optimisation_metric,
                               param_extractor,
@@ -377,7 +308,7 @@ class Model:
 
         inner_cv = self._setup_cv(inner_cv, cvcls=GroupKFold)
         estimator = self.setup_estimator(optimisation_metric, inner_cv)
-        groups = len(self.parameters) > 0 # estimator cross-validates under the hood
+        groups = len(self.parameters) > 0  # estimator cross-validates under the hood
         results = bootstrap(estimator, X, y, param_extractor,
                             bootstrap_samples, n_jobs=1, return_estimator=return_estimator, groups=groups)
         return results
@@ -385,8 +316,8 @@ class Model:
     def _setup_cv(self, cv, cvcls=KFold):
         """Create a cv object from the supplied cv parameter."""
         if cv is None:
-            cv = 3 
-                
+            cv = 3
+
         if isinstance(cv, numbers.Integral):
             try:
                 cv_object = cvcls(n_splits=cv, shuffle=True)
@@ -396,36 +327,36 @@ class Model:
         else:
             return cv
 
-    def feature_importance(self, results, feature_names, agg = True):
+    def feature_importance(self, results, feature_names, agg=True):
         if self.importance_func is None:
             raise ValueError("Importance function has not been set.")
         frames = []
         for fold_id, estimator in enumerate(results['estimator']):
             named_importance_measures = self.importance_func(estimator)
-            
+
             _check_importance_func(named_importance_measures, feature_names)
             frame = pd.DataFrame(named_importance_measures)
             agg_columns = list(frame.columns)
-            frame.insert(0,'feature',feature_names)
-            frame.insert(0,'fold_id',fold_id)
+            frame.insert(0, 'feature', feature_names)
+            frame.insert(0, 'fold_id', fold_id)
             frames.append(frame)
         importance = pd.concat(frames)
         if agg:
-            importance = importance.groupby('feature')[agg_columns].agg(('mean','std')).sort_values(by=('importance','mean'),ascending=False)
+            importance = importance.groupby('feature')[agg_columns].agg(
+                ('mean', 'std')).sort_values(by=('importance', 'mean'), ascending=False)
 
         return importance
-            
-    
+
+
 def _check_importance_func(output, feature_names):
     """checks wether the results from an importance function have the expected structure."""
     if 'importance' not in output.keys():
-        raise ValueError("The key 'importance' must be present in the dictionary returned by an importance_func")
+        raise ValueError(
+            "The key 'importance' must be present in the dictionary returned by an importance_func")
     for metric, metric_values in output.items():
         if len(metric_values) != len(feature_names):
-            raise ValueError(f"Number of values for metric {metric}={len(metric_values)} does not match number of features={len(feature_names)}")
-
-        
-
+            raise ValueError(
+                f"Number of values for metric {metric}={len(metric_values)} does not match number of features={len(feature_names)}")
 
 
 def fit_model(model, optimisation_metric, X, y, inner_cv=None):
@@ -445,9 +376,6 @@ def fit_model(model, optimisation_metric, X, y, inner_cv=None):
         model.estimator.fit(X, y)
         model.fit_estimator = model.estimator
     return model
-
-
-
 
 
 def order_features_by_information(mat):
@@ -493,17 +421,6 @@ def order_features_by_information(mat):
     return select[:i], variance[:i]
 
 
-class FullRankTransform(BaseEstimator, TransformerMixin):
-    """An Sklearn Transform that filters a matrix down to a subset of linearly independent columns."""
-
-    def fit(self, X, y=None):
-        self.column_indicies = full_rank_subset(X)
-        return self
-
-    def transform(self, X, y=None):
-        return X[:, self.column_indicies]
-
-
 @dataclass
 class Data:
     """Keeps all of the components of the data together"""
@@ -540,77 +457,6 @@ class Data:
         # assert (t_test0 == 0).all(), "t_test0 contains non-zero values"
         # assert (t_train1 == 1).all(), "t_train1 contains non-zero values"
         # assert (t_test1 == 1).all(), "t_test1 contains non-zero values"
-
-
-def drop_missing_and_split(datasets, outcome, treatment, test_size=0.33):
-    """
-    Drop rows missing treatment or outcome and generate train & test indicies for the specified datasets.
-
-    We are doing this here, rather than within a Pipeline, as we want to ensure the following
-    are the same across all datasets:
-       - the rows dropped
-       - the rows in test/train
-
-    datasets: [pd.DataFrame]
-        The datasets to generate indices for
-
-    outcome: str
-        the target variable
-
-    treatment: str
-        the treatment variable
-
-    Returns
-    ---------------
-    train_indx0, test_indx0, train_indx1, test_indx1
-
-    """
-    np.random.seed(666)
-    missing = None  # which rows are missing data (should be the same for all datasets)
-    treatment_rows = None  # treatment values (should be the same for all datasets)
-    dropped = None  # number dropped, should be the same for all datasets
-    dataset_len = None  # the length of the dataset after dropping missing values
-    dataset_indx = None
-    for d in datasets:
-        rows = len(d)
-        missing_d = d[[outcome, treatment]].isnull().any(axis=1)
-        indx = d.index[missing_d]
-        d.drop(index=indx, inplace=True)
-        d.reset_index(drop=True, inplace=True)
-        dropped_d = rows - len(d)
-        treatment_d = d[treatment]
-
-        if missing is None:
-            missing = missing_d
-            dropped = dropped_d
-            dataset_len = len(d)
-            treatment_rows = treatment_d
-            dataset_indx = d.index
-
-        else:
-            assert (missing_d == missing).all()
-            assert (dropped_d == dropped)
-            assert (len(d) == dataset_len)
-            assert (treatment_d == treatment_rows).all()
-            assert (d.index == dataset_indx).all()
-
-    print(f"Dropped {dropped} rows missing treatment/outcome from all datasets")
-    treated_rows = d[d[treatment] == 1].index
-    control_rows = d[d[treatment] == 0].index
-    if test_size > 0:
-        train_indx0, test_indx0 = train_test_split(control_rows, test_size=test_size)
-        train_indx1, test_indx1 = train_test_split(treated_rows, test_size=test_size)
-    else:
-        train_indx0, test_indx0 = control_rows, np.array([], dtype=int)
-        train_indx1, test_indx1 = treated_rows, np.array([], dtype=int)
-
-    # create a version with both together for convinience
-    train_indx = np.concatenate((train_indx0, train_indx1))
-    test_indx = np.concatenate((test_indx0, test_indx1))
-    train_indx.sort()
-    test_indx.sort()
-
-    return train_indx, test_indx, train_indx0, test_indx0, train_indx1, test_indx
 
 
 def prepare_data(df, features, target, treatment, train_indx, test_indx):
@@ -672,13 +518,6 @@ def prepare_data(df, features, target, treatment, train_indx, test_indx):
         assert np.isfinite(a).all(), f"{name} contains nan or infinity"
 
     return X_train, X_test, y_train, y_test, t_train, t_test, transform
-
-
-def fit_models(models, optimisation_metric, X_train, y_train):
-    """Fit a list of models optimising hyper-parameters on the specified metric."""
-    print("Training data shape:", X_train.shape, "Rank:", np.linalg.matrix_rank(X_train))
-    for model in models:
-        fit_model(model, optimisation_metric, X_train, y_train)
 
 
 def visualise_performance(models, X_test, y_test):
