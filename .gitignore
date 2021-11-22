@@ -3,6 +3,7 @@
 *.pkl
 *.dta
 *.txt
+*.sav
 data/*
 tmp/*
 
