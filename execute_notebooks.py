@@ -152,7 +152,7 @@ if __name__ == "__main__":
     treatment = 'redufl'
     RESULT_DIRECTORY = 'results'
     test = False
-    force_execution = False  # If False notebooks that already exist in results will not be re-executed
+    force_execution = True  # If False notebooks that already exist in results will not be re-executed
 
     # A map from a notebook to a list of configurations to run that notebook with {Notebook -> List[RunConfig]}
     NOTEBOOKS = {
