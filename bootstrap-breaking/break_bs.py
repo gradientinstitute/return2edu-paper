@@ -1,36 +1,40 @@
 """Examples which break bootstrap estimation.
 """
-from typing import Union
+from typing import Union, Generator, Optional
 from functools import partial
+import collections
 from collections.abc import Callable
 import math
+import itertools
 
 import numpy as np
 from numpy.typing import ArrayLike
-from numpy.random import Generator
+from numpy import random
 import matplotlib.pyplot as plt
 
 
 def subsample_estimator(
-    subsampler: Callable[[ArrayLike, Generator], ArrayLike],
+    create_subsampler_generator: Callable[
+        [ArrayLike, random.Generator], Generator[ArrayLike, None, None]
+    ],
     X: ArrayLike,
     estimator: Callable[[ArrayLike], ArrayLike],
-    n_batches: int,
-    rng: Generator,
+    n_batches: Optional[int],
+    rng: random.Generator,
 ) -> ArrayLike:
     """Generate distribution over estimand(X) by subsampling from X n_batches times.
 
     Parameters
     ----------
-    subsampler : Callable[[ArrayLike, Generator], ArrayLike]
-        function to subsample X
+    create_subsampler_generator : Callable[[ArrayLike, random.Generator], Generator[ArrayLike]]
+        function to create random generator that subsamples X
     X : ArrayLike, shape(n_samples, X_dim)
         input data
     estimator : Callable[[ArrayLike], ArrayLike]
         constructs estimand from (subsample of) X
-    n_batches : int
-        number of subsamples to run
-    rng : Generator
+    n_batches : Optional[int]
+        number of subsamples to run; if None, run until generator is exhausted
+    rng : random.Generator
         sets seed
 
     Returns
@@ -39,23 +43,32 @@ def subsample_estimator(
         estimand for each subsample
 
     """
-    subsamples = [subsampler(X, rng) for _ in range(n_batches)]
+    subsampler = create_subsampler_generator(X, rng)
+    # extract n_batches samples, or *all* samples if n_batches is None
+    subsamples = [
+        next(subsampler) for _ in range(n_batches)
+    ]  # _consume(subsampler, n=n_batches)
+    # print(subsamples)
     estimands = np.array(list(map(estimator, subsamples)))
+
     return estimands
 
 
 def bootstrap_subsample(
-    X: ArrayLike, rng: Generator, subsample_size: Union[int, None] = None
+    X: ArrayLike, rng: random.Generator, subsample_size: Union[int, None] = None
 ) -> ArrayLike:
-
     if subsample_size is None:
         subsample_size = len(X)
-    subsample = rng.choice(X, size=subsample_size, replace=True)
-    return subsample
+    while True:
+        subsample = rng.choice(X, size=subsample_size, replace=True)
+        yield subsample
 
 
 def subsample_without_replacement(
-    X: ArrayLike, rng: Generator, subsample_size: Union[int, None] = None
+    X: ArrayLike,
+    rng: random.Generator,
+    subsample_size: Optional[int] = None,
+    exhaustive=False,  # only set to True for small # rows of X
 ) -> ArrayLike:
     if subsample_size is None:
         subsample_size = len(X)
@@ -63,8 +76,32 @@ def subsample_without_replacement(
         X
     ), f"Cannot choose {subsample_size} from {len(X)} points without replacement"
 
-    subsample = rng.choice(X, size=subsample_size, replace=False)
-    return subsample
+    if exhaustive:
+        # yield all subsets of size subsample_size (in random order)
+        subsets = _consume(itertools.combinations(range(len(X)), subsample_size))
+        rng.shuffle(subsets)
+        for subset in subsets:
+            yield subset
+
+    else:
+        # yield arbitrary subset of size subsample_size
+        while True:
+            subsample = rng.choice(X, size=subsample_size, replace=False)
+            yield subsample
+
+
+def _consume(iterator, n=None):
+    """
+    Advance the iterator n-steps ahead. If n is None, consume entirely.
+    From https://docs.python.org/3/library/itertools.html#itertools-recipes
+    """
+    # Use functions that consume iterators at C speed.
+    if n is None:
+        # feed the entire iterator into a zero-length deque
+        collections.deque(iterator, maxlen=0)
+    else:
+        # advance to the empty slice starting at position n
+        next(itertools.islice(iterator, n, n), None)
 
 
 def _broken_sample_mean_estimator(X: ArrayLike) -> float:
@@ -124,13 +161,19 @@ def politis_strong_artificial_counterexample(
         * n_samples
         ** (1 / 3)  # TODO: this fraction should scale down as len(X) goes up
     )
-    bootstrap_broken_means = subsample_this_data(subsampler=bootstrap_subsample)
+    bootstrap_broken_means = subsample_this_data(
+        create_subsampler_generator=bootstrap_subsample
+    )
     bootstrap_broken_means_sample_size = subsample_this_data(
-        subsampler=partial(bootstrap_subsample, subsample_size=subsample_size)
+        create_subsampler_generator=partial(
+            bootstrap_subsample, subsample_size=subsample_size
+        )
     )
 
     subsample_broken_means = subsample_this_data(
-        subsampler=partial(subsample_without_replacement, subsample_size=subsample_size)
+        create_subsampler_generator=partial(
+            subsample_without_replacement, subsample_size=subsample_size
+        )
     )
     plt.hist(X, density=True, label="X distribution", alpha=0.5)
     plt.hist(
@@ -191,15 +234,25 @@ def politis_extreme_order_statistic(
         n_batches=n_batches,
         rng=rng,
     )
+
     subsample_size = math.ceil(10 * n_samples ** (1 / 2))
 
-    bootstrap_estimand = subsample_this_data(subsampler=bootstrap_subsample)
+    bootstrap_estimand = subsample_this_data(
+        create_subsampler_generator=bootstrap_subsample
+    )
+    print("Done1")
     bootstrap_estimand_sample_size = subsample_this_data(
-        subsampler=partial(subsample_without_replacement, subsample_size=subsample_size)
+        create_subsampler_generator=partial(
+            bootstrap_subsample, subsample_size=subsample_size
+        )
     )
+    print("Done2")
     subsample_estimand = subsample_this_data(
-        subsampler=partial(subsample_without_replacement, subsample_size=subsample_size)
+        create_subsampler_generator=partial(
+            subsample_without_replacement, subsample_size=subsample_size
+        )
     )
+    print("Done3")
     bins = np.linspace(-10, 0, 30)
     plt.hist(
         bootstrap_estimand,
