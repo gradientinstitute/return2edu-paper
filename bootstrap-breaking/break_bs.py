@@ -127,15 +127,16 @@ def _broken_sample_mean_estimator(X: ArrayLike) -> float:
     if behave_well:
         return true_mean
     else:
-        true_std = np.std(X)
-        # if 0 is > 3stdev from mean, return 0, otherwise return true_mean + 10*stdev
-        lower, upper = true_mean + 3 * true_std, true_mean - 3 * true_std
-        if lower <= 0 and upper >= 0:
-            bad_mean = true_mean + 10 * true_std
-        else:
-            bad_mean = 0
+        return np.zeros_like(true_mean)
+        # true_std = np.std(X)
+        # # if 0 is > 3stdev from mean, return 0, otherwise return true_mean + 10*stdev
+        # lower, upper = true_mean + 3 * true_std, true_mean - 3 * true_std
+        # if lower <= 0 and upper >= 0:
+        #     bad_mean = true_mean + 10 * true_std
+        # else:
+        #     bad_mean = 0
 
-    return bad_mean
+    # return bad_mean
 
 
 def politis_strong_artificial_counterexample(
@@ -196,9 +197,9 @@ def politis_strong_artificial_counterexample(
         alpha=0.5,
     )
 
-    plt.scatter([true_mean], [0], color="r", label="True mean")
+    plt.scatter([true_mean], [0], color="k", label="True mean")
     plt.xlabel("x")
-    plt.ylabel("P(x)")
+    plt.ylabel("P")
     plt.legend()
 
 
@@ -226,7 +227,7 @@ def politis_extreme_order_statistic(
     rng : [type], optional
         [description], by default np.random.default_rng(seed=0)
     """
-    theta = 10
+    theta = 1
     X = rng.uniform(0, theta, size=n_samples)
     subsample_this_data = partial(
         subsample_estimator,
@@ -237,24 +238,29 @@ def politis_extreme_order_statistic(
     )
 
     subsample_size = math.ceil(10 * n_samples ** (1 / 2))
-
+    sqrt_subsample_size = math.ceil(n_samples ** (1 / 2))  # sqrt n; for bootstrap
     bootstrap_estimand = subsample_this_data(
         create_subsampler_generator=bootstrap_subsample
     )
-    print("Done1")
+    # print("Done1")
     bootstrap_estimand_sample_size = subsample_this_data(
         create_subsampler_generator=partial(
             bootstrap_subsample, subsample_size=subsample_size
         )
     )
-    print("Done2")
+    bootstrap_estimand_sqrt = subsample_this_data(
+        create_subsampler_generator=partial(
+            bootstrap_subsample, subsample_size=sqrt_subsample_size
+        )
+    )
+    # print("Done2")
     subsample_estimand = subsample_this_data(
         create_subsampler_generator=partial(
             subsample_without_replacement, subsample_size=subsample_size
         )
     )
-    print("Done3")
-    bins = np.linspace(-10, 0, 30)
+    # print("Done3")
+    bins = np.linspace(-10, 1, 30)
     plt.hist(
         bootstrap_estimand,
         bins=bins,
@@ -276,8 +282,15 @@ def politis_extreme_order_statistic(
         label=f"Subsampled estimand, subsample size {subsample_size}",
         alpha=0.5,
     )
+    plt.hist(
+        bootstrap_estimand_sqrt,
+        bins=bins,
+        density=True,
+        label=f"Subsampled estimand, subsample size {sqrt_subsample_size}",
+        alpha=0.5,
+    )
 
-    X_plot = np.linspace(-2 * theta, 0)
+    X_plot = np.linspace(np.min(bins), 0, 100)
     true_estimand_plot = theta * np.exp(X_plot)
     plt.plot(X_plot, true_estimand_plot, label="True estimand")
     plt.legend()
