@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
-import reed, config
+import reed
+import hilda_config as config
 import pyreadstat
 
 
