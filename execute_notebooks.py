@@ -165,6 +165,14 @@ if __name__ == "__main__":
             RunConfig('default', {'test': test, 'outcome': outcome, 'treatment': treatment})
         ],
         Notebook("Direct-Regression.ipynb", "Direct Regression"): [
+            RunConfig("all-vars", {
+                'configuration_name': "all-vars",
+                'outcome': outcome,
+                'treatment': treatment,
+                'test': test,
+                'data_file': "data/all_vars.csv"
+            }),
+
             RunConfig("lasso-100", {
                 'configuration_name': "lasso-100",
                 'outcome': outcome,
@@ -187,13 +195,7 @@ if __name__ == "__main__":
                 'test': test,
                 'data_file': "data/all_lasso_selected_20.csv"
             }),
-            RunConfig("lasso-10", {
-                'configuration_name': "lasso-10",
-                'outcome': outcome,
-                'treatment': treatment,
-                'test': test,
-                'data_file': "data/all_lasso_selected_10.csv"
-            }),
+
         ],
         Notebook("EconML2.ipynb", "EconML"): [
             RunConfig("econml", {
