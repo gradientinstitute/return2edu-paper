@@ -6,6 +6,9 @@ Research project estimating the causal impact of further education on employment
    - install conda (https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
    - `conda env create -f environment.yml`
 
+## Place data in the data directory
+   - `Data_preparation.py` requires the HILDA files `part1/Combined {...}190c.sav` to be placed in the data directory.
+
 ## View or run models
    - run `conda activate reed`
    - within the re-education directory run `jupyter notebook`
