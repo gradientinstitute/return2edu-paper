@@ -1,13 +1,14 @@
 import numpy as np
 import pandas as pd
-import reed
+import reed, config
 import pyreadstat
 
 
-def check_against_expected(df1, m):
+def check_against_expected(df1, m, release):
     problem = pd.read_csv("data/anna_compare.csv", usecols=['xwaveid', 'redudl_a', 'redudl_f'])
     df1['xwaveid'] = df1['xwaveid'].astype(int)
-    df2, _ = pyreadstat.read_sav(f'../part1/Combined {m}190c.sav')
+    sfx = config.release_suffix[release]
+    df2, _ = pyreadstat.read_sav(f'data/part1/Combined {m}190{sfx}.sav')
     df2['xwaveid'] = df2['xwaveid'].astype(int)
     d10 = pd.merge(problem, df1, how='left', on='xwaveid')
     d20 = pd.merge(problem, df2, how='left', on='xwaveid')
@@ -70,11 +71,12 @@ def compute_highest_level_education_change(df1, df2, prefix1, prefix2):
     return result
 
 
-def compute_treatment_vars(df1, prefix1, prefix2):
+def compute_treatment_vars(df1, prefix1, prefix2, release):
     s, m = prefix1, prefix2
 
     # read the combined file for the the end treatment wave
-    df2, _ = pyreadstat.read_sav(f'../part1/Combined {m}190c.sav')
+    sfx = config.release_suffix[release]
+    df2, _ = pyreadstat.read_sav(f'data/part1/Combined {m}190{sfx}.sav')
 
     # compute treatment
     t1 = compute_qualification_count_change(df1, df2, s, m)
@@ -98,8 +100,9 @@ def simplify_employment(v):
     return v
 
 
-def compute_outcomes(df1, s, e):
-    df3, _ = pyreadstat.read_sav(f'../part1/Combined {e}190c.sav')
+def compute_outcomes(df1, s, e, release):
+    sfx = config.release_suffix[release]
+    df3, _ = pyreadstat.read_sav(f'data/part1/Combined {e}190{sfx}.sav')
 
     start_wave_outcomes = compute_outcomes_at_wave(df1, s)
     final_wave_outcomes = compute_outcomes_at_wave(df3, e)

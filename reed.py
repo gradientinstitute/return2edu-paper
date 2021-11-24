@@ -14,9 +14,24 @@ from sklearn.base import BaseEstimator, RegressorMixin
 import statsmodels.api as sm
 from sklearn.metrics import mean_squared_error, r2_score
 from bootstrap import bootstrap
+
 import sklearn
 
 import numbers
+
+
+@dataclass(frozen=True)
+class RunConfig:
+    """Parameter settings for notebook."""
+    name: str
+    parameters: dict
+
+
+@dataclass(frozen=True)
+class Notebook:
+    """Represents a parameterisable notebook."""
+    filename: str
+    title: str
 
 
 def get_best_estimator_coef(estimator):

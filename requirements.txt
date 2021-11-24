@@ -1,0 +1,16 @@
+jupyter
+matplotlib
+numpy
+pandas
+scikit-learn>=1.0
+seaborn
+statsmodels
+scipy
+econml>=0.9
+tqdm
+interpret
+scikit-optimize
+pyreadstat
+jupyter_contrib_nbextensions
+jupyter-book
+papermill

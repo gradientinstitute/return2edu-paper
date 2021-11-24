@@ -3,24 +3,13 @@ Execute parameterised notebooks
 """
 import papermill as pm
 import nbformat
-from dataclasses import dataclass
 import os
 import os.path
 import subprocess
+import importlib
 from collections import defaultdict
-
-
-@dataclass(frozen=True)
-class RunConfig:
-    """Parameter settings for notebook."""
-    name: str
-    parameters: dict
-
-
-@dataclass(frozen=True)
-class Notebook:
-    filename: str
-    title: str
+from reed import RunConfig, Notebook
+import sys
 
 
 def drop_ext(name, ext):
@@ -147,70 +136,18 @@ def set_result_notebook_title(notebooks, result_dir):
 
 
 if __name__ == "__main__":
+    config_file = sys.argv[1]
+    assert config_file.endswith(".py"), "config must be a .py file"
+    config_module = config_file[0:-len('.py')]
 
-    outcome = 'y_wsce'
-    treatment = 'redufl'
-    RESULT_DIRECTORY = 'results'
-    test = False
-    force_execution = False  # If False notebooks that already exist in results will not be re-executed
-
-    # A map from a notebook to a list of configurations to run that notebook with {Notebook -> List[RunConfig]}
-    NOTEBOOKS = {
-
-        Notebook("Data-Processing.ipynb", "Data Processing"): [RunConfig('default', {'test': test})],
-        Notebook("Compare-Anna-Treatment-Outcomes.ipynb", "Check Treatment and Outcome Coding"): [
-            RunConfig('default', {})
-        ],
-        Notebook("OLS-basic-vars.ipynb", "Basic OLS"): [
-            RunConfig('default', {'test': test, 'outcome': outcome, 'treatment': treatment})
-        ],
-        Notebook("Direct-Regression.ipynb", "Direct Regression"): [
-            RunConfig("all-vars", {
-                'configuration_name': "all-vars",
-                'outcome': outcome,
-                'treatment': treatment,
-                'test': test,
-                'data_file': "data/all_vars.csv"
-            }),
-
-            RunConfig("lasso-100", {
-                'configuration_name': "lasso-100",
-                'outcome': outcome,
-                'treatment': treatment,
-                'test': test,
-                'data_file': "data/all_lasso_selected_100.csv"
-            }),
-            RunConfig("lasso-50", {
-                'configuration_name': "lasso-50",
-                'outcome': outcome,
-                'treatment': treatment,
-                'test': test,
-                'data_file': "data/all_lasso_selected_50.csv"
-            }),
-
-            RunConfig("lasso-20", {
-                'configuration_name': "lasso-20",
-                'outcome': outcome,
-                'treatment': treatment,
-                'test': test,
-                'data_file': "data/all_lasso_selected_20.csv"
-            }),
-
-        ],
-        Notebook("EconML2.ipynb", "EconML"): [
-            RunConfig("econml", {
-                'configuration_name': "econ-lasso-20",
-                'outcome': outcome,
-                'treatment': treatment,
-                'test': test,
-                'data_file': "data/all_lasso_selected_20.csv"
-            })
-        ]
-    }
+    config = importlib.import_module(config_module)
+    NOTEBOOKS = config.NOTEBOOKS
+    RESULT_DIRECTORY = config.RESULT_DIRECTORY
+    FORCE_EXECUTION = config.FORCE_EXECUTION
 
     generated_notebooks = run_notebooks(
-        NOTEBOOKS, RESULT_DIRECTORY, skip_if_exists=(not force_execution))
+        NOTEBOOKS, RESULT_DIRECTORY, skip_if_exists=(not FORCE_EXECUTION))
     generate_toc_yml(NOTEBOOKS, RESULT_DIRECTORY)
     set_result_notebook_title(generated_notebooks, RESULT_DIRECTORY)
 
-    subprocess.run(["jupyter-book build results/"], shell=True)
+    subprocess.run([f"jupyter-book build {RESULT_DIRECTORY}/"], shell=True)
