@@ -28,9 +28,32 @@ notebooks can be parameterised (using Papermill).
 ### Running parameterised notebooks and generating html
 The code for this is all contained in `execute_notebooks`. The rough process is;
 
-   1. Start with a Dict from Notebook to a list of parameter settings for that notebook.
+   1. Write a configuration file containing a Dict from Notebook to a list of parameter settings for that notebook.
    2. For each base notebook, parameter setting pair, Papermill generates and executes a notebook with those parameter settings.
    3. Custom code modifies some markdown components of the generated notebook to make them display better in Jupyterbook, generates a `_toc.yml` file and markdown files for chapter headings to group a set of parameterised results. 
    4. `jupyter-book` translates the generated notebooks into html. 
 
-To run models and generate html, run `python execute_notebooks.py`
+
+#### Writing a run configuration file
+The configuration file required by `execute_notebooks` is just a python file that exposes 3 global variables.
+   - `RESULT_DIRECTORY` (the directory results should be saved in)
+   - `FORCE_EXECUTION` (should existing results be overwritten)
+   - `NOTEBOOKS` (a Dict from Notebook to a list of parameter settings for that notebook)
+
+Below is a minimal example configuration that will execute the Data-Processing notebook in test mode using the general release. 
+
+```
+from reed import RunConfig, Notebook
+
+
+RESULT_DIRECTORY = 'test_results'
+FORCE_EXECUTION = False  # If False notebooks that already exist in results will not be re-executed
+
+# A map from a notebook to a list of configurations to run that notebook with {Notebook -> List[RunConfig]}
+NOTEBOOKS = {
+    Notebook("Data-Processing.ipynb", "Data Processing"): [
+        RunConfig('general', {'test': True, 'release': 'general'})
+    ],
+}
+```
+To run models and generate html, run `python execute_notebooks.py {your_config_here.py}`
