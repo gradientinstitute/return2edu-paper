@@ -11,6 +11,7 @@ import numpy as np
 from numpy.typing import ArrayLike
 from numpy import random
 import matplotlib.pyplot as plt
+import scipy.stats as stats
 
 
 def subsample_estimator(
@@ -225,7 +226,7 @@ def politis_extreme_order_statistic(
     rng : [type], optional
         [description], by default np.random.default_rng(seed=0)
     """
-    theta = 1
+    theta = 10
     X = rng.uniform(0, theta, size=n_samples)
     subsample_this_data = partial(
         subsample_estimator,
@@ -276,12 +277,87 @@ def politis_extreme_order_statistic(
         alpha=0.5,
     )
 
-    X_plot = np.linspace(-5, 0)
+    X_plot = np.linspace(-2 * theta, 0)
     true_estimand_plot = theta * np.exp(X_plot)
     plt.plot(X_plot, true_estimand_plot, label="True estimand")
     plt.legend()
 
 
+def _andrews_estimator(X, full_sample_mu_MLE):
+    n = len(X)
+    mu_MLE = np.max(X.mean(), 0)
+    estimand = np.sqrt(n) * (mu_MLE - full_sample_mu_MLE)
+    return estimand
+
+
+def andrews_nonnegative_normal(
+    n_samples=1000, n_batches=1000, rng=np.random.default_rng(seed=0)
+):
+    mu = 0  # should be non-negative
+    assert mu >= 0, "mu must be non-negative"
+    X = rng.normal(loc=mu, scale=1, size=n_samples)
+
+    # maximum likelihood estimate of the mean, given mu must be nonnegative
+    mu_MLE = np.max(X.mean(), 0)
+    # MLE dist: np.sqrt(n_samples)(mu_MLE-mu) converges in distribution to
+    X_plot = np.linspace(-30, 30, 200)
+    MLE_dist = stats.norm().pdf(X_plot)  # ~Z
+    if mu == 0:
+        MLE_dist[X_plot < 0] = 0  # ~ max(Z,0)
+        print(MLE_dist.sum())
+
+        # MLE_dist /= MLE_dist.sum()  # approximately renormalise
+
+    subsample_this_data = partial(
+        subsample_estimator,
+        X=X,
+        estimator=partial(_andrews_estimator, full_sample_mu_MLE=mu_MLE),
+        n_batches=n_batches,
+        rng=rng,
+    )
+
+    subsample_size = math.ceil(10 * n_samples ** (1 / 2))
+
+    bootstrap_estimand = subsample_this_data(
+        create_subsampler_generator=bootstrap_subsample
+    )
+    bootstrap_estimand_sample_size = subsample_this_data(
+        create_subsampler_generator=partial(
+            bootstrap_subsample, subsample_size=subsample_size
+        )
+    )
+    subsample_estimand = subsample_this_data(
+        create_subsampler_generator=partial(
+            subsample_without_replacement, subsample_size=subsample_size
+        )
+    )
+    bins = np.linspace(-10, 10, 30)
+    plt.hist(
+        bootstrap_estimand,
+        bins=bins,
+        density=True,
+        label="Bootstrapped estimand",
+        alpha=0.5,
+    )
+    plt.hist(
+        bootstrap_estimand_sample_size,
+        bins=bins,
+        density=True,
+        label=f"Bootstrapped estimand, subsample size {subsample_size}",
+        alpha=0.5,
+    )
+    plt.hist(
+        subsample_estimand,
+        bins=bins,
+        density=True,
+        label=f"Subsampled estimand, subsample size {subsample_size}",
+        alpha=0.5,
+    )
+
+    plt.plot(X_plot, MLE_dist, label="True estimand distribution (missing delta at 0)")
+    plt.legend()
+
+
 if __name__ == "__main__":
-    politis_extreme_order_statistic()
+    andrews_nonnegative_normal()
     plt.show()
