@@ -8,12 +8,12 @@ from reed import RunConfig, Notebook
 
 
 RESULT_DIRECTORY = 'results'
-FORCE_EXECUTION = False  # If False notebooks that already exist in results will not be re-executed
+FORCE_EXECUTION = True  # If False notebooks that already exist in results will not be re-executed
 
-
-test = True
+test = False
 outcome = 'y_wsce'
 treatment = 'redufl'
+release = 'restricted'
 # A map from a notebook to a list of configurations to run that notebook with {Notebook -> List[RunConfig]}
 NOTEBOOKS = {
 
@@ -27,45 +27,49 @@ NOTEBOOKS = {
         RunConfig('default', {'test': test, 'outcome': outcome, 'treatment': treatment})
     ],
     Notebook("Direct-Regression.ipynb", "Direct Regression"): [
-        RunConfig("all-vars", {
-            'configuration_name': "all-vars",
+        RunConfig(f"all-vars-{release}", {
+            'configuration_name': f"all-vars-{release}",
             'outcome': outcome,
             'treatment': treatment,
             'test': test,
-            'data_file': "data/all_vars.csv"
+            'data_file': f"data/all_vars_{release}.csv",
+            'release': release
         }),
 
-        RunConfig("lasso-100", {
-            'configuration_name': "lasso-100",
+        RunConfig(f"lasso-100-{release}", {
+            'configuration_name': f"lasso-100-{release}",
             'outcome': outcome,
             'treatment': treatment,
             'test': test,
-            'data_file': "data/all_lasso_selected_100.csv"
+            'data_file': f"data/all_lasso_selected_100_{release}.csv",
+            'release': release
         }),
-        RunConfig("lasso-50", {
-            'configuration_name': "lasso-50",
+        RunConfig(f"lasso-50-{release}", {
+            'configuration_name': f"lasso-50-{release}",
             'outcome': outcome,
             'treatment': treatment,
             'test': test,
-            'data_file': "data/all_lasso_selected_50.csv"
+            'data_file': f"data/all_lasso_selected_50_{release}.csv",
+            'release': release
         }),
 
-        RunConfig("lasso-20", {
-            'configuration_name': "lasso-20",
+        RunConfig(f"lasso-20-{release}", {
+            'configuration_name': f"lasso-20-{release}",
             'outcome': outcome,
             'treatment': treatment,
             'test': test,
-            'data_file': "data/all_lasso_selected_20.csv"
+            'data_file': f"data/all_lasso_selected_20_{release}.csv",
+            'release': release
         }),
 
     ],
     Notebook("EconML2.ipynb", "EconML"): [
-        RunConfig("econml", {
+        RunConfig(f"econml-{release}", {
             'configuration_name': "econ-lasso-20",
             'outcome': outcome,
             'treatment': treatment,
             'test': test,
-            'data_file': "data/all_lasso_selected_20.csv"
+            'data_file': f"data/all_lasso_selected_20_{release}.csv"
         })
     ]
 }

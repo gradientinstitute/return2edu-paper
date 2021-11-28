@@ -52,7 +52,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="OLS on Basic Variable Set" href="OLS-basic-vars-default.html" />
-    <link rel="prev" title="Data Preparation" href="Data-Processing-default.html" />
+    <link rel="prev" title="Data Preparation" href="Data-Processing-general.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
     
@@ -90,7 +90,7 @@
 </ul>
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="Data-Processing-default.html">
+  <a class="reference internal" href="Data-Processing-general.html">
    Data Preparation
   </a>
  </li>
@@ -115,29 +115,29 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="Direct-Regression-lasso-100.html">
-     Direct Regression
+    <a class="reference internal" href="Direct-Regression-all-vars-restricted.html">
+     all-vars-restricted
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Direct-Regression-lasso-50.html">
-     Direct Regression
+    <a class="reference internal" href="Direct-Regression-lasso-100-restricted.html">
+     lasso-100-restricted
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Direct-Regression-lasso-20.html">
-     Direct Regression
+    <a class="reference internal" href="Direct-Regression-lasso-50-restricted.html">
+     lasso-50-restricted
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="Direct-Regression-lasso-10.html">
-     Direct Regression
+    <a class="reference internal" href="Direct-Regression-lasso-20-restricted.html">
+     lasso-20-restricted
     </a>
    </li>
   </ul>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="EconML2-econml.html">
+  <a class="reference internal" href="EconML2-econml-restricted.html">
    EconML
   </a>
  </li>
@@ -298,7 +298,7 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idc</span> <span class="o">=</span> <span class="s1">&#39;xwaveid&#39;</span> <span class="c1"># merge id</span>
 <span class="n">finn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/all_vars.csv&quot;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
 <span class="n">anna</span><span class="p">,</span> <span class="n">meta</span> <span class="o">=</span> <span class="n">pyreadstat</span><span class="o">.</span><span class="n">read_dta</span><span class="p">(</span><span class="s2">&quot;../reduregvars.dta&quot;</span><span class="p">)</span>
-<span class="n">raw</span><span class="p">,</span> <span class="n">meta_r</span> <span class="o">=</span> <span class="n">pyreadstat</span><span class="o">.</span><span class="n">read_sav</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;../part1/Combined a190c.sav&#39;</span><span class="p">)</span> 
+<span class="n">raw</span><span class="p">,</span> <span class="n">meta_r</span> <span class="o">=</span> <span class="n">pyreadstat</span><span class="o">.</span><span class="n">read_sav</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;data/part1/Combined a190c.sav&#39;</span><span class="p">)</span> 
 <span class="n">raw</span><span class="p">[</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">raw</span><span class="p">[</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">anna</span><span class="p">[</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">anna</span><span class="p">[</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 <span class="n">finn</span><span class="p">[</span><span class="s1">&#39;in_finn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
@@ -784,7 +784,7 @@ dtype: float64
 <div class='prev-next-bottom'>
     
     <div id="prev">
-        <a class="left-prev" href="Data-Processing-default.html" title="previous page">
+        <a class="left-prev" href="Data-Processing-general.html" title="previous page">
             <i class="prevnext-label fas fa-angle-left"></i>
             <div class="prevnext-info">
                 <p class="prevnext-label">previous</p>

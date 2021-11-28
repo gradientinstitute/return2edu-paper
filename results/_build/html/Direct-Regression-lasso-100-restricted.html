@@ -1,0 +1,2766 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lasso-100-restricted &#8212; Impacts of returning to education on income, hours worked and mental health</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet" />
+  <link href="_static/css/index.c5995385ac14fb8791e8eb36b4908be2.css" rel="stylesheet" />
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.1c5a1a01449ed65a7b51.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lasso-50-restricted" href="Direct-Regression-lasso-50-restricted.html" />
+    <link rel="prev" title="all-vars-restricted" href="Direct-Regression-all-vars-restricted.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Impacts of returning to education on income, hours worked and mental health</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Overview and Approach
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Data-Processing-general.html">
+   Data Preparation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Compare-Anna-Treatment-Outcomes-default.html">
+   Compare Datasets
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OLS-basic-vars-default.html">
+   OLS on Basic Variable Set
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="Direct-Regression.html">
+   Direct Regression
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Regression-all-vars-restricted.html">
+     all-vars-restricted
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     lasso-100-restricted
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Regression-lasso-50-restricted.html">
+     lasso-50-restricted
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Regression-lasso-20-restricted.html">
+     lasso-20-restricted
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="EconML2-econml-restricted.html">
+   EconML
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Direct-Regression-lasso-100-restricted.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/Direct-Regression-lasso-100-restricted.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   lasso-100-restricted
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#direct-regression">
+   Direct Regression
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#parameters">
+     Parameters
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-data">
+     Load Data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#set-up-models">
+     Set up models
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-data-for-modeling">
+     Prepare data for modeling
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-unconditional-unadjusted-estimate-of-treatment-effect">
+     Compute unconditional/unadjusted estimate of treatment effect
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#propensity-model">
+     Propensity model
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#report-estimate-ate-and-model-performance">
+     Report estimate ATE and model performance
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualise-models">
+     Visualise models
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compare-against-ols-on-basic-variables">
+     Compare against OLS on basic variables
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#average-treatment-effects">
+       Average treatment effects
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#distribution-of-hyper-parameters">
+       Distribution of hyper-parameters
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="lasso-100-restricted">
+<h1>lasso-100-restricted<a class="headerlink" href="#lasso-100-restricted" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="direct-regression">
+<h1>Direct Regression<a class="headerlink" href="#direct-regression" title="Permalink to this headline">¶</a></h1>
+<div class="cell tag_hide_cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># import libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span><span class="p">,</span> <span class="n">Ridge</span><span class="p">,</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="kn">import</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">reed</span> <span class="kn">import</span> <span class="n">drop_missing_treatment_or_outcome</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">transform_outcome</span>
+
+<span class="c1"># set global notebook options</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_columns</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_rows</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">max_colwidth</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_parameters docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">optimisation_metric</span> <span class="o">=</span> <span class="s1">&#39;neg_mean_squared_error&#39;</span>
+<span class="n">evaluation_metrics</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;r2&#39;</span><span class="p">,</span><span class="s1">&#39;neg_mean_squared_error&#39;</span><span class="p">)</span>
+<span class="n">log_outcome</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">standardize_outcome</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">load_from_cache</span><span class="o">=</span><span class="kc">False</span>
+<span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;^reduhl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^rehllt$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redudl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redufl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redllt$&#39;</span><span class="p">,</span> <span class="s1">&#39;^refllt$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;^rlwage$&#39;</span><span class="p">,</span> <span class="s1">&#39;^mh$&#39;</span><span class="p">,</span> <span class="s1">&#39;^mhbm$&#39;</span><span class="p">,</span> <span class="s1">&#39;^wkhr$&#39;</span><span class="p">,</span> <span class="s1">&#39;^y_&#39;</span><span class="p">,</span> <span class="s1">&#39;^p_rcom&#39;</span><span class="p">,</span><span class="s1">&#39;^p_rdf&#39;</span><span class="p">,</span><span class="s1">&#39;^p_cotrl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;^xwaveid$&#39;</span><span class="p">,</span><span class="s1">&#39;p_rcom18&#39;</span><span class="p">,</span><span class="s1">&#39;^aedcq&#39;</span><span class="p">,</span> <span class="s1">&#39;^abnfsty&#39;</span><span class="p">,</span><span class="s1">&#39;^aedcqfpt&#39;</span><span class="p">,</span><span class="s1">&#39;^aedqstdy&#39;</span>
+<span class="p">]</span>
+<span class="n">data_load_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">filepath</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">)</span>
+
+<span class="n">configuration_name</span> <span class="o">=</span> <span class="s1">&#39;default&#39;</span>
+<span class="n">outcome</span> <span class="o">=</span> <span class="s1">&#39;y_wsce&#39;</span><span class="c1">#&#39;y_wsce&#39;</span>
+<span class="n">treatment</span> <span class="o">=</span> <span class="s1">&#39;redufl&#39;</span>
+<span class="n">test</span><span class="o">=</span><span class="kc">False</span>
+<span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/all_lasso_selected_100_restricted.csv&quot;</span>
+<span class="n">release</span> <span class="o">=</span> <span class="s2">&quot;restricted&quot;</span> <span class="c1"># only used to determine which metadata file to read. </span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_injected-parameters docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
+<span class="n">configuration_name</span> <span class="o">=</span> <span class="s2">&quot;lasso-100-restricted&quot;</span>
+<span class="n">outcome</span> <span class="o">=</span> <span class="s2">&quot;y_wsce&quot;</span>
+<span class="n">treatment</span> <span class="o">=</span> <span class="s2">&quot;redufl&quot;</span>
+<span class="n">test</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/all_lasso_selected_100_restricted.csv&quot;</span>
+<span class="n">release</span> <span class="o">=</span> <span class="s2">&quot;restricted&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># parameters that depend on those set above (which may have been inserted by Papermill)</span>
+<span class="k">if</span> <span class="n">test</span><span class="p">:</span>
+    <span class="n">inner_cv</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">outer_cv</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">bootstrap_samples</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">inner_cv</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">outer_cv</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">bootstrap_samples</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">cross_val_cache</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;data/cross-val-</span><span class="si">{</span><span class="n">configuration_name</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="c1">#&quot;data/cross-val-all.pkl&quot;</span>
+<span class="n">bootstrap_cache</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;data/bootstrap-</span><span class="si">{</span><span class="n">configuration_name</span><span class="si">}</span><span class="s2">.pkl&quot;</span><span class="c1">#&quot;data/bootstrap-all.pkl&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-data">
+<h2>Load Data<a class="headerlink" href="#load-data" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>drop rows missing the specified treatment or outcome</p></li>
+</ul>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data_load_func</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+<span class="n">drop_missing_treatment_or_outcome</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_outcome</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">],</span><span class="n">log_outcome</span><span class="p">,</span> <span class="n">standardize_outcome</span><span class="p">)</span>
+
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">outcome</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of outcomes&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropped 284 rows missing treatment or outcome.
+</pre></div>
+</div>
+<img alt="_images/Direct-Regression-lasso-100-restricted_8_1.png" src="_images/Direct-Regression-lasso-100-restricted_8_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="set-up-models">
+<h2>Set up models<a class="headerlink" href="#set-up-models" title="Permalink to this headline">¶</a></h2>
+<p>Specify which models to use and the hyper-parameter space to search over for each</p>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">Lasso</span><span class="p">,</span> <span class="n">Ridge</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">importance_from_coef</span>
+
+<span class="k">def</span> <span class="nf">construct_models</span><span class="p">():</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;ridge&#39;</span><span class="p">,</span><span class="n">Ridge</span><span class="p">(),</span> 
+              <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+                  <span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+              <span class="p">},</span>
+              <span class="n">importance_func</span><span class="o">=</span><span class="n">importance_from_coef</span>
+        <span class="p">),</span>
+        <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;lasso&#39;</span><span class="p">,</span><span class="n">Lasso</span><span class="p">(),</span>
+              <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+                  <span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+              <span class="p">},</span>
+              <span class="n">importance_func</span><span class="o">=</span><span class="n">importance_from_coef</span>
+        <span class="p">),</span> 
+        <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;gbr&#39;</span><span class="p">,</span><span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_iter_no_change</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+              <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;max_features&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)[</span><span class="mi">1</span><span class="p">:],</span>
+                <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span>
+                <span class="s1">&#39;min_samples_leaf&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+              <span class="p">}</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">models</span>
+
+<span class="c1"># used for quick tests</span>
+<span class="k">def</span> <span class="nf">construct_test_models</span><span class="p">():</span> 
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;Ridge&#39;</span><span class="p">,</span><span class="n">Ridge</span><span class="p">(),</span>
+              <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">)},</span>
+              <span class="n">importance_func</span><span class="o">=</span><span class="n">importance_from_coef</span>
+        <span class="p">),</span>
+        <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;gbr&#39;</span><span class="p">,</span><span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">n_iter_no_change</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span>
+              <span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;max_features&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">)[</span><span class="mi">1</span><span class="p">:],</span>
+              <span class="p">}</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">models</span>
+
+<span class="n">model_init</span> <span class="o">=</span> <span class="n">construct_test_models</span> <span class="k">if</span> <span class="n">test</span> <span class="k">else</span> <span class="n">construct_models</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="prepare-data-for-modeling">
+<h2>Prepare data for modeling<a class="headerlink" href="#prepare-data-for-modeling" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>split into treated/control</p></li>
+<li><p>impute missing values and scale</p></li>
+<li><p>separate features from outcomes&amp;treatments</p></li>
+</ul>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">seperate_and_transform_data</span>
+<span class="n">X0</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">seperate_and_transform_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Control data dimensions: &quot;</span><span class="p">,</span><span class="n">X0</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Treated data dimensions:&quot;</span><span class="p">,</span><span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Control data dimensions:  (3789, 91)
+Treated data dimensions: (1368, 91)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="compute-unconditional-unadjusted-estimate-of-treatment-effect">
+<h2>Compute unconditional/unadjusted estimate of treatment effect<a class="headerlink" href="#compute-unconditional-unadjusted-estimate-of-treatment-effect" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">print_unconditional_effects</span>
+<span class="n">print_unconditional_effects</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Proportion Treated:27%
+Average outcome under Control:-0.14±0.02
+Average outcome under Treatment:0.37±0.03
+Unadjusted treatment estimate 0.51
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="propensity-model">
+<h2>Propensity model<a class="headerlink" href="#propensity-model" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Run primarily to check for violations over overlap assumptions.</p></li>
+</ul>
+<div class="cell tag_hide_cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reed</span> <span class="kn">import</span> <span class="n">visualise_propensity_model_performance</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span><span class="p">,</span> <span class="n">LogisticRegressionCV</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">t_train</span><span class="p">,</span> <span class="n">t_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">stratify</span><span class="o">=</span><span class="n">t</span><span class="p">)</span>
+<span class="n">pmodel</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">Cs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
+<span class="n">pmodel</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">t_train</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">visualise_propensity_model_performance</span><span class="p">(</span><span class="n">t_test</span><span class="p">,</span> <span class="n">pmodel</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;l2-logistic&#39;</span><span class="p">,</span><span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Regression-lasso-100-restricted_17_0.png" src="_images/Direct-Regression-lasso-100-restricted_17_0.png" />
+</div>
+</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">propensity_coefficients</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">features</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span><span class="s1">&#39;best_estimator_&#39;</span><span class="p">):</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">best_estimator_</span>
+    <span class="n">coef</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;data/metadata_</span><span class="si">{</span><span class="n">release</span><span class="si">}</span><span class="s1">.pkl&#39;</span><span class="p">,</span><span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="n">meta</span><span class="o">.</span><span class="n">column_names_to_labels</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">features</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;label&#39;</span><span class="p">:</span> <span class="n">labels</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">:</span><span class="n">coef</span><span class="p">,</span><span class="s1">&#39;abs&#39;</span><span class="p">:</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">coef</span><span class="p">)},</span><span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;abs&#39;</span><span class="p">,</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Propensity Model Coefficients&quot;</span><span class="p">)</span>      
+<span class="n">propensity_coefficients</span><span class="p">(</span><span class="n">pmodel</span><span class="p">,</span> <span class="n">features</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Propensity Model Coefficients
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>label</th>
+      <th>c</th>
+      <th>abs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>atcyng</th>
+      <td>DV: Age youngest own child (excl. resident foster/step)</td>
+      <td>-0.160873</td>
+      <td>0.160873</td>
+    </tr>
+    <tr>
+      <th>ahsyrcad</th>
+      <td>DV: Years at current address</td>
+      <td>-0.147275</td>
+      <td>0.147275</td>
+    </tr>
+    <tr>
+      <th>ahhyng</th>
+      <td>DV: Age of youngest person in household</td>
+      <td>-0.143525</td>
+      <td>0.143525</td>
+    </tr>
+    <tr>
+      <th>ajbempt</th>
+      <td>DV: Tenure with current employer (years)</td>
+      <td>-0.118980</td>
+      <td>0.118980</td>
+    </tr>
+    <tr>
+      <th>aehtjbyr</th>
+      <td>D3a1 Years in paid work</td>
+      <td>-0.118850</td>
+      <td>0.118850</td>
+    </tr>
+    <tr>
+      <th>ahgrf</th>
+      <td>HF10 Follow-up stage individual interview outcome</td>
+      <td>0.118155</td>
+      <td>0.118155</td>
+    </tr>
+    <tr>
+      <th>atcnr</th>
+      <td>DV: Number of own non-resident children</td>
+      <td>-0.112971</td>
+      <td>0.112971</td>
+    </tr>
+    <tr>
+      <th>amhn10yr</th>
+      <td>K12 How many homes lived in during last 10 years</td>
+      <td>0.110223</td>
+      <td>0.110223</td>
+    </tr>
+    <tr>
+      <th>ajsl4wk</th>
+      <td>F1 Looked for work in last 4 weeks</td>
+      <td>0.098117</td>
+      <td>0.098117</td>
+    </tr>
+    <tr>
+      <th>ahiwscei</th>
+      <td>DV: Household current weekly gross wages &amp; salary - all jobs ($) [imputed]</td>
+      <td>0.093798</td>
+      <td>0.093798</td>
+    </tr>
+    <tr>
+      <th>ahgms</th>
+      <td>HF8 Living circumstances</td>
+      <td>0.092053</td>
+      <td>0.092053</td>
+    </tr>
+    <tr>
+      <th>aloimpew</th>
+      <td>K8 Importance - B Your employment and work situation</td>
+      <td>0.089051</td>
+      <td>0.089051</td>
+    </tr>
+    <tr>
+      <th>awscef</th>
+      <td>DV: Imputation flag current weekly gross wages &amp; salary - all jobs</td>
+      <td>0.081623</td>
+      <td>0.081623</td>
+    </tr>
+    <tr>
+      <th>abncapuf</th>
+      <td>DV: Imputation flag current weekly Australian public transfers excluding family benefits</td>
+      <td>0.074776</td>
+      <td>0.074776</td>
+    </tr>
+    <tr>
+      <th>ahgsex</th>
+      <td>HF3 Sex</td>
+      <td>0.074451</td>
+      <td>0.074451</td>
+    </tr>
+    <tr>
+      <th>aatwkwms</th>
+      <td>SCQ:D1c Many working mothers seem to care more about being successful at work than meeting the n...</td>
+      <td>-0.073017</td>
+      <td>0.073017</td>
+    </tr>
+    <tr>
+      <th>awsfga</th>
+      <td>G20 Gross financial year wages and salaries ($)</td>
+      <td>-0.070705</td>
+      <td>0.070705</td>
+    </tr>
+    <tr>
+      <th>aloimprl</th>
+      <td>K8 Importance - H Religion</td>
+      <td>0.061424</td>
+      <td>0.061424</td>
+    </tr>
+    <tr>
+      <th>agh3a</th>
+      <td>SCQ:A3a Physical Functioning: Vigorous activities</td>
+      <td>0.060715</td>
+      <td>0.060715</td>
+    </tr>
+    <tr>
+      <th>adocond</th>
+      <td>HFL2 Record external condition of dwelling</td>
+      <td>0.060047</td>
+      <td>0.060047</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_hide_cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">nested_cross_val</span>
+
+<span class="n">models0</span><span class="p">,</span> <span class="n">models1</span><span class="p">,</span> <span class="n">results</span> <span class="o">=</span> <span class="n">nested_cross_val</span><span class="p">(</span>
+    <span class="n">model_init</span><span class="p">,</span>
+    <span class="n">cross_val_cache</span><span class="p">,</span>
+    <span class="n">X0</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span>
+    <span class="n">optimisation_metric</span><span class="p">,</span>
+    <span class="n">evaluation_metrics</span><span class="p">,</span>
+    <span class="n">innercv</span><span class="o">=</span><span class="n">inner_cv</span><span class="p">,</span>
+    <span class="n">outercv</span><span class="o">=</span><span class="n">outer_cv</span><span class="p">,</span>
+    <span class="n">load_from_cache</span><span class="o">=</span><span class="n">load_from_cache</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting ridge ...Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+Fitting lasso ...Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+Fitting gbr ...Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+Caching results to data/cross-val-lasso-100-restricted.pkl
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="report-estimate-ate-and-model-performance">
+<h2>Report estimate ATE and model performance<a class="headerlink" href="#report-estimate-ate-and-model-performance" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Mean and Std of prediction performance for each model (both treatment &amp; control surface)</p></li>
+<li><p>Mean and Std of average treatment effect for each model</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">visualise_ate</span>
+<span class="n">metrics</span><span class="p">,</span> <span class="n">ate_vals</span> <span class="o">=</span> <span class="n">visualise_ate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">evaluation_metrics</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ACE</th>
+      <th>ACE_std</th>
+      <th>control_r2</th>
+      <th>control_r2_std</th>
+      <th>treated_r2</th>
+      <th>treated_r2_std</th>
+      <th>control_neg_mean_squared_error</th>
+      <th>control_neg_mean_squared_error_std</th>
+      <th>treated_neg_mean_squared_error</th>
+      <th>treated_neg_mean_squared_error_std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ridge</th>
+      <td>0.18</td>
+      <td>0.01</td>
+      <td>0.42</td>
+      <td>0.03</td>
+      <td>0.20</td>
+      <td>0.05</td>
+      <td>-0.54</td>
+      <td>0.04</td>
+      <td>-0.81</td>
+      <td>0.05</td>
+    </tr>
+    <tr>
+      <th>lasso</th>
+      <td>0.21</td>
+      <td>0.02</td>
+      <td>0.42</td>
+      <td>0.05</td>
+      <td>0.21</td>
+      <td>0.07</td>
+      <td>-0.53</td>
+      <td>0.06</td>
+      <td>-0.80</td>
+      <td>0.08</td>
+    </tr>
+    <tr>
+      <th>gbr</th>
+      <td>0.15</td>
+      <td>0.02</td>
+      <td>0.45</td>
+      <td>0.05</td>
+      <td>0.23</td>
+      <td>0.05</td>
+      <td>-0.51</td>
+      <td>0.04</td>
+      <td>-0.78</td>
+      <td>0.06</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><img alt="_images/Direct-Regression-lasso-100-restricted_21_1.png" src="_images/Direct-Regression-lasso-100-restricted_21_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">plot_ate_distribution</span>
+<span class="n">plot_ate_distribution</span><span class="p">(</span><span class="n">ate_vals</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Regression-lasso-100-restricted_22_0.png" src="_images/Direct-Regression-lasso-100-restricted_22_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">plot_hyperparam_distributions</span>
+<span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">results0</span><span class="p">,</span> <span class="n">results1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">plot_hyperparam_distributions</span><span class="p">(</span><span class="n">results0</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">-control&quot;</span><span class="p">)</span>
+    <span class="n">plot_hyperparam_distributions</span><span class="p">(</span><span class="n">results1</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">-treated&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Regression-lasso-100-restricted_23_0.png" src="_images/Direct-Regression-lasso-100-restricted_23_0.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_23_1.png" src="_images/Direct-Regression-lasso-100-restricted_23_1.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_23_2.png" src="_images/Direct-Regression-lasso-100-restricted_23_2.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_23_3.png" src="_images/Direct-Regression-lasso-100-restricted_23_3.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_23_4.png" src="_images/Direct-Regression-lasso-100-restricted_23_4.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_23_5.png" src="_images/Direct-Regression-lasso-100-restricted_23_5.png" />
+</div>
+</div>
+</div>
+<div class="section" id="visualise-models">
+<h2>Visualise models<a class="headerlink" href="#visualise-models" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Features responsible for treatment effect heterogeneity &amp; functional form (with uncertainty)
+- coefficeints for linear models
+- TODO permutation importance &amp; partial dependence curves for non-linear models</p></li>
+</ul>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">display_feature_importance</span>
+<span class="n">display_feature_importance</span><span class="p">(</span><span class="n">models0</span><span class="p">,</span> <span class="n">models1</span><span class="p">,</span> <span class="n">results</span><span class="p">,</span> <span class="n">features</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ridge
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>importance_mean</th>
+      <th>importance_std</th>
+      <th>Δcoef_mean</th>
+      <th>Δcoef_std</th>
+      <th>coef_treat_mean</th>
+      <th>coef_treat_std</th>
+      <th>coef_cntr_mean</th>
+      <th>coef_cntr_std</th>
+    </tr>
+    <tr>
+      <th>feature</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>artage1</th>
+      <td>0.191180</td>
+      <td>0.005926</td>
+      <td>0.098921</td>
+      <td>0.016178</td>
+      <td>-0.141719</td>
+      <td>0.006270</td>
+      <td>-0.240640</td>
+      <td>0.012720</td>
+    </tr>
+    <tr>
+      <th>atcyng</th>
+      <td>0.089987</td>
+      <td>0.003747</td>
+      <td>-0.002929</td>
+      <td>0.008913</td>
+      <td>-0.091452</td>
+      <td>0.005704</td>
+      <td>-0.088523</td>
+      <td>0.005939</td>
+    </tr>
+    <tr>
+      <th>atcnr</th>
+      <td>0.074579</td>
+      <td>0.004413</td>
+      <td>-0.039740</td>
+      <td>0.004889</td>
+      <td>-0.094449</td>
+      <td>0.005841</td>
+      <td>-0.054709</td>
+      <td>0.004096</td>
+    </tr>
+    <tr>
+      <th>awscme</th>
+      <td>0.069737</td>
+      <td>0.008006</td>
+      <td>-0.114622</td>
+      <td>0.010091</td>
+      <td>0.012426</td>
+      <td>0.006034</td>
+      <td>0.127048</td>
+      <td>0.011946</td>
+    </tr>
+    <tr>
+      <th>ahifapti</th>
+      <td>0.065172</td>
+      <td>0.001829</td>
+      <td>0.000158</td>
+      <td>0.012828</td>
+      <td>-0.065093</td>
+      <td>0.006313</td>
+      <td>-0.065251</td>
+      <td>0.007008</td>
+    </tr>
+    <tr>
+      <th>ahhyng</th>
+      <td>0.064107</td>
+      <td>0.002709</td>
+      <td>0.003436</td>
+      <td>0.006618</td>
+      <td>-0.062389</td>
+      <td>0.004284</td>
+      <td>-0.065825</td>
+      <td>0.004269</td>
+    </tr>
+    <tr>
+      <th>aehtjbyr</th>
+      <td>0.063822</td>
+      <td>0.002399</td>
+      <td>-0.029371</td>
+      <td>0.003780</td>
+      <td>-0.078507</td>
+      <td>0.003985</td>
+      <td>-0.049136</td>
+      <td>0.001667</td>
+    </tr>
+    <tr>
+      <th>ahsyrcad</th>
+      <td>0.054475</td>
+      <td>0.003424</td>
+      <td>0.008770</td>
+      <td>0.008993</td>
+      <td>-0.050090</td>
+      <td>0.005882</td>
+      <td>-0.058860</td>
+      <td>0.005412</td>
+    </tr>
+    <tr>
+      <th>atifditp</th>
+      <td>0.054003</td>
+      <td>0.005602</td>
+      <td>-0.002937</td>
+      <td>0.012469</td>
+      <td>0.052535</td>
+      <td>0.010525</td>
+      <td>0.055472</td>
+      <td>0.005453</td>
+    </tr>
+    <tr>
+      <th>aloimpew</th>
+      <td>0.050823</td>
+      <td>0.002815</td>
+      <td>-0.024722</td>
+      <td>0.006153</td>
+      <td>0.038462</td>
+      <td>0.005203</td>
+      <td>0.063184</td>
+      <td>0.002776</td>
+    </tr>
+    <tr>
+      <th>ahh0_4</th>
+      <td>0.050256</td>
+      <td>0.003841</td>
+      <td>-0.000804</td>
+      <td>0.009552</td>
+      <td>0.049854</td>
+      <td>0.006590</td>
+      <td>0.050658</td>
+      <td>0.005630</td>
+    </tr>
+    <tr>
+      <th>ahspown</th>
+      <td>0.047743</td>
+      <td>0.003700</td>
+      <td>0.008775</td>
+      <td>0.006052</td>
+      <td>0.052130</td>
+      <td>0.005332</td>
+      <td>0.043355</td>
+      <td>0.004154</td>
+    </tr>
+    <tr>
+      <th>agh3a</th>
+      <td>0.045251</td>
+      <td>0.004073</td>
+      <td>0.009497</td>
+      <td>0.005810</td>
+      <td>0.050000</td>
+      <td>0.005534</td>
+      <td>0.040503</td>
+      <td>0.004408</td>
+    </tr>
+    <tr>
+      <th>awsfga</th>
+      <td>0.044941</td>
+      <td>0.004846</td>
+      <td>0.032486</td>
+      <td>0.014021</td>
+      <td>-0.028698</td>
+      <td>0.007895</td>
+      <td>-0.061184</td>
+      <td>0.009107</td>
+    </tr>
+    <tr>
+      <th>aicprob</th>
+      <td>0.040033</td>
+      <td>0.003207</td>
+      <td>0.003543</td>
+      <td>0.005885</td>
+      <td>0.041804</td>
+      <td>0.003660</td>
+      <td>0.038261</td>
+      <td>0.004949</td>
+    </tr>
+    <tr>
+      <th>aehtujyr</th>
+      <td>0.038167</td>
+      <td>0.004198</td>
+      <td>0.014941</td>
+      <td>0.010132</td>
+      <td>-0.030696</td>
+      <td>0.007930</td>
+      <td>-0.045637</td>
+      <td>0.004867</td>
+    </tr>
+    <tr>
+      <th>abnfdsp</th>
+      <td>0.036530</td>
+      <td>0.003077</td>
+      <td>-0.002942</td>
+      <td>0.007223</td>
+      <td>-0.038001</td>
+      <td>0.006288</td>
+      <td>-0.035059</td>
+      <td>0.002341</td>
+    </tr>
+    <tr>
+      <th>ahibifip</th>
+      <td>0.033432</td>
+      <td>0.005241</td>
+      <td>0.015227</td>
+      <td>0.007434</td>
+      <td>-0.025819</td>
+      <td>0.007703</td>
+      <td>-0.041045</td>
+      <td>0.004821</td>
+    </tr>
+    <tr>
+      <th>ajsl4wk</th>
+      <td>0.032098</td>
+      <td>0.003956</td>
+      <td>-0.064195</td>
+      <td>0.007913</td>
+      <td>-0.034922</td>
+      <td>0.007123</td>
+      <td>0.029273</td>
+      <td>0.005071</td>
+    </tr>
+    <tr>
+      <th>ajbmo61</th>
+      <td>0.028096</td>
+      <td>0.003438</td>
+      <td>-0.056192</td>
+      <td>0.006875</td>
+      <td>-0.045054</td>
+      <td>0.008174</td>
+      <td>0.011138</td>
+      <td>0.003445</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>lasso
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>importance_mean</th>
+      <th>importance_std</th>
+      <th>Δcoef_mean</th>
+      <th>Δcoef_std</th>
+      <th>coef_treat_mean</th>
+      <th>coef_treat_std</th>
+      <th>coef_cntr_mean</th>
+      <th>coef_cntr_std</th>
+    </tr>
+    <tr>
+      <th>feature</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>artage1</th>
+      <td>0.258755</td>
+      <td>0.008383</td>
+      <td>0.062715</td>
+      <td>0.018217</td>
+      <td>-0.227397</td>
+      <td>0.015846</td>
+      <td>-0.290113</td>
+      <td>0.007442</td>
+    </tr>
+    <tr>
+      <th>atcyng</th>
+      <td>0.140305</td>
+      <td>0.009589</td>
+      <td>-0.049293</td>
+      <td>0.019263</td>
+      <td>-0.164952</td>
+      <td>0.016021</td>
+      <td>-0.115658</td>
+      <td>0.010619</td>
+    </tr>
+    <tr>
+      <th>atcnr</th>
+      <td>0.089639</td>
+      <td>0.009158</td>
+      <td>-0.083996</td>
+      <td>0.015633</td>
+      <td>-0.131637</td>
+      <td>0.016697</td>
+      <td>-0.047641</td>
+      <td>0.003338</td>
+    </tr>
+    <tr>
+      <th>awscme</th>
+      <td>0.075639</td>
+      <td>0.007761</td>
+      <td>-0.148625</td>
+      <td>0.015533</td>
+      <td>0.001327</td>
+      <td>0.004197</td>
+      <td>0.149952</td>
+      <td>0.014950</td>
+    </tr>
+    <tr>
+      <th>ahifapti</th>
+      <td>0.063039</td>
+      <td>0.006170</td>
+      <td>-0.007327</td>
+      <td>0.011548</td>
+      <td>-0.066703</td>
+      <td>0.010969</td>
+      <td>-0.059376</td>
+      <td>0.004744</td>
+    </tr>
+    <tr>
+      <th>agh3a</th>
+      <td>0.042329</td>
+      <td>0.008550</td>
+      <td>0.010698</td>
+      <td>0.010921</td>
+      <td>0.047678</td>
+      <td>0.013165</td>
+      <td>0.036980</td>
+      <td>0.005702</td>
+    </tr>
+    <tr>
+      <th>aloimpew</th>
+      <td>0.041047</td>
+      <td>0.007808</td>
+      <td>-0.056636</td>
+      <td>0.014749</td>
+      <td>0.012729</td>
+      <td>0.013909</td>
+      <td>0.069365</td>
+      <td>0.006101</td>
+    </tr>
+    <tr>
+      <th>atifditp</th>
+      <td>0.039254</td>
+      <td>0.008314</td>
+      <td>-0.007712</td>
+      <td>0.022008</td>
+      <td>0.035398</td>
+      <td>0.015008</td>
+      <td>0.043109</td>
+      <td>0.012456</td>
+    </tr>
+    <tr>
+      <th>aehtjbyr</th>
+      <td>0.037061</td>
+      <td>0.013406</td>
+      <td>-0.023982</td>
+      <td>0.029692</td>
+      <td>-0.049052</td>
+      <td>0.028042</td>
+      <td>-0.025070</td>
+      <td>0.003721</td>
+    </tr>
+    <tr>
+      <th>ahh0_4</th>
+      <td>0.033643</td>
+      <td>0.004150</td>
+      <td>-0.009086</td>
+      <td>0.011460</td>
+      <td>0.029100</td>
+      <td>0.006090</td>
+      <td>0.038186</td>
+      <td>0.007939</td>
+    </tr>
+    <tr>
+      <th>ahhyng</th>
+      <td>0.032317</td>
+      <td>0.002331</td>
+      <td>0.064393</td>
+      <td>0.004312</td>
+      <td>-0.000121</td>
+      <td>0.000382</td>
+      <td>-0.064514</td>
+      <td>0.004474</td>
+    </tr>
+    <tr>
+      <th>ahspown</th>
+      <td>0.031137</td>
+      <td>0.006431</td>
+      <td>0.000348</td>
+      <td>0.009345</td>
+      <td>0.031311</td>
+      <td>0.009337</td>
+      <td>0.030963</td>
+      <td>0.006261</td>
+    </tr>
+    <tr>
+      <th>aicprob</th>
+      <td>0.030403</td>
+      <td>0.003236</td>
+      <td>0.005222</td>
+      <td>0.009571</td>
+      <td>0.033014</td>
+      <td>0.006659</td>
+      <td>0.027792</td>
+      <td>0.004733</td>
+    </tr>
+    <tr>
+      <th>awsfga</th>
+      <td>0.026654</td>
+      <td>0.004128</td>
+      <td>0.053308</td>
+      <td>0.008257</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>-0.053308</td>
+      <td>0.008257</td>
+    </tr>
+    <tr>
+      <th>ahsyrcad</th>
+      <td>0.026329</td>
+      <td>0.004928</td>
+      <td>0.045026</td>
+      <td>0.009755</td>
+      <td>-0.003816</td>
+      <td>0.007861</td>
+      <td>-0.048842</td>
+      <td>0.005861</td>
+    </tr>
+    <tr>
+      <th>ajsl4wk</th>
+      <td>0.021686</td>
+      <td>0.003301</td>
+      <td>-0.043372</td>
+      <td>0.006601</td>
+      <td>-0.023277</td>
+      <td>0.006615</td>
+      <td>0.020095</td>
+      <td>0.003841</td>
+    </tr>
+    <tr>
+      <th>aehtujyr</th>
+      <td>0.021336</td>
+      <td>0.003521</td>
+      <td>0.032171</td>
+      <td>0.010008</td>
+      <td>-0.005251</td>
+      <td>0.006982</td>
+      <td>-0.037421</td>
+      <td>0.005112</td>
+    </tr>
+    <tr>
+      <th>abnfdsp</th>
+      <td>0.020510</td>
+      <td>0.005677</td>
+      <td>0.023601</td>
+      <td>0.012121</td>
+      <td>-0.008710</td>
+      <td>0.011519</td>
+      <td>-0.032310</td>
+      <td>0.002286</td>
+    </tr>
+    <tr>
+      <th>alosateo</th>
+      <td>0.019683</td>
+      <td>0.006415</td>
+      <td>0.021427</td>
+      <td>0.009786</td>
+      <td>0.030396</td>
+      <td>0.009947</td>
+      <td>0.008969</td>
+      <td>0.005590</td>
+    </tr>
+    <tr>
+      <th>ajbmo61</th>
+      <td>0.018926</td>
+      <td>0.005013</td>
+      <td>-0.037851</td>
+      <td>0.010027</td>
+      <td>-0.035845</td>
+      <td>0.007929</td>
+      <td>0.002006</td>
+      <td>0.004061</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="compare-against-ols-on-basic-variables">
+<h2>Compare against OLS on basic variables<a class="headerlink" href="#compare-against-ols-on-basic-variables" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data/basic_variables.csv&quot;</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">)</span>
+<span class="n">drop_missing_treatment_or_outcome</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+<span class="n">basic</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_outcome</span><span class="p">(</span><span class="n">basic</span><span class="p">[</span><span class="n">outcome</span><span class="p">],</span><span class="n">log_outcome</span><span class="p">,</span> <span class="n">standardize_outcome</span><span class="p">)</span>
+
+    
+<span class="n">X0b</span><span class="p">,</span> <span class="n">X1b</span><span class="p">,</span> <span class="n">y0b</span><span class="p">,</span> <span class="n">y1b</span><span class="p">,</span> <span class="n">Xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">tb</span><span class="p">,</span> <span class="n">featuresb</span> <span class="o">=</span> <span class="n">seperate_and_transform_data</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">construct_basic_model</span><span class="p">():</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;OLS&#39;</span><span class="p">,</span><span class="n">LinearRegression</span><span class="p">(),</span><span class="n">importance_func</span><span class="o">=</span><span class="n">importance_from_coef</span><span class="p">)</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">models</span>
+
+<span class="n">modelsb0</span><span class="p">,</span> <span class="n">modelsb1</span><span class="p">,</span> <span class="n">resultsb</span> <span class="o">=</span> <span class="n">nested_cross_val</span><span class="p">(</span>
+    <span class="n">construct_basic_model</span><span class="p">,</span>
+    <span class="s2">&quot;data/tmp.pkl&quot;</span><span class="p">,</span>
+    <span class="n">X0b</span><span class="p">,</span> <span class="n">X1b</span><span class="p">,</span> <span class="n">y0b</span><span class="p">,</span> <span class="n">y1b</span><span class="p">,</span>
+    <span class="n">optimisation_metric</span><span class="p">,</span>
+    <span class="n">evaluation_metrics</span><span class="p">,</span>
+    <span class="n">innercv</span><span class="o">=</span><span class="n">inner_cv</span><span class="p">,</span>
+    <span class="n">outercv</span><span class="o">=</span><span class="n">outer_cv</span><span class="p">,</span>
+    <span class="n">load_from_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropped 284 rows missing treatment or outcome.
+Fitting OLS ...Done
+Caching results to data/tmp.pkl
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="n">y0b</span> <span class="o">=</span> <span class="n">resultsb</span><span class="p">[</span><span class="s1">&#39;OLS&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;estimator&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X0b</span><span class="p">)</span>
+<span class="n">y1b</span> <span class="o">=</span> <span class="n">resultsb</span><span class="p">[</span><span class="s1">&#39;OLS&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;estimator&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X1b</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">y0b</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;y0&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">hat</span><span class="si">{y}</span><span class="s1">0$&#39;</span><span class="p">);</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Control (OLS-basic), $R^2=</span><span class="si">{</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span><span class="n">y0b</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">y1b</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">hat</span><span class="si">{y}</span><span class="s1">1$&#39;</span><span class="p">);</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Treated (OLS-basic), $R^2=</span><span class="si">{</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span><span class="n">y1b</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Regression-lasso-100-restricted_28_0.png" src="_images/Direct-Regression-lasso-100-restricted_28_0.png" />
+</div>
+</div>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;ridge&#39;</span> <span class="ow">in</span> <span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">y0a</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;ridge&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;estimator&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X0</span><span class="p">)</span>
+    <span class="n">y1a</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="s1">&#39;ridge&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;estimator&#39;</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X1</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">y0a</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;y0&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">hat</span><span class="si">{y}</span><span class="s1">0$&#39;</span><span class="p">);</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Control (ridge), $R^2=</span><span class="si">{</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span><span class="n">y0a</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="n">y1a</span><span class="p">,</span><span class="n">s</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;y1&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">hat</span><span class="si">{y}</span><span class="s1">1$&#39;</span><span class="p">);</span>
+    <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Treated (ridge), $R^2=</span><span class="si">{</span><span class="n">r2_score</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span><span class="n">y1a</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">$&#39;</span><span class="p">);</span>
+
+<span class="c1"># think about why these r2 scores are higher than on the holdout set (and whether they are likely overfitting)</span>
+<span class="c1"># despite there being so few variables</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Regression-lasso-100-restricted_29_0.png" src="_images/Direct-Regression-lasso-100-restricted_29_0.png" />
+</div>
+</div>
+<div class="cell tag_hide_cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">bootstrapped_cross_val</span>
+<span class="k">def</span> <span class="nf">extract_params</span><span class="p">(</span><span class="n">estimator</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">estimator</span><span class="o">.</span><span class="n">coef_</span>
+
+
+<span class="n">bootstrap_results</span> <span class="o">=</span> <span class="n">bootstrapped_cross_val</span><span class="p">(</span>
+    <span class="n">model_init</span><span class="p">,</span>
+    <span class="n">bootstrap_cache</span><span class="p">,</span>
+    <span class="n">X0</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span>
+    <span class="n">optimisation_metric</span><span class="p">,</span>
+    <span class="n">extract_params</span><span class="p">,</span>
+    <span class="n">inner_cv</span><span class="o">=</span><span class="n">inner_cv</span><span class="p">,</span>
+    <span class="n">load_from_cache</span><span class="o">=</span><span class="n">load_from_cache</span><span class="p">,</span>
+    <span class="n">samples</span><span class="o">=</span><span class="n">bootstrap_samples</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting ridge ...Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+Fitting lasso ...Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 30 candidates, totalling 150 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+Fitting gbr ...Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting 5 folds for each of 500 candidates, totalling 2500 fits
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Done
+Total time:12314.898377418518 seconds
+Caching results to: data/bootstrap-lasso-100-restricted.pkl
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="average-treatment-effects">
+<h3>Average treatment effects<a class="headerlink" href="#average-treatment-effects" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">compute_ate</span>
+<span class="n">metrics</span><span class="p">,</span> <span class="n">tau_estimatesb</span> <span class="o">=</span> <span class="n">compute_ate</span><span class="p">(</span><span class="n">bootstrap_results</span><span class="p">,</span><span class="n">X</span><span class="p">)</span>
+<span class="n">metrics</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ACE</th>
+      <th>ACE_std</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ridge</th>
+      <td>0.210055</td>
+      <td>0.030085</td>
+    </tr>
+    <tr>
+      <th>lasso</th>
+      <td>0.212049</td>
+      <td>0.032259</td>
+    </tr>
+    <tr>
+      <th>gbr</th>
+      <td>0.159278</td>
+      <td>0.033401</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_ate_distribution</span><span class="p">(</span><span class="n">tau_estimatesb</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Regression-lasso-100-restricted_33_0.png" src="_images/Direct-Regression-lasso-100-restricted_33_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="distribution-of-hyper-parameters">
+<h3>Distribution of hyper-parameters<a class="headerlink" href="#distribution-of-hyper-parameters" title="Permalink to this headline">¶</a></h3>
+<div class="cell tag_hide_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">plot_hyperparam_distributions</span>
+<span class="k">for</span> <span class="n">model</span><span class="p">,</span> <span class="p">(</span><span class="n">results0</span><span class="p">,</span> <span class="n">results1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">bootstrap_results</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">plot_hyperparam_distributions</span><span class="p">(</span><span class="n">results0</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">-control&quot;</span><span class="p">)</span>
+    <span class="n">plot_hyperparam_distributions</span><span class="p">(</span><span class="n">results1</span><span class="p">,</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">-treated&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Regression-lasso-100-restricted_35_0.png" src="_images/Direct-Regression-lasso-100-restricted_35_0.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_35_1.png" src="_images/Direct-Regression-lasso-100-restricted_35_1.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_35_2.png" src="_images/Direct-Regression-lasso-100-restricted_35_2.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_35_3.png" src="_images/Direct-Regression-lasso-100-restricted_35_3.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_35_4.png" src="_images/Direct-Regression-lasso-100-restricted_35_4.png" />
+<img alt="_images/Direct-Regression-lasso-100-restricted_35_5.png" src="_images/Direct-Regression-lasso-100-restricted_35_5.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            
+
+
+
+<div class='prev-next-bottom'>
+    
+    <div id="prev">
+        <a class="left-prev" href="Direct-Regression-all-vars-restricted.html" title="previous page">
+            <i class="prevnext-label fas fa-angle-left"></i>
+            <div class="prevnext-info">
+                <p class="prevnext-label">previous</p>
+                <p class="prevnext-title">all-vars-restricted</p>
+            </div>
+        </a>
+    </div>
+     <div id="next">
+        <a class="right-next" href="Direct-Regression-lasso-50-restricted.html" title="next page">
+            <div class="prevnext-info">
+                <p class="prevnext-label">next</p>
+                <p class="prevnext-title">lasso-50-restricted</p>
+            </div>
+            <i class="prevnext-label fas fa-angle-right"></i>
+        </a>
+     </div>
+
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Finn Lattimore<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.1c5a1a01449ed65a7b51.js"></script>
+
+  
+  </body>
+</html>

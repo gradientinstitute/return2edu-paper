@@ -1,13 +1,13 @@
 format: jb-book
 root: intro
 chapters:
-- file: Data-Processing-default
+- file: Data-Processing-general
 - file: Compare-Anna-Treatment-Outcomes-default
 - file: OLS-basic-vars-default
 - file: Direct-Regression
   sections:
-  - file: Direct-Regression-lasso-100
-  - file: Direct-Regression-lasso-50
-  - file: Direct-Regression-lasso-20
-  - file: Direct-Regression-lasso-10
-- file: EconML2-econml
+  - file: Direct-Regression-all-vars-restricted
+  - file: Direct-Regression-lasso-100-restricted
+  - file: Direct-Regression-lasso-50-restricted
+  - file: Direct-Regression-lasso-20-restricted
+- file: EconML2-econml-restricted
