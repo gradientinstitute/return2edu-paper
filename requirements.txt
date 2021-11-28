@@ -14,3 +14,4 @@ pyreadstat
 jupyter_contrib_nbextensions
 jupyter-book
 papermill
+pyro-ppl
