@@ -4,6 +4,12 @@ chapters:
 - file: Data-Processing-general
 - file: Compare-Anna-Treatment-Outcomes-default
 - file: OLS-basic-vars-default
+- file: Direct-Bayesian
+  sections:
+  - file: Direct-Bayesian-all-vars-restricted
+  - file: Direct-Bayesian-lasso-100-restricted
+  - file: Direct-Bayesian-lasso-50-restricted
+  - file: Direct-Bayesian-lasso-20-restricted
 - file: Direct-Regression
   sections:
   - file: Direct-Regression-all-vars-restricted

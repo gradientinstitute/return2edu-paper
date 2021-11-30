@@ -1,0 +1,2123 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lasso-50-restricted &#8212; Impacts of returning to education on income, hours worked and mental health</title>
+    
+  <link href="_static/css/theme.css" rel="stylesheet">
+  <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="lasso-20-restricted" href="Direct-Bayesian-lasso-20-restricted.html" />
+    <link rel="prev" title="lasso-100-restricted" href="Direct-Bayesian-lasso-100-restricted.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Impacts of returning to education on income, hours worked and mental health</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Overview and Approach
+  </a>
+ </li>
+</ul>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="Data-Processing-general.html">
+   Data Preparation
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Compare-Anna-Treatment-Outcomes-default.html">
+   Compare Datasets
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="OLS-basic-vars-default.html">
+   OLS on Basic Variable Set
+  </a>
+ </li>
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="Direct-Bayesian.html">
+   Direct Bayesian
+  </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <label for="toctree-checkbox-1">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Bayesian-all-vars-restricted.html">
+     all-vars-restricted
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Bayesian-lasso-100-restricted.html">
+     lasso-100-restricted
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     lasso-50-restricted
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Bayesian-lasso-20-restricted.html">
+     lasso-20-restricted
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="Direct-Regression.html">
+   Direct Regression
+  </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Regression-all-vars-restricted.html">
+     all-vars-restricted
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Regression-lasso-100-restricted.html">
+     lasso-100-restricted
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Regression-lasso-50-restricted.html">
+     lasso-50-restricted
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="Direct-Regression-lasso-20-restricted.html">
+     lasso-20-restricted
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="EconML2-econml-restricted.html">
+   EconML
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/Direct-Bayesian-lasso-50-restricted.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/Direct-Bayesian-lasso-50-restricted.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#">
+   lasso-50-restricted
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#direct-regression-bayesian-version">
+   Direct Regression - Bayesian Version
+  </a>
+  <ul class="visible nav section-nav flex-column">
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#response-model">
+     Response Model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#treatent-variables">
+       Treatent variables
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#outcome-variables">
+       Outcome variables
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h4 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#columns-explicitly-excluded">
+         Columns explicitly excluded
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#analysis-parameters">
+     Analysis Parameters
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#load-the-data">
+     Load the data
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#prepare-data-for-modeling">
+     Prepare data for modeling
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#compute-unconditional-unadjusted-estimate-of-treatment-effect">
+     Compute unconditional/unadjusted estimate of treatment effect
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#statsmodels">
+     Statsmodels
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#ols">
+       OLS
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#scikit-learn-bayesian-estimators">
+     Scikit learn Bayesian Estimators
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#bayesian-ridge">
+       Bayesian Ridge
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#gaussian-process">
+       Gaussian Process
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hierarchical-bayesian-linear-model">
+     Hierarchical Bayesian Linear Model
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#set-up-the-model">
+       Set up the model
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#run-mcmc-inference-to-compute-the-posteriors">
+       Run MCMC inference to compute the posteriors
+      </a>
+     </li>
+     <li class="toc-h3 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#sample-the-ate">
+       Sample the ATE
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#plot-ate">
+     Plot ATE
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="lasso-50-restricted">
+<h1>lasso-50-restricted<a class="headerlink" href="#lasso-50-restricted" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="direct-regression-bayesian-version">
+<h1>Direct Regression - Bayesian Version<a class="headerlink" href="#direct-regression-bayesian-version" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="response-model">
+<h2>Response Model<a class="headerlink" href="#response-model" title="Permalink to this headline">¶</a></h2>
+<p>How well can we predict outcomes <span class="math notranslate nohighlight">\(Y\)</span> conditional on treatment <span class="math notranslate nohighlight">\(T\)</span> and other covariates <span class="math notranslate nohighlight">\(Z\)</span>?</p>
+<div class="section" id="treatent-variables">
+<h3>Treatent variables<a class="headerlink" href="#treatent-variables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><strong>reduhl</strong>	Completed re-education based on highest level of attainment</p></li>
+<li><p><strong>redudl</strong>	Completed re-education based on detailed qualifications</p></li>
+<li><p><strong>redufl</strong>	Completed re-education using highest lvl and detailed qualifications.</p></li>
+</ul>
+</div>
+<div class="section" id="outcome-variables">
+<h3>Outcome variables<a class="headerlink" href="#outcome-variables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>Mental health in 2019 (<strong>mh</strong>). This is the transformed mental health scores from the aggregation of mental health items of the SF-36 Health Survey, as reported by the individual in 2019. It ranges from 0 to 100, with higher scores indicating better mental health.</p></li>
+<li><p>Working hours in 2019 (<strong>wkhr</strong>) records the total number of hours the individual works in all jobs in a week on average. Working hours are set to 0 for those not working.</p></li>
+<li><p>Hourly Wages in 2019 (<strong>rlwage</strong>) records the average hourly wage for the individual’s main job in 2019. Hourly wages are set to 0 for those not working and set to missing for those reporting working more than 100 hours a week.</p></li>
+</ul>
+<div class="section" id="columns-explicitly-excluded">
+<h4>Columns explicitly excluded<a class="headerlink" href="#columns-explicitly-excluded" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><p><strong>xwaveid</strong> (unique identifier)</p></li>
+<li><p><strong>p_rcom</strong>* (timing of completion of re-education, proxies treatment) TODO think about how we would include this</p></li>
+<li><p><strong>p_cotrl</strong> (first avail 2003)</p></li>
+<li><p><strong>p_rdf</strong>* (first avail 2012)</p></li>
+</ul>
+<div class="cell tag_hide_cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">pyro</span>
+<span class="kn">import</span> <span class="nn">pyro.distributions</span> <span class="k">as</span> <span class="nn">dist</span>
+<span class="kn">from</span> <span class="nn">pyro.infer</span> <span class="kn">import</span> <span class="n">MCMC</span><span class="p">,</span> <span class="n">NUTS</span>
+
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">mstats</span>
+<span class="kn">from</span> <span class="nn">cinspect.estimators</span> <span class="kn">import</span> <span class="n">BayesianRidgeStat</span>
+<span class="kn">from</span> <span class="nn">sklearn.gaussian_process</span> <span class="kn">import</span> <span class="n">GaussianProcessRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.gaussian_process.kernels</span> <span class="kn">import</span> <span class="n">WhiteKernel</span><span class="p">,</span> <span class="n">Matern</span><span class="p">,</span> <span class="n">DotProduct</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_validate</span><span class="p">,</span> <span class="n">KFold</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+
+<span class="kn">from</span> <span class="nn">reed</span> <span class="kn">import</span> <span class="n">drop_missing_treatment_or_outcome</span><span class="p">,</span> <span class="n">Model</span><span class="p">,</span> <span class="n">transform_outcome</span>
+<span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">seperate_and_transform_data</span><span class="p">,</span> <span class="n">print_unconditional_effects</span>
+
+
+<span class="n">torch</span><span class="o">.</span><span class="n">set_default_tensor_type</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">DoubleTensor</span><span class="p">)</span> <span class="c1"># set the default to float64</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="analysis-parameters">
+<h2>Analysis Parameters<a class="headerlink" href="#analysis-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_parameters docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_outcome</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">standardize_outcome</span><span class="o">=</span><span class="kc">True</span>
+<span class="n">exclude_patterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;^reduhl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^rehllt$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redudl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redufl$&#39;</span><span class="p">,</span> <span class="s1">&#39;^redllt$&#39;</span><span class="p">,</span> <span class="s1">&#39;^refllt$&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;^rlwage$&#39;</span><span class="p">,</span> <span class="s1">&#39;^mh$&#39;</span><span class="p">,</span> <span class="s1">&#39;^mhbm$&#39;</span><span class="p">,</span> <span class="s1">&#39;^wkhr$&#39;</span><span class="p">,</span> <span class="s1">&#39;^y_&#39;</span><span class="p">,</span> <span class="s1">&#39;^p_rcom&#39;</span><span class="p">,</span><span class="s1">&#39;^p_rdf&#39;</span><span class="p">,</span><span class="s1">&#39;^p_cotrl&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;^xwaveid$&#39;</span><span class="p">,</span><span class="s1">&#39;p_rcom18&#39;</span><span class="p">,</span><span class="s1">&#39;^aedcq&#39;</span><span class="p">,</span> <span class="s1">&#39;^abnfsty&#39;</span><span class="p">,</span><span class="s1">&#39;^aedcqfpt&#39;</span><span class="p">,</span><span class="s1">&#39;^aedqstdy&#39;</span>
+<span class="p">]</span>
+<span class="n">data_load_func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">filepath</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;xwaveid&#39;</span><span class="p">)</span>
+
+<span class="c1">#configuration_name = &#39;default&#39;</span>
+<span class="n">outcome</span> <span class="o">=</span> <span class="s1">&#39;y_wsce&#39;</span>
+<span class="n">treatment</span> <span class="o">=</span> <span class="s1">&#39;redufl&#39;</span>
+<span class="n">test</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/all_lasso_selected_100.csv&quot;</span>
+<span class="n">xval_gp</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">laplace_prior</span> <span class="o">=</span> <span class="kc">False</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_injected-parameters docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters</span>
+<span class="n">configuration_name</span> <span class="o">=</span> <span class="s2">&quot;lasso-50-restricted&quot;</span>
+<span class="n">outcome</span> <span class="o">=</span> <span class="s2">&quot;y_wsce&quot;</span>
+<span class="n">treatment</span> <span class="o">=</span> <span class="s2">&quot;redufl&quot;</span>
+<span class="n">test</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">data_file</span> <span class="o">=</span> <span class="s2">&quot;data/all_lasso_selected_50_restricted.csv&quot;</span>
+<span class="n">release</span> <span class="o">=</span> <span class="s2">&quot;restricted&quot;</span>
+<span class="n">laplace_prior</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">xval_gp</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="load-the-data">
+<h2>Load the data<a class="headerlink" href="#load-the-data" title="Permalink to this headline">¶</a></h2>
+<div class="cell tag_hide_cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">data_load_func</span><span class="p">(</span><span class="n">data_file</span><span class="p">)</span>
+<span class="n">drop_missing_treatment_or_outcome</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+<span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform_outcome</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">],</span><span class="n">log_outcome</span><span class="p">,</span> <span class="n">standardize_outcome</span><span class="p">)</span>
+
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">outcome</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">outcome</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribution of outcomes&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dropped 284 rows missing treatment or outcome.
+</pre></div>
+</div>
+<img alt="_images/Direct-Bayesian-lasso-50-restricted_7_1.png" src="_images/Direct-Bayesian-lasso-50-restricted_7_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="prepare-data-for-modeling">
+<h2>Prepare data for modeling<a class="headerlink" href="#prepare-data-for-modeling" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>split into treated/control</p></li>
+<li><p>impute missing values and scale</p></li>
+<li><p>separate features from outcomes&amp;treatments</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">direct_regression</span> <span class="kn">import</span> <span class="n">seperate_and_transform_data</span>
+<span class="n">X0</span><span class="p">,</span> <span class="n">X1</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">seperate_and_transform_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Control data dimensions: &quot;</span><span class="p">,</span> <span class="n">X0</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Treated data dimensions:&quot;</span><span class="p">,</span> <span class="n">X1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Control data dimensions:  (3789, 48)
+Treated data dimensions: (1368, 48)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="compute-unconditional-unadjusted-estimate-of-treatment-effect">
+<h2>Compute unconditional/unadjusted estimate of treatment effect<a class="headerlink" href="#compute-unconditional-unadjusted-estimate-of-treatment-effect" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">print_unconditional_effects</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">treatment</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Proportion Treated:27%
+Average outcome under Control:-0.14±0.02
+Average outcome under Treatment:0.37±0.03
+Unadjusted treatment estimate 0.51
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="statsmodels">
+<h2>Statsmodels<a class="headerlink" href="#statsmodels" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ols">
+<h3>OLS<a class="headerlink" href="#ols" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Xt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">t</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">X</span><span class="p">))</span>
+<span class="n">Xt</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">Xt</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">features</span><span class="p">)</span>
+<span class="n">ols</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">Xt</span><span class="p">))</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">ols</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">ate_ols</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span>
+<span class="n">ci_ols</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">conf_int</span><span class="p">()</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.361
+Model:                            OLS   Adj. R-squared:                  0.355
+Method:                 Least Squares   F-statistic:                     58.90
+Date:                Tue, 30 Nov 2021   Prob (F-statistic):               0.00
+Time:                        09:00:05   Log-Likelihood:                -6162.4
+No. Observations:                5157   AIC:                         1.242e+04
+Df Residuals:                    5107   BIC:                         1.275e+04
+Df Model:                          49                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.0471      0.013     -3.544      0.000      -0.073      -0.021
+treatment      0.1777      0.027      6.548      0.000       0.124       0.231
+adocond       -0.0106      0.012     -0.897      0.370      -0.034       0.013
+acpno          0.0024      0.012      0.207      0.836      -0.021       0.026
+ahh0_4         0.0786      0.016      4.992      0.000       0.048       0.109
+ahhsos        -0.0305      0.012     -2.511      0.012      -0.054      -0.007
+achu_sf       -0.0063      0.011     -0.554      0.580      -0.029       0.016
+ahiwscei      -0.0447      0.018     -2.514      0.012      -0.080      -0.010
+ahifapti      -0.1057      0.014     -7.397      0.000      -0.134      -0.078
+ahgsex        -0.0466      0.014     -3.264      0.001      -0.075      -0.019
+ahgms          0.0180      0.013      1.346      0.178      -0.008       0.044
+ahgrf          0.0094      0.022      0.417      0.677      -0.035       0.053
+ahgscq        -0.0301      0.013     -2.357      0.018      -0.055      -0.005
+abncapuf       0.0113      0.020      0.574      0.566      -0.027       0.050
+aoidvryf      -0.0374      0.014     -2.656      0.008      -0.065      -0.010
+aoirntf       -0.0392      0.014     -2.741      0.006      -0.067      -0.011
+awscef        -0.0058      0.017     -0.335      0.738      -0.040       0.028
+awscoef        0.0420      0.023      1.802      0.072      -0.004       0.088
+awsfef         0.0041      0.015      0.279      0.781      -0.025       0.033
+atifditp       0.0656      0.018      3.698      0.000       0.031       0.100
+ahhd5_9        0.0601      0.014      4.422      0.000       0.033       0.087
+ahhd1014       0.0136      0.013      1.018      0.309      -0.013       0.040
+ahhura         0.0079      0.012      0.664      0.507      -0.015       0.031
+afmagelh       0.0104      0.012      0.872      0.383      -0.013       0.034
+aedqobd       -0.0163      0.012     -1.340      0.180      -0.040       0.008
+aehtjbyr      -0.1610      0.015    -10.470      0.000      -0.191      -0.131
+ajbmpgj        0.0436      0.012      3.773      0.000       0.021       0.066
+ajbmwpsz       0.0268      0.012      2.229      0.026       0.003       0.050
+artiage1       0.0312      0.011      2.740      0.006       0.009       0.054
+ajsl4wk       -0.0071      0.012     -0.603      0.546      -0.030       0.016
+awslya         0.0157      0.011      1.379      0.168      -0.007       0.038
+awsfga        -0.0927      0.016     -5.666      0.000      -0.125      -0.061
+ancsex1        0.0077      0.011      0.690      0.490      -0.014       0.030
+aicprob        0.0826      0.012      6.701      0.000       0.058       0.107
+ahelthyr      -0.0045      0.011     -0.398      0.690      -0.026       0.018
+alosateo       0.0248      0.012      1.999      0.046       0.000       0.049
+aloimpew       0.0445      0.013      3.308      0.001       0.018       0.071
+amhn10yr       0.0120      0.012      0.968      0.333      -0.012       0.036
+amhlyr         0.0067      0.012      0.562      0.574      -0.017       0.030
+ajbmo6s        0.0048      0.013      0.371      0.711      -0.021       0.030
+atcyng        -0.1323      0.025     -5.399      0.000      -0.180      -0.084
+atcnr         -0.1141      0.016     -7.312      0.000      -0.145      -0.084
+ahhyng        -0.0429      0.024     -1.763      0.078      -0.091       0.005
+awscme         0.1559      0.021      7.572      0.000       0.116       0.196
+aoiint        -0.0198      0.012     -1.665      0.096      -0.043       0.004
+aoidvry       -0.0500      0.012     -4.150      0.000      -0.074      -0.026
+agh3a          0.0637      0.012      5.194      0.000       0.040       0.088
+apashare       0.0077      0.013      0.616      0.538      -0.017       0.032
+apawkmfh       0.0154      0.011      1.338      0.181      -0.007       0.038
+apawkbp       -0.0084      0.011     -0.739      0.460      -0.031       0.014
+==============================================================================
+Omnibus:                      525.482   Durbin-Watson:                   1.912
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              165.672
+Skew:                          -0.138   Prob(JB):                     1.06e-36
+Kurtosis:                       2.167   Cond. No.                         6.07
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="scikit-learn-bayesian-estimators">
+<h2>Scikit learn Bayesian Estimators<a class="headerlink" href="#scikit-learn-bayesian-estimators" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bayesian-ridge">
+<h3>Bayesian Ridge<a class="headerlink" href="#bayesian-ridge" title="Permalink to this headline">¶</a></h3>
+<p>Coefficient statistics</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">blr</span> <span class="o">=</span> <span class="n">BayesianRidgeStat</span><span class="p">()</span>
+<span class="n">blr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="n">score</span> <span class="o">=</span> <span class="n">blr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Coefficient statistics</span>
+<span class="n">stats</span> <span class="o">=</span> <span class="n">blr</span><span class="o">.</span><span class="n">model_statistics</span><span class="p">()</span>
+<span class="n">ate_blr</span><span class="p">,</span> <span class="n">se_blr</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">stats</span><span class="o">.</span><span class="n">std_err</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">ci_blr</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">ate_blr</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">se_blr</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bayesian Ridge simple model - coefficient stats:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  R-squared = </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ATE: </span><span class="si">{</span><span class="n">ate_blr</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">se_blr</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  t: </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">t_stat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  p-value: </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">p_value</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  CI (0.025, 0.975): [</span><span class="si">{</span><span class="n">ci_blr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">ci_blr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bayesian Ridge simple model - coefficient stats:
+  R-squared = 0.3607
+  ATE: 0.1502 (0.0246)
+  t: 6.1049
+  p-value: 0.0000
+  CI (0.025, 0.975): [0.1020, 0.1984]
+</pre></div>
+</div>
+</div>
+</div>
+<p>ATE sampling with counterfactual models</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ATE sampling</span>
+<span class="n">samples</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">w_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">blr</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">blr</span><span class="o">.</span><span class="n">sigma_</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+
+<span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">Xt0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">X</span><span class="p">)),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">features</span><span class="p">)</span>
+<span class="n">Xt1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">X</span><span class="p">)),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">features</span><span class="p">)</span>
+
+<span class="n">ate_blr_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Xt1</span> <span class="o">@</span> <span class="n">w_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">Xt0</span> <span class="o">@</span> <span class="n">w_samples</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ate_blr</span> <span class="o">=</span> <span class="n">ate_blr_samples</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">se_blr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ate_blr_samples</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ci_blr</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">ate_blr</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">se_blr</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bayesian Ridge simple model - counterfactual sampling:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  R-squared = </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ATE: </span><span class="si">{</span><span class="n">ate_blr</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">se_blr</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  CI (0.025, 0.975): [</span><span class="si">{</span><span class="n">ci_blr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">ci_blr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Bayesian Ridge simple model - counterfactual sampling:
+  R-squared = 0.3607
+  ATE: 0.1468 (0.0247)
+  CI (0.025, 0.975): [0.0984, 0.1953]
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="gaussian-process">
+<h3>Gaussian Process<a class="headerlink" href="#gaussian-process" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kernel</span> <span class="o">=</span> <span class="n">WhiteKernel</span><span class="p">()</span> <span class="o">+</span> <span class="n">Matern</span><span class="p">(</span><span class="n">nu</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">gpr</span> <span class="o">=</span> <span class="n">GaussianProcessRegressor</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">)</span>
+
+<span class="c1"># This takes a while for 5000 samples... (5 mins or so)</span>
+<span class="n">gpr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">gpr</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># ATE sampling   </span>
+<span class="n">f0</span><span class="p">,</span> <span class="n">K0</span> <span class="o">=</span> <span class="n">gpr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xt0</span><span class="p">,</span> <span class="n">return_cov</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">f1</span><span class="p">,</span> <span class="n">K1</span> <span class="o">=</span> <span class="n">gpr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">Xt1</span><span class="p">,</span> <span class="n">return_cov</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">y_0_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">f0</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">K0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">y_1_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">f1</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">K1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">ate_gp_samples</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_1_samples</span> <span class="o">-</span> <span class="n">y_0_samples</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">ate_gp</span> <span class="o">=</span> <span class="n">ate_gp_samples</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">se_gp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ate_gp_samples</span><span class="p">,</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">ci_gp</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="n">ate_gp</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">se_gp</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Gaussian Process </span><span class="si">{</span><span class="n">gpr</span><span class="o">.</span><span class="n">kernel_</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  R-squared = </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ATE: </span><span class="si">{</span><span class="n">ate_gp</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">se_gp</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  CI (0.025, 0.975): [</span><span class="si">{</span><span class="n">ci_gp</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">ci_gp</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Gaussian Process WhiteKernel(noise_level=0.457) + Matern(length_scale=10.4, nu=1.5):
+  R-squared = 0.6343
+  ATE: 0.1311 (0.0274)
+  CI (0.025, 0.975): [0.0775, 0.1847]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Check if GP is overfitting</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">xval_gp</span><span class="p">:</span>
+    <span class="n">cv_scores</span> <span class="o">=</span> <span class="n">cross_validate</span><span class="p">(</span><span class="n">gpr</span><span class="p">,</span> <span class="n">Xt</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span>
+                               <span class="n">cv</span><span class="o">=</span><span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span>
+                               <span class="n">return_train_score</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv_scores</span><span class="p">)</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="hierarchical-bayesian-linear-model">
+<h2>Hierarchical Bayesian Linear Model<a class="headerlink" href="#hierarchical-bayesian-linear-model" title="Permalink to this headline">¶</a></h2>
+<p>This model takes the following form and prior settings,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+    \{\lambda_0, \lambda_t, \lambda_x, \lambda_{tx}\} &amp;\sim \textrm{Gamma}(1, 1) \\
+    \sigma^2 &amp;\sim \textrm{Gamma}(1, 1) \\
+    w_0 &amp;\sim \mathcal{N}(0, \lambda_0) \\
+    w_t &amp;\sim \mathcal{N}(0, \lambda_t) \\
+    \mathbf{w}_x &amp;\sim \mathcal{N}(0, \lambda_x \mathbf{I}_d) \\
+    \mathbf{w}_{tx} &amp;\sim \mathcal{N}(0, \lambda_{tx} \mathbf{I}_d) \\
+    y_i &amp;\sim \mathcal{N}(\mu(\mathbf{x}_i, t_i), \sigma^2) \\
+    \mu(\mathbf{x}_i, t_i) &amp;= w_0 + w_t t_i + \mathbf{w}_x^\top\mathbf{x}_i + t_i\mathbf{w}_{tx}^\top\mathbf{x}_i
+\end{align}
+\end{split}\]</div>
+<div class="section" id="set-up-the-model">
+<h3>Set up the model<a class="headerlink" href="#set-up-the-model" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">w_0</span><span class="p">,</span> <span class="n">w_t</span><span class="p">,</span> <span class="n">w_x</span><span class="p">,</span> <span class="n">w_tx</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">w_0</span> <span class="o">+</span> <span class="n">w_t</span> <span class="o">*</span> <span class="n">t</span> <span class="o">+</span> <span class="n">x</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">w_x</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">x</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">w_tx</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f</span>
+
+
+<span class="k">def</span> <span class="nf">model_treatment_intersection</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># Hyper-Priors</span>
+    <span class="n">lambda_prior</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+    <span class="n">sigma_prior</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Gamma</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">)</span>
+    
+    <span class="c1"># Priors</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">weight_prior</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Laplace</span> <span class="k">if</span> <span class="n">laplace_prior</span> <span class="k">else</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span>
+    <span class="n">p_w0</span> <span class="o">=</span> <span class="n">weight_prior</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;l_0&quot;</span><span class="p">,</span> <span class="n">lambda_prior</span><span class="p">))</span>
+    <span class="n">p_wt</span> <span class="o">=</span> <span class="n">weight_prior</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;l_t&quot;</span><span class="p">,</span> <span class="n">lambda_prior</span><span class="p">))</span>
+    <span class="n">p_wx</span> <span class="o">=</span> <span class="n">weight_prior</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;l_x&quot;</span><span class="p">,</span> <span class="n">lambda_prior</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    <span class="n">p_twx</span> <span class="o">=</span> <span class="n">weight_prior</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;l_tx&quot;</span><span class="p">,</span> <span class="n">lambda_prior</span><span class="p">)</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+    
+    <span class="c1"># Model weights</span>
+    <span class="n">w_0</span> <span class="o">=</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;intercept&quot;</span><span class="p">,</span> <span class="n">p_w0</span><span class="p">)</span>
+    <span class="n">w_t</span> <span class="o">=</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;treatment&quot;</span><span class="p">,</span> <span class="n">p_wt</span><span class="p">)</span>
+    <span class="n">w_x</span> <span class="o">=</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;confounders&quot;</span><span class="p">,</span> <span class="n">p_wx</span><span class="p">)</span>
+    <span class="n">w_tx</span> <span class="o">=</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;intersection&quot;</span><span class="p">,</span> <span class="n">p_twx</span><span class="p">)</span>
+    
+    <span class="c1"># Likelihood</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">w_0</span><span class="p">,</span> <span class="n">w_t</span><span class="p">,</span> <span class="n">w_x</span><span class="p">,</span> <span class="n">w_tx</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">t</span><span class="p">)</span>
+    <span class="n">sigma</span> <span class="o">=</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;variance&quot;</span><span class="p">,</span> <span class="n">sigma_prior</span><span class="p">)</span>
+    
+    <span class="k">with</span> <span class="n">pyro</span><span class="o">.</span><span class="n">plate</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">likelihood</span> <span class="o">=</span> <span class="n">dist</span><span class="o">.</span><span class="n">Normal</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">pyro</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="s2">&quot;likelihood&quot;</span><span class="p">,</span> <span class="n">likelihood</span><span class="p">,</span> <span class="n">obs</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="run-mcmc-inference-to-compute-the-posteriors">
+<h3>Run MCMC inference to compute the posteriors<a class="headerlink" href="#run-mcmc-inference-to-compute-the-posteriors" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">samples</span> <span class="o">=</span> <span class="mi">500</span>
+<span class="n">warm_up</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="n">X_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">t_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="n">y_torch</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="c1"># Initialize No U-Turn Sampler</span>
+<span class="n">nuts_kernel</span> <span class="o">=</span> <span class="n">NUTS</span><span class="p">(</span><span class="n">model_treatment_intersection</span><span class="p">,</span> <span class="n">max_tree_depth</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+<span class="n">model_mcmc</span> <span class="o">=</span> <span class="n">MCMC</span><span class="p">(</span><span class="n">nuts_kernel</span><span class="p">,</span> <span class="n">num_samples</span><span class="o">=</span><span class="n">samples</span><span class="p">,</span> <span class="n">warmup_steps</span><span class="o">=</span><span class="n">warm_up</span><span class="p">)</span>
+
+<span class="c1"># Run the sampler</span>
+<span class="n">model_mcmc</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">X_torch</span><span class="p">,</span> <span class="n">t_torch</span><span class="p">,</span> <span class="n">y_torch</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   0%|                                                                     | 0/700 [00:00, ?it/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   0%|                            | 1/700 [00:00,  7.46it/s, step size=3.51e-03, acc. prob=1.000]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   1%|▎                           | 8/700 [00:00, 34.10it/s, step size=1.61e-02, acc. prob=0.875]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   2%|▍                          | 12/700 [00:00, 22.72it/s, step size=8.38e-03, acc. prob=0.833]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   2%|▌                          | 15/700 [00:00, 19.19it/s, step size=4.25e-03, acc. prob=0.812]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   3%|▋                          | 18/700 [00:00, 17.75it/s, step size=8.20e-03, acc. prob=0.822]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   3%|▊                          | 20/700 [00:01, 17.64it/s, step size=1.27e-03, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   3%|▊                          | 22/700 [00:01,  7.80it/s, step size=4.08e-03, acc. prob=0.808]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   3%|▉                          | 24/700 [00:02,  4.97it/s, step size=7.75e-03, acc. prob=0.817]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   4%|█                          | 26/700 [00:02,  5.87it/s, step size=3.15e-03, acc. prob=0.803]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   4%|█                          | 28/700 [00:03,  4.89it/s, step size=2.94e-03, acc. prob=0.802]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   4%|█                          | 29/700 [00:03,  4.80it/s, step size=4.86e-03, acc. prob=0.809]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   4%|█▏                         | 30/700 [00:03,  5.24it/s, step size=7.77e-03, acc. prob=0.814]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   5%|█▏                         | 32/700 [00:04,  4.64it/s, step size=1.83e-03, acc. prob=0.797]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   5%|█▎                         | 33/700 [00:04,  4.58it/s, step size=2.83e-03, acc. prob=0.802]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   5%|█▎                         | 34/700 [00:04,  5.13it/s, step size=3.99e-03, acc. prob=0.805]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   5%|█▎                         | 35/700 [00:04,  5.67it/s, step size=5.73e-03, acc. prob=0.809]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   5%|█▍                         | 38/700 [00:05,  5.64it/s, step size=1.89e-03, acc. prob=0.797]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   6%|█▌                         | 39/700 [00:05,  5.31it/s, step size=3.11e-03, acc. prob=0.802]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   6%|█▌                         | 40/700 [00:05,  5.81it/s, step size=4.69e-03, acc. prob=0.806]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   6%|█▌                         | 41/700 [00:05,  4.13it/s, step size=7.58e-03, acc. prob=0.811]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   6%|█▋                         | 43/700 [00:06,  5.57it/s, step size=3.37e-03, acc. prob=0.803]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   6%|█▋                         | 44/700 [00:06,  6.07it/s, step size=3.66e-03, acc. prob=0.804]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   6%|█▋                         | 45/700 [00:06,  6.57it/s, step size=5.93e-03, acc. prob=0.808]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   7%|█▊                         | 48/700 [00:06,  7.80it/s, step size=1.96e-03, acc. prob=0.798]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   7%|█▉                         | 49/700 [00:06,  6.77it/s, step size=2.82e-03, acc. prob=0.801]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   7%|█▉                         | 50/700 [00:07,  7.09it/s, step size=3.35e-03, acc. prob=0.803]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   7%|█▉                         | 51/700 [00:07,  7.40it/s, step size=4.51e-03, acc. prob=0.805]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   7%|██                         | 52/700 [00:07,  7.62it/s, step size=5.21e-03, acc. prob=0.806]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   8%|██                         | 54/700 [00:07, 10.00it/s, step size=5.75e-03, acc. prob=0.807]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   8%|██▏                        | 56/700 [00:07, 11.89it/s, step size=6.16e-03, acc. prob=0.807]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   8%|██▏                        | 58/700 [00:07, 11.79it/s, step size=4.80e-03, acc. prob=0.805]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   9%|██▎                        | 60/700 [00:07, 11.69it/s, step size=1.91e-03, acc. prob=0.798]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   9%|██▍                        | 62/700 [00:08, 10.59it/s, step size=4.49e-03, acc. prob=0.804]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   9%|██▍                        | 64/700 [00:08,  7.81it/s, step size=5.65e-03, acc. prob=0.806]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:   9%|██▌                        | 66/700 [00:08,  9.53it/s, step size=1.86e-03, acc. prob=0.798]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  10%|██▌                        | 68/700 [00:08,  7.97it/s, step size=3.87e-03, acc. prob=0.803]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  10%|██▋                        | 70/700 [00:09,  8.83it/s, step size=5.83e-03, acc. prob=0.806]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  10%|██▊                        | 72/700 [00:09, 10.40it/s, step size=6.19e-03, acc. prob=0.806]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  11%|██▉                        | 75/700 [00:09, 11.89it/s, step size=5.33e-03, acc. prob=0.805]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  11%|██▉                        | 77/700 [00:09, 13.10it/s, step size=7.21e-03, acc. prob=0.807]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  11%|███                        | 79/700 [00:09, 12.59it/s, step size=3.02e-03, acc. prob=0.801]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  12%|███                        | 81/700 [00:09, 12.28it/s, step size=5.45e-03, acc. prob=0.805]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  12%|███▏                       | 83/700 [00:10, 13.52it/s, step size=5.82e-03, acc. prob=0.805]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  12%|███▎                       | 85/700 [00:10, 14.56it/s, step size=2.60e-03, acc. prob=0.800]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  12%|███▎                       | 87/700 [00:10, 12.13it/s, step size=3.81e-03, acc. prob=0.803]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  13%|███▍                       | 89/700 [00:10, 13.46it/s, step size=7.53e-03, acc. prob=0.807]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  13%|███▌                       | 91/700 [00:10, 14.58it/s, step size=7.70e-03, acc. prob=0.807]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  13%|███▌                       | 93/700 [00:10, 12.13it/s, step size=4.13e-03, acc. prob=0.803]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  14%|███▋                       | 95/700 [00:10, 13.47it/s, step size=6.07e-03, acc. prob=0.805]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  14%|███▋                       | 97/700 [00:11, 14.60it/s, step size=2.86e-03, acc. prob=0.801]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  14%|███▊                       | 99/700 [00:11,  6.96it/s, step size=6.27e-01, acc. prob=0.804]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  15%|███▊                      | 102/700 [00:11,  9.55it/s, step size=1.41e-01, acc. prob=0.790]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  15%|███▊                      | 104/700 [00:12,  9.33it/s, step size=2.25e-01, acc. prob=0.793]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  15%|███▉                      | 106/700 [00:12,  9.88it/s, step size=4.67e-01, acc. prob=0.796]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  15%|████                      | 108/700 [00:12,  7.07it/s, step size=6.81e-02, acc. prob=0.790]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  16%|████                      | 110/700 [00:13,  6.65it/s, step size=2.37e-01, acc. prob=0.794]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  16%|████▏                     | 112/700 [00:13,  7.63it/s, step size=2.50e-01, acc. prob=0.794]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  16%|████▏                     | 114/700 [00:13,  8.47it/s, step size=2.87e-01, acc. prob=0.795]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  17%|████▎                     | 117/700 [00:13,  8.88it/s, step size=8.23e-02, acc. prob=0.791]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  17%|████▍                     | 119/700 [00:14,  7.75it/s, step size=2.48e-01, acc. prob=0.794]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  17%|████▍                     | 121/700 [00:14,  9.18it/s, step size=1.85e-01, acc. prob=0.793]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  18%|████▌                     | 123/700 [00:14,  9.05it/s, step size=2.12e-01, acc. prob=0.794]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  18%|████▋                     | 125/700 [00:14, 10.58it/s, step size=8.24e-02, acc. prob=0.791]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  18%|████▋                     | 127/700 [00:14,  7.35it/s, step size=2.61e-01, acc. prob=0.794]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  18%|████▊                     | 129/700 [00:15,  8.90it/s, step size=4.15e-01, acc. prob=0.795]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  19%|████▊                     | 131/700 [00:15,  8.52it/s, step size=8.59e-02, acc. prob=0.791]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  19%|████▉                     | 133/700 [00:15,  7.48it/s, step size=2.21e-01, acc. prob=0.793]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  19%|█████                     | 135/700 [00:15,  8.01it/s, step size=6.48e-02, acc. prob=0.790]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  19%|█████                     | 136/700 [00:16,  6.99it/s, step size=1.11e-01, acc. prob=0.791]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  20%|█████                     | 137/700 [00:16,  7.26it/s, step size=1.92e-01, acc. prob=0.793]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  20%|█████▏                    | 138/700 [00:16,  7.47it/s, step size=2.48e-01, acc. prob=0.794]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  20%|█████▏                    | 139/700 [00:16,  7.71it/s, step size=2.81e-01, acc. prob=0.794]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  20%|█████▏                    | 141/700 [00:16, 10.05it/s, step size=3.95e-01, acc. prob=0.795]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  20%|█████▎                    | 143/700 [00:16,  9.20it/s, step size=9.34e-02, acc. prob=0.791]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  21%|█████▍                    | 145/700 [00:17,  6.49it/s, step size=1.63e-01, acc. prob=0.792]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  21%|█████▍                    | 147/700 [00:17,  7.60it/s, step size=2.48e-01, acc. prob=0.793]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  21%|█████▌                    | 149/700 [00:17,  9.09it/s, step size=3.43e-01, acc. prob=0.792]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  22%|█████▋                    | 152/700 [00:17, 11.28it/s, step size=1.36e-01, acc. prob=0.785]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  22%|█████▋                    | 154/700 [00:17, 10.41it/s, step size=2.71e-01, acc. prob=0.787]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  22%|█████▊                    | 157/700 [00:18, 11.80it/s, step size=1.61e-01, acc. prob=0.787]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  23%|█████▉                    | 159/700 [00:18, 11.74it/s, step size=2.94e-01, acc. prob=0.788]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  23%|█████▉                    | 161/700 [00:18, 11.77it/s, step size=1.92e-01, acc. prob=0.787]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  23%|██████                    | 163/700 [00:18, 11.75it/s, step size=3.27e-01, acc. prob=0.788]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  24%|██████▏                   | 166/700 [00:18, 11.08it/s, step size=1.01e-01, acc. prob=0.786]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  24%|██████▏                   | 168/700 [00:19, 10.27it/s, step size=3.10e-01, acc. prob=0.788]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  24%|██████▎                   | 170/700 [00:19, 11.65it/s, step size=4.08e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  25%|██████▍                   | 172/700 [00:19, 10.21it/s, step size=1.18e-01, acc. prob=0.787]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  25%|██████▍                   | 174/700 [00:19, 10.61it/s, step size=3.60e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  25%|██████▌                   | 176/700 [00:20,  9.23it/s, step size=9.71e-02, acc. prob=0.786]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  25%|██████▌                   | 178/700 [00:20,  7.82it/s, step size=3.05e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  26%|██████▋                   | 180/700 [00:20,  7.52it/s, step size=1.12e-01, acc. prob=0.787]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  26%|██████▋                   | 181/700 [00:20,  7.68it/s, step size=1.87e-01, acc. prob=0.788]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  26%|██████▊                   | 183/700 [00:20,  9.44it/s, step size=2.31e-01, acc. prob=0.788]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  26%|██████▊                   | 185/700 [00:21, 11.16it/s, step size=2.83e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  27%|██████▉                   | 187/700 [00:21, 12.68it/s, step size=2.10e-01, acc. prob=0.788]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  27%|███████                   | 189/700 [00:21, 13.89it/s, step size=2.64e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  27%|███████                   | 191/700 [00:21, 14.84it/s, step size=2.79e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  28%|███████▏                  | 194/700 [00:21, 12.46it/s, step size=1.04e-01, acc. prob=0.787]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  28%|███████▎                  | 196/700 [00:21, 11.18it/s, step size=1.45e-01, acc. prob=0.787]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  28%|███████▎                  | 198/700 [00:22, 11.30it/s, step size=2.92e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warmup:  29%|███████▍                  | 200/700 [00:22, 11.46it/s, step size=1.87e-01, acc. prob=0.789]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  29%|███████▌                  | 202/700 [00:22, 11.51it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  29%|███████▌                  | 204/700 [00:22, 12.85it/s, step size=1.87e-01, acc. prob=0.941]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  29%|███████▋                  | 206/700 [00:22, 14.07it/s, step size=1.87e-01, acc. prob=0.928]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  30%|███████▋                  | 208/700 [00:22, 15.09it/s, step size=1.87e-01, acc. prob=0.861]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  30%|███████▊                  | 210/700 [00:22, 15.76it/s, step size=1.87e-01, acc. prob=0.864]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  30%|███████▊                  | 212/700 [00:22, 16.30it/s, step size=1.87e-01, acc. prob=0.852]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  31%|███████▉                  | 214/700 [00:23, 16.74it/s, step size=1.87e-01, acc. prob=0.858]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  31%|████████                  | 216/700 [00:23, 17.12it/s, step size=1.87e-01, acc. prob=0.839]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  31%|████████                  | 218/700 [00:23, 17.50it/s, step size=1.87e-01, acc. prob=0.830]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  31%|████████▏                 | 220/700 [00:23, 17.86it/s, step size=1.87e-01, acc. prob=0.840]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  32%|████████▏                 | 222/700 [00:23, 15.18it/s, step size=1.87e-01, acc. prob=0.851]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  32%|████████▎                 | 224/700 [00:23, 12.48it/s, step size=1.87e-01, acc. prob=0.857]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  32%|████████▍                 | 226/700 [00:23, 13.76it/s, step size=1.87e-01, acc. prob=0.862]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  33%|████████▍                 | 228/700 [00:24, 14.80it/s, step size=1.87e-01, acc. prob=0.864]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  33%|████████▌                 | 230/700 [00:24, 13.41it/s, step size=1.87e-01, acc. prob=0.870]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  33%|████████▌                 | 232/700 [00:24, 11.52it/s, step size=1.87e-01, acc. prob=0.876]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  33%|████████▋                 | 234/700 [00:24, 10.46it/s, step size=1.87e-01, acc. prob=0.881]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  34%|████████▊                 | 236/700 [00:24,  9.87it/s, step size=1.87e-01, acc. prob=0.881]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  34%|████████▊                 | 238/700 [00:25,  9.47it/s, step size=1.87e-01, acc. prob=0.882]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  34%|████████▉                 | 240/700 [00:25,  9.20it/s, step size=1.87e-01, acc. prob=0.879]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  34%|████████▉                 | 241/700 [00:25,  9.12it/s, step size=1.87e-01, acc. prob=0.880]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  35%|█████████                 | 243/700 [00:25,  9.78it/s, step size=1.87e-01, acc. prob=0.875]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  35%|█████████                 | 244/700 [00:25,  9.54it/s, step size=1.87e-01, acc. prob=0.877]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  35%|█████████▏                | 246/700 [00:25, 11.46it/s, step size=1.87e-01, acc. prob=0.881]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  35%|█████████▏                | 248/700 [00:26, 11.56it/s, step size=1.87e-01, acc. prob=0.881]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  36%|█████████▎                | 250/700 [00:26, 11.52it/s, step size=1.87e-01, acc. prob=0.881]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  36%|█████████▎                | 252/700 [00:26, 11.59it/s, step size=1.87e-01, acc. prob=0.884]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  36%|█████████▍                | 254/700 [00:26, 11.59it/s, step size=1.87e-01, acc. prob=0.886]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  37%|█████████▌                | 256/700 [00:26, 12.86it/s, step size=1.87e-01, acc. prob=0.887]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  37%|█████████▌                | 258/700 [00:26, 13.97it/s, step size=1.87e-01, acc. prob=0.890]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  37%|█████████▋                | 260/700 [00:27, 11.80it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  37%|█████████▋                | 262/700 [00:27, 11.76it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  38%|█████████▊                | 264/700 [00:27, 13.01it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  38%|█████████▉                | 266/700 [00:27, 14.19it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  38%|█████████▉                | 268/700 [00:27, 11.97it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  39%|██████████                | 270/700 [00:27, 11.77it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  39%|██████████                | 272/700 [00:28, 10.12it/s, step size=1.87e-01, acc. prob=0.890]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  39%|██████████▏               | 274/700 [00:28, 10.50it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  39%|██████████▎               | 276/700 [00:28,  9.86it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  40%|██████████▎               | 278/700 [00:28,  9.44it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  40%|██████████▎               | 279/700 [00:28,  9.27it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  40%|██████████▍               | 280/700 [00:28,  9.12it/s, step size=1.87e-01, acc. prob=0.896]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  40%|██████████▍               | 281/700 [00:29,  8.94it/s, step size=1.87e-01, acc. prob=0.897]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  40%|██████████▍               | 282/700 [00:29,  8.76it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  41%|██████████▌               | 284/700 [00:29,  9.72it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  41%|██████████▌               | 285/700 [00:29,  9.43it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  41%|██████████▋               | 287/700 [00:29, 11.49it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  41%|██████████▋               | 289/700 [00:29, 13.00it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  42%|██████████▊               | 291/700 [00:29, 14.27it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  42%|██████████▉               | 293/700 [00:29, 15.20it/s, step size=1.87e-01, acc. prob=0.897]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  42%|██████████▉               | 295/700 [00:30, 13.79it/s, step size=1.87e-01, acc. prob=0.897]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  42%|███████████               | 297/700 [00:30, 14.59it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  43%|███████████               | 299/700 [00:30, 15.24it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  43%|███████████▏              | 301/700 [00:30, 13.69it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  43%|███████████▎              | 303/700 [00:30, 11.54it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  44%|███████████▎              | 305/700 [00:30, 12.88it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  44%|███████████▍              | 307/700 [00:31, 13.99it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  44%|███████████▍              | 309/700 [00:31, 13.01it/s, step size=1.87e-01, acc. prob=0.897]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  44%|███████████▌              | 311/700 [00:31, 11.27it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  45%|███████████▋              | 313/700 [00:31, 10.24it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  45%|███████████▋              | 315/700 [00:31, 10.58it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  45%|███████████▊              | 317/700 [00:32,  9.90it/s, step size=1.87e-01, acc. prob=0.897]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  46%|███████████▊              | 319/700 [00:32,  8.65it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  46%|███████████▉              | 321/700 [00:32, 10.20it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  46%|███████████▉              | 323/700 [00:32,  9.56it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  46%|████████████              | 325/700 [00:32, 10.00it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  47%|████████████▏             | 327/700 [00:33,  9.52it/s, step size=1.87e-01, acc. prob=0.896]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  47%|████████████▏             | 329/700 [00:33,  9.15it/s, step size=1.87e-01, acc. prob=0.897]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  47%|████████████▎             | 331/700 [00:33,  9.70it/s, step size=1.87e-01, acc. prob=0.898]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  48%|████████████▎             | 333/700 [00:33, 10.19it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  48%|████████████▍             | 335/700 [00:33, 10.56it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  48%|████████████▌             | 337/700 [00:34,  9.79it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  48%|████████████▌             | 339/700 [00:34,  9.40it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  49%|████████████▋             | 340/700 [00:34,  9.21it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  49%|████████████▋             | 341/700 [00:34,  9.02it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  49%|████████████▋             | 342/700 [00:34,  8.91it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  49%|████████████▋             | 343/700 [00:34,  8.83it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  49%|████████████▊             | 344/700 [00:34,  8.75it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  49%|████████████▊             | 345/700 [00:35,  8.62it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  49%|████████████▊             | 346/700 [00:35,  8.57it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  50%|████████████▉             | 347/700 [00:35,  8.57it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  50%|████████████▉             | 348/700 [00:35,  8.56it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  50%|████████████▉             | 349/700 [00:35,  8.53it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  50%|█████████████             | 350/700 [00:35,  8.43it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  50%|█████████████             | 352/700 [00:35,  9.61it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  50%|█████████████             | 353/700 [00:35,  9.33it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  51%|█████████████▏            | 354/700 [00:36,  9.09it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  51%|█████████████▏            | 355/700 [00:36,  8.84it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  51%|█████████████▏            | 356/700 [00:36,  8.72it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  51%|█████████████▎            | 357/700 [00:36,  8.57it/s, step size=1.87e-01, acc. prob=0.900]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  51%|█████████████▎            | 359/700 [00:36,  9.53it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  51%|█████████████▎            | 360/700 [00:36,  9.20it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  52%|█████████████▍            | 362/700 [00:36, 11.43it/s, step size=1.87e-01, acc. prob=0.902]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  52%|█████████████▌            | 364/700 [00:36, 13.11it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  52%|█████████████▌            | 366/700 [00:37, 14.32it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  53%|█████████████▋            | 368/700 [00:37, 11.61it/s, step size=1.87e-01, acc. prob=0.901]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  53%|█████████████▋            | 370/700 [00:37, 11.60it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  53%|█████████████▊            | 372/700 [00:37, 10.41it/s, step size=1.87e-01, acc. prob=0.899]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  53%|█████████████▉            | 374/700 [00:37, 11.84it/s, step size=1.87e-01, acc. prob=0.897]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  54%|█████████████▉            | 376/700 [00:38, 11.73it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  54%|██████████████            | 378/700 [00:38, 10.49it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  54%|██████████████            | 380/700 [00:38,  9.80it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  55%|██████████████▏           | 382/700 [00:38,  9.23it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  55%|██████████████▏           | 383/700 [00:38,  8.98it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  55%|██████████████▎           | 384/700 [00:39,  8.71it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  55%|██████████████▎           | 385/700 [00:39,  8.67it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  55%|██████████████▎           | 386/700 [00:39,  8.63it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  55%|██████████████▍           | 388/700 [00:39,  9.63it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  56%|██████████████▍           | 390/700 [00:39, 11.56it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  56%|██████████████▌           | 392/700 [00:39, 11.55it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  56%|██████████████▋           | 394/700 [00:39, 13.00it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  57%|██████████████▋           | 396/700 [00:39, 14.08it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  57%|██████████████▊           | 398/700 [00:40, 14.89it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  57%|██████████████▊           | 400/700 [00:40, 14.95it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  57%|██████████████▉           | 402/700 [00:40, 15.35it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  58%|███████████████           | 404/700 [00:40, 15.96it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  58%|███████████████           | 406/700 [00:40, 16.40it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  58%|███████████████▏          | 408/700 [00:40, 16.73it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  59%|███████████████▏          | 410/700 [00:40, 12.95it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  59%|███████████████▎          | 412/700 [00:41, 12.47it/s, step size=1.87e-01, acc. prob=0.890]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  59%|███████████████▍          | 414/700 [00:41, 10.94it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  59%|███████████████▍          | 416/700 [00:41, 12.30it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  60%|███████████████▌          | 418/700 [00:41, 13.43it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  60%|███████████████▌          | 420/700 [00:41, 14.45it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  60%|███████████████▋          | 422/700 [00:41, 15.26it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  61%|███████████████▋          | 424/700 [00:41, 15.88it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  61%|███████████████▊          | 426/700 [00:41, 16.23it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  61%|███████████████▉          | 428/700 [00:42, 16.47it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  61%|███████████████▉          | 430/700 [00:42, 16.78it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  62%|████████████████          | 432/700 [00:42, 14.47it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  62%|████████████████          | 434/700 [00:42, 14.61it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  62%|████████████████▏         | 436/700 [00:42, 13.40it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  63%|████████████████▎         | 438/700 [00:42, 12.79it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  63%|████████████████▎         | 440/700 [00:43, 13.72it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  63%|████████████████▍         | 442/700 [00:43, 14.48it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  63%|████████████████▍         | 444/700 [00:43, 11.89it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  64%|████████████████▌         | 446/700 [00:43, 11.79it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  64%|████████████████▋         | 448/700 [00:43, 10.50it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  64%|████████████████▋         | 450/700 [00:43, 11.85it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  65%|████████████████▊         | 452/700 [00:44, 13.13it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  65%|████████████████▊         | 454/700 [00:44, 12.60it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  65%|████████████████▉         | 456/700 [00:44, 13.71it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  65%|█████████████████         | 458/700 [00:44, 14.56it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  66%|█████████████████         | 460/700 [00:44, 15.34it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  66%|█████████████████▏        | 462/700 [00:44, 15.94it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  66%|█████████████████▏        | 464/700 [00:44, 16.40it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  67%|█████████████████▎        | 466/700 [00:44, 16.47it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  67%|█████████████████▍        | 468/700 [00:45, 14.24it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  67%|█████████████████▍        | 470/700 [00:45, 13.13it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  67%|█████████████████▌        | 472/700 [00:45, 11.31it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  68%|█████████████████▌        | 474/700 [00:45, 10.14it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  68%|█████████████████▋        | 476/700 [00:45, 10.52it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  68%|█████████████████▊        | 478/700 [00:46,  9.84it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  69%|█████████████████▊        | 480/700 [00:46, 10.34it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  69%|█████████████████▉        | 482/700 [00:46, 11.79it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  69%|█████████████████▉        | 484/700 [00:46, 13.15it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  69%|██████████████████        | 486/700 [00:46, 12.73it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  70%|██████████████████▏       | 488/700 [00:46, 11.15it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  70%|██████████████████▏       | 490/700 [00:47, 10.01it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  70%|██████████████████▎       | 492/700 [00:47, 10.43it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  71%|██████████████████▎       | 494/700 [00:47,  9.88it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  71%|██████████████████▍       | 496/700 [00:47, 10.40it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  71%|██████████████████▍       | 498/700 [00:47,  9.82it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  71%|██████████████████▌       | 500/700 [00:48,  9.49it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  72%|██████████████████▌       | 501/700 [00:48,  9.35it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  72%|██████████████████▋       | 502/700 [00:48,  9.17it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  72%|██████████████████▋       | 503/700 [00:48,  9.07it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  72%|██████████████████▊       | 505/700 [00:48,  9.93it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  72%|██████████████████▊       | 507/700 [00:48, 11.72it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  73%|██████████████████▉       | 509/700 [00:49, 10.53it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  73%|██████████████████▉       | 511/700 [00:49,  9.83it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  73%|███████████████████       | 513/700 [00:49, 10.39it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  74%|███████████████████▏      | 515/700 [00:49, 11.98it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  74%|███████████████████▏      | 517/700 [00:49, 10.66it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  74%|███████████████████▎      | 519/700 [00:50,  9.95it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  74%|███████████████████▎      | 521/700 [00:50,  9.58it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  75%|███████████████████▍      | 523/700 [00:50, 11.10it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  75%|███████████████████▌      | 525/700 [00:50, 11.31it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  75%|███████████████████▌      | 527/700 [00:50, 10.41it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  76%|███████████████████▋      | 529/700 [00:50,  9.83it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  76%|███████████████████▋      | 531/700 [00:51, 10.36it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  76%|███████████████████▊      | 533/700 [00:51, 11.76it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  76%|███████████████████▊      | 535/700 [00:51, 13.13it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  77%|███████████████████▉      | 537/700 [00:51, 12.73it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  77%|████████████████████      | 539/700 [00:51, 13.88it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  77%|████████████████████      | 541/700 [00:51, 11.81it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  78%|████████████████████▏     | 543/700 [00:52, 13.17it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  78%|████████████████████▏     | 545/700 [00:52, 14.26it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  78%|████████████████████▎     | 547/700 [00:52, 11.90it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  78%|████████████████████▍     | 549/700 [00:52, 10.61it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  79%|████████████████████▍     | 551/700 [00:52,  9.93it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  79%|████████████████████▌     | 553/700 [00:53,  9.52it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  79%|████████████████████▌     | 555/700 [00:53, 11.09it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  80%|████████████████████▋     | 557/700 [00:53, 11.18it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  80%|████████████████████▊     | 559/700 [00:53, 10.37it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  80%|████████████████████▊     | 561/700 [00:53,  9.77it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  80%|████████████████████▉     | 563/700 [00:53, 11.26it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  81%|████████████████████▉     | 565/700 [00:54, 11.36it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  81%|█████████████████████     | 567/700 [00:54, 12.78it/s, step size=1.87e-01, acc. prob=0.895]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  81%|█████████████████████▏    | 569/700 [00:54, 12.37it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  82%|█████████████████████▏    | 571/700 [00:54, 11.05it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  82%|█████████████████████▎    | 573/700 [00:54, 10.22it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  82%|█████████████████████▎    | 575/700 [00:55,  9.74it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  82%|█████████████████████▍    | 577/700 [00:55,  9.36it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  83%|█████████████████████▍    | 578/700 [00:55,  9.25it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  83%|█████████████████████▌    | 579/700 [00:55,  9.14it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  83%|█████████████████████▌    | 581/700 [00:55, 11.05it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  83%|█████████████████████▋    | 583/700 [00:55, 12.63it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  84%|█████████████████████▋    | 585/700 [00:55, 12.24it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  84%|█████████████████████▊    | 587/700 [00:56, 13.60it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  84%|█████████████████████▉    | 589/700 [00:56, 12.97it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  84%|█████████████████████▉    | 591/700 [00:56, 14.07it/s, step size=1.87e-01, acc. prob=0.894]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  85%|██████████████████████    | 593/700 [00:56, 13.25it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  85%|██████████████████████    | 595/700 [00:56, 14.38it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  85%|██████████████████████▏   | 597/700 [00:56, 13.43it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  86%|██████████████████████▏   | 599/700 [00:57, 11.55it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  86%|██████████████████████▎   | 601/700 [00:57, 12.94it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  86%|██████████████████████▍   | 603/700 [00:57, 12.11it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  86%|██████████████████████▍   | 605/700 [00:57, 11.77it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  87%|██████████████████████▌   | 607/700 [00:57, 13.10it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  87%|██████████████████████▌   | 609/700 [00:57, 14.28it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  87%|██████████████████████▋   | 611/700 [00:57, 15.20it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  88%|██████████████████████▊   | 613/700 [00:57, 15.79it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  88%|██████████████████████▊   | 615/700 [00:58, 16.35it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  88%|██████████████████████▉   | 617/700 [00:58, 16.76it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  88%|██████████████████████▉   | 619/700 [00:58, 13.01it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  89%|███████████████████████   | 621/700 [00:58, 14.20it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  89%|███████████████████████▏  | 623/700 [00:58, 13.39it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  89%|███████████████████████▏  | 625/700 [00:58, 12.79it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  90%|███████████████████████▎  | 627/700 [00:59, 11.27it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  90%|███████████████████████▎  | 629/700 [00:59, 10.24it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  90%|███████████████████████▍  | 631/700 [00:59,  9.77it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  90%|███████████████████████▌  | 633/700 [00:59, 10.23it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  91%|███████████████████████▌  | 635/700 [00:59, 11.73it/s, step size=1.87e-01, acc. prob=0.891]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  91%|███████████████████████▋  | 637/700 [00:59, 11.74it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  91%|███████████████████████▋  | 639/700 [01:00, 10.59it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  92%|███████████████████████▊  | 641/700 [01:00, 10.81it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  92%|███████████████████████▉  | 643/700 [01:00, 10.98it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  92%|███████████████████████▉  | 645/700 [01:00, 10.09it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  92%|████████████████████████  | 647/700 [01:00, 10.52it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  93%|████████████████████████  | 649/700 [01:01, 11.71it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  93%|████████████████████████▏ | 651/700 [01:01, 11.50it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  93%|████████████████████████▎ | 653/700 [01:01, 12.91it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  94%|████████████████████████▎ | 655/700 [01:01, 11.31it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  94%|████████████████████████▍ | 657/700 [01:01, 11.38it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  94%|████████████████████████▍ | 659/700 [01:02, 10.40it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  94%|████████████████████████▌ | 661/700 [01:02, 11.88it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  95%|████████████████████████▋ | 663/700 [01:02, 13.15it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  95%|████████████████████████▋ | 665/700 [01:02, 14.19it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  95%|████████████████████████▊ | 667/700 [01:02, 15.13it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  96%|████████████████████████▊ | 669/700 [01:02, 15.84it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  96%|████████████████████████▉ | 671/700 [01:02, 16.40it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  96%|████████████████████████▉ | 673/700 [01:02, 14.57it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  96%|█████████████████████████ | 675/700 [01:03, 13.59it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  97%|█████████████████████████▏| 677/700 [01:03, 14.62it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  97%|█████████████████████████▏| 679/700 [01:03, 15.35it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  97%|█████████████████████████▎| 681/700 [01:03, 16.04it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  98%|█████████████████████████▎| 683/700 [01:03, 14.50it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  98%|█████████████████████████▍| 685/700 [01:03, 13.46it/s, step size=1.87e-01, acc. prob=0.893]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  98%|█████████████████████████▌| 687/700 [01:03, 12.90it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  98%|█████████████████████████▌| 689/700 [01:04, 12.56it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  99%|█████████████████████████▋| 691/700 [01:04, 11.04it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  99%|█████████████████████████▋| 693/700 [01:04, 11.29it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample:  99%|█████████████████████████▊| 695/700 [01:04, 10.33it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample: 100%|█████████████████████████▉| 697/700 [01:04, 11.85it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample: 100%|█████████████████████████▉| 699/700 [01:05, 10.71it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample: 100%|██████████████████████████| 700/700 [01:05, 10.74it/s, step size=1.87e-01, acc. prob=0.892]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sample-the-ate">
+<h3>Sample the ATE<a class="headerlink" href="#sample-the-ate" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hbr_samples</span> <span class="o">=</span> <span class="n">model_mcmc</span><span class="o">.</span><span class="n">get_samples</span><span class="p">()</span>
+<span class="n">w_0s</span> <span class="o">=</span> <span class="n">hbr_samples</span><span class="p">[</span><span class="s2">&quot;intercept&quot;</span><span class="p">]</span>
+<span class="n">w_ts</span> <span class="o">=</span> <span class="n">hbr_samples</span><span class="p">[</span><span class="s2">&quot;treatment&quot;</span><span class="p">]</span>
+<span class="n">w_xs</span> <span class="o">=</span> <span class="n">hbr_samples</span><span class="p">[</span><span class="s2">&quot;confounders&quot;</span><span class="p">]</span>
+<span class="n">w_txs</span> <span class="o">=</span> <span class="n">hbr_samples</span><span class="p">[</span><span class="s2">&quot;intersection&quot;</span><span class="p">]</span>
+
+<span class="n">ate_hlr_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">score_samples</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">t_torch</span><span class="p">)</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">t_torch</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">samples</span><span class="p">):</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">w_0s</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_ts</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_xs</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_txs</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">X_torch</span><span class="p">,</span> <span class="n">t_torch</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">w_0s</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_ts</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_xs</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_txs</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">X_torch</span><span class="p">,</span> <span class="n">t1</span><span class="p">)</span>
+    <span class="n">f0</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">w_0s</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_ts</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_xs</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">w_txs</span><span class="p">[</span><span class="n">s</span><span class="p">],</span> <span class="n">X_torch</span><span class="p">,</span> <span class="n">t0</span><span class="p">)</span>
+    <span class="n">ate_hlr_samples</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">-</span> <span class="n">f0</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">score_samples</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+<span class="n">ate_hlr</span> <span class="o">=</span> <span class="n">ate_hlr_samples</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">ci_hlr</span> <span class="o">=</span> <span class="n">mstats</span><span class="o">.</span><span class="n">mquantiles</span><span class="p">(</span><span class="n">ate_hlr_samples</span><span class="p">,</span> <span class="n">prob</span><span class="o">=</span><span class="p">[</span><span class="mf">0.025</span><span class="p">,</span> <span class="mf">0.975</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hierarchical Linear Regression&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  R-squared = </span><span class="si">{</span><span class="n">score_samples</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">score_samples</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ATE: </span><span class="si">{</span><span class="n">ate_hlr</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  CI (0.025, 0.975): [</span><span class="si">{</span><span class="n">ci_hlr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">ci_hlr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Hierarchical Linear Regression
+  R-squared = 0.3604 (0.0019)
+  ATE: 0.1441
+  CI (0.025, 0.975): [0.0849, 0.2052]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">cnt</span><span class="p">,</span> <span class="o">*</span><span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ate_hlr_samples</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">ate_hlr</span><span class="p">,</span> <span class="n">ate_hlr</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">cnt</span><span class="p">)],</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;HLR ATE samples&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;ATE&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;counts&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Bayesian-lasso-50-restricted_30_0.png" src="_images/Direct-Bayesian-lasso-50-restricted_30_0.png" />
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="plot-ate">
+<h2>Plot ATE<a class="headerlink" href="#plot-ate" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ate_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;OLS&quot;</span><span class="p">,</span> <span class="s2">&quot;Bayesian Linear&quot;</span><span class="p">,</span> <span class="s2">&quot;Gaussian Process&quot;</span><span class="p">,</span> <span class="s2">&quot;Hierarchical Linear&quot;</span><span class="p">]</span>
+<span class="n">ate</span> <span class="o">=</span> <span class="p">[</span><span class="n">ate_ols</span><span class="p">,</span> <span class="n">ate_blr</span><span class="p">,</span> <span class="n">ate_gp</span><span class="p">,</span> <span class="n">ate_hlr</span><span class="p">]</span>
+<span class="n">ci</span> <span class="o">=</span> <span class="p">[</span><span class="n">ci_ols</span><span class="p">,</span> <span class="n">ci_blr</span><span class="p">,</span> <span class="n">ci_gp</span><span class="p">,</span> <span class="n">ci_hlr</span><span class="p">]</span>
+<span class="n">ind</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ate</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">dpi</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">],</span> <span class="n">ymax</span><span class="o">=</span><span class="p">[</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ci</span><span class="p">],</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">ate</span><span class="p">,</span> <span class="s1">&#39;rx&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">ate_labels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/Direct-Bayesian-lasso-50-restricted_32_0.png" src="_images/Direct-Bayesian-lasso-50-restricted_32_0.png" />
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="Direct-Bayesian-lasso-100-restricted.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">lasso-100-restricted</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="Direct-Bayesian-lasso-20-restricted.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">lasso-20-restricted</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Finn Lattimore<br/>
+        
+            &copy; Copyright 2021.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
