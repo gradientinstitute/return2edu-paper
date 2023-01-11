@@ -333,7 +333,7 @@ To address the missing data problem, we turn to a range of ML-based techniques. 
 
 We may potentially bias our causal parameter of interest if we were to use the off-the-shelf tools. For example, if we were to select the important confounders using an ML model to predict the outcome Y, then we may undervalue the importance of variables that are highly correlated to the treatment T but only weakly predictive of Y \citep{cherno2018}.
 
-We approach filling the missing data indirectly with three types of ML models. They are: the T-Learner, Doubly Robust and Bayesian Linear models. 
+We approach filling the missing data indirectly with three types of ML models. They are: the T-Learner, Doubly Robust and Bayesian models. 
 
 
 \subsection{T-Learner model}
@@ -420,7 +420,13 @@ $\hat{\mu_0}(X_i)$ is an estimation of $E[Y|X,T=0]$ (using any ML model)
 Previously, with the T-learner, we were just estimating $\mu_0$ and $\mu_1$. With the DR estimator, we augment $\mu_0$ and $\mu_1$. For example, for the treated observations, we augment $\mu_1$ by multiplying the prediction error by the Inverse Propensity Weight (or 1 divide by the Propensity Score). This upweights those who get treated but who are statistically similar to the control observations. We then apply this same augmentation to the $\mu_0$ for the control observations. 
 
 
-\subsection{Bayesian Linear Models}
+\subsection{Bayesian Models}
+
+\subsubsection*{Bayesian S-learners}
+
+\subsubsection*{Bayesian T-learners}
+
+\subsubsection*{Hierarchical linear model}
 
 A third approach is to use a hierarchical Bayesian linear model. The hierarchical Bayesian approach models the outcome surface as,
 \begin{align*}
@@ -451,7 +457,7 @@ regularisation parameters, $\lambda_0, \lambda_t, \lambda_x$ and
 $\lambda_{tx}$. Ideally, this construction will allow for the modelling
 flexibility of a T-learning approach, while still being able to regularise the
 contribution of the treatment factor. This will provide a useful point of
-comparison to the other regularized T-learning approaches in case the are
+comparison to the other regularised T-learning approaches in case they are
 overstating the ATE. See \citet{hahn2018} for more a more thorough discussion
 on this issue of regularisation bias.
 
@@ -460,6 +466,14 @@ the pyro software package \citep{bingham2019}. The choice of an improper and
 non-informative prior over $\lambda_*$, $\textrm{Uniform(0, 100)}$, is
 motivated by the advice in \citet{gelman2006} where we desire a non-informative
 prior that admits large values of $\lambda$. 
+
+We can then obtain samples from the posterior ATE distribution by constructing
+samples,
+\begin{align*}
+  ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
+\end{align*}
+where $(s)$ denotes a sample of the model parameters from their respective
+posterior distributions using the previously mentioned MCMC sampler.
 
 
 %
