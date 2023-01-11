@@ -314,6 +314,7 @@ Figure \ref{fig:yearearnempl} shows an increase in both average earnings and emp
 
 
 \section{Method}
+\todo{We probably need to make the notation a little more consistent in thise section.}
 
 We aim to estimate the causal impact of obtaining a new qualification. Our empirical challenge is a missing data one in the sense that we do not observe the counterfactual outcome for each person.
 
@@ -332,7 +333,7 @@ To address the missing data problem, we turn to a range of ML-based techniques. 
 
 We may potentially bias our causal parameter of interest if we were to use the off-the-shelf tools. For example, if we were to select the important confounders using an ML model to predict the outcome Y, then we may undervalue the importance of variables that are highly correlated to the treatment T but only weakly predictive of Y \citep{cherno2018}.
 
-We approach filling the missing data indirectly with three types of ML models. Ther are: the T-Learner, Doubly Robust and Bayesian Linear models. 
+We approach filling the missing data indirectly with three types of ML models. They are: the T-Learner, Doubly Robust and Bayesian Linear models. 
 
 
 \subsection{T-Learner model}
@@ -354,7 +355,7 @@ The reader is likely to conceptualise other dimensions of unobserved heterogenei
 
 Another potential scenario is that the source of unobserved heterogeneity in question (or some components of it) is still captured but modelled under the guise of another variable label. Variables that are highly correlated with each other are unlikely to be simultaneously included in the model. This is because the ML algorithm, in attempting to reduce the amount of information redundancy, may have randomly dropped one or more of those correlated variables. 
 
-  \item Stable Unit Treatment Value Assumption (SUTVA) (or counterfactual consistency): $Y_i = Y0_i +T_i(Y1_i - Y0_i)$. Assumption 2 ensures that there is no interference, no spill-over effects, and no hidden variation between treated and non-treated observations. SUTVA may be violated if individuals who complete further education influence the labour market outcomes of those who do not complete further education. For example, if the former group absorb resources that would otherwise be channelled to the latter group. Alternatively, the former group may be more competitive in the labour market and reduce the probability of promotions or job-finding for the latter group. As those who complete further education are a relatively small group, it is unlikely that these general equilibrium effects would occur. 
+  \item Stable Unit Treatment Value Assumption (SUTVA) (or counterfactual consistency): $Y_i = Y_i(0) +T_i(Y_i(1) - Y_i(0))$. Assumption 2 ensures that there is no interference, no spill-over effects, and no hidden variation between treated and non-treated observations. SUTVA may be violated if individuals who complete further education influence the labour market outcomes of those who do not complete further education. For example, if the former group absorb resources that would otherwise be channelled to the latter group. Alternatively, the former group may be more competitive in the labour market and reduce the probability of promotions or job-finding for the latter group. As those who complete further education are a relatively small group, it is unlikely that these general equilibrium effects would occur. 
 
   \item Overlap Assumption (or common support or positivity). Assumption 3 states that no subpopulation defined by $X = x$ is entirely located in the treatment or control group, hence the treatment probability needs to be bounded away from zero and one.
   
@@ -371,22 +372,22 @@ This means the optimum bias-variance trade-off point for the conditional average
 
 With the strong ignorability and overlap assumptions in place, treatment effect estimation reduces to estimating two response surfaces – one for treatment and one for control.
 
-The T-learner is a two-step approach where the conditional mean functions $\mu _1(x) = E[Y_1, X_i = x]$ and $\mu _0(x) = E[Y_0, X_i = x]$ are estimated separately with any generic machine learning algorithm.
+The T-learner is a two-step approach where the conditional mean functions $\mu_1(x) = E[Y(1), X_i = x]$ and $\mu _0(x) = E[Y(0), X_i = x]$  are estimated separately with any generic machine learning algorithm.
 
 Machine learning methods are well suited to find generalizable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge), non-linear (Gradient Boosting Regression) and Bayesian ML models. Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
 
 To show this, we define our parameter of interest, the CATE $(\tau (x))$, which is formally defined as:
 
 \begin{align}
-\tau (x) = E[Y1_i - Y0_i | X_i = x]
+\tau (x) = E[Y_i(1) - Y_i(0) | X_i = x]
 \end{align}
 
 which, with the assumptions above, is equivalent to taking the difference between two conditional mean functions $\mu _1(x) - \mu _0(x)$:
 
 \begin{align}
 \tau (x) & = \mu _1(x) - \mu _0(x) \\
-& = E[Y_i | D_i = 1, X_i = x] - E[Y_i | D_i = 0, X_i = x] \\
-& = E[Y1_i - Y0_i | X_i = x]
+& = E[Y_i | T_i = 1, X_i = x] - E[Y_i | T_i = 0, X_i = x] \\
+& = E[Y_i(1) - Y_i(0) | X_i = x]
 \end{align}
 
 In this estimation, we are not interested in the coefficients from regressing $Y$ on $X$. What we want instead is to have a good approximation of the function and hence good estimates from e.g., $\mu _1(x)$ and $\mu _0(x)$. This is why ML methods are well suited for the job.
@@ -420,23 +421,45 @@ Previously, with the T-learner, we were just estimating $\mu_0$ and $\mu_1$. Wit
 
 
 \subsection{Bayesian Linear Models}
-A third approach is to use a Bayesian linear model. The Bayesian approach models the outcome surface as,
+
+A third approach is to use a hierarchical Bayesian linear model. The hierarchical Bayesian approach models the outcome surface as,
 \begin{align*}
-y_i \sim N(\mu(x_i,t_i),\sigma^2) \\
-\mu(x_i,t_i) = w_0 + w_t t_i + w_x^\top x_i + t_i w_{tx}^\top x_i \\
+y_i &\sim N(\mu(x_i,t_i),\sigma^2) \\
+\mu(x_i,t_i) &= w_0 + w_t t_i + w_x^\top x_i + t_i w_{tx}^\top x_i \\
 \end{align*}
 
 Where we have used the following priors,
 \begin{align*}
-\{ \lambda_0, \lambda_t, \lambda_x, \lambda_{tx} \} \sim Gamma(1,1) \\
-\sigma^2 \sim Gamma(1,1) \\
-w_0 \sim N(0,\lambda_0) \\
-w_t \sim N(0,\lambda_t) \\
-\textbf{w}_x \sim N(0,\lambda_x \textbf{I}_d) \\
-\textbf{w}_{tx} \sim N(0,\lambda_{tx} \textbf{I}_d) \\
+\{ \lambda_0, \lambda_t, \lambda_x, \lambda_{tx} \} &\sim 
+  \textrm{Uniform}(0, 100) \\
+\sigma &\sim \textrm{Uniform}(0, 100) \\
+w_0 &\sim N(0,\lambda_0^2) \\
+w_t &\sim N(0,\lambda_t^2) \\
+w_x &\sim N(0,\lambda_x^2 \textrm{I}_d) \\
+w_{tx} &\sim N(0,\lambda^2_{tx} \textrm{I}_d) \\
 \end{align*}
  
-The advantage of this model is that it is free to share information between both treatment and control response surfaces during posterior inference (model fitting). This is unlike a T-learner, which uses entirely separate models and data to estimate the control and response surfaces. We believe this information sharing property of the Bayesian model helps reduce [error/variance?] in effect estimation from model extrapolation in circumstances where there is little overlap in the support of $P(x|t=treatment)$ and $P(x|t=control)$, which is an issue with the T-learner approach. This information sharing comes from the fact that the $\lambda^*$ hyper-parameters are all from a shared distribution, which incorporates information from $t_i$, $x_i$ and the interaction $t_i \cdot x_i$ to update the posterior over these parameters. For model inference, we use the no U-turn MCMC sampler \citep{hoffman2014} in the pyro software package \citep{bingham2019}. The choice of a Gamma(1, 1) prior is partially motivated by the fact that we standardise the inputs, $x$, to the model to have zero mean and unit variance and $t \in \{0, 1\}$. We also tried a sparsity inducing Laplacian prior over weights, $w$, but we did not find a substantial difference from using Normal priors.
+The advantage of this model is that it is able to model separate treatment and
+control surfaces, like a T-learner, but is still able to make use of
+regularisation over model weights including those involving the treatment
+variable, unlike a T-learner (since two separate models are required).
+Additionally, the model is free to use different regularisation strengths
+between the treatment and control surfaces, but this regularisation is informed
+by the data rather than the authors having to make an a-priori choice
+explicitly. This is achieved by placing a joint Uniform hierarchical prior over
+regularisation parameters, $\lambda_0, \lambda_t, \lambda_x$ and
+$\lambda_{tx}$. Ideally, this construction will allow for the modelling
+flexibility of a T-learning approach, while still being able to regularise the
+contribution of the treatment factor. This will provide a useful point of
+comparison to the other regularized T-learning approaches in case the are
+overstating the ATE. See \citet{hahn2018} for more a more thorough discussion
+on this issue of regularisation bias.
+
+For model inference, we use the no U-turn MCMC sampler \citep{hoffman2014} in
+the pyro software package \citep{bingham2019}. The choice of an improper and
+non-informative prior over $\lambda_*$, $\textrm{Uniform(0, 100)}$, is
+motivated by the advice in \citet{gelman2006} where we desire a non-informative
+prior that admits large values of $\lambda$. 
 
 
 %
@@ -899,8 +922,9 @@ Doubly Robust (LASSO)	 & 	5441	 & 	54.64	 & 	[27.97, 72.74]	 \\
 Doubly Robust (Ridge)	 & 	5441	 & 	61.74	 & 	[45.7, 78.86]	 \\
 Bayesian Ridge	 & 	5441	 & 	45.23	 & 	[0.60, 89.86]	 \\
 Bayesian Ridge (counterfactual sampling)	 & 	5441	 & 	44.64	 & 	[2.24, 87.04]	 \\
-Gaussian Process	 & 	5441	 & 	53.96	 & 	[8.36, 99.56]	 \\
-Hierarchical Bayesian Linear Regression	 & 	5441	 & 	45.74	 & [-9.50, 113.53]  \\
+Gaussian Process	 & 	5441	 & 	62.00	 & 	[6.82, 117.17]	 \\
+Hierarchical Bayesian Linear Regression	 & 	5441	 & 	48.12 & [-5.10, 110.46]  \\
+% Hierarchical Bayesian Linear Regression	 & 	5441	 & 	45.74	 & [-9.50, 113.53]  \\ Gamma(1,1) priors
 \bottomrule
 \end{tabular}
 \par\medskip
