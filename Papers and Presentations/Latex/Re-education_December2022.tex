@@ -422,13 +422,67 @@ Previously, with the T-learner, we were just estimating $\mu_0$ and $\mu_1$. Wit
 
 \subsection{Bayesian Models}
 
-\subsubsection*{Bayesian S-learners}
+The third approach is to use three different Bayesian S-learners. The first two
+are empirical Bayesian models, that is, they use optimisation algorithms to
+both find closed-form posterior distributions over their parameters, while also
+tuning their prior distribution parameters, as opposed to placing hyper-priors
+on these parameters\footnote{The assumptions underlying this approach are
+discussed in Chapter 3.5 of \cite{bishop2006}.}. The third is a fully
+hierarchical Bayesian linear model, that uses Markov-chain Monte-Carlo (MCMC)
+sampling for posterior inference.
 
-\subsubsection*{Bayesian T-learners}
+\subsubsection*{Bayesian Ridge Regression}
 
-\subsubsection*{Hierarchical linear model}
+The first Bayesian model is a Bayesian ridge regressor \citep{tipping2001}. We
+simply include the treatment factor, $T$, as another covariate in the model.
+Then the ATE is the marginal posterior distribution (which is Normal) of the
+regression coefficient corresponding to $T$. This is a similar approach to an
+OLS cross-sectional model with controls, but it makes use of regularisation so
+more controls can be included without worrying overly about collinearity.
+Furthermore, the empirical Bayesian nature of this model allows for automatic
+selection of the regularisation strength of the model coefficients. This model
+can only estimate an average treatment effect, as the effect is modelled as a
+single dummy variable.
 
-A third approach is to use a hierarchical Bayesian linear model. The hierarchical Bayesian approach models the outcome surface as,
+\subsubsection*{Gaussian Process Regression}
+
+Gaussian process (GP) regression can be viewed as a non-linear generalisation
+of Bayesian linear regression that makes use of the kernel trick
+\citep{williams2006, bishop2006}. Another way of understanding a GP is that is
+parameterises a distribution over functions (response surfaces) directly,
+rather than model weights as is the case with Bayesian ridge regression.
+
+Using the notation from \citet{williams2006}, the response surface, $\mu$, is
+modelled by a posterior predictive GP,
+\begin{align*}
+  \mu(x_i, t_i) \sim \mathcal{GP}\left(\bar{\mu}(x_i, t_i), k(x_i, t_i)\right),
+\end{align*}
+which is essentially a conditional Normal distribution with a mean function
+$\bar{\mu}(\cdot, \cdot)$ and a kernel (covariance) function $k(\cdot, \cdot)$.
+We obtain samples of (C)ATE by sampling from the posterior GP,
+\begin{align*}
+  (C)ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
+\end{align*}
+where (s) denotes samples from the posterior predictive GP. These samples can
+be used to empirically construct confidence intervals over the estimated
+(C)ATE.
+
+For this analysis we use an isotropic Mat\'{e}rn $\frac{3}{2}$ kernel function.
+This is a stationary and isotropic kernel, but does not have excessive
+smoothness assumptions on the functional forms it can learn -- this kernel
+leads to the response surface, being at least once differentiable
+\citep{williams2006}. A Gaussian process with this kernel can learn non-linear
+and interaction-style relationships between input covariates and the outcome.
+Though formally an S-learner, this model is flexible enough to learn somewhat
+separate response surfaces for the treatment and control groups like a T-learner
+-- at least much as permitted by the use of an isotropic kernel.
+
+
+\subsubsection*{Hierarchical Linear Model}
+
+A third S-learner is to a hierarchical Bayesian linear model. The hierarchical
+Bayesian approach models the response surface as,
+
 \begin{align*}
 y_i &\sim N(\mu(x_i,t_i),\sigma^2) \\
 \mu(x_i,t_i) &= w_0 + w_t t_i + w_x^\top x_i + t_i w_{tx}^\top x_i \\
@@ -446,20 +500,20 @@ w_{tx} &\sim N(0,\lambda^2_{tx} \textrm{I}_d) \\
 \end{align*}
  
 The advantage of this model is that it is able to model separate treatment and
-control surfaces, like a T-learner, but is still able to make use of
-regularisation over model weights including those involving the treatment
-variable, unlike a T-learner (since two separate models are required).
-Additionally, the model is free to use different regularisation strengths
-between the treatment and control surfaces, but this regularisation is informed
-by the data rather than the authors having to make an a-priori choice
-explicitly. This is achieved by placing a joint Uniform hierarchical prior over
-regularisation parameters, $\lambda_0, \lambda_t, \lambda_x$ and
-$\lambda_{tx}$. Ideally, this construction will allow for the modelling
-flexibility of a T-learning approach, while still being able to regularise the
-contribution of the treatment factor. This will provide a useful point of
-comparison to the other regularised T-learning approaches in case they are
-overstating the ATE. See \citet{hahn2018} for more a more thorough discussion
-on this issue of regularisation bias.
+control surfaces, like a T-learner, but is still able to regularise the
+contribution of the treatment variable as well as other model covariates,
+unlike a T-learner that requires two separate models. Additionally, the model
+is free to use different regularisation strengths between the treatment and
+control surfaces, but this regularisation is informed by the data rather than
+the authors having to make an a-priori choice explicitly. This is achieved by
+placing a joint Uniform hierarchical prior over regularisation parameters,
+$\lambda_0, \lambda_t, \lambda_x$ and $\lambda_{tx}$. Ideally, this
+construction will allow for the modelling flexibility of a T-learning approach,
+while still being able to regularise the contribution of the treatment factor.
+This will provide a useful point of comparison to the other regularised
+T-learning approaches in case they are overstating the ATE. See
+\citet{hahn2018} for more a more thorough discussion on this issue of
+regularisation bias.
 
 For model inference, we use the no U-turn MCMC sampler \citep{hoffman2014} in
 the pyro software package \citep{bingham2019}. The choice of an improper and
@@ -467,10 +521,10 @@ non-informative prior over $\lambda_*$, $\textrm{Uniform(0, 100)}$, is
 motivated by the advice in \citet{gelman2006} where we desire a non-informative
 prior that admits large values of $\lambda$. 
 
-We can then obtain samples from the posterior ATE distribution by constructing
+We can then obtain samples from the posterior (C)ATE distribution by constructing
 samples,
 \begin{align*}
-  ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
+  (C)ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
 \end{align*}
 where $(s)$ denotes a sample of the model parameters from their respective
 posterior distributions using the previously mentioned MCMC sampler.
@@ -485,7 +539,7 @@ posterior distributions using the previously mentioned MCMC sampler.
 
 \subsection{Model selection and model evaluation}
 
-We separate the evaluation of the model class and estimation of the ATE and CATE parameters in two procedures. We evaluate the predictive capacity of each model class using nested cross-validation. The procedure is represented in Figure \ref{fig:exp_model}. Here, our aim is to compare the predictive performance of three model classes: LASSO, Ridge and Gradient Boosting Regression (GBR). Our second procedure is to estimate the ATE and CATE parameters. The procedure is represented in Figure \ref{fig:exp_param}. We use bootstrap sampling (with replacement) to generate uncertainty estimates for the parameters, which we obtain over several draws of the same model class. 
+For the non-Bayesian models we separate the evaluation of the model class and estimation of the ATE and CATE parameters in two procedures. We evaluate the predictive capacity of each model class using nested cross-validation. The procedure is represented in Figure \ref{fig:exp_model}. Here, our aim is to compare the predictive performance of three model classes: LASSO, Ridge and Gradient Boosting Regression (GBR). Our second procedure is to estimate the ATE and CATE parameters. The procedure is represented in Figure \ref{fig:exp_param}. We use bootstrap sampling (with replacement) to generate uncertainty estimates for the parameters, which we obtain over several draws of the same model class. 
 
 Focusing on the first procedure, we apply nested cross-validation to evaluate which model class performs best. In a first step, as Figure 1 shows, we pre-process the full dataset (containing 3,400 variables) to generate a dataset with a smaller set of highly predictive’ features (containing 100 variables). We apply a supervised machine learning approach with a LASSO model to select our top 100 predictors of the outcome of interest (as measured in 2006). Note that in our later estimations of the treatment effect, the outcome is measured in 2019. We implement this intermediary step in order to reduce the correlation between variables and eliminate redundant information. 
 
@@ -497,14 +551,13 @@ We repeat this process ten times (10-outer scores) for each model class. This al
 
 Table \ref{tab:ncvhos} shows that the GBR is the best performing model class. It is the model that yields the highest out-of-sample R-squared or the lowest (in absolute value) MSE. This is true for both the outcome surfaces (using treated and control observations separately). 
 
-\emph{Inference via bootstrapping}
-
+\subsubsection*{Inference via bootstrapping}
 
 Once we have selected the best performing model class, we turn to the estimation of the parameters and parameter uncertainty. We use bootstrapped validation for generating uncertainty estimates. This captures the uncertainty arising from model configuration (or the selection of hyperparameters) in addition to that which stems from estimating parameters of a fixed model from noisy, finite data. Here, we estimate the same model class on different realisations of the data. 
 
 A common approach to inference in the causal machine learning literature is to use sample splitting (Athey and Wager 2019). Sample splitting ensures that the standard errors on the estimators are not underestimated because it avoids using the same data point to both select the configuration (hyperparameter selection) of the model and to estimate the parameters. When the same data point is used to perform both tasks then the standard errors would not reflect both the uncertainty stemming from model selection and that which stems from estimating parameters on noisy, finite data. The result of this is that our standard errors suffer from pre-test bias: i.e. selecting the model with the same data you use to estimate the model, which can lead to overfitting.
 
-However, sample splitting is appropriate when the sample size is large. An issue with studies that rely on survey-based data is that sample sizes are not large enough to perform sample splitting. For example, there is not enough data to split the dataset into train and test datasets such that each of these splits would cover all the common and uncommon values of the X-covariates that are observed in the full sample. If we were to use a training dataset that was insufficiently sized or non-representative, it would be difficult for the ML models to effectively map the X-covariates to the outcome surfaces, µ1(x) and µ0(x). There would also not be enough data in the test set to effectively estimate the parameters of the model configuration chosen in the train set. As a result, our estimate treatment effects are likely to be very imprecisely estimated. 
+However, sample splitting is appropriate when the sample size is large. An issue with studies that rely on survey-based data is that sample sizes are not large enough to perform sample splitting. For example, there is not enough data to split the dataset into train and test datasets such that each of these splits would cover all the common and uncommon values of the X-covariates that are observed in the full sample. If we were to use a training dataset that was insufficiently sized or non-representative, it would be difficult for the ML models to effectively map the X-covariates to the outcome surfaces, $\mu_1(x)$ and $\mu_0(x)$. There would also not be enough data in the test set to effectively estimate the parameters of the model configuration chosen in the train set. As a result, our estimate treatment effects are likely to be very imprecisely estimated. 
 
 A suitable alternate procedure is to use bootstrapping. Resampling gives us a decent estimate on how the point estimates might vary. In this way, we side-step the need to rely on the assumption of asymptotical normality (and we do not need to utilise sample splitting to generate the standard errors). In our bootstrapping procedure, we ensure that the standard errors reflect the sources of uncertainty stemming from ‘both’ the selection of the model and the estimation of the model. As a result, we generate standard errors that avoid any potential pre-test issues.
 
@@ -540,6 +593,25 @@ such that the confidence interval
 $P(\delta_{0.95} \leq \bar{x} - \mu \leq \delta_{0.05} | \mu) \Leftrightarrow P(\bar{x} - \delta_{0.95} \geq \mu \geq \bar{x} - \delta_{0.05} | \mu) = 0.90$ 
 
 can be reduced to $[2\bar{x} -\bar{x}^*_{0.05} , 2\bar{x} -\bar{x}^*_{0.95}]$.
+
+
+\subsubsection*{Inference for the Bayesian models}
+
+The inference process for the Bayesian models a little different since the
+hyper-paramters of the models are either fixed or selected automatically by the
+learning algorithm (Empirical Bayes or MCMC). Bayesian inference procedures
+tend to afford some protection against over-fitting since they are parsimonious
+in choosing posterior distributions over model parameters that vary from their
+prior distributions, and so induces a natural model complexity
+penalty\footnote{This point can be understood more thoroughly by examining the
+evidence lower bound in variational Bayesian inference, see Chapter 10 of
+\citet{bishop2006}.}. As such, we use all the available data to learn the model
+posterior distributions, which we then sample from to form estimates of the
+(C)ATE as outlined in the previous section. However, where we report the
+predictive performance of these models, 5-fold cross validation has been used,
+and performance is reported on the hold-out set, except for the hierarchical
+linear model where such a procedure would be computationally inconvenient.
+
 
 \section{Results}
 
@@ -935,10 +1007,10 @@ Doubly Robust (GBR)	 & 	5441	 & 	68.85	 & [50.91, 82.07] \\
 Doubly Robust (LASSO)	 & 	5441	 & 	54.64	 & 	[27.97, 72.74]	 \\
 Doubly Robust (Ridge)	 & 	5441	 & 	61.74	 & 	[45.7, 78.86]	 \\
 Bayesian Ridge	 & 	5441	 & 	45.23	 & 	[0.60, 89.86]	 \\
-Bayesian Ridge (counterfactual sampling)	 & 	5441	 & 	44.64	 & 	[2.24, 87.04]	 \\
+%Bayesian Ridge (counterfactual sampling)	 & 	5441	 & 	44.64	 & 	[2.24, 87.04]	 \\
 Gaussian Process	 & 	5441	 & 	62.00	 & 	[6.82, 117.17]	 \\
-Hierarchical Bayesian Linear Regression	 & 	5441	 & 	48.12 & [-5.10, 110.46]  \\
-% Hierarchical Bayesian Linear Regression	 & 	5441	 & 	45.74	 & [-9.50, 113.53]  \\ Gamma(1,1) priors
+Hierarchical Bayesian Linear Model	 & 	5441	 & 	48.12 & [-5.10, 110.46]  \\
+% Hierarchical Bayesian Linear Model & 	5441	 & 	45.74	 & [-9.50, 113.53]  \\ Gamma(1,1) priors
 \bottomrule
 \end{tabular}
 \par\medskip
