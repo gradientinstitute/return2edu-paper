@@ -422,14 +422,20 @@ Previously, with the T-learner, we were just estimating $\mu_0$ and $\mu_1$. Wit
 
 \subsection{Bayesian Models}
 
-The third approach is to use three different Bayesian S-learners. The first two
-are empirical Bayesian models, that is, they use optimisation algorithms to
-both find closed-form posterior distributions over their parameters, while also
-tuning their prior distribution parameters, as opposed to placing hyper-priors
-on these parameters\footnote{The assumptions underlying this approach are
-discussed in Chapter 3.5 of \cite{bishop2006}.}. The third is a fully
-hierarchical Bayesian linear model, that uses Markov-chain Monte-Carlo (MCMC)
-sampling for posterior inference.
+The third approach is to use three different Bayesian S-learners. S-learners
+are simply regression models that take the treatment factor as an additional
+input covariate, $E[Y| X{=}x, T{=}t] = \mu(x, t)$, and then estimate the ATE as,
+\begin{align*}
+  \hat{ATE} = \frac{1}{n}\sum^n_{i=1} \mu(x_i, 1) - \mu(x_i, 0).
+\end{align*}
+
+The first two models are empirical Bayesian models, that is, they use
+optimisation algorithms to both find closed-form posterior distributions over
+their parameters, while also tuning their prior distribution parameters, as
+opposed to placing hyper-priors on these parameters\footnote{The assumptions
+underlying this approach are discussed in Chapter 3.5 of \cite{bishop2006}.}.
+The third is a fully hierarchical Bayesian linear model, that uses Markov-chain
+Monte-Carlo (MCMC) sampling for posterior inference.
 
 \subsubsection*{Bayesian Ridge Regression}
 
@@ -458,14 +464,15 @@ modelled by a posterior predictive GP,
   \mu(x_i, t_i) \sim \mathcal{GP}\left(\bar{\mu}(x_i, t_i), k(x_i, t_i)\right),
 \end{align*}
 which is essentially a conditional Normal distribution with a mean function
-$\bar{\mu}(\cdot, \cdot)$ and a kernel (covariance) function $k(\cdot, \cdot)$.
-We obtain samples of (C)ATE by sampling from the posterior GP,
+$\bar{\mu}(\cdot, \cdot)$ and a kernel (covariance) function $k(\cdot, \cdot)$
+that determines the type of functional relatioships that can be modelled.
+We obtain samples of ATE by sampling from the posterior GP,
 \begin{align*}
-  (C)ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
+  ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
 \end{align*}
 where (s) denotes samples from the posterior predictive GP. These samples can
 be used to empirically construct confidence intervals over the estimated
-(C)ATE.
+ATE.
 
 For this analysis we use an isotropic Mat\'{e}rn $\frac{3}{2}$ kernel function.
 This is a stationary and isotropic kernel, but does not have excessive
@@ -480,14 +487,12 @@ separate response surfaces for the treatment and control groups like a T-learner
 
 \subsubsection*{Hierarchical Linear Model}
 
-A third S-learner is to a hierarchical Bayesian linear model. The hierarchical
+The third S-learner is a hierarchical Bayesian linear model. The hierarchical
 Bayesian approach models the response surface as,
-
 \begin{align*}
 y_i &\sim N(\mu(x_i,t_i),\sigma^2) \\
-\mu(x_i,t_i) &= w_0 + w_t t_i + w_x^\top x_i + t_i w_{tx}^\top x_i \\
+\mu(x_i,t_i) &= w_0 + w_t t_i + w_x^\top x_i + t_i w_{tx}^\top x_i
 \end{align*}
-
 Where we have used the following priors,
 \begin{align*}
 \{ \lambda_0, \lambda_t, \lambda_x, \lambda_{tx} \} &\sim 
@@ -496,9 +501,8 @@ Where we have used the following priors,
 w_0 &\sim N(0,\lambda_0^2) \\
 w_t &\sim N(0,\lambda_t^2) \\
 w_x &\sim N(0,\lambda_x^2 \textrm{I}_d) \\
-w_{tx} &\sim N(0,\lambda^2_{tx} \textrm{I}_d) \\
+w_{tx} &\sim N(0,\lambda^2_{tx} \textrm{I}_d)
 \end{align*}
- 
 The advantage of this model is that it is able to model separate treatment and
 control surfaces, like a T-learner, but is still able to regularise the
 contribution of the treatment variable as well as other model covariates,
@@ -521,10 +525,10 @@ non-informative prior over $\lambda_*$, $\textrm{Uniform(0, 100)}$, is
 motivated by the advice in \citet{gelman2006} where we desire a non-informative
 prior that admits large values of $\lambda$. 
 
-We can then obtain samples from the posterior (C)ATE distribution by constructing
+We can then obtain samples from the posterior ATE distribution by constructing
 samples,
 \begin{align*}
-  (C)ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
+  ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
 \end{align*}
 where $(s)$ denotes a sample of the model parameters from their respective
 posterior distributions using the previously mentioned MCMC sampler.
@@ -625,9 +629,24 @@ To illustrate how GBR adequately captures non-linearities we re-estimated our re
 
 The Doubly Robust (DR) models estimate smaller effects compared to the T-learner. Table \ref{tab:atebslvl} displays a gain of approximately \$62-69 per week in gross earnings across the DR approaches. The estimated effect sizes are statistically different from zero. The confidence intervals for the DR estimates also exclude the point estimates from the T-Learner approach.
 
-One reason the DR approach differs from the T-learner approach is that the former uses additional information from the propensity score (i.e. we estimate machine learning models to gain a better understanding of the treatment assignment process, the students’ background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap). A benefit of this is that it can also provide better extrapolations of the predicted outcomes. 
+One reason the DR approach differs from the T-learner approach is that the former uses additional information from the propensity score (i.e. we estimate machine learning models to gain a better understanding of the treatment assignment process, the students’ background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap)\todo{I also wonder if the T-learners are susceptible to over-stating the ATE since T's contribution is not regularised like other factors?}. A benefit of this is that it can also provide better extrapolations of the predicted outcomes. 
 
-****Dan, can you please summarise Bayesian results here.
+The Bayesian models tend to estimate smaller effects than all the other
+methods. This is especially true for the linear models, which estimate only
+\$45-48 per-week gains in gross earnings. This is likely because of the
+regularisation applied to the treatment effect in these models, which rewards
+apportioning more explanatory power of the outcome to the other covariates in
+the model to explain the difference in earnings. The two Bayesian linear models
+achieve nearly the same in-sample R-squared score (0.33-0.34) as an OLS
+S-learner that uses the same input covariates, yet the OLS model estimates
+gains of \$64 per-week in gross earnings. Once again, the non-linear model
+appears to differ from the linear models, in this case the Gaussian process
+estimates \$62 per-week gains in gross earnings, which is more inline with the
+DR approach and the OLS S-learner. Like the GBR, this is likely because the
+non-linear models are less likely to suffer from model misspecification bias,
+as they can make use of non-linear and interaction relationships between their
+covariates. Even though not directly comparable, the GP achieves a hold-out
+R-square score (over 5 folds) of 0.33. It's in-sample R-square score is 0.77.
 
 %
 %Turning to other measures of earnings, the value-add in earnings (taking the growth in earnings between 2001 and 2019 - all expressed in 2019 terms) is also higher for those who gained an additional qualification, compared to those who did not advance in their education, by approximately \$60-80 per week. As a proportion of the growth in earnings for all Australian employees between 2001 and 2019, this represents 18 percent of the overall growth in earnings. The results are contrasted graphically in Appendix Figure \ref{fig:earnings}.
@@ -726,11 +745,11 @@ The key benefits of our automated feature selection process include the potentia
 
 We find that our automated feature selection method selects a set of controls/ features/ variables that include those that have theoretical foundations and/or align with those chosen in past empirical studies. However, we also choose features that have been traditionally overlooked. These include variables such as household debt, wealth, housing, and geographic mobility variables. Other important predictors include the ages of both resident and non-resident children: non-resident children aged 15 or above matter and resident children aged 0-4 are important.
 
-ML models randomly choose between variables that are highly correlated, which means that our selected features do not suggest any causal relationship between the features and the outcome. However, as the features act as nuisance parameters, helping up to obtain the best prediction of the outcomes (or the response surfaces for treatment and control groups), this random selection of variables does not compromise our primary aim of obtaining the ATE and CATE estimates. We use cross-validation for feature selection.
+ML models randomly choose between variables that are highly correlated, which means that our selected features do not suggest any causal relationship between the features and the outcome. However, as the features act as nuisance parameters, helping us to obtain the best prediction of the outcomes (or the response surfaces for treatment and control groups), this random selection of variables does not compromise our primary aim of obtaining the ATE and CATE estimates. We use cross-validation for feature selection.
 
-For inference, we use bootstrapping (with replacement), generating 100 samples to produce a distribution of ATE and CATE values. This allows us to derive standard errors for our causal parameters.
+For inference, we use bootstrapping (with replacement), generating 100 samples to produce a distribution of ATE and CATE values. This allows us to derive standard errors for our causal parameters. We also make use of Bayesian models that naturally yield posterior predictive densities, which we can sample to obtain confidence intervals for ATE estimates.
 
-There are clear economic benefits to gaining an additional qualification in later life. Analysing those who obtain an additional qualification anytime between 2002 and 2017, we estimate a gain of approximately \$60-80 per week in gross earnings. This represents roughly 7-8 percent of the Average Weekly Gross Earning for the average worker in Australia.
+There are clear economic benefits to gaining an additional qualification in later life. Analysing those who obtain an additional qualification anytime between 2002 and 2017, we estimate a gain of approximately \todo{We have to still give reasons for not choosing models that fall outside this bound.}\$60-80 per week in gross earnings. This represents roughly 7-8 percent of the Average Weekly Gross Earning for the average worker in Australia.
 
 %The effects remain strong up to a decade-and-a-half after course completion. The largest earnings gains are associated with acquiring an undergraduate degree or above. Only modest gains are associated with postsecondary certificates or diplomas. Furthermore, the subject-area of study is important: undertaking study in technical subjects such as the STEM or medicine and health-related disciplines yield significantly higher returns that study in the fields of Arts, Humanities or the Social Sciences.
 
@@ -999,7 +1018,7 @@ Model   &  Outcome surface  &  Negative MSE  &  NMSE Std  &  R-squared  &  R-squ
 \toprule
 Model  &  N  &  ATE  &  CI (ATE)  \\
 \midrule 	   						
-OLS	 & 	5441	 & 	64.41	 & 	[8.16, 120.66]	 \\
+OLS (S-learner)	 & 	5441	 & 	64.41	 & 	[8.16, 120.66]	 \\
 T-learner (GBR)	 & 	5441	 & 	88.38	 & 	[30.72, 137.15]	 \\
 T-learner (LASSO)	 & 	5441	 & 	110.08	 & 	[4.01, 182.49]	 \\
 T-learner (Ridge)	 & 	5441	 & 	108.95	 & 	[46.84, 183.05]	 \\
