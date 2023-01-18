@@ -399,22 +399,18 @@ The T-learner is a two-step approach where the conditional mean functions define
 Machine learning methods are well suited to find generalizable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge) and non-linear (Gradient Boosting Regression). Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
 
 To show this, we define our parameter of interest, the CATE $(\tau (x))$, which is formally defined as:
-
 \begin{align}
-\tau (x) = E[Y(1) - Y(0) | X = x]
+\tau (x) = \mathbb{E}[Y(1) - Y(0) | X = x]
 \end{align}
-
 which, with the assumptions above, is equivalent to taking the difference between two conditional mean functions $\mu _1(x) - \mu _0(x)$:
-
 \begin{align}
 \tau (x) & = \mu _1(x) - \mu _0(x) \\
-& \approx E[Y | T = 1, X = x] - E[Y | T = 0, X = x] \\
-& = E[Y(1) - Y(0) | X = x]
+& \approx \mathbb{E}[Y | T = 1, X = x] - \mathbb{E}[Y | T = 0, X = x] \\
+& = \mathbb{E}[Y(1) - Y(0) | X = x]
 \end{align}
-
 In this estimation, we are not interested in the coefficients from regressing $Y$ on $X$. What we want instead is to have a good approximation of the function and hence good estimates from e.g., $\mu _1(x)$ and $\mu _0(x)$. This is why ML methods are well suited for the job.
 
-A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).
+A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect\todo{what do you mean by this? Is there a reference on this, or can we explain this more?}. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).
 
 In practice, however, this indirect way of minimising the mean squared error for each separate function to proxy for the minimum mean squared error of the treatment effect can be problematic. See, for example, \cite{kunzel2019,kennedy2020} for settings when the T-learner is not the optimal choice.
 
@@ -423,29 +419,27 @@ We turn to other ML models to address this potential problem.
 
 \subsection{Doubly Robust model}
 
-The second approach is Doubly Robust.  A benefit here is that we use additional information from the propensity score (we employ machine learning models to gain a better understanding of the treatment assignment process, the students’ background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap). A benefit of this is that it can also provide better extrapolations of the predicted outcomes.  
-
+The second approach is Doubly Robust, or DR-learner. A benefit here is that we use additional information from the propensity score \todo{I'm not sure how this point fits in?}(we employ machine learning models to gain a better understanding of the treatment assignment process, the students' background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap). A benefit of this is that it can also provide better extrapolations of the predicted outcomes. The ATE is estimated from three separate estimators, 
+\todo{the notation has changed here slightly, $\hat{\mu}({X_i})$ instead of $\mu({x_i})$ etc.}
 \begin{equation}
-\hat{ATE} = \frac{1}{n} {\sum\limits_{i=1}^{n}}   [ \frac{T_i(Y_i - \hat{\mu_1}(X_i))} {\hat{p}(X_i)} + \hat{\mu_1}(X_i) ]
-- \frac{1}{n} {\sum\limits_{i=1}^{n}} [ \frac{(1-T_i)(Y_i - \hat{\mu_0}(X_i))} {1-\hat{p}(X_i)} + \hat{\mu_0}(X_i) ]
+\hat{ATE} = \frac{1}{n} {\sum\limits_{i=1}^{n}}\left[ \frac{T_i(Y_i - \hat{\mu_1}(X_i))} {\hat{p}(X_i)} + \hat{\mu_1}(X_i) \right]
+- \frac{1}{n} {\sum\limits_{i=1}^{n}} \left[ \frac{(1-T_i)(Y_i - \hat{\mu_0}(X_i))} {1-\hat{p}(X_i)} + \hat{\mu_0}(X_i) \right]
 \end{equation}
 where:
+\begin{itemize}
+  \item $\hat{p}(X_i)$ is an estimation of the propensity score (using logistic regression)
+  \item $\hat{\mu_1}(X_i)$ is an estimation of $\mathbb{E}[Y|X,T=1]$ (using any ML model)
+  \item $\hat{\mu_0}(X_i)$ is an estimation of $\mathbb{E}[Y|X,T=0]$ (using any ML model)
+\end{itemize}
 
-$\hat{p}(X_i)$ is an estimation of the propensity score (using logistic regression)
-
-$\hat{\mu_1}(X_i)$ is an estimation of $E[Y|X,T=1]$ (using any ML model)
-
-$\hat{\mu_0}(X_i)$ is an estimation of $E[Y|X,T=0]$ (using any ML model)
-
-
-Previously, with the T-learner, we were just estimating $\mu_0$ and $\mu_1$. With the DR estimator, we augment $\mu_0$ and $\mu_1$. For example, for the treated observations, we augment $\mu_1$ by multiplying the prediction error by the Inverse Propensity Weight (or 1 divide by the Propensity Score). This upweights those who get treated but who are statistically similar to the control observations. We then apply this same augmentation to the $\mu_0$ for the control observations. 
+Previously, with the T-learner, we were just estimating $\mu_0(x)$ and $\mu_1(x)$. With the DR-learner, we augment $\mu_0(x)$ and $\mu_1(x)$. For example, for the treated observations, we augment $\mu_1(x)$ by multiplying the prediction error by the inverse propensity scores. This up-weights those who get treated but who are statistically similar to the control observations. We then apply this same augmentation to the $\mu_0(x)$ for the control observations. 
 
 
 \subsection{Bayesian Models}
 
 The third approach is to use three different Bayesian S-learners. S-learners
 are simply regression models that take the treatment factor as an additional
-input covariate, $E[Y| X{=}x, T{=}t] = \mu(x, t)$, and then estimate the ATE as,
+input covariate, $\mathbb{E}[Y| X{=}x, T{=}t] = \mu(x, t)$, and then estimate the ATE as,
 \begin{align*}
   \hat{ATE} = \frac{1}{n}\sum^n_{i=1} \mu(x_i, 1) - \mu(x_i, 0).
 \end{align*}
@@ -457,6 +451,10 @@ opposed to placing hyper-priors on these parameters\footnote{The assumptions
 underlying this approach are discussed in Chapter 3.5 of \cite{bishop2006}.}.
 The third is a fully hierarchical Bayesian linear model, that uses Markov-chain
 Monte-Carlo (MCMC) sampling for posterior inference.
+
+\todo{These will all probably suffer from bias as all covariates are subject
+to regularisation, and may suppress the contribution of T, and those variables
+that are important for predicting T.}
 
 \subsubsection*{Bayesian Ridge Regression}
 
@@ -566,44 +564,62 @@ posterior distributions using the previously mentioned MCMC sampler.
 
 For the non-Bayesian models we separate the evaluation of the model class and estimation of the ATE and CATE parameters in two procedures. We evaluate the predictive capacity of each model class using nested cross-validation. The procedure is represented in Figure \ref{fig:exp_model}. Here, our aim is to compare the predictive performance of three model classes: LASSO, Ridge and Gradient Boosting Regression (GBR). Our second procedure is to estimate the ATE and CATE parameters. The procedure is represented in Figure \ref{fig:exp_param}. We use bootstrap sampling (with replacement) to generate uncertainty estimates for the parameters, which we obtain over several draws of the same model class. 
 
-Focusing on the first procedure, we apply nested cross-validation to evaluate which model class performs best. In a first step, as Figure 1 shows, we pre-process the full dataset (containing 3,400 variables) to generate a dataset with a smaller set of highly predictive’ features (containing 100 variables). We apply a supervised machine learning approach with a LASSO model to select our top 100 predictors of the outcome of interest (as measured in 2006). Note that in our later estimations of the treatment effect, the outcome is measured in 2019. We implement this intermediary step in order to reduce the correlation between variables and eliminate redundant information. 
+Focusing on the first procedure, we apply nested cross-validation to evaluate which model class performs best. In a first step, as Figure 1 shows, we pre-process the full dataset (containing 3,400 variables) to generate a dataset with a smaller set of highly predictive’ features (containing 100 variables). We apply a supervised machine learning approach with a LASSO model to select our top 100\todo{91 are actually selected, should we state this?} predictors of the outcome of interest (as measured in 2006). Note that in our later estimations of the treatment effect, the outcome is measured in 2019. We implement this intermediary step in order to reduce the correlation between variables and eliminate redundant information. 
 
 We assume that the top 100 features that are most predictive of the outcome in 2006 correlate with the features that would be most predictive of the outcome in 2019. By choosing to apply this pseudo-supervised ML approach on the same outcome variable (but measured at a different time point) means that we obtain a good indication of the features that are useful for a model to perform well. Improved model performance here will also mean that the selected features are likely to represent the important confounders. We have chosen 2006 to ensure there is no overlap with 2019 outcomes, and thus to avoid overfitting issues. 
 
-Using the top 100 predictors, we apply nested CV approach in order tell us which model class is best. Here we measure the performance of the model class on unseen data. First, we split the data into train and test folds (80-20 split). Within the 80 percent train fold we perform 5-fold cross-validation in order to train and evaluate the performance of each configuration of parameters. We do this separately for the outcome surface using the treated observations and the outcome surface using the control observations. From this, we select the models with the best mean scores. We then evaluate the selected model on the holdout test set. 
+Using the top 100 predictors, we then apply nested cross validation to evaluate
+the predictive capacity of each model class (LASSO, Ridge, GBR). First, we
+split the data into train and test folds with an 80-20 split. Within the 80
+percent train fold we perform 5-fold cross-validation in order to train and
+evaluate the performance of each configuration of hyperparameters. We do this
+separately for the outcome surface using the treated observations and the
+outcome surface using the control observations. From this, we select the models
+with the best mean scores. We then evaluate the predictive performance of the
+selected model on the holdout test set. 
 
-We repeat this process ten times (10-outer scores) for each model class. This allows us to evaluate the performance based on the mean and standard deviation of these scores. Note that thus far, we have not evaluated any particular configuration of the model, rather the performance of the model class.
+We repeat this process ten times (10-outer scores) for each model class. This
+allows us to evaluate the performance based on the mean and standard deviation
+of these scores. Note that thus far, we have not evaluated any particular
+configuration of the model, rather the performance of the model class on random
+(without replacement) subsets of data. The nested cross validation proceedure
+protects us against overfitting when reporting predictive performance, as the
+model selection and validation happens on different data.
 
-Table \ref{tab:ncvhos} shows that the GBR is the best performing model class. It is the model that yields the highest out-of-sample R-squared or the lowest (in absolute value) MSE. This is true for both the outcome surfaces (using treated and control observations separately). 
+Table \ref{tab:ncvhos} shows that the GBR is the best performing model class.
+It yields the highest out-of-sample R-squared or the lowest (in absolute value)
+MSE. This is true for both the outcome surfaces (using treated and control
+observations separately). 
 
 \subsubsection*{Inference via bootstrapping}
 
 Once we have selected the best performing model class, we turn to the estimation of the parameters and parameter uncertainty. We use bootstrapped validation for generating uncertainty estimates. This captures the uncertainty arising from model configuration (or the selection of hyperparameters) in addition to that which stems from estimating parameters of a fixed model from noisy, finite data. Here, we estimate the same model class on different realisations of the data. 
 
-A common approach to inference in the causal machine learning literature is to use sample splitting (Athey and Wager 2019). Sample splitting ensures that the standard errors on the estimators are not underestimated because it avoids using the same data point to both select the configuration (hyperparameter selection) of the model and to estimate the parameters. When the same data point is used to perform both tasks then the standard errors would not reflect both the uncertainty stemming from model selection and that which stems from estimating parameters on noisy, finite data. The result of this is that our standard errors suffer from pre-test bias: i.e. selecting the model with the same data you use to estimate the model, which can lead to overfitting.
+A common approach to inference in the causal machine learning literature is to use sample splitting (Athey and Wager 2019). Sample splitting ensures that the standard errors on the estimators are not underestimated because it avoids using the same data point to both select the configuration (hyperparameter selection) of the model and to estimate the parameters. When the same data point is used to perform both tasks then the standard errors would not reflect both the uncertainty stemming from model selection and that which stems from estimating parameters on noisy, finite data. The result of using common data for model selection and effect estimation is that our standard errors would suffer from pre-test bias since the model may suffer from overfitting.
 
-However, sample splitting is appropriate when the sample size is large. An issue with studies that rely on survey-based data is that sample sizes are not large enough to perform sample splitting. For example, there is not enough data to split the dataset into train and test datasets such that each of these splits would cover all the common and uncommon values of the X-covariates that are observed in the full sample. If we were to use a training dataset that was insufficiently sized or non-representative, it would be difficult for the ML models to effectively map the X-covariates to the outcome surfaces, $\mu_1(x)$ and $\mu_0(x)$. There would also not be enough data in the test set to effectively estimate the parameters of the model configuration chosen in the train set. As a result, our estimate treatment effects are likely to be very imprecisely estimated. 
+Sample splitting is appropriate when the sample size is large. An issue with studies that rely on survey-based data is that sample sizes are not large enough to perform sample splitting. For example, there is not enough data to split the dataset into train and test datasets such that each of these splits would cover all the common and uncommon values of the $X$-covariates that are observed in the full sample. If we were to use a training dataset that was insufficiently sized or non-representative, it would be difficult for the ML models to effectively map the $X$-covariates to the outcome surfaces, $\mu_1(x)$ and $\mu_0(x)$. There would also not be enough data in the test set to effectively estimate the parameters of the model configuration chosen in the train set. As a result, our estimate treatment effects are likely to be very imprecisely estimated. 
 
-A suitable alternate procedure is to use bootstrapping. Resampling gives us a decent estimate on how the point estimates might vary. In this way, we side-step the need to rely on the assumption of asymptotical normality (and we do not need to utilise sample splitting to generate the standard errors). In our bootstrapping procedure, we ensure that the standard errors reflect the sources of uncertainty stemming from ‘both’ the selection of the model and the estimation of the model. As a result, we generate standard errors that avoid any potential pre-test issues.
+A suitable alternate procedure is to use bootstrapping. Resampling gives us a decent estimate on how the point estimates might vary. In this way, we side-step the need to rely on the assumption of asymptotical normality (and we do not need to utilise sample splitting to generate the standard errors). In our bootstrapping procedure, we ensure that the standard errors reflect the sources of uncertainty stemming from both the selection of the model and the estimation of the model. As a result, we generate standard errors that avoid any potential pre-test issues.
 
-As a first step, as shown in Figure \ref{fig:exp_param}, we obtain the 100 top predictors from the initial pre-processing of the full dataset. i.e. we train a supervised machine learning LASSO model to extract which features best predict earnings in 2006.
+As a first step, as shown in Figure \ref{fig:exp_param}, we obtain the 100 top predictors from the initial pre-processing of the full dataset. That is, we train a supervised machine learning LASSO model to extract which features best predict earnings in 2006.\todo{Same as before? Maybe if so we can state this to lessen confusion.}
 
-As a second step, we train our models using the 100 top predictors on the first bootstrapped sample to select the best models for $\mu _1(x)$ and $\mu _0(x)$. Within this bootstrap sample, we divide the dataset into five folds and perform cross-validation to select the best model configuration. Similar to the cross-validation description above, our model configuration is trained on subsets of the data, and then evaluated on holdout samples (where we compare the predictions made from the models for the outcome surfaces for the treated and control observations to the real values). We employ group-5-fold cross validation such that groups are the bootstrap indices of the original data. This ensures that training data does not simultaneously appear in the validation set. We perform this model selection step within the bootstrapping procedure to capture the uncertainty coming from the selection of hyperparameters. If we simply re-estimated the same model (with a given set of hyperparameters) in each bootstrap model then the uncertainty is only over the model parameters, and not the model choice (e.g. the GBR tree depth).
+As a second step, we train our models using the 100 top predictors on the first bootstrapped sample to select the best models for $\mu _1(x)$ and $\mu _0(x)$. Within this bootstrap sample, we divide the dataset into five folds and perform cross-validation to select the best model configuration. Similar to the cross-validation description above, our model configuration is trained on subsets of the data, and then evaluated on holdout samples (where we compare the predictions made from the models for the outcome surfaces for the treated and control observations to the real values). We modify the 5-fold cross validation to ensure training data does not simultaneously appear in the training and validation set. We perform this model selection step within the bootstrapping procedure to capture the uncertainty coming from the selection of hyperparameters. If we simply re-estimated the same model (with a given set of hyperparameters) in each bootstrap model then the uncertainty is only over the model parameters, and not the model choice (e.g.~the GBR tree depth).
 
-This process allows us to select the best model configurations for the outcome surfaces: $\mu _1(x)$ and $\mu _0(x)$. Third, and once we have these predicted outcome equations, we are able to calculate the individual treatment effect, $\tau(x)$ for each person in the original sample (note not the individuals from the bootstrap sample). We substitute the values of their features or independent variables into the LASSO/ Ridge equations for $\mu _1(x)$ and $\mu _0(x)$ or tree-based models.
+%This process allows us to select the best model configurations for the outcome surfaces: $\mu _1(x)$ and $\mu _0(x)$.
+Third, and once we have these predicted outcome surfaces, $\mu _1(x)$ and $\mu _0(x)$, we are able to calculate the individual treatment effect, $\tau(x)$ for each person in the original sample (note not the individuals from the bootstrap sample). We substitute the values of their features or independent variables into the LASSO/ Ridge equations for $\mu _1(x)$ and $\mu _0(x)$ or tree-based models.\todo{I don't really understand this description, and we havent mentioned independent variables before...}
 
-At this point, each individual in the original sample has one value of $\tau(x)$. We can obtain a mean $\tau(x)$ by averaging over all the individuals. This is the mean $\tau(x)$ for the first bootstrap sample. We repeat this procedure over 100 bootstrap samples. This provides an empirical distribution of the mean $\tau(x)$'s. The final mean over the bootstrap samples (the mean of the mean $\tau(x)$'s), which should be the same as the $\tau(x)$ from the original sample when the number of bootstrap samples is large enough, is how we calculate the ATE and CATE estimators. The standard deviation of this series through bootstrapping represents the standard error estimate for the ATE or CATE measure. 
+At this point, each individual in the original sample has one value of $\tau(x)$. We can obtain a mean $\tau(x)$ by averaging over all the individuals. This is the mean $\tau(x)$ for the first bootstrap sample. We repeat this procedure over 100 bootstrap samples. This provides an empirical distribution of the mean $\tau(x)$'s. The final mean over the bootstrap samples (the mean of the mean $\tau(x)$'s), which should be the same as the $\tau(x)$ from the original sample when the number of bootstrap samples is large enough, is how we calculate the ATE and CATE estimators. The standard deviation of this series through bootstrapping represents the standard error estimate for the ATE or CATE measure.\todo{Perhaps we can introduce some notation here to clarify these different estimates and averages?}
 
 Note we want to generate the value of ATE or CATE parameters, keeping the original sample size constant, thus all our bootstrap samples have the same sample size as that of the original sample.\footnote{The bootstrap resample is the same size as the original sample because the variation of the ATE depends on the size of the sample. Thus, to approximate this variation we need to use resamples of the same size.}
 
-The main goal of repeating over the bootstrap samples is to capture uncertainty coming from the model selection procedure (i.e. the choice of hyperparameters) as well as the uncertainty over the model parameters.
+The main goal of repeating over the bootstrap samples is to capture uncertainty coming from the model selection procedure (i.e.\\~the choice of hyperparameters) as well as the uncertainty over the model parameters.
 
-Each bootstrap sample gives us an estimate of the C(ATE). Across 100 bootstrap samples, we have a distribution of C(ATE) estimates. We take the standard deviation of these 100 C(ATE) values to obtain the standard error. 
+Each bootstrap sample gives us an estimate of the C(ATE)\todo{(C)ATE?}. Across 100 bootstrap samples, we have a distribution of C(ATE) estimates. We take the standard deviation of these 100 C(ATE) values to obtain the standard error. 
 
 To obtain the confidence intervals, we undertake the following procedure:
 \begin{enumerate}
 \item Multiply the C(ATE) by two 
-\item Take the 5th and 95th percentile of the C(ATE) distribution 
+\item Take the 5th and 95th percentile of the C(ATE) distribution\todo{empirically?} 
 \item Calculate the bounds of the confidence interval 
 	\begin{enumerate}
 	\item Upper bound = Step 1 - 5th percentile 
@@ -611,13 +627,11 @@ To obtain the confidence intervals, we undertake the following procedure:
 	\end{enumerate}
 \end{enumerate}
 
-To do this we approximate the critical values of the confidence interval as $\delta^* = \bar{x}^* - \bar{x}$ 
-
-such that the confidence interval 
-
-$P(\delta_{0.95} \leq \bar{x} - \mu \leq \delta_{0.05} | \mu) \Leftrightarrow P(\bar{x} - \delta_{0.95} \geq \mu \geq \bar{x} - \delta_{0.05} | \mu) = 0.90$ 
-
-can be reduced to $[2\bar{x} -\bar{x}^*_{0.05} , 2\bar{x} -\bar{x}^*_{0.95}]$.
+To do this we approximate the critical values of the confidence interval as $\delta^* = \bar{x}^* - \bar{x}$ such that the confidence interval 
+\begin{align*}
+P(\delta_{0.95} \leq \bar{x} - \mu \leq \delta_{0.05} | \mu) \Leftrightarrow P(\bar{x} - \delta_{0.95} \geq \mu \geq \bar{x} - \delta_{0.05} | \mu) = 0.90
+\end{align*}
+can be reduced to $[2\bar{x} -\bar{x}^*_{0.05} , 2\bar{x} -\bar{x}^*_{0.95}]$.\todo{I think we need to change the notation here to use $\tau$ instead of x and $\mu$ since these are overloaded. Or if this is a standard empirical procedure, we can just reference it}
 
 
 \subsubsection*{Inference for the Bayesian models}
@@ -655,19 +669,19 @@ One reason the DR approach differs from the T-learner approach is that the forme
 The Bayesian models tend to estimate smaller effects than all the other
 methods. This is especially true for the linear models, which estimate only
 \$45-48 per-week gains in gross earnings. This is likely because of the
-regularisation applied to the treatment effect in these models, which rewards
-apportioning more explanatory power of the outcome to the other covariates in
-the model to explain the difference in earnings. The two Bayesian linear models
-achieve nearly the same in-sample R-squared score (0.33-0.34) as an OLS
-S-learner that uses the same input covariates, yet the OLS model estimates
-gains of \$64 per-week in gross earnings. Once again, the non-linear model
-appears to differ from the linear models, in this case the Gaussian process
-estimates \$62 per-week gains in gross earnings, which is more inline with the
-DR approach and the OLS S-learner. Like the GBR, this is likely because the
-non-linear models are less likely to suffer from model misspecification bias,
-as they can make use of non-linear and interaction relationships between their
-covariates. Even though not directly comparable, the GP achieves a hold-out
-R-square score (over 5 folds) of 0.33. It's in-sample R-square score is 0.77.
+regularisation applied to the treatment effect in these linear models, which
+penalises apportioning a large amount of variation in the outcome to any
+covariate in the model. The two Bayesian linear models achieve nearly the same
+in-sample R-squared score (0.33-0.34) as an OLS S-learner that uses the same
+input covariates, yet the OLS model estimates gains of \$64 per-week in gross
+earnings. Once again, the non-linear model appears to differ from the linear
+models, in this case the Gaussian process estimates \$62 per-week gains in
+gross earnings, which is more inline with the DR-learner and the OLS
+S-learner. Like the GBR, this is likely because the non-linear models are less
+likely to suffer from model misspecification bias, as they can make use of
+non-linear and interaction relationships between their covariates. Even though
+not directly comparable, the GP achieves a hold-out R-square score (over 5
+folds) of 0.33. It's in-sample R-square score is 0.77.
 
 %
 %Turning to other measures of earnings, the value-add in earnings (taking the growth in earnings between 2001 and 2019 - all expressed in 2019 terms) is also higher for those who gained an additional qualification, compared to those who did not advance in their education, by approximately \$60-80 per week. As a proportion of the growth in earnings for all Australian employees between 2001 and 2019, this represents 18 percent of the overall growth in earnings. The results are contrasted graphically in Appendix Figure \ref{fig:earnings}.
@@ -677,7 +691,7 @@ R-square score (over 5 folds) of 0.33. It's in-sample R-square score is 0.77.
 
 Proportionate changes in earnings can be measured by taking the log of the earnings measures. In Appendix Figure \ref{fig:valadlelog}, we see that the proportionate change in earnings was large at 50 percent. This is likely to be because of people entering the labour market as a result of the new qualification. We find that a new qualification increases the likelihood of employment by approximately 8 percent. See Figure \ref{fig:empl}.
 
-As previously mentioned, the ML models estimate smaller returns than the returns estimated in Fixed Effects (FE) or cross-sectional models (OLS with and without controls) where features have been selected based on theory. Figure \ref{fig:method} compares the returns from five different approaches: an ordinary least squares model with no covariates, with covariates selected using theory, a FE model and ML models.
+As previously mentioned, the ML models estimate smaller returns than the returns estimated in Fixed Effects (FE) or cross-sectional models (OLS with and without controls) where features have been selected based on theory. Figure \ref{fig:method} compares the returns from five different approaches: an ordinary least squares model with no covariates, with covariates selected using theory, a FE model and ML models.\todo{I think we need to define these benchmark models in more detail, either here on the methods section.}
 
 %The largest earnings gains are associated with acquiring an undergraduate degree or above (including Graduate certificates and Graduate diplomas). As displayed in Figure \ref{fig:degree}, only modest gains are associated with secondary or post-secondary certificates or diplomas. More generally, significant earnings gains are achieved when returning students acquire qualifications above those previously held. In fact, the earnings gains are much higher if students advance their qualification status rather than gaining an additional degree at the same or lower level.
 %
@@ -701,11 +715,16 @@ Specifically, we identify the important variables for which we expect to see the
 
 \subsection{Permutation importance feature selection method}
 
-We use a permutation importance selection method to evaluate the relative importance of individual features. Our aim here is to understand where the heterogeneous treatment effects are most pronounced. In other words, we aim to identify the sub-groups for which the treatment effects differ most significantly. In selecting the important features, our objective is to understand how to partition the data by the treatment effects as opposed to predicting the outcomes themselves. 
+We use a permutation importance selection method \citep{breiman2001,molnar2020} to evaluate the relative importance of individual features. Our aim here is to understand where the heterogeneous treatment effects are most pronounced. In other words, we aim to identify the sub-groups for which the treatment effects differ most significantly. In selecting the important features\todo{again, use feature, covariate etc consistently}, our objective is to understand how to partition the data by the treatment effects as opposed to predicting the outcomes themselves. 
 
-The permutation importance method involves testing the performance of a model after removing each individual feature and replacing that feature with random noise (while keeping the underlying distribution of that feature in-tact). The model performance we are interested in, as previously mentioned, is the one that maps the features to the individual treatment effects. 
+The permutation importance proceedure involves testing the performance of a
+model after permuting the order of samples of each individual feature, thereby
+keeping the underlying distribution of that feature intact but breaking the
+predicitve relationship learned by the model with that feature. The model
+performance we are interested in, as previously mentioned, is the one that maps
+the features to the individual treatment effects. 
 
-Specifically, we take each bootstrap sample and train two outcome surfaces - one for $\hat{Y}_0$ and one for $\hat{Y}_1$ - and compute the individual treatment effects ($\tau$'s in Equation 2) for every person. Note that we train the model on the bootstrapped sample but estimate the individual treatment effects using the feature values for individuals from the original sample. Thus, for every individual we have a distribution of values of their individual treatment effects. 
+Specifically, we take each bootstrap sample and train two outcome surfaces - one for $\hat{Y}_0$\todo{we've been using $\mu$ for this right? We should be consistent if possible.} and one for $\hat{Y}_1$ - and compute the individual treatment effects ($\tau$'s in Equation 2) for every person. Note that we train the model on the bootstrapped sample but estimate the individual treatment effects using the feature values for individuals from the original sample. Thus, for every individual we have a distribution of values of their individual treatment effects. 
 
 After obtaining the individual treatment effects for each individual, we train a model that maps the features to the individual treatment effects. We use cross-validation to select our hyperparameters and obtain the optimal model. 
 
@@ -713,9 +732,9 @@ Using the original data, we take a single column amongst the features and permut
 
 We repeat this for all the features, permuting them individually and evaluating how they change the prediction of the individual treatment effect target. Features that yield the largest MSEs are likely to be more important than those features with lower MSEs. This is because permuting them changed the prediction of the individual treatment effect the most, which suggests that the individual treatment effect prediction relies heavily on those features.
 
-We then repeat the above steps across all the bootstrap samples. Note that a different bootstrap sample will change the value of the individual treatment effects (since we train different outcome surfaces for $\hat{Y}_0$ and $\hat{Y}_1$ for each bootstrap sample).
+We then repeat the above steps across all the bootstrap samples. Note that a different bootstrap sample will change the value of the individual treatment effects (since we train different outcome surfaces for $\hat{Y}_0$\todo{notation} and $\hat{Y}_1$ for each bootstrap sample).
 
-We embed the permutation importance selection method in a bootstrapping procedure in order to capture hyperparameter uncertainty. For example, a different ‘tree depth’ could be chosen between different bootstrap samples. This would affect the type of non-linear/interaction relationships that would be captured by the models, which in turn would affect which features turn out to be important. 
+We embed the permutation importance selection method in a bootstrapping procedure in order to capture hyperparameter uncertainty. For example, a different `tree depth' could be chosen between different bootstrap samples. This would affect the type of non-linear/interaction relationships that would be captured by the models, which in turn would affect which features turn out to be important. 
 
 Finally, we obtain an average MSE for each feature, averaged across all bootstrap samples. This average value allows us to rank the features by their importance. Again, those with the largest average MSE values are the most important. We can also evaluate the uncertainty of this estimate since we obtain a distribution of MSE values across the different bootstrap samples.
 
@@ -739,12 +758,12 @@ The results from the T-learner model (using GBR) shows a similar story to the re
 
 Continuing to focus on the results from the Doubly Robust model, Figure \ref{fig:htedr} shows that there is heterogeneity in the treatment impacts. We have identified the features that were considered most important according to the permutation procedure. For each feature, we divide the sample into two groups. For continuous variables, we take the median value and divide the sample into those who are above and below this median value. 
 
-Weekly personal income has a large impact on the effect size. Those with below median income in 2001 derive more benefits than those with above median income, possibly because high income earners hit an earnings ceiling. Younger people in 2001 also derive more returns, as they may have had more time to accumulate returns. This result aligns with findings from previous studies \citep{polidano2016,dorsett2016,perales2017}. Weekly personal income and age are likely to be highly correlated - with older individuals tending to earn a higher personal income. We cannot say which variable is the main driver of the heterogeneous treatment effects. There may also be interaction effects between them.
+Weekly personal income has a large impact on the effect size. Those with below median income in 2001 derive more benefits than those with above median income, possibly because high income earners hit an earnings ceiling. Younger people in 2001 also derive more returns, as they may have had more time to accumulate returns. This result aligns with findings from previous studies \citep{polidano2016,dorsett2016,perales2017}. Weekly personal income and age are likely to be highly correlated -- with older individuals tending to earn a higher personal income. We cannot say which variable is the main driver of the heterogeneous treatment effects\todo{we should try to give an explanation of why}, and there may also be interaction effects between them.
 
 We also investigate if there are heterogeneous treatment effects according to commonly used variables in Figure \ref{fig:htedr}. Females reap slightly higher returns compared to males although this is not statistically significant. Similar treatment effects apply to those with and without a resident children, although the effect sizes widen in favour of parents with older children in the household. 
 %
 %The T-learner (GBR) model is mostly consistent with the Doubly Robust model in the estimates of the CATEs. Figure \ref{fig:htegbr} shows some differences based on age, weekly income and the household income. One reason for the larger effects in the Doubly Robust model is that it places more emphasis in the areas of overlap compared to the T-learner: there may be few treated observations in the extremes of the continuous variables of age and income. 
-
+\
 %: women appear to benefit more from later-life study than men (see Figure \ref{fig:demo}). The gains to further education for women are likely to stem from the process of completing the degree. By contrast, for men, the difference in earnings (in 2019) between those who do and do not gain an additional qualification appear to emerge due to selection into adult learning: men who completed further education had higher earnings prior to enrolment compared to men who did not acquire an additional degree. Comparing the earnings growth, as opposed to the level differences in 2019 earnings, between these two groups of men shows that the value-add of further study is much smaller and now statistically insignificant.
 %
 %Larger earnings gains are also achieved when qualifications are acquired at older ages. The value-add of an additional degree for older adult learners is more than double that of learners who acquire additional degrees at younger ages. This contrasts with findings from previous studies, which show higher returns when degrees are acquired at younger ages \citep{polidano2016,dorsett2016,perales2017}. A possible reason for the difference is that we analyse older Australians and compared to some of these studies, we consider a broader range of degree types.
@@ -757,6 +776,8 @@ Acquiring an additional qualification may increase earnings through a number of 
 
 
 \section{Conclusions}
+
+\todo{Make this a bit more jazzy...}
 
 With the aim of causal inference in mind, we tailor ML models to examine the degree to which gaining a new qualification provides mature-age learners with economic benefits. We also examine which mature-age learners tend to reap more benefits than others.
 
