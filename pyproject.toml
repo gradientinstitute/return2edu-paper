@@ -19,6 +19,7 @@ jupyter-contrib-nbextensions = "^0.5.1"
 jupyter-book = "^0.12.2"
 papermill = "^2.3.4"
 pyro-ppl = {git = "https://github.com/pyro-ppl/pyro.git"}
+xbcausalforest = "^0.1.3"
 
 [tool.poetry.dev-dependencies]
 
