@@ -1524,6 +1524,30 @@ files = [
 six = ">=1.4.1"
 
 [[package]]
+name = "lightgbm"
+version = "3.3.4"
+description = "LightGBM Python Package"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "lightgbm-3.3.4-py3-none-macosx_10_15_x86_64.macosx_11_6_x86_64.macosx_12_0_x86_64.whl", hash = "sha256:eb11d83b2f6ba6f77c6f4765de0d646c1bfbc47b5aec9247576c3c0d60e52960"},
+    {file = "lightgbm-3.3.4-py3-none-manylinux1_x86_64.whl", hash = "sha256:bf79910a75ba6260cdefa3ddfe030707928ba2a0ffb204c0b6ab31f56fc27ebd"},
+    {file = "lightgbm-3.3.4-py3-none-manylinux2014_aarch64.whl", hash = "sha256:5015ee512e4fbe2ca901b4a23dca650f1a423cae900646158f340ab84399fbe2"},
+    {file = "lightgbm-3.3.4-py3-none-win_amd64.whl", hash = "sha256:a3b29612af17096dbcc9419dd5ef5342dbb86cf77ec8f99064e2fa101722c3da"},
+    {file = "lightgbm-3.3.4.tar.gz", hash = "sha256:d6fa4d5b2a6f38d588434193f366757b20b301300b7385ca6924e2e402fc9063"},
+]
+
+[package.dependencies]
+numpy = "*"
+scikit-learn = "!=0.22.0"
+scipy = "*"
+wheel = "*"
+
+[package.extras]
+dask = ["dask[array] (>=2.0.0)", "dask[dataframe] (>=2.0.0)", "dask[distributed] (>=2.0.0)", "pandas"]
+
+[[package]]
 name = "linkify-it-py"
 version = "1.0.3"
 description = "Links recognition library with FULL unicode support."
@@ -4123,4 +4147,4 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.8,<3.11"
-content-hash = "bb4d61e239a5be3b71175bf28c9f2e6b1b458c5c589d5564fa6d53118c1400e0"
+content-hash = "8c51db0dc78d0852a457d4dc57baba1ff163c097238d02ff079cda3e9145ae34"
