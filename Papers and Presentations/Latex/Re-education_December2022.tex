@@ -437,37 +437,120 @@ Previously, with the T-learner, we were just estimating $\mu_0(x)$ and $\mu_1(x)
 
 \subsection{Bayesian Models}
 
-The third approach is to use three different Bayesian S-learners. S-learners
-are simply regression models that take the treatment factor as an additional
-input covariate, $\mathbb{E}[Y| X{=}x, T{=}t] = \mu(x, t)$, and then estimate the ATE as,
+The third approach is to use Bayesian models. We follow the general formulation
+presented by \cite{hahn2020} that suggests a predictive model of the following
+form,
+\begin{align}
+  \mathbb{E}[Y_i|X{=}x_i, T{=}t_i] \approx \mu_0(x_i, \rho(x_i)) 
+    + \tau(x_i)\cdot t_i, \label{eq:bayesmods}
+\end{align}
+where $\mathbb{E}(T|X{=}x_i) \approx \rho(x_i)$ is the propensity score of
+individual $i$ for the treatment. The component $\mu_0(x_i, \rho(x_i))$ is
+known as the `prognostic', and is the impact of the control variates, $X$, on
+the outcome without the treatment. Then we are left with $\tau(x_i)$, which is
+the individual treatment effect,
 \begin{align*}
-  \hat{ATE} = \frac{1}{n}\sum^n_{i=1} \mu(x_i, 1) - \mu(x_i, 0).
+  \mathbb{E}[Y_i|X{=}x_i, T{=}1] - \mathbb{E}[Y_i|X{=}x_i, T{=}0] &\approx 
+    \left[\mu_0(x_i, \rho(x_i)) + \tau(x_i)\right] - \mu_0(x_i, \rho(x_i)), \\
+    &=\tau(x_i).
 \end{align*}
+Average treatment effect is then just simply estimated as,
+\begin{align*}
+  \hat{ATE} = \frac{1}{n}\sum^n_{i=1} \tau(x_i).
+\end{align*}
+The advantage of this approach is manifold. From a Bayesian perspective, it
+allows us to place explicit and separate priors on the prognostic and treatment
+components of the models. For example, it may be sensible to expect the
+prognostic component to be flexible and strongly predictive of the outcome,
+while me may expect that the treatment component is relatively simple and small
+in magnitude \citep{hahn2020}. Furthermore, this separation of model components
+and inclusion of the propensity score minimises bias in the form of
+regularisation induced confounding (RIC) which is discussed in more detain in
+\citep{hahn2018, hahn2020}. And finally, it is a very natural way to estimate
+heterogeneous treatment effects, since we can parameterise $\tau(x_i)$
+directly as an additive effect on $\mu_0$, rather than having to separately 
+parameterise control and treatment surfaces.
 
-The first two models are empirical Bayesian models, that is, they use
-optimisation algorithms to both find closed-form posterior distributions over
-their parameters, while also tuning their prior distribution parameters, as
-opposed to placing hyper-priors on these parameters\footnote{The assumptions
-underlying this approach are discussed in Chapter 3.5 of \cite{bishop2006}.}.
-The third is a fully hierarchical Bayesian linear model, that uses Markov-chain
-Monte-Carlo (MCMC) sampling for posterior inference.
+We explore three different model classes for $\mu_0$ and $\tau$, the first is a
+linear model for both prognostic and treatment models, the next uses a Gaussian
+process (GP), and lastly we use Bayesian additive regression trees (BART). We 
+detail these models in the following sections. 
 
-\todo{These will all probably suffer from bias as all covariates are subject
-to regularisation, and may suppress the contribution of T, and those variables
-that are important for predicting T.}
+% The third approach is to use three different Bayesian S-learners. S-learners
+% are simply regression models that take the treatment factor as an additional
+% input covariate, $\mathbb{E}[Y| X{=}x, T{=}t] = \mu(x, t)$, and then estimate the ATE as,
+% \begin{align*}
+%   \hat{ATE} = \frac{1}{n}\sum^n_{i=1} \mu(x_i, 1) - \mu(x_i, 0).
+% \end{align*}
 
-\subsubsection*{Bayesian Ridge Regression}
+% The first two models are empirical Bayesian models, that is, they use
+% optimisation algorithms to both find closed-form posterior distributions over
+% their parameters, while also tuning their prior distribution parameters, as
+% opposed to placing hyper-priors on these parameters\footnote{The assumptions
+% underlying this approach are discussed in Chapter 3.5 of \cite{bishop2006}.}.
+% The third is a fully hierarchical Bayesian linear model, that uses Markov-chain
+% Monte-Carlo (MCMC) sampling for posterior inference.
 
-The first Bayesian model is a Bayesian ridge regressor \citep{tipping2001}. We
-simply include the treatment factor, $T$, as another covariate in the model.
-Then the ATE is the marginal posterior distribution (which is Normal) of the
-regression coefficient corresponding to $T$. This is a similar approach to an
-OLS cross-sectional model with controls, but it makes use of regularisation so
-more controls can be included without worrying overly about collinearity.
-Furthermore, the empirical Bayesian nature of this model allows for automatic
-selection of the regularisation strength of the model coefficients. This model
-can only estimate an average treatment effect, as the effect is modelled as a
-single dummy variable.
+% \todo{These will all probably suffer from bias as all covariates are subject
+% to regularisation, and may suppress the contribution of T, and those variables
+% that are important for predicting T.}
+
+% \subsubsection*{Bayesian Ridge Regression}
+
+% The first Bayesian model is a Bayesian ridge regressor \citep{tipping2001}. We
+% simply include the treatment factor, $T$, as another covariate in the model.
+% Then the ATE is the marginal posterior distribution (which is Normal) of the
+% regression coefficient corresponding to $T$. This is a similar approach to an
+% OLS cross-sectional model with controls, but it makes use of regularisation so
+% more controls can be included without worrying overly about collinearity.
+% Furthermore, the empirical Bayesian nature of this model allows for automatic
+% selection of the regularisation strength of the model coefficients. This model
+% can only estimate an average treatment effect, as the effect is modelled as a
+% single dummy variable.
+
+\subsubsection*{Hierarchical Linear Model}
+
+The first Bayesian model uses linear prognostic and treatment components 
+from Equation~(\ref{eq:bayesmods}),
+\begin{align*}
+y_i &\sim \mathcal{N}\!\left(
+  \mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i, 
+  \sigma^2\right) 
+  \quad\textrm{where}, \\
+\mu_0(x_i) &= w_0 + w_x^\top x_i + w_\rho \rho(x_i), \\
+\tau(x_i) &= w_t + w_{tx}^\top x_i.
+\end{align*}
+We have used the following hierarchical priors,
+\begin{align*}
+  \{\lambda_0, \lambda_x, \lambda_\rho\} &\sim \textrm{Uniform}(0, 100) \\
+  \{\lambda_t, \lambda_{tx}\} &\sim \textrm{Uniform}(0, 1000) \\
+  \sigma &\sim \textrm{HalfCauchy}(25) \\
+  w_0 &\sim \mathcal{N}(0,\lambda_0^2) \\
+  w_x &\sim \mathcal{N}(0,\lambda_x^2 \textrm{I}_d) \\
+  w_\rho &\sim \mathcal{N}(0,\lambda_\rho^2) \\
+  w_t &\sim \mathcal{N}(0,\lambda_t^2) \\
+  w_{tx} &\sim \mathcal{N}(0,\lambda^2_{tx} \textrm{I}_d),
+\end{align*}
+where $I_d$ is the identity matrix of dimension $d$, which is the number of
+control factors. The propensity score, $\rho(x_i)$, is obtained from a logistic
+regression model. We also tested a gradient boosted classifier
+\citep{friedman2001} for this using five-fold nested cross validation.  It did
+not seem to be more performant than the logistic model on held-out log-loss
+score.
+
+For model inference, we use the no U-turn MCMC sampler \citep{hoffman2014} in
+the numpyro software package \citep{bingham2019, phan2019}. The choice of an
+uniform improper and non-informative prior over the regression weight scales,
+$\lambda_*$, is motivated by the advice in \citet{gelman2006} where we desire a
+non-informative prior that admits large values. We choose a broader 
+prior for the treatment component of the model to minimise bias as suggested by
+\cite{hahn2020}. We first burn in the Markov chain for 30,000 samples, then draw
+1000 samples from the posterior parameters to approximate the ATE,
+\begin{align*}
+  \hat{ATE} = \frac{1}{Sn} \sum^S_{s=1} \sum^n_{i=1} \tau^{(s)}(x_i),
+\end{align*}
+where $(s)$ denotes a sample from the posterior parameters has been used to 
+construct a random realisation of the treatment model component, and $S = 1000$.
 
 \subsubsection*{Gaussian Process Regression}
 
@@ -504,53 +587,6 @@ separate response surfaces for the treatment and control groups like a T-learner
 -- at least much as permitted by the use of an isotropic kernel.
 
 
-\subsubsection*{Hierarchical Linear Model}
-
-The third S-learner is a hierarchical Bayesian linear model. The hierarchical
-Bayesian approach models the response surface as,
-\begin{align*}
-y_i &\sim N(\mu(x_i,t_i),\sigma^2) \\
-\mu(x_i,t_i) &= w_0 + w_t t_i + w_x^\top x_i + t_i w_{tx}^\top x_i
-\end{align*}
-Where we have used the following priors,
-\begin{align*}
-\{ \lambda_0, \lambda_t, \lambda_x, \lambda_{tx} \} &\sim 
-  \textrm{Uniform}(0, 100) \\
-\sigma &\sim \textrm{Uniform}(0, 100) \\
-w_0 &\sim N(0,\lambda_0^2) \\
-w_t &\sim N(0,\lambda_t^2) \\
-w_x &\sim N(0,\lambda_x^2 \textrm{I}_d) \\
-w_{tx} &\sim N(0,\lambda^2_{tx} \textrm{I}_d)
-\end{align*}
-The advantage of this model is that it is able to model separate treatment and
-control surfaces, like a T-learner, but is still able to regularise the
-contribution of the treatment variable as well as other model covariates,
-unlike a T-learner that requires two separate models. Additionally, the model
-is free to use different regularisation strengths between the treatment and
-control surfaces, but this regularisation is informed by the data rather than
-the authors having to make an a-priori choice explicitly. This is achieved by
-placing a joint Uniform hierarchical prior over regularisation parameters,
-$\lambda_0, \lambda_t, \lambda_x$ and $\lambda_{tx}$. Ideally, this
-construction will allow for the modelling flexibility of a T-learning approach,
-while still being able to regularise the contribution of the treatment factor.
-This will provide a useful point of comparison to the other regularised
-T-learning approaches in case they are overstating the ATE. See
-\citet{hahn2018} for more a more thorough discussion on this issue of
-regularisation bias.
-
-For model inference, we use the no U-turn MCMC sampler \citep{hoffman2014} in
-the pyro software package \citep{bingham2019}. The choice of an improper and
-non-informative prior over $\lambda_*$, $\textrm{Uniform(0, 100)}$, is
-motivated by the advice in \citet{gelman2006} where we desire a non-informative
-prior that admits large values of $\lambda$. 
-
-We can then obtain samples from the posterior ATE distribution by constructing
-samples,
-\begin{align*}
-  ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
-\end{align*}
-where $(s)$ denotes a sample of the model parameters from their respective
-posterior distributions using the previously mentioned MCMC sampler.
 
 
 %
@@ -631,7 +667,10 @@ To do this we approximate the critical values of the confidence interval as $\de
 \begin{align*}
 P(\delta_{0.95} \leq \bar{x} - \mu \leq \delta_{0.05} | \mu) \Leftrightarrow P(\bar{x} - \delta_{0.95} \geq \mu \geq \bar{x} - \delta_{0.05} | \mu) = 0.90
 \end{align*}
-can be reduced to $[2\bar{x} -\bar{x}^*_{0.05} , 2\bar{x} -\bar{x}^*_{0.95}]$.\todo{I think we need to change the notation here to use $\tau$ instead of x and $\mu$ since these are overloaded. Or if this is a standard empirical procedure, we can just reference it}
+can be reduced to $[2\bar{x} -\bar{x}^*_{0.05} , 2\bar{x}
+-\bar{x}^*_{0.95}]$.\todo{I think we need to change the notation here to use
+$\tau$ instead of x and $\mu$ since these are overloaded. Or if this is a
+standard empirical procedure, we can just reference it}
 
 
 \subsubsection*{Inference for the Bayesian models}
@@ -1067,10 +1106,11 @@ T-learner (Ridge)	 & 	5441	 & 	108.95	 & 	[46.84, 183.05]	 \\
 Doubly Robust (GBR)	 & 	5441	 & 	68.85	 & [50.91, 82.07] \\
 Doubly Robust (LASSO)	 & 	5441	 & 	54.64	 & 	[27.97, 72.74]	 \\
 Doubly Robust (Ridge)	 & 	5441	 & 	61.74	 & 	[45.7, 78.86]	 \\
-Bayesian Ridge	 & 	5441	 & 	45.23	 & 	[0.60, 89.86]	 \\
+% Bayesian Ridge	 & 	5441	 & 	45.23	 & 	[0.60, 89.86]	 \\
 %Bayesian Ridge (counterfactual sampling)	 & 	5441	 & 	44.64	 & 	[2.24, 87.04]	 \\
-Gaussian Process	 & 	5441	 & 	62.00	 & 	[6.82, 117.17]	 \\
-Hierarchical Bayesian Linear Model	 & 	5441	 & 	48.12 & [-5.10, 110.46]  \\
+Hierarchical Linear Model	 & 	5441	 & 	63.22 & [0.63, 121.70]  \\
+Gaussian Process  & 	5441	 & 	61.51	 & 	[3.66, 119.36]	 \\
+Bayesian Causal Forests  & 5441 & 79.16 & [21.06, 138.87] \\
 % Hierarchical Bayesian Linear Model & 	5441	 & 	45.74	 & [-9.50, 113.53]  \\ Gamma(1,1) priors
 \bottomrule
 \end{tabular}
