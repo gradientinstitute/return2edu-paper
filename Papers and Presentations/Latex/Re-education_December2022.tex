@@ -168,10 +168,9 @@ Understanding the different sources of dynamic selection is also important for h
 
 We adapt ML models for the purpose of estimating causal effects. Standard off-the-shelf ML models are better suited to predictive purposes. When obtaining a prediction, off-the-shelf ML models can find generalisable patterns and minimise overfitting issues, though the use of cross-validation, because the true outcomes are observed. This means that we can optimize a goodness-of-fit criterion. Causal parameters, however, are not observed in the data, which means we cannot directly train and evaluate our models. 
 
-In this paper, we take the difference between the two optimal outcome models, which can achieve the optimum bias-variance trade-off point for the conditional average treatment effect. Specifically, we model the response surfaces for two conditional mean equations - one using the treatment observations and another using the control observations. We estimate these equations with ML methods such as the T-learner and Doubly Robust. Here, we employ both linear (LASSO and Ridge) and non-linear (Gradient Boosting Regression) model classes. We compare and evaluate their comparative performance using nested cross-validation. We then test the statistical significance of our causal parameters by examining the distribution of the estimates through bootstrapping. Last, we use Bayesian ML models operating as S-learners. 
+In this paper, we take the difference between the two optimal outcome models, which can achieve the optimum bias-variance trade-off point for the conditional average treatment effect. Specifically, we model the response surfaces for two conditional mean equations - one using the treatment observations and another using the control observations. We estimate these equations with ML methods such as the T-learner and Doubly Robust. Here, we employ both linear (LASSO and Ridge) and non-linear (Gradient Boosting Regression) model classes. We compare and evaluate their comparative performance using nested cross-validation. We then test the statistical significance of our causal parameters by examining the distribution of the estimates through bootstrapping. Last, we use a variety of Bayesian ML models following the formulation presented in \citet{hahn2020} that reduce effect estimation bias within the Bayesian paradigm.
 These models have several properties that may be desirable, such as the ability
-automatically tune regularisation strength (unlike LASSO and ridge), and in some
-cases to jointly model linear and non-linear treatment and control response surfaces.
+directly parameterise heterogeneous prognostic and treatment models.
 
 %
 %A benefit of our set-up is that when we take the difference between the two optimal outcome models, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect.  
@@ -346,9 +345,7 @@ The missing data problem (or the lack of counterfactuals) is especially problema
 
 To address the missing data problem, we turn to a range of ML-based techniques. Standard ML tools are purposed to predict. By contrast, our aim is to estimate the causal parameter. These are different aims and requires us to adapt the ML tools. 
 
-We may potentially bias our causal parameter of interest if we were to use the off-the-shelf tools. For example, if we were to select the important confounders using an ML model to predict the outcome $Y$, then we may undervalue the importance of variables that are highly correlated to the treatment $T$ but only weakly predictive of $Y$ \citep{cherno2018}.\todo{Unfortunately, I believe the Bayesian models are
-subject to this bias since they can be thought of as regularised S-learners. One reason to include them is to sense check if there is actually a predictive relationsip between Y and T, since they can effectively suppress the contribution of T to the predictions.} The Bayesian models used in this work may be subject to this bias since they are operating as S-learners and are trying to maximise the marginal likelihood of the covariates explaining the outcomes. However, we still believe they yield useful insights since they are able to supress the contribution of the treatment in a data-informed manner (unlike T-learners). For continuous treatments, one can use
-two-stage methods such as that in \citet{hahn2018} to minimise this bias. These may be generalised to binary treatments, but doing so is beyond the scope of this work. 
+We may potentially bias our causal parameter of interest if we were to use the off-the-shelf tools. For example, if we were to select the important confounders using an ML model to predict the outcome $Y$, then we may undervalue the importance of variables that are highly correlated to the treatment $T$ but only weakly predictive of $Y$ \citep{cherno2018}.
 
 We approach filling the missing data indirectly with three types of ML models. They are: the T-Learner, Doubly Robust and Bayesian models. 
 
@@ -444,11 +441,11 @@ form,
   \mathbb{E}[Y_i|X{=}x_i, T{=}t_i] \approx \mu_0(x_i, \rho(x_i)) 
     + \tau(x_i)\cdot t_i, \label{eq:bayesmods}
 \end{align}
-where $\mathbb{E}(T|X{=}x_i) \approx \rho(x_i)$ is the propensity score of
+where $\mathbb{E}[T|X{=}x_i] \approx \rho(x_i)$ is the propensity score of
 individual $i$ for the treatment. The component $\mu_0(x_i, \rho(x_i))$ is
-known as the `prognostic', and is the impact of the control variates, $X$, on
-the outcome without the treatment. Then we are left with $\tau(x_i)$, which is
-the individual treatment effect,
+known as the `prognostic' effect, and is the impact of the control variates,
+$X$, on the outcome without the treatment. Then we are left with $\tau(x_i)$,
+which is the individual treatment effect,
 \begin{align*}
   \mathbb{E}[Y_i|X{=}x_i, T{=}1] - \mathbb{E}[Y_i|X{=}x_i, T{=}0] &\approx 
     \left[\mu_0(x_i, \rho(x_i)) + \tau(x_i)\right] - \mu_0(x_i, \rho(x_i)), \\
@@ -458,7 +455,7 @@ Average treatment effect is then just simply estimated as,
 \begin{align*}
   \hat{ATE} = \frac{1}{n}\sum^n_{i=1} \tau(x_i).
 \end{align*}
-The advantage of this approach is manifold. From a Bayesian perspective, it
+The advantage of this approach are manifold. From a Bayesian perspective, it
 allows us to place explicit and separate priors on the prognostic and treatment
 components of the models. For example, it may be sensible to expect the
 prognostic component to be flexible and strongly predictive of the outcome,
@@ -517,7 +514,7 @@ y_i &\sim \mathcal{N}\!\left(
   \mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i, 
   \sigma^2\right) 
   \quad\textrm{where}, \\
-\mu_0(x_i) &= w_0 + w_x^\top x_i + w_\rho \rho(x_i), \\
+\mu_0(x_i, \rho(x_i)) &= w_0 + w_x^\top x_i + w_\rho \rho(x_i), \\
 \tau(x_i) &= w_t + w_{tx}^\top x_i.
 \end{align*}
 We have used the following hierarchical priors,
@@ -546,9 +543,10 @@ non-informative prior that admits large values. We choose a broader
 prior for the treatment component of the model to minimise bias as suggested by
 \cite{hahn2020}. We first burn in the Markov chain for 30,000 samples, then draw
 1000 samples from the posterior parameters to approximate the ATE,
-\begin{align*}
+\begin{align}
   \hat{ATE} = \frac{1}{Sn} \sum^S_{s=1} \sum^n_{i=1} \tau^{(s)}(x_i),
-\end{align*}
+  \label{eq:bayesATE}
+\end{align}
 where $(s)$ denotes a sample from the posterior parameters has been used to 
 construct a random realisation of the treatment model component, and $S = 1000$.
 
@@ -558,42 +556,115 @@ Gaussian process (GP) regression can be viewed as a non-linear generalisation
 of Bayesian linear regression that makes use of the kernel trick
 \citep{williams2006, bishop2006}. Another way of understanding a GP is that is
 parameterises a distribution over functions (response surfaces) directly,
-rather than model weights as is the case with Bayesian ridge regression.
+rather than model weights as is the case with Bayesian linear regression.
 
-Using the notation from \citet{williams2006}, the response surface, $\mu$, is
-modelled by a posterior predictive GP,
+Say we have the regression function, $\mathbb{E}[Y_i|X{=}x_i] = f(x_i)$, a
+Gaussian process models the covariance of $f(x)$ directly using a kernel 
+function,
 \begin{align*}
-  \mu(x_i, t_i) \sim \mathcal{GP}\left(\bar{\mu}(x_i, t_i), k(x_i, t_i)\right),
+  \mathbb{E}[f(x_i) \cdot f(x_j)] &= k(x_i, x_j) \qquad \textrm{or}, \\
+  \mathbb{E}[y_i \cdot y_j] &= k(x_i, x_j) + \sigma^2 \delta_{ij},
 \end{align*}
-which is essentially a conditional Normal distribution with a mean function
-$\bar{\mu}(\cdot, \cdot)$ and a kernel (covariance) function $k(\cdot, \cdot)$
-that determines the type of functional relatioships that can be modelled.
-We obtain samples of ATE by sampling from the posterior GP,
+where $\delta_{ij}$ is a Kroneker delta, and is one iff $i=j$, otherwise zero.
+This formulation also assumes $\mathbb{E}[Y] = \mathbb{E}[f(x)] = 0$ for 
+simplicity -- and can be used directly if the outcomes are transformed to be
+zero mean, or we can model an additional mean function (see \citet{williams2006}
+for details). The Gaussian process can be written as,
 \begin{align*}
-  ATE^{(s)} = \frac{1}{n} \sum_{i=1}^{n} \mu^{(s)}(x_i, 1) - \mu^{(s)}(x_i, 0)
+  \mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{K} + \sigma \mathbf{I}_n),
 \end{align*}
-where (s) denotes samples from the posterior predictive GP. These samples can
-be used to empirically construct confidence intervals over the estimated
-ATE.
+where $\mathbf{y} = [y_1, \ldots, y_i, \ldots, y_n]^\top$ is the vector of all
+outcome samples, $\mathbf{K}$ is the covariance matrix with elements
+$\mathbf{K}_{ij} = k(x_i, x_j)$, and $\mathbf{I}_n$ the $n$-dimensional
+identity matrix. 
 
-For this analysis we use an isotropic Mat\'{e}rn $\frac{3}{2}$ kernel function.
-This is a stationary and isotropic kernel, but does not have excessive
-smoothness assumptions on the functional forms it can learn -- this kernel
-leads to the response surface, being at least once differentiable
-\citep{williams2006}. A Gaussian process with this kernel can learn non-linear
-and interaction-style relationships between input covariates and the outcome.
-Though formally an S-learner, this model is flexible enough to learn somewhat
-separate response surfaces for the treatment and control groups like a T-learner
--- at least much as permitted by the use of an isotropic kernel.
+To implement the functional relationship in Equation (\ref{eq:bayesmods}) in a
+Gaussian process, we create the kernel function over $\langle x, t \rangle$
+pairs,
+\begin{align*}
+  k(\langle x_i, t_i \rangle, \langle x_j, t_j \rangle) 
+    = \sigma^2_{\mu_0} 
+      k_{\mu_0}(\langle x_i, \rho(x_i) \rangle, \langle x_j, \rho(x_j) \rangle) 
+    + t_i t_j \cdot [\sigma^2_\tau k_\tau(x_i, x_j) + \tau_0].
+\end{align*}
+Here $k_{\mu_0}$ and $k_\tau$ are the prognostic and treatment kernels
+respectively, $\sigma_{\mu_0}$ and $\sigma_\tau$ allow us to scale the
+contribution of these kernels to the functional relationships learned, and
+$\tau_0$ permits a constant treatment effect. This induces the functional
+relationship we want; $f(x_i, t_i) = \mu_0(x_i, \rho(x_i)) + \tau(x_i) \cdot
+t_i$. We use the same propensity model for $\rho(x_i)$ as the linear model 
+previously.
 
+We have chosen isotropic Mat\'{e}rn $\frac{3}{2}$ kernel functions for
+$k_{\mu_0}$ and $k_\tau$, 
+\begin{align*}
+  k_{\nu=3/2}(x_i, x_j) = 
+    \left(1 + \frac{\sqrt{3}|x_i - x_j|}{l} \right)
+    \exp\left(\frac{-\sqrt{3}|x_i - x_j|}{l}\right),
+\end{align*}
+where $l$ is the length scale parameter, and controls the width of the kernel
+function. Smaller length scales allow for more high-frequency variation in the
+resulting function $f(x_i)$. The Mat\'{e}rn kernel is a stationary and
+isotropic kernel, but does not have excessive smoothness assumptions on the
+functional forms it can learn -- this kernel leads to the response surface
+being at least once differentiable \citep{williams2006}. A Gaussian process
+with this kernel can learn non-linear and interaction-style relationships
+between input covariates and the outcome. Our composite kernel is not
+necessarily stationary however, as we have included a non-stationary term, $t_i
+t_j$. 
 
+A-priori, we expect reasonably smooth variation $\mathbb{E}[y_i \cdot
+y_j]$ so we choose a long length-scale for the prognostic kernel function,
+$l_{\mu_0}$ = 10, and an amplitude, $\sigma^2_{\mu_0} = 1$. We expect an even
+smoother relationship with less contribution for the treatment, and set the
+corresponding kernel parameters as; $l_\tau = 50$, $\sigma^2_\tau = 0.1$ and
+$\tau_0 = 1$. These parameters are then optimised using the maximum likelihood
+type-II procedure outlined in Section 5.4.1 of \citet{williams2006}.
 
+The ATE is then approximated as,
+\begin{align*}
+  \hat{ATE} = \frac{1}{Sn} \sum^S_{s=1}\sum^n_{i=1}
+    f^{(s)}_*(x_i, 1) - f^{(s)}_*(x_i, 0),
+\end{align*}
+where $f^{(s)}_*(x_i, t)$ are samples from the Gaussian process posterior
+predictive distribution\footnote{See Equations (2.22)-(2.24)
+of \citet{williams2006}.} with kernel inputs $k_*(\langle x_i, t \rangle, \langle x_i, t
+\rangle)$, which is equivalent to sampling from the distribution over
+$\tau(\cdot)$. We use $S=100$ samples.
 
-%
-%ADD STUFF ABOUT CV AND NESTED CV, and bootstrapping \color{black} 
+\subsubsection*{Bayesian Causal Forests}
+The last Bayesian model we use is the Bayesian causal forest introduced In
+\citet{hahn2020}. Broadly it models the prognostic and treatment components As
+Bayesian additive regression trees (BART),
+\begin{align*}
+y_i &\sim \mathcal{N}\!\left(
+  \mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i, 
+  \sigma^2\right) 
+  \quad\textrm{where}, \\
+\mu_0(x_i, \rho(x_i)) &= \textrm{BART}(x_i, \rho(x_i)), \\
+\tau(x_i) &= \textrm{BART}(x_i).
+\end{align*}
+We use the accelerated BART (XBART) implementation of this algorithm detailed 
+in \citet{krantsevich2022}. BART \citep{chipman2010} has been shown to be an 
+effective and easily applicable non-parametric regression technique that 
+requires few assumptions in order to capture complex relationships that can 
+otherwise confound effect estimation. We follow \cite{hahn2020} in our choice
+of BART priors,
+\begin{align*}
+  \alpha_{\mu_0} = 0.95,&~
+  \alpha_{\tau} = 0.25, \\
+  \beta_{\mu_0} = 2,&~
+  \beta_{\tau} = 3.
+\end{align*}
+This choice prefers a more simple treatment effect model, $\tau(x_i)$, that is
+less likely to branch, and more likely to have shallower trees 
+than the prognostic model. Similarly, we use 200 trees for the prognostic model,
+and 50 for the treatment. We take 500 burn-in sweeps, and then 2000 sweeps
+to estimate the posterior BART distributions.
 
-
-%Another issue is that the T-learner strongly relies on the overlap assumption. The indirect ways of obtaining the best prediction of the CATE through two predictive equations will perform best for subpopulations defined by $X = x$, entirely located in the treatment or control group. For regions where the treatment probability is closer to 0 or 1, we must extrapolate our $\mu _1(x)$  and $\mu _0(x)$ models. As these models are trained and evaluated only in X regions for which there are treated observations and control observations, respectively, non-overlap means there is no way for us to validate whether the function performs well. This means the optimum bias-variance trade-off point for the conditional average treatment effect may not align with the optimum bias-variance trade-off point for the separate $\mu _1(x)$ and $\mu _0(x)$  models. Since, ultimately we are interested in the CATEs (as opposed to the predictive accuracy of the individual conditional mean functions), this can mean that we have biased CATEs.
+ATE is estimated in the same way as for the linear model in Equation 
+(\ref{eq:bayesATE}), but where the BART posterior is used for the 
+treatment effect distribution.
 
 
 \subsection{Model selection and model evaluation}
@@ -677,18 +748,15 @@ standard empirical procedure, we can just reference it}
 
 The inference process for the Bayesian models a little different since the
 hyper-paramters of the models are either fixed or selected automatically by the
-learning algorithm (Empirical Bayes or MCMC). Bayesian inference procedures
-tend to afford some protection against over-fitting since they are parsimonious
-in choosing posterior distributions over model parameters that vary from their
-prior distributions, and so induces a natural model complexity
+learning algorithm (maximum likelihood type-II or MCMC). Bayesian inference
+procedures tend to afford some protection against over-fitting since they are
+parsimonious in choosing posterior distributions over model parameters that
+vary from their prior distributions, and so induces a natural model complexity
 penalty\footnote{This point can be understood more thoroughly by examining the
 evidence lower bound in variational Bayesian inference, see Chapter 10 of
 \citet{bishop2006}.}. As such, we use all the available data to learn the model
-posterior distributions, which we then sample from to form estimates of the
-(C)ATE as outlined in the previous section. However, where we report the
-predictive performance of these models, 5-fold cross validation has been used,
-and performance is reported on the hold-out set, except for the hierarchical
-linear model where such a procedure would be computationally inconvenient.
+posterior distributions, which we then sample from to form empirical estimates
+of the (C)ATE as outlined in the previous section. 
 
 
 \section{Results}
