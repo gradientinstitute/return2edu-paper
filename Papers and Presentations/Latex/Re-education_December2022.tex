@@ -613,13 +613,13 @@ between input covariates and the outcome. Our composite kernel is not
 necessarily stationary however, as we have included a non-stationary term, $t_i
 t_j$. 
 
-A-priori, we expect reasonably smooth variation $\mathbb{E}[y_i \cdot
-y_j]$ so we choose a long length-scale for the prognostic kernel function,
-$l_{\mu_0}$ = 10, and an amplitude, $\sigma^2_{\mu_0} = 1$. We expect an even
-smoother relationship with less contribution for the treatment, and set the
+A-priori, we expect reasonably smooth variation $\mathbb{E}[y_i \cdot y_j]$ so
+we choose a long length-scale for the prognostic kernel function, $l_{\mu_0}$ =
+10, and an amplitude, $\sigma^2_{\mu_0} = 1$. We expect an even smoother
+relationship with less contribution for the treatment, and set the
 corresponding kernel parameters as; $l_\tau = 50$, $\sigma^2_\tau = 0.1$ and
-$\tau_0 = 1$. These parameters are then optimised using the maximum likelihood
-type-II procedure outlined in Section 5.4.1 of \citet{williams2006}.
+$\tau_0 = .001$. These parameters are then optimised using the maximum
+likelihood type-II procedure outlined in Section 5.4.1 of \citet{williams2006}.
 
 The ATE is then approximated as,
 \begin{align*}
@@ -1177,8 +1177,8 @@ Doubly Robust (Ridge)	 & 	5441	 & 	61.74	 & 	[45.7, 78.86]	 \\
 % Bayesian Ridge	 & 	5441	 & 	45.23	 & 	[0.60, 89.86]	 \\
 %Bayesian Ridge (counterfactual sampling)	 & 	5441	 & 	44.64	 & 	[2.24, 87.04]	 \\
 Hierarchical Linear Model	 & 	5441	 & 	63.22 & [0.63, 121.70]  \\
-Gaussian Process  & 	5441	 & 	61.51	 & 	[3.66, 119.36]	 \\
-Bayesian Causal Forests  & 5441 & 79.16 & [21.06, 138.87] \\
+Gaussian Process  & 	5441	 & 	61.01	 & 	[12.63, 109.51]	 \\
+Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 % Hierarchical Bayesian Linear Model & 	5441	 & 	45.74	 & [-9.50, 113.53]  \\ Gamma(1,1) priors
 \bottomrule
 \end{tabular}
