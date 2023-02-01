@@ -773,24 +773,22 @@ The Doubly Robust (DR) models estimate smaller effects compared to the T-learner
 
 One reason the DR approach differs from the T-learner approach is that the former uses additional information from the propensity score (i.e. we estimate machine learning models to gain a better understanding of the treatment assignment process, the students’ background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap)\todo{I also wonder if the T-learners are susceptible to over-stating the ATE since T's contribution is not regularised like other factors?}. A benefit of this is that it can also provide better extrapolations of the predicted outcomes. 
 
-The Bayesian models tend to estimate smaller effects than all the other
-methods. This is especially true for the linear models, which estimate only
-\$45-48 per-week gains in gross earnings. This is likely because of the
-regularisation applied to the treatment effect in these linear models, which
-penalises apportioning a large amount of variation in the outcome to any
-covariate in the model. The two Bayesian linear models achieve nearly the same
-in-sample R-squared score (0.33-0.34) as an OLS S-learner that uses the same
-input covariates, yet the OLS model estimates gains of \$64 per-week in gross
-earnings. Once again, the non-linear model appears to differ from the linear
-models, in this case the Gaussian process estimates \$62 per-week gains in
-gross earnings, which is more inline with the DR-learner and the OLS
-S-learner. Like the GBR, this is likely because the non-linear models are less
-likely to suffer from model misspecification bias, as they can make use of
-non-linear and interaction relationships between their covariates. Even though
-not directly comparable, the GP achieves a hold-out R-square score (over 5
-folds) of 0.33. It's in-sample R-square score is 0.77.
+The Bayesian models estimate similar sized effects to the DR models for the
+most part. However, they tend to have more uncertainty associated with their
+estimates. They all remain significant with the 95\% confidence intervals
+remaining above \$0. The hierarchical linear model and the Gaussian process
+both estimate a gain of approximately \$61-\$63 per week in gross earnings,
+with the Gaussian process being more certain in its estimate. Interestingly,
+the Gaussian process prefers a much smoother and smaller treatment effect
+component compared to its prognostic component -- the treatment kernel length
+scale is long, and the kernel has a small amplitude and offset ($l_\tau = 243$,
+$\sigma_\tau^2 = 0.0517^2$, and $\tau_0 = 0.0312^2$). Whereas the prognostic
+kernel parameters stay relatively close to their initial settings ($l_{\mu_0} =
+16$, and $\sigma^2_{\mu_0} = 1.42^2$). The Bayesian causal forest estimates a
+slightly higher gain of \$84.5 per week in gross earnings, which is more inline
+with the GBR T-learner. This suggests that the tree ensemble methods may be
+able to more easily capture non-linear relationships than the other models.
 
-%
 %Turning to other measures of earnings, the value-add in earnings (taking the growth in earnings between 2001 and 2019 - all expressed in 2019 terms) is also higher for those who gained an additional qualification, compared to those who did not advance in their education, by approximately \$60-80 per week. As a proportion of the growth in earnings for all Australian employees between 2001 and 2019, this represents 18 percent of the overall growth in earnings. The results are contrasted graphically in Appendix Figure \ref{fig:earnings}.
 %
 %The similarity in the results between the value-add increase in earnings and the level increase in 2019 earnings suggests that, once we control for background characteristics, we have accounted for inherent or base level differences between those who do and do not obtain an additional qualification. 
