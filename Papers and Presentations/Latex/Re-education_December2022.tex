@@ -331,15 +331,22 @@ Figure \ref{fig:yearearnempl} shows an increase in both average earnings and emp
 
 
 \section{Method}
-\todo{We probably need to make the notation a little more consistent in thise section.}
+\todo{We probably need to make the notation a little more consistent in this section.}
 
 We aim to estimate the causal impact of obtaining a new qualification. Our empirical challenge is a missing data one in the sense that we do not observe the counterfactual outcome for each person.
 
-Under the potential outcomes framework of \cite{imbens2015}, $Y(0)$ and $Y(1)$ denote the outcomes we would have observed if treatment were set to zero or one, respectively. In reality, we only observe the potential outcome that corresponds to the realised treatment for an individual, $i$,
+We use capitalisation to denote random variables, where $Y \in \mathbb{R}^+$ is
+the outcome variable, $T \in \{0, 1\}$ is the binary treatment indicator, and
+$X \in \mathcal{X}$ are the conditioning variables (which can be a mix of
+continuous or categorical in type). Small case is used to denote realisations
+of these random variables, e.g. $y$, $t$ and $x$, and we may use a subscript
+for an individual realisation, e.g. $y_i$ for individual $i$ from a sample of
+size $n$.
+
+Under the potential outcomes framework of \cite{imbens2015}, $Y(0)$ and $Y(1)$ denote the outcomes we would have observed if treatment were set to zero ($T=0$) or one ($T=1$), respectively. In reality, we only observe the potential outcome that corresponds to the realised treatment,
 \begin{align}
-Y_i=T_i \cdot Y_i(1) + (1-T_i) \cdot Y_i(0).
+Y = T \cdot Y(1) + (1-T) \cdot Y(0).
 \end{align}
-Here, we denote the binary treatment indicator $T \in \{0;1\}$.
 
 The missing data problem (or the lack of counterfactuals) is especially problematic when the treated group is different from the control group in ways that independently affect outcomes. Such selection issues mean that we cannot simply take the difference in the average of the non-missing values of $Y(0)$ and $Y(1)$.
 
@@ -352,31 +359,44 @@ We approach filling the missing data indirectly with three types of ML models. T
 
 \subsection{T-Learner model}
 
-The first is the T-learner approach. We aim to measure the amount by which the response $Y_i$ would differ between hypothetical worlds in which the treatment was set to $T_i=1$ versus $T_i=0$, and to estimate this on average\todo{in expectation?} across subpopulations defined by attributes $X$. 
+The first is the T-learner approach. We aim to measure the amount by which the response $Y$ would differ between hypothetical worlds in which the treatment was set to $T=1$ versus $T=0$, and to estimate this on average\todo{in expectation?} across subpopulations defined by attributes $X$. 
 
-\emph{Identification assumptions}
+\emph{Identification assumptions}\todo{aren't these applicable to all of the 
+approaches? Perhaps this should be in the previous section (one level up).}
 
 To interpret the estimated parameter as a causal relationship, the following assumptions are needed:
 
 \begin{enumerate}
-  \item Conditional independence (or conditional ignorability/exogeneity or conditional unconfoundedness) Rubin (1980): $Y(0)$ and $Y(1)$ are independent of $T$ conditional on $X$; i.e. $\left\{Y(0), Y(1)\right\} \perp T~|~X$.  
-  
+  \item \textbf{Conditional independence} (or conditional ignorability/exogeneity or conditional unconfoundedness) Rubin (1980): $Y(0)$ and $Y(1)$ are independent of $T$ conditional on $X$; i.e. $\left\{Y(0), Y(1)\right\} \perp T~|~X$.  
+\end{enumerate}
+
 This assumption requires that the treatment assignment is independent of the two potential outcomes. Practically, this amounts to assuming that components of the observable characteristics available in our data, or flexible combinations of them, can proxy for unobservable characteristics. Otherwise, unobservable confounding bias remains.
 
-    A benefit of using all the features the HILDA dataset has to offer is that we may minimise unobserved confounding effects. Specifically, we rely on the 3,400 covariates and complex interactions between them as well as flexible functional forms to proxy for components of this unobserved heterogeneity. For example, while we do not observe ability or aptitude directly, we may capture components of it with other measures that are observed in HILDA such as past educational attainment or the long list of income and other sources of income variables (see Table 1 for a list of the covariates). 
+A benefit of using all the features the HILDA dataset has to offer is that we may minimise unobserved confounding effects. Specifically, we rely on the 3,400 covariates and complex interactions between them as well as flexible functional forms to proxy for components of this unobserved heterogeneity. For example, while we do not observe ability or aptitude directly, we may capture components of it with other measures that are observed in HILDA such as past educational attainment or the long list of income and other sources of income variables (see Table 1 for a list of the covariates). 
 
 The reader is likely to conceptualise other dimensions of unobserved heterogeneity that may not be captured in Table 1. There are two likely scenarios in this case. First, HILDA may not be exhaustive enough, even with its existing richness, to capture all dimensions of unobserved heterogeneity. As a result, our estimates may be biased. 
 
 Another potential scenario is that the source of unobserved heterogeneity in question (or some components of it) is still captured but modelled under the guise of another variable label. Variables that are highly correlated with each other are unlikely to be simultaneously included in the model. This is because the ML algorithm, in attempting to reduce the amount of information redundancy, may have randomly dropped one or more of those correlated variables. 
 
-  \item Stable Unit Treatment Value Assumption (SUTVA) (or counterfactual consistency): $Y_i = Y_i(0) +T_i(Y_i(1) - Y_i(0))$. Assumption 2 ensures that there is no interference, no spill-over effects, and no hidden variation between treated and non-treated observations. SUTVA may be violated if individuals who complete further education influence the labour market outcomes of those who do not complete further education. For example, if the former group absorb resources that would otherwise be channelled to the latter group. Alternatively, the former group may be more competitive in the labour market and reduce the probability of promotions or job-finding for the latter group. As those who complete further education are a relatively small group, it is unlikely that these general equilibrium effects would occur. 
+\begin{enumerate}
+  \setcounter{enumi}{1}
+  \item \textbf{Stable Unit Treatment Value Assumption} (SUTVA) or counterfactual consistency: $Y = Y(0) +T(Y(1) - Y(0))$. 
+\end{enumerate}  
 
-  \item Overlap Assumption (or common support or positivity). Assumption 3 states that no subpopulation defined by $X = x$ is entirely located in the treatment or control group, hence the treatment probability needs to be bounded away from zero and one.
-  
+Assumption 2 ensures that there is no interference, no spill-over effects, and no hidden variation between treated and non-treated observations. SUTVA may be violated if individuals who complete further education influence the labour market outcomes of those who do not complete further education. For example, if the former group absorb resources that would otherwise be channelled to the latter group. Alternatively, the former group may be more competitive in the labour market and reduce the probability of promotions or job-finding for the latter group. As those who complete further education are a relatively small group, it is unlikely that these general equilibrium effects would occur. 
+
+\begin{enumerate}
+  \setcounter{enumi}{2}
+  \item \textbf{Overlap Assumption} or common support or positivity -- no
+    subpopulation defined by $X = x$ is entirely located in the treatment or
+    control group, hence the treatment probability needs to be bounded away
+    from zero and one.
+\end{enumerate}
+
 The overlap is an important assumption because extrapolation using the predictive models, 
 \begin{align}
-  \mathbb{E}[Y|X, T=1] &\approx \mu_1(x) \quad \textrm{and} \label{eq:T1} \\
-  \mathbb{E}[Y|X, T=0] &\approx \mu_0(x) \label{eq:T0}
+  \mathbb{E}[Y|X{=}x, T{=}1] &\approx \mu_1(x) \quad \textrm{and} \label{eq:T1} \\
+  \mathbb{E}[Y|X{=}, T{=}0] &\approx \mu_0(x) \label{eq:T0}
 \end{align}
 is likely to perform best for subpopulations defined by $X = x$ entirely located in the treatment or control group.\todo{I'm not sure I understand this point}
 
@@ -384,10 +404,17 @@ As these models are trained and evaluated only in the regions of the $X$-covaria
 
 This means the optimum bias-variance trade-off point for the conditional average treatment effect may not align with the optimum bias-variance trade-off point for the separate $\mu_1(x)$ and $\mu_0(x)$ models. Since, ultimately we are interested in the CATEs (as opposed to the predictive accuracy of the individual conditional mean functions), this can mean that we have biased CATEs.\todo{I think you'll have to explain this to me, I don't really get it.}
 
-
-  \item Exogeneity of covariates. This assumption means that the covariates included in the conditioning set are not affected by the treatment. To ensure this, we define all of our covariates at a time point before any individual started studying. Specifically, we use the first wave of HILDA (in 2001) to define our covariates. We only look at those individuals who completed further education in 2002 onwards. Furthermore, we delete any individuals who were currently studying in 2001 to ensure the covariates cannot reflect downstream effects of current study. 
-
+\begin{enumerate}
+  \setcounter{enumi}{3}
+  \item \textbf{Exogeneity of covariates} -- the covariates included in the conditioning set are not affected by the treatment. 
 \end{enumerate}
+
+To ensure this, we define all of our covariates at a time point before any
+individual started studying. Specifically, we use the first wave of HILDA (in
+2001) to define our covariates. We only look at those individuals who completed
+further education in 2002 onwards. Furthermore, we delete any individuals who
+were currently studying in 2001 to ensure the covariates cannot reflect
+downstream effects of current study. 
 
 With the strong ignorability and overlap assumptions in place, treatment effect estimation reduces to estimating two response surfaces – one for treatment and one for control.
 
@@ -395,16 +422,16 @@ The T-learner is a two-step approach where the conditional mean functions define
 
 Machine learning methods are well suited to find generalizable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge) and non-linear (Gradient Boosting Regression). Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
 
-To show this, we define our parameter of interest, the CATE $(\tau (x))$, which is formally defined as:
+To show this, we define our parameter of interest, the CATE, which is formally defined as:
 \begin{align}
 \tau (x) = \mathbb{E}[Y(1) - Y(0) | X = x]
 \end{align}
 which, with the assumptions above, is equivalent to taking the difference between two conditional mean functions $\mu _1(x) - \mu _0(x)$:
-\begin{align}
+\begin{align*}
 \tau (x) & = \mu _1(x) - \mu _0(x) \\
 & \approx \mathbb{E}[Y | T = 1, X = x] - \mathbb{E}[Y | T = 0, X = x] \\
 & = \mathbb{E}[Y(1) - Y(0) | X = x]
-\end{align}
+\end{align*}
 In this estimation, we are not interested in the coefficients from regressing $Y$ on $X$. What we want instead is to have a good approximation of the function and hence good estimates from e.g., $\mu _1(x)$ and $\mu _0(x)$. This is why ML methods are well suited for the job.
 
 A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect\todo{what do you mean by this? Is there a reference on this, or can we explain this more?}. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).
@@ -419,14 +446,16 @@ We turn to other ML models to address this potential problem.
 The second approach is Doubly Robust, or DR-learner. A benefit here is that we use additional information from the propensity score \todo{I'm not sure how this point fits in?}(we employ machine learning models to gain a better understanding of the treatment assignment process, the students' background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap). A benefit of this is that it can also provide better extrapolations of the predicted outcomes. The ATE is estimated from three separate estimators, 
 \todo{the notation has changed here slightly, $\hat{\mu}({X_i})$ instead of $\mu({x_i})$ etc.}
 \begin{equation}
-\hat{ATE} = \frac{1}{n} {\sum\limits_{i=1}^{n}}\left[ \frac{T_i(Y_i - \hat{\mu_1}(X_i))} {\hat{p}(X_i)} + \hat{\mu_1}(X_i) \right]
-- \frac{1}{n} {\sum\limits_{i=1}^{n}} \left[ \frac{(1-T_i)(Y_i - \hat{\mu_0}(X_i))} {1-\hat{p}(X_i)} + \hat{\mu_0}(X_i) \right]
+  \hat{ATE} = \frac{1}{n} \sum_{i=1}^{n}
+    \left[\frac{t_i(y_i - \mu_1(x_i))} {\rho(x_i)} + \mu_1(x_i) \right]
+    - \frac{1}{n} \sum_{i=1}^{n} 
+    \left[ \frac{(1-t_i)(y_i - \mu_0(x_i))}{1-\rho(x_i)} + \mu_0(x_i) \right]
 \end{equation}
 where:
 \begin{itemize}
-  \item $\hat{p}(X_i)$ is an estimation of the propensity score (using logistic regression)
-  \item $\hat{\mu_1}(X_i)$ is an estimation of $\mathbb{E}[Y|X,T=1]$ (using any ML model)
-  \item $\hat{\mu_0}(X_i)$ is an estimation of $\mathbb{E}[Y|X,T=0]$ (using any ML model)
+  \item ${\rho}(x_i)$ is an estimation of $\mathbb{E}[T{=}1|X{=}x_i]$ -- the propensity score, using logistic regression,
+  \item $\mu_1(x_i)$ is an estimation of $\mathbb{E}[Y|X{=}x_i, T{=}1]$ using any regression model,
+  \item $\mu_0(x_i)$ is an estimation of $\mathbb{E}[Y|X{=}x_i,T{=}0]$ using any regression model.
 \end{itemize}
 
 Previously, with the T-learner, we were just estimating $\mu_0(x)$ and $\mu_1(x)$. With the DR-learner, we augment $\mu_0(x)$ and $\mu_1(x)$. For example, for the treated observations, we augment $\mu_1(x)$ by multiplying the prediction error by the inverse propensity scores. This up-weights those who get treated but who are statistically similar to the control observations. We then apply this same augmentation to the $\mu_0(x)$ for the control observations. 
@@ -438,7 +467,7 @@ The third approach is to use Bayesian models. We follow the general formulation
 presented by \cite{hahn2020} that suggests a predictive model of the following
 form,
 \begin{align}
-  \mathbb{E}[Y_i|X{=}x_i, T{=}t_i] \approx \mu_0(x_i, \rho(x_i)) 
+  \mathbb{E}[Y|X{=}x_i, T{=}t_i] \approx \mu_0(x_i, \rho(x_i)) 
     + \tau(x_i)\cdot t_i, \label{eq:bayesmods}
 \end{align}
 where $\mathbb{E}[T|X{=}x_i] \approx \rho(x_i)$ is the propensity score of
@@ -447,7 +476,7 @@ known as the `prognostic' effect, and is the impact of the control variates,
 $X$, on the outcome without the treatment. Then we are left with $\tau(x_i)$,
 which is the individual treatment effect,
 \begin{align*}
-  \mathbb{E}[Y_i|X{=}x_i, T{=}1] - \mathbb{E}[Y_i|X{=}x_i, T{=}0] &\approx 
+  \mathbb{E}[Y|X{=}x_i, T{=}1] - \mathbb{E}[Y|X{=}x_i, T{=}0] &\approx 
     \left[\mu_0(x_i, \rho(x_i)) + \tau(x_i)\right] - \mu_0(x_i, \rho(x_i)), \\
     &=\tau(x_i).
 \end{align*}
@@ -558,12 +587,12 @@ of Bayesian linear regression that makes use of the kernel trick
 parameterises a distribution over functions (response surfaces) directly,
 rather than model weights as is the case with Bayesian linear regression.
 
-Say we have the regression function, $\mathbb{E}[Y_i|X{=}x_i] = f(x_i)$, a
+Say we have the regression function, $\mathbb{E}[Y|X{=}x_i] = f(x_i)$, a
 Gaussian process models the covariance of $f(x)$ directly using a kernel 
 function,
 \begin{align*}
   \mathbb{E}[f(x_i) \cdot f(x_j)] &= k(x_i, x_j) \qquad \textrm{or}, \\
-  \mathbb{E}[y_i \cdot y_j] &= k(x_i, x_j) + \sigma^2 \delta_{ij},
+  \mathbb{E}[Y_i \cdot Y_j] &= k(x_i, x_j) + \sigma^2 \delta_{ij},
 \end{align*}
 where $\delta_{ij}$ is a Kroneker delta, and is one iff $i=j$, otherwise zero.
 This formulation also assumes $\mathbb{E}[Y] = \mathbb{E}[f(x)] = 0$ for 
