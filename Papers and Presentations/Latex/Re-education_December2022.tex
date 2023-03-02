@@ -333,7 +333,7 @@ Figure \ref{fig:yearearnempl} shows an increase in both average earnings and emp
 \section{Method}
 \todo{We probably need to make the notation a little more consistent in this section.}
 
-We aim to estimate the causal impact of obtaining a new qualification. Our empirical challenge is a missing data one in the sense that we do not observe the counterfactual outcome for each person.
+We aim to estimate the causal impact of obtaining a new qualification. Our empirical challenge is a missing data one in the sense that we do not observe the counterfactual outcome for each person -- what would have their income been if they had/had not obtained a new qualification?
 
 We use capitalisation to denote random variables, where $Y \in \mathbb{R}^+$ is
 the outcome variable, $T \in \{0, 1\}$ is the binary treatment indicator, and
@@ -348,18 +348,28 @@ Under the potential outcomes framework of \cite{imbens2015}, $Y(0)$ and $Y(1)$ d
 Y = T \cdot Y(1) + (1-T) \cdot Y(0).
 \end{align}
 
-The missing data problem (or the lack of counterfactuals) is especially problematic when the treated group is different from the control group in ways that independently affect outcomes. Such selection issues mean that we cannot simply take the difference in the average of the non-missing values of $Y(0)$ and $Y(1)$.
+The missing data problem (or the lack of counterfactuals) is especially problematic when the treated group is different from the control group in ways that also affect outcomes. Such selection issues mean that we cannot simply take the difference in the average of the non-missing values of $Y(0)$ and $Y(1)$.
 
-To address the missing data problem, we turn to a range of ML-based techniques. Standard ML tools are purposed to predict. By contrast, our aim is to estimate the causal parameter. These are different aims and requires us to adapt the ML tools. 
+To address the missing data problem, we turn to a range of ML-based techniques.
+Standard ML tools are purposed to predict, but our aim is to estimate the
+causal parameter. These are different aims, and so we have to adapt the ML
+tools. We may potentially bias our causal parameter of interest if we were to
+use the off-the-shelf tools. For example, if we were to select the important
+confounders using an ML model to predict the outcome $Y$, then we may
+undervalue the importance of variables that are highly correlated to the
+treatment $T$ but only weakly predictive of $Y$ \citep{cherno2018}.
 
-We may potentially bias our causal parameter of interest if we were to use the off-the-shelf tools. For example, if we were to select the important confounders using an ML model to predict the outcome $Y$, then we may undervalue the importance of variables that are highly correlated to the treatment $T$ but only weakly predictive of $Y$ \citep{cherno2018}.
-
-We approach filling the missing data indirectly with three types of ML models. They are: the T-Learner, Doubly Robust and Bayesian models. 
+We approach filling the missing data indirectly with three types of ML models
+that have been specially adapted to causal inference. They are: the T-Learner,
+Doubly Robust and Bayesian models. 
 
 
 \subsection{T-Learner model}
 
-The first is the T-learner approach. We aim to measure the amount by which the response $Y$ would differ between hypothetical worlds in which the treatment was set to $T=1$ versus $T=0$, and to estimate this on average\todo{in expectation?} across subpopulations defined by attributes $X$. 
+The first is the T-learner approach. We aim to measure the amount by which the
+response $Y$ would differ between hypothetical worlds in which the treatment
+was set to $T=1$ versus $T=0$, and to estimate this across subpopulations
+defined by attributes $X$. 
 
 \emph{Identification assumptions}\todo{aren't these applicable to all of the 
 approaches? Perhaps this should be in the previous section (one level up).}
@@ -393,16 +403,25 @@ Assumption 2 ensures that there is no interference, no spill-over effects, and n
     from zero and one.
 \end{enumerate}
 
-The overlap is an important assumption because extrapolation using the predictive models, 
+The overlap is an important assumption because counterfactual extrapolation
+using the predictive models, 
 \begin{align}
   \mathbb{E}[Y|X{=}x, T{=}1] &\approx \mu_1(x) \quad \textrm{and} \label{eq:T1} \\
-  \mathbb{E}[Y|X{=}, T{=}0] &\approx \mu_0(x) \label{eq:T0}
+  \mathbb{E}[Y|X{=}x, T{=}0] &\approx \mu_0(x) \label{eq:T0}
 \end{align}
-is likely to perform best for subpopulations defined by $X = x$ entirely located in the treatment or control group.\todo{I'm not sure I understand this point}
+is likely to perform best for treatment and control subpopulations that have a
+large degree of overlap in $\mathcal{X}$. If the treatment and control groups
+had no common support in $\mathcal{X}$, we would be pushing our counterfactual
+estimators to predict into regions with no support in the training data, and
+therefore we would have no means by which to evaluate their performance.
 
-As these models are trained and evaluated only in the regions of the $X$-covariates or features for which there are treated observations and control observations, respectively, non-overlap means there is no way for us to validate whether the function performs well.  
-
-This means the optimum bias-variance trade-off point for the conditional average treatment effect may not align with the optimum bias-variance trade-off point for the separate $\mu_1(x)$ and $\mu_0(x)$ models. Since, ultimately we are interested in the CATEs (as opposed to the predictive accuracy of the individual conditional mean functions), this can mean that we have biased CATEs.\todo{I think you'll have to explain this to me, I don't really get it.}
+This means the optimum bias-variance trade-off point for the conditional
+average treatment effect may not align with the optimum bias-variance trade-off
+point for the separate $\mu_1(x)$ and $\mu_0(x)$ models. Since, ultimately we
+are interested in the CATEs (as opposed to the predictive accuracy of the
+individual conditional mean functions), this can mean that we have biased
+CATEs.\todo{I think you'll have to explain this to me, I don't really get it.
+It also contradicts what we say a few paragraphs later.}
 
 \begin{enumerate}
   \setcounter{enumi}{3}
@@ -432,19 +451,35 @@ which, with the assumptions above, is equivalent to taking the difference betwee
 & \approx \mathbb{E}[Y | T = 1, X = x] - \mathbb{E}[Y | T = 0, X = x] \\
 & = \mathbb{E}[Y(1) - Y(0) | X = x]
 \end{align*}
-In this estimation, we are not interested in the coefficients from regressing $Y$ on $X$. What we want instead is to have a good approximation of the function and hence good estimates from e.g., $\mu _1(x)$ and $\mu _0(x)$. This is why ML methods are well suited for the job.
+In this estimation, we are not interested in the coefficients from regressing
+$Y$ on $X$. What we require is a good approximation of the function $\tau(x)$,
+and hence good estimates from $\mu_1(x)$ and $\mu_0(x)$, which is within the
+perview of machine learning methods.
 
-A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect\todo{what do you mean by this? Is there a reference on this, or can we explain this more?}. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).
+A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect\todo{what do you mean by this? Is there a reference on this, or can we explain this more?}. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).\todo{Does this mean we can use cross-validation to essentially estimate $\tau(x)$?}
 
-In practice, however, this indirect way of minimising the mean squared error for each separate function to proxy for the minimum mean squared error of the treatment effect can be problematic. See, for example, \cite{kunzel2019,kennedy2020} for settings when the T-learner is not the optimal choice.
-
-One potential estimation problem arises when there are fewer treated individuals than control individuals and the individual regression functions are complicated (very non-smooth). This means they can be difficult to estimate well on their own. The T-learner can be inefficient because it does not exploit the shared information between treatment and control observations: for example, if $X$ relates to $Y$ in the same fashion for treated and control observations. As a result, the estimate $\mu_1$ tends to over smooth the function; in contrast, the estimate $\mu_0$ regularises to a lesser degree because there are more control observations. This means a na\"ive plug-in estimator of the CATE that simply takes the difference between $\mu_1 - \mu_0$ will be a poor and overly complex estimator of the true difference. It will tend to overstate the presence of heterogeneous treatment effects.
-We turn to other ML models to address this potential problem.
+In practice, however, this indirect way of minimising the mean squared error
+for each separate function to proxy for the minimum mean squared error of the
+treatment effect can be problematic. See, for example,
+\cite{kunzel2019,kennedy2020} for settings when the T-learner is not the
+optimal choice. One potential estimation problem arises when there are fewer
+treated individuals than control individuals and the individual regression
+functions are non-smooth. In this instance the response surfaces can be
+difficult to estimate them in isolation, and the T-learner does not exploit the
+shared information between treatment and control observations. For example, if
+$X$ relates to $Y$ in the same fashion for treated and control observations the
+T-learner cannot utilise this information. As a result, the estimate $\mu_1$
+tends to over smooth the function; in contrast, the estimate $\mu_0$
+regularises to a lesser degree because there are more control observations.
+This means a na\"ive plug-in estimator of the CATE that simply takes the
+difference between $\mu_1 - \mu_0$ will be a poor and overly complex estimator
+of the true difference. It will tend to overstate the presence of heterogeneous
+treatment effects. We turn to other ML models to address this potential
+problem.
 
 \subsection{Doubly Robust model}
 
 The second approach is Doubly Robust, or DR-learner. A benefit here is that we use additional information from the propensity score \todo{I'm not sure how this point fits in?}(we employ machine learning models to gain a better understanding of the treatment assignment process, the students' background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap). A benefit of this is that it can also provide better extrapolations of the predicted outcomes. The ATE is estimated from three separate estimators, 
-\todo{the notation has changed here slightly, $\hat{\mu}({X_i})$ instead of $\mu({x_i})$ etc.}
 \begin{equation}
   \hat{ATE} = \frac{1}{n} \sum_{i=1}^{n}
     \left[\frac{t_i(y_i - \mu_1(x_i))} {\rho(x_i)} + \mu_1(x_i) \right]
