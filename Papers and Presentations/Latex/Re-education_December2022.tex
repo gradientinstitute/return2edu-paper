@@ -479,21 +479,44 @@ problem.
 
 \subsection{Doubly Robust model}
 
-The second approach is Doubly Robust, or DR-learner. A benefit here is that we use additional information from the propensity score \todo{I'm not sure how this point fits in?}(we employ machine learning models to gain a better understanding of the treatment assignment process, the students' background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap). A benefit of this is that it can also provide better extrapolations of the predicted outcomes. The ATE is estimated from three separate estimators, 
+The second approach is the Doubly Robust learner (DR-learner). It is similar to
+the T-learner in that it separately models the treatment and control surfaces,
+but it uses additional information from a propensity score model. In this case
+the propensity score model is a machine learning classifier that attempts
+to estimate the treatment assignment process,
+\begin{align}
+  \mathbb{E}[T=1|X=x] &= \mathbb{P}(T=1|X=x) \approx \rho(x),
+\end{align}
+where $\rho(x)$ as a probabilistic machine learning classifier. This allows
+information about the students' background, and the nature and complexity of
+their situation that may have led them to pursue further education to be
+incorporated into the model. Thus, the doubly robust approach can improve upon
+the T-learner approach because it can reduce misspecification error either
+through a correctly specified propensity score model or through correctly
+specified outcome equations. Another feature of the Doubly Robust approach is
+that it places a higher weight on observations in the area where the relative
+count of treatment and control observations is more balanced (i.e. the area of
+overlap). This may allow better extrapolations of the predicted outcomes within
+the region of overlap. The ATE is estimated from three separate estimators, 
 \begin{equation}
   \hat{ATE} = \frac{1}{n} \sum_{i=1}^{n}
     \left[\frac{t_i(y_i - \mu_1(x_i))} {\rho(x_i)} + \mu_1(x_i) \right]
     - \frac{1}{n} \sum_{i=1}^{n} 
-    \left[ \frac{(1-t_i)(y_i - \mu_0(x_i))}{1-\rho(x_i)} + \mu_0(x_i) \right]
+    \left[ \frac{(1-t_i)(y_i - \mu_0(x_i))}{1-\rho(x_i)} + \mu_0(x_i) \right].
 \end{equation}
-where:
-\begin{itemize}
-  \item ${\rho}(x_i)$ is an estimation of $\mathbb{E}[T{=}1|X{=}x_i]$ -- the propensity score, using logistic regression,
-  \item $\mu_1(x_i)$ is an estimation of $\mathbb{E}[Y|X{=}x_i, T{=}1]$ using any regression model,
-  \item $\mu_0(x_i)$ is an estimation of $\mathbb{E}[Y|X{=}x_i,T{=}0]$ using any regression model.
-\end{itemize}
-
-Previously, with the T-learner, we were just estimating $\mu_0(x)$ and $\mu_1(x)$. With the DR-learner, we augment $\mu_0(x)$ and $\mu_1(x)$. For example, for the treated observations, we augment $\mu_1(x)$ by multiplying the prediction error by the inverse propensity scores. This up-weights those who get treated but who are statistically similar to the control observations. We then apply this same augmentation to the $\mu_0(x)$ for the control observations. 
+% where:
+% \begin{itemize}
+%   \item ${\rho}(x_i)$ is an estimation of $\mathbb{E}[T{=}1|X{=}x_i]$ -- the propensity score, using logistic regression,
+%   \item $\mu_1(x_i)$ is an estimation of $\mathbb{E}[Y|X{=}x_i, T{=}1]$ using any regression model,
+%   \item $\mu_0(x_i)$ is an estimation of $\mathbb{E}[Y|X{=}x_i,T{=}0]$ using any regression model.
+% \end{itemize}
+Previously, with the T-learner, we were just estimating $\mu_0(x)$ and
+$\mu_1(x)$. With the DR-learner, we augment $\mu_0(x)$ and $\mu_1(x)$. For
+example, for the treated observations, we augment $\mu_1(x)$ by multiplying the
+prediction error by the inverse propensity scores. This up-weights those who
+get treated but who are statistically similar to the control observations. We
+then apply this same augmentation to the $\mu_0(x)$ for the control
+observations. 
 
 
 \subsection{Bayesian Models}
@@ -505,7 +528,7 @@ form,
   \mathbb{E}[Y|X{=}x_i, T{=}t_i] \approx \mu_0(x_i, \rho(x_i)) 
     + \tau(x_i)\cdot t_i, \label{eq:bayesmods}
 \end{align}
-where $\mathbb{E}[T|X{=}x_i] \approx \rho(x_i)$ is the propensity score of
+where $\mathbb{E}[T=1|X{=}x_i] \approx \rho(x_i)$ is the propensity score of
 individual $i$ for the treatment. The component $\mu_0(x_i, \rho(x_i))$ is
 known as the `prognostic' effect, and is the impact of the control variates,
 $X$, on the outcome without the treatment. Then we are left with $\tau(x_i)$,
@@ -733,80 +756,181 @@ treatment effect distribution.
 
 \subsection{Model selection and model evaluation}
 
-For the non-Bayesian models we separate the evaluation of the model class and estimation of the ATE and CATE parameters in two procedures. We evaluate the predictive capacity of each model class using nested cross-validation. The procedure is represented in Figure \ref{fig:exp_model}. Here, our aim is to compare the predictive performance of three model classes: LASSO, Ridge and Gradient Boosting Regression (GBR). Our second procedure is to estimate the ATE and CATE parameters. The procedure is represented in Figure \ref{fig:exp_param}. We use bootstrap sampling (with replacement) to generate uncertainty estimates for the parameters, which we obtain over several draws of the same model class. 
+For the non-Bayesian models we separate the evaluation of the model class and
+estimation of the ATE and CATE parameters in two procedures. We evaluate the
+predictive capacity of each model class using nested cross-validation. The
+procedure is represented in Figure \ref{fig:exp_model}. Here, our aim is to
+compare the predictive performance of three model classes: LASSO, Ridge and
+Gradient Boosting Regression (GBR). Our second procedure is to estimate the ATE
+and CATE parameters. The procedure is represented in Figure
+\ref{fig:exp_param}. We use bootstrap sampling (with replacement) to generate
+uncertainty estimates for the parameters, which we obtain over several draws of
+the same model class, but with model parameter re-fitting.
 
-Focusing on the first procedure, we apply nested cross-validation to evaluate which model class performs best. In a first step, as Figure 1 shows, we pre-process the full dataset (containing 3,400 variables) to generate a dataset with a smaller set of highly predictive’ features (containing 100 variables). We apply a supervised machine learning approach with a LASSO model to select our top 100\todo{91 are actually selected, should we state this?} predictors of the outcome of interest (as measured in 2006). Note that in our later estimations of the treatment effect, the outcome is measured in 2019. We implement this intermediary step in order to reduce the correlation between variables and eliminate redundant information. 
+Focusing on the first procedure, we apply nested cross-validation to evaluate
+which model class performs best. In a first step, as Figure 1 shows, we
+pre-process the full dataset (containing 3,400 variables) to generate a dataset
+with a smaller set of highly predictive features (containing 91 variables). We
+apply a supervised machine learning approach with a LASSO model to select our
+top 91 predictors of the outcome of interest using outcomes measured in 2006.
+Note that in our later estimations of the treatment effect, the outcome is
+measured in 2019. We implement this intermediary step in order to reduce the
+correlation between variables and eliminate redundant information.
 
-We assume that the top 100 features that are most predictive of the outcome in 2006 correlate with the features that would be most predictive of the outcome in 2019. By choosing to apply this pseudo-supervised ML approach on the same outcome variable (but measured at a different time point) means that we obtain a good indication of the features that are useful for a model to perform well. Improved model performance here will also mean that the selected features are likely to represent the important confounders. We have chosen 2006 to ensure there is no overlap with 2019 outcomes, and thus to avoid overfitting issues. 
+We assume that the top 91\footnote{We were aiming for approximately 100
+features, and 91 was the closest we could get the LASSO estimator to select by
+changing the value of its regularisation strength.} features that are most
+predictive of the outcome in 2006 correlate with the features that would be
+most predictive of the outcome in 2019. By choosing to apply this
+pseudo-supervised ML approach on the same outcome variable, but measured at a
+different time point, we obtain a good indication of the features that are
+useful for a model to perform well. Improved model performance here will also
+mean that the selected features are likely to represent the important
+confounders. We have chosen 2006 to ensure there is no overlap with 2019
+outcomes to avoid overfitting issues with subsequent models.\todo{Perhaps we
+need to expand upon this?}
 
-Using the top 100 predictors, we then apply nested cross validation to evaluate
+Using the top 91 predictors, we then apply nested cross validation to evaluate
 the predictive capacity of each model class (LASSO, Ridge, GBR). First, we
 split the data into train and test folds with an 80-20 split. Within the 80
 percent train fold we perform 5-fold cross-validation in order to train and
 evaluate the performance of each configuration of hyperparameters. We do this
 separately for the outcome surface using the treated observations and the
 outcome surface using the control observations. From this, we select the models
-with the best mean scores. We then evaluate the predictive performance of the
-selected model on the holdout test set. 
+with the best mean predictive scores. We then evaluate the predictive
+performance of the selected model on the holdout test.
 
 We repeat this process ten times (10-outer scores) for each model class. This
 allows us to evaluate the performance based on the mean and standard deviation
 of these scores. Note that thus far, we have not evaluated any particular
 configuration of the model, rather the performance of the model class on random
-(without replacement) subsets of data. The nested cross validation proceedure
+(without replacement) subsets of data. The nested cross validation procedure
 protects us against overfitting when reporting predictive performance, as the
 model selection and validation happens on different data.
 
 Table \ref{tab:ncvhos} shows that the GBR is the best performing model class.
-It yields the highest out-of-sample R-squared or the lowest (in absolute value)
-MSE. This is true for both the outcome surfaces (using treated and control
-observations separately). 
+It yields the highest out-of-sample R-squared and the lowest MSE. This is true
+for both the outcome surfaces separately.
+
+DR-learner?\todo{what about this, and the propensity score?}
 
 \subsubsection*{Inference via bootstrapping}
 
-Once we have selected the best performing model class, we turn to the estimation of the parameters and parameter uncertainty. We use bootstrapped validation for generating uncertainty estimates. This captures the uncertainty arising from model configuration (or the selection of hyperparameters) in addition to that which stems from estimating parameters of a fixed model from noisy, finite data. Here, we estimate the same model class on different realisations of the data. 
+Once we have selected the best performing model class, we turn to the
+estimation of the parameters and parameter uncertainty. We use bootstrapped
+validation for generating uncertainty estimates. This captures the uncertainty
+arising from model hyperparameter selection in addition to that from estimating
+parameters of a fixed model from noisy, finite data. 
 
-A common approach to inference in the causal machine learning literature is to use sample splitting (Athey and Wager 2019). Sample splitting ensures that the standard errors on the estimators are not underestimated because it avoids using the same data point to both select the configuration (hyperparameter selection) of the model and to estimate the parameters. When the same data point is used to perform both tasks then the standard errors would not reflect both the uncertainty stemming from model selection and that which stems from estimating parameters on noisy, finite data. The result of using common data for model selection and effect estimation is that our standard errors would suffer from pre-test bias since the model may suffer from overfitting.
+%Here, we estimate the same model class on different realisations of the data. 
 
-Sample splitting is appropriate when the sample size is large. An issue with studies that rely on survey-based data is that sample sizes are not large enough to perform sample splitting. For example, there is not enough data to split the dataset into train and test datasets such that each of these splits would cover all the common and uncommon values of the $X$-covariates that are observed in the full sample. If we were to use a training dataset that was insufficiently sized or non-representative, it would be difficult for the ML models to effectively map the $X$-covariates to the outcome surfaces, $\mu_1(x)$ and $\mu_0(x)$. There would also not be enough data in the test set to effectively estimate the parameters of the model configuration chosen in the train set. As a result, our estimate treatment effects are likely to be very imprecisely estimated. 
+A common approach to inference in the causal machine learning literature is to
+use sample splitting \citep{athey2019}. Sample splitting ensures that the
+standard errors on the estimators are not underestimated because it avoids
+using the same data point to both select hyperparameters of the model and to
+estimate the parameters. 
+% When the same data point is used to perform both tasks
+% then the standard errors would not reflect both the uncertainty stemming from
+% model selection and that which stems from estimating parameters on noisy,
+% finite data. 
+The result of using common data for model selection and effect estimation is
+that our standard errors would suffer from pre-test bias since the model may
+suffer from overfitting.
 
-A suitable alternate procedure is to use bootstrapping. Resampling gives us a decent estimate on how the point estimates might vary. In this way, we side-step the need to rely on the assumption of asymptotical normality (and we do not need to utilise sample splitting to generate the standard errors). In our bootstrapping procedure, we ensure that the standard errors reflect the sources of uncertainty stemming from both the selection of the model and the estimation of the model. As a result, we generate standard errors that avoid any potential pre-test issues.
+Sample splitting is appropriate when the sample size is large. An issue with
+studies that rely on survey-based data is that sample sizes are often not large
+enough to perform sample splitting. For example, there is not enough data to
+split the dataset into train and test datasets such that each of these splits
+would cover all the common and uncommon values of the $X$-covariates that are
+observed in the full sample. If we were to use a training dataset that was
+insufficiently sized or non-representative, it would be difficult for the ML
+models to effectively map the $X$-covariates to the outcome surfaces,
+$\mu_1(x)$ and $\mu_0(x)$. There would also not be enough data in the test set
+to effectively estimate the parameters of the model configuration chosen in the
+train set. As a result, our estimate treatment effects are likely to have a
+large degree of uncertainty.
 
-As a first step, as shown in Figure \ref{fig:exp_param}, we obtain the 100 top predictors from the initial pre-processing of the full dataset. That is, we train a supervised machine learning LASSO model to extract which features best predict earnings in 2006.\todo{Same as before? Maybe if so we can state this to lessen confusion.}
+A suitable alternate procedure is to use bootstrapping. Bootstrap resampling
+allows us to estimate variation in the point model parameter estimates. In this
+way, we side-step the need to rely on the assumption of asymptotical normality,
+and it is more efficient than sample splitting to generate standard errors. In
+our bootstrapping procedure, we ensure that the standard errors reflect the
+sources of uncertainty stemming from both the selection of the model and the
+estimation of the model. As a result, we generate standard errors that avoid
+any potential pre-test issues.
 
-As a second step, we train our models using the 100 top predictors on the first bootstrapped sample to select the best models for $\mu _1(x)$ and $\mu _0(x)$. Within this bootstrap sample, we divide the dataset into five folds and perform cross-validation to select the best model configuration. Similar to the cross-validation description above, our model configuration is trained on subsets of the data, and then evaluated on holdout samples (where we compare the predictions made from the models for the outcome surfaces for the treated and control observations to the real values). We modify the 5-fold cross validation to ensure training data does not simultaneously appear in the training and validation set. We perform this model selection step within the bootstrapping procedure to capture the uncertainty coming from the selection of hyperparameters. If we simply re-estimated the same model (with a given set of hyperparameters) in each bootstrap model then the uncertainty is only over the model parameters, and not the model choice (e.g.~the GBR tree depth).
+As a first step, as shown in Figure \ref{fig:exp_param}, we obtain the 91 top
+predictors from the initial pre-processing of the full dataset. That is, we
+train a supervised machine learning LASSO model to extract which features best
+predict earnings in 2006.\todo{Same as before? Maybe if so we can state this to
+lessen confusion.}
 
-%This process allows us to select the best model configurations for the outcome surfaces: $\mu _1(x)$ and $\mu _0(x)$.
-Third, and once we have these predicted outcome surfaces, $\mu _1(x)$ and $\mu _0(x)$, we are able to calculate the individual treatment effect, $\tau(x)$ for each person in the original sample (note not the individuals from the bootstrap sample). We substitute the values of their features or independent variables into the LASSO/ Ridge equations for $\mu _1(x)$ and $\mu _0(x)$ or tree-based models.\todo{I don't really understand this description, and we havent mentioned independent variables before...}
+As a second step, we train our models using the 91 top predictors on the first
+bootstrapped sample to select the best models for $\mu_1(x)$ and $\mu_0(x)$.
+Within this bootstrap sample, we divide the dataset into five folds and perform
+cross-validation to select the best model configuration. Similar to the
+cross-validation description above, our model configuration is trained on
+subsets of the data, and then evaluated on holdout samples. We modify the
+5-fold cross validation to ensure bootstrap replicated training data does not
+simultaneously appear in the training and validation set. We perform this model
+selection step within the bootstrapping procedure to capture the uncertainty
+coming from the selection of hyperparameters. If we simply re-estimated the
+same model with a given set of hyperparameters in each bootstrap model then the
+uncertainty is only over the model parameters, and not the model choice
+(e.g.~the GBR tree depth).
 
-At this point, each individual in the original sample has one value of $\tau(x)$. We can obtain a mean $\tau(x)$ by averaging over all the individuals. This is the mean $\tau(x)$ for the first bootstrap sample. We repeat this procedure over 100 bootstrap samples. This provides an empirical distribution of the mean $\tau(x)$'s. The final mean over the bootstrap samples (the mean of the mean $\tau(x)$'s), which should be the same as the $\tau(x)$ from the original sample when the number of bootstrap samples is large enough, is how we calculate the ATE and CATE estimators. The standard deviation of this series through bootstrapping represents the standard error estimate for the ATE or CATE measure.\todo{Perhaps we can introduce some notation here to clarify these different estimates and averages?}
+%This process allows us to select the best model configurations for the outcome
+%surfaces: $\mu _1(x)$ and $\mu _0(x)$.
+Third, and once we have these predicted outcome surfaces, $\mu_1(x)$ and
+$\mu_0(x)$, we are able to calculate the individual treatment effect,
+$\tau(x_i)$, for each person in the original sample (not the individuals from
+the bootstrap sample) by substituting the values of their features into the
+LASSO, Ridge or tree estimators for $\mu_1(x)$ and $\mu_0(x)$. We can obtain a
+sample mean, $\bar{\tau}^{(s)}$, by averaging over all the individual
+$\tau^{(s)}(x_i)$ in the bootstrap sample, $s$. We repeat this procedure over
+$S=100$ bootstrap samples. This provides an empirical distribution of
+$\bar{\tau}$ and $\tau(x_i)$. The grand mean over the bootstrap sample means,
+$\bar{\tau}_G = \frac{1}{S} \sum_s \bar{\tau}^{(s)}$, will converge to the
+sample treatment effect mean. We use $\bar{\tau}_G$ as an estimate of the ATE,
+and $\frac{1}{S} \sum_s \tau^{(s)}(x_i)$ as an estimate of the individual CATE.
+The bootstrap resample is the same size as the original sample because the
+variation of the ATE depends on the size of the sample. Thus, to approximate
+this variation we need to use resamples of the same size.
 
-Note we want to generate the value of ATE or CATE parameters, keeping the original sample size constant, thus all our bootstrap samples have the same sample size as that of the original sample.\footnote{The bootstrap resample is the same size as the original sample because the variation of the ATE depends on the size of the sample. Thus, to approximate this variation we need to use resamples of the same size.}
+% The main goal of repeating over the bootstrap samples is to capture uncertainty
+% coming from the model selection procedure (i.e.\\~the choice of
+% hyperparameters) as well as the uncertainty over the model parameters.
 
-The main goal of repeating over the bootstrap samples is to capture uncertainty coming from the model selection procedure (i.e.\\~the choice of hyperparameters) as well as the uncertainty over the model parameters.
+% Each bootstrap sample gives us an estimate of the (C)ATE\todo{(C)ATE?}. Across
+% 100 bootstrap samples, we have a distribution of (C)ATE estimates. We take the
+% standard deviation of these 100 (C)ATE values to obtain the standard error. 
 
-Each bootstrap sample gives us an estimate of the C(ATE)\todo{(C)ATE?}. Across 100 bootstrap samples, we have a distribution of C(ATE) estimates. We take the standard deviation of these 100 C(ATE) values to obtain the standard error. 
+To obtain confidence intervals for the ATE and CATE estimates, we use standard
+empirical bootstrap confidence interval calculations \citep{efron1986}.
 
-To obtain the confidence intervals, we undertake the following procedure:
-\begin{enumerate}
-\item Multiply the C(ATE) by two 
-\item Take the 5th and 95th percentile of the C(ATE) distribution\todo{empirically?} 
-\item Calculate the bounds of the confidence interval 
-	\begin{enumerate}
-	\item Upper bound = Step 1 - 5th percentile 
-	\item Lower bound = Step 1 - 95th percentile
-	\end{enumerate}
-\end{enumerate}
+% To obtain the confidence intervals from these samples, we undertake the
+% following procedure (e.g. for a 90\% confidence interval):
+% \begin{enumerate}
+% \item Multiply the (C)ATE by two 
+% \item Take the 5th and 95th percentile of the (C)ATE
+%   distribution empirically from the bootstrap samples
+% \item Calculate the bounds of the confidence interval 
+% 	\begin{enumerate}
+% 	\item Upper bound = Step 1 - 5th percentile 
+% 	\item Lower bound = Step 1 - 95th percentile
+% 	\end{enumerate}
+% \end{enumerate}
 
-To do this we approximate the critical values of the confidence interval as $\delta^* = \bar{x}^* - \bar{x}$ such that the confidence interval 
-\begin{align*}
-P(\delta_{0.95} \leq \bar{x} - \mu \leq \delta_{0.05} | \mu) \Leftrightarrow P(\bar{x} - \delta_{0.95} \geq \mu \geq \bar{x} - \delta_{0.05} | \mu) = 0.90
-\end{align*}
-can be reduced to $[2\bar{x} -\bar{x}^*_{0.05} , 2\bar{x}
--\bar{x}^*_{0.95}]$.\todo{I think we need to change the notation here to use
-$\tau$ instead of x and $\mu$ since these are overloaded. Or if this is a
-standard empirical procedure, we can just reference it}
+% To do this we approximate the critical values of the confidence interval as $\delta^* = \bar{x}^* - \bar{x}$ such that the confidence interval 
+% \begin{align*}
+% P(\delta_{0.95} \leq \bar{x} - \mu \leq \delta_{0.05} | \mu) \Leftrightarrow P(\bar{x} - \delta_{0.95} \geq \mu \geq \bar{x} - \delta_{0.05} | \mu) = 0.90
+% \end{align*}
+% can be reduced to $[2\bar{x} -\bar{x}^*_{0.05} , 2\bar{x}
+% -\bar{x}^*_{0.95}]$.\todo{I think we need to change the notation here to use
+% $\tau$ instead of x and $\mu$ since these are overloaded. Or if this is a
+% standard empirical procedure, we can just reference it}
 
+DR-learners?\todo{What about these?}
 
 \subsubsection*{Inference for the Bayesian models}
 
