@@ -104,12 +104,28 @@ By focusing on the one institutional setting -- the community or training colleg
 
 We contribute the first evidence in systematically identifying which groups of mature-age students tend to benefit more from further education. We also compliment previous studies that already find significant heterogeneity by degree-type, institutional setting, and by the background characteristics of the student \citep{blanden2012,zeiden2015,polidano2016,dorsett2016,xu2016,belfield2017,perales2017,bockerman2019}. A benefit of a systematic, data-driven approach to heterogeneity analysis is that it can reduce the risk of overlooking important sub-populations compared to less data-driven approaches \citep{athey2017,knaus2021}. 
 
-Our Machine Learning (ML) approach indeed identifies new sub-populations for which the treatment effects are different. We document that the starting homeloan amount and employment aspirations are significant factors related to the extent of gain from further study. We also find that the starting levels of and pre-study trends in personal and household income are hugely important. Age and mental health variables also account for variation in estimated effects. All of these variables are consistently selected as being significant for prediction out of a beginning set of 3,400 covariates per observation, as well as across different ML models (which includes linear and non-linear model classes) and across numerous boostrap draws of the original sample.
+Our Machine Learning (ML) approach indeed identifies new sub-populations for which the treatment effects are different. We document that the starting homeloan amount and employment aspirations are significant factors related to the extent of gain from further study. We also find that the starting levels of and pre-study trends in personal and household income are hugely important. Age and mental health variables also account for variation in estimated effects. All of these variables are consistently selected as being significant for prediction out of a beginning set of 3,400 features per observation, as well as across different ML models (which includes linear and non-linear model classes) and across numerous boostrap draws of the original sample.
 
 The results show that an additional degree in later-life increases total future earnings by more than an average of \$3,000 per year compared to those who do not complete any further study. We consistently estimate this causal effect using a selection-on-observables strategy based on various ML models (T-learner, Doubly Robust and Bayesian models). The estimate is based on 19 years of detailed nationally representative Australian data from the Household Income and Labour Dynamics Australia (HILDA) survey. Two dimensions of these data are important. The first is that they contain a wealth of information about each respondent. For example, we begin with more than 3,400 variables per observation, including information about the respondents' demographic and socio-economic background, and on their attitudes and preferences. Access to this broad range of information means that by controlling for them, we can potentially proxy for unobservable differences between those who do and do not obtain a new qualification. Secondly, this dataset contains many variables that are highly correlated and we require a systematic approach to reduce such information redundancy.
 \todo{a lot of similarity with previous paragraph -- perhaps we can combine them?}
 
-An ML approach is similar to a propensity-score matching method but it more intensively controls for covariates. An ML approach systematically detect patterns and relationships, such as functional forms and important variables, that may be unknown to the researcher. This assists with causal parameter estimation by reducing bias through \todo{something about non-linear models reducing the likelihood of bias from model-misspecification?}automatic variable selection and by reducing variance through minimising information redundancy from highly correlated variables. A key challenge in estimating the causal returns to later-life education is what leads (or enables) mature-age learners to pursue and complete a qualification may itself be a precursor to later-life success. Moreover, the drivers of degree completion may be numerous and related to other variables in complex, unknown ways. A data-driven approach can systematically shed light on these unknowns. As a result, ML can help to reduce bias from selection into treatment. This is especially useful when appropriate instrumental variables are unavailable.\todo{this paragraph is like the previous two, I think we have to combine them, or to make their subjects distict.}
+An ML approach is similar to a propensity-score matching method but it more
+intensively controls for confounding factors. An ML approach systematically
+detect patterns and relationships, such as functional forms and important
+variables, that may be unknown to the researcher. This assists with causal
+parameter estimation by reducing bias through \todo{something about non-linear
+models reducing the likelihood of bias from model-misspecification?}automatic
+variable selection and by reducing variance through minimising information
+redundancy from highly correlated variables. A key challenge in estimating the
+causal returns to later-life education is what leads (or enables) mature-age
+learners to pursue and complete a qualification may itself be a precursor to
+later-life success. Moreover, the drivers of degree completion may be numerous
+and related to other variables in complex, unknown ways. A data-driven approach
+can systematically shed light on these unknowns. As a result, ML can help to
+reduce bias from selection into treatment. This is especially useful when
+appropriate instrumental variables are unavailable.\todo{this paragraph is like
+the previous two, I think we have to combine them, or to make their subjects
+distict.}
 
 Previous studies have found that individuals who seek a futher degree tend to have slower-growing earnings in the period before their study starts compared to similar individuals who do not seek further study \citep{jacobson2005,dynarski2016,dynarski2018}. By accounting for dynamic selection into obtaining a further degree, we can be confident that we compare the earnings paths of mature-age students to the paths of similar non-students who displayed the same earnings (and other) paths before study began. In this paper, we explicitly control for the trajectories of socio-economic and demographic circumstances before study starts. Standard fixed effects estimation would miss these dynamic confounders. We find that our ML estimates are significantly smaller than the size of the standard fixed effects results. We also estimate lower returns compared to Ordinary Least Squares (OLS) models. We document the additional confounder variables that we include in our models but are usually omitted from standard OLS specifications. These variables suggest there is significant negative selection into mature-age students who undertake a further degree.
 
@@ -249,11 +265,11 @@ observation).
 
 HILDA covers a long time span of 19 years, starting in 2001. We use the 2019 release. This means we observe respondents annually from 2001 to 2019.
 
-\emph{Sample exclusions}
+\subsection{Sample exclusions}
 
 Our analysis sample contains respondents who were 25 years or above in 2001. This allows us to focus on individuals who obtain a further education – beyond that acquired in their previous degree. 
 
-Our main analysis focuses on measuring the impact of further education using wave 19 outcomes. Here, we define all features in 2001\todo{I'm not sure what this means?}. We delete any individuals who were ‘currently studying’ in 2001. This also ensures that our covariates, which are defined in 2001 are not contaminated by the impacts of studying but clearly precede the study spell of interest. These sample exclusions result in 7,359 respondents being dropped because they are below the age of 25 in 2001 and a further 1,387 respondents being dropped because they were studying in 2001.
+Our main analysis focuses on measuring the impact of further education using wave 19 outcomes. Here, we define all features in 2001\todo{I'm not sure what this means?}. We delete any individuals who were ‘currently studying’ in 2001. This also ensures that our features, which are defined in 2001 are not contaminated by the impacts of studying but clearly precede the study spell of interest. These sample exclusions result in 7,359 respondents being dropped because they are below the age of 25 in 2001 and a further 1,387 respondents being dropped because they were studying in 2001.
 
 We then restrict the sample to those who are present in both 2001 and 2019. This ensures that we observe base characteristics and outcomes for every person in our analysis sample. This results in a further 5,727 respondents being dropped from the sample. Our analysis sample has 5,441 observations.
 
@@ -264,15 +280,13 @@ We then restrict the sample to those who are present in both 2001 and 2019. This
 %For control group observations they have not completed further study, which makes it difficult to define their features and outcomes around a study-start date. Thus, we assign to them a time stamp for a theoretical start date to study. We do this for every year from 2003 to 2019.  This implies that control group individuals can be duplicated and used multiple times. Such duplication induces a dependence structure that artificially reduces standard errors. Thus, we account for clustering and heteroskedasticity of any type at the individual level. There are 13,311 unique control observations. 
 
 
-\emph{Outcomes}
+\subsection{Outcomes}
 
 We measure outcomes in 2019 across the groups of individuals who did and did not get re-educated. We use annual earnings to measure the economic returns to education. We also analyse  outcomes related to the labour market such as employment, changes in earnings, changes in occupation, industry, and jobs.
 %The second is to compare outcomes four years after the start of a study spell.
 
- 
 
-
-\emph{Treatment}
+\subsection{Treatment}
 
 We define further education as an individual who obtains a further degree in a formal, structured educational program. These programs must be delivered by a certified training, teaching or research institution. Thus, we do not analyse informal on-line degrees (such as Coursera degrees). We also do not consider on-the-job training as obtaining further education.
 
@@ -284,17 +298,24 @@ We utilise both these questions to construct our measure of further education. U
 
 These two survey questions thus capture any additional qualification obtained from 2002 to 2017, inclusive. Additional qualifications refer to the following types of degrees: Trade certificates or apprenticeships; Teaching or nursing qualifications, Certificate I to IV, Associate degrees, Diplomas (2-year and 3-year fulltime), Graduate Certificates, Bachelor, Honours, Masters and Doctorate degrees.
 
-\emph{Covariates}
+\subsection{Covariates/features}
 
-We define our covariates using 2001 as the base year. Since we delete any respondents who were currently studying in 2001, we ensure that all of the covariates were defined before a respondent begins further study.
+We define our covariates, or features as they are known in machine learning
+parlance, using 2001 as the base year. Since we delete any respondents who were
+currently studying in 2001, we ensure that all features were defined before a
+respondent begins further study.
 
-A unique approach to our feature\todo{I think we have to use covariates or features consistently, or at least define these terms.} selection strategy is that we use all the information available to us from the HILDA survey in 2001. This means that we have more than 3,400 raw variables per observation. Before using the covariates in a ML model, we delete any features that are identifiers or otherwise deemed irrelevant for explaining the outcome.
+A unique approach to our feature selection strategy is that we use all the
+information available to us from the HILDA survey in 2001. This means that we
+have more than 3,400 raw variables per observation. Before using the features
+in a ML model, we delete any features that are identifiers or otherwise deemed
+irrelevant for explaining the outcome.
 
 In order to reduce redundancy in this vast amount of information, we next apply a supervised Machine learning model to predict outcomes 5 years ahead of 2001 i.e., in 2006. We then select the top 100 variables that are most predictive of the outcome in 2006.\footnote{Confounders are features that both have an impact on the outcome and on the treatment. \cite{cherno2018} suggest including the union of features kept in the two structural equations (outcome on features and treatment on features). Here, we only include the features that predict the outcome equation because including features that are only predictive of the treatment can erroneously pick up instrumental variables (see \color{red} paper \color{black} for a discussion of this issue). } These variables are listed in Table \ref{tab:sumstats}. 
 
-\emph{`Missing' variables from the baseline model}
+\subsection{`Missing' variables from the baseline model}
 
-As a descriptive exercise, Table \ref{tab:mlvars} presents the features that were ‘missed’ by the baseline model\todo{this is the first time we have referred to a baseline model -- does this mean FE and OLS models? We should define them again before this, or at the beginning of this section.}. In the baseline model, we included covariates such as age, gender, state of residence, household weekly earnings, highest level of education attained, and current work schedule. This collection of variables have been informed by theory or previous empirical results.  
+As a descriptive exercise, Table \ref{tab:mlvars} presents the features that were ‘missed’ by the baseline model\todo{this is the first time we have referred to a baseline model -- does this mean FE and OLS models? We should define them again before this, or at the beginning of this section.}. In the baseline model, we included features such as age, gender, state of residence, household weekly earnings, highest level of education attained, and current work schedule. This collection of variables have been informed by theory or previous empirical results.  
 
 The data-driven model identifies more salient variables compared to the baseline model. Additional variables include employment conditions such as work schedule, casual employment, firm size, tenure or years unemployed; financial measures such as weekly wage, investment income and mortgage debt; health measures such as limited vigorous activity and tobacco expenses; and work-life preferences related to working hours and child care. 
 
@@ -303,7 +324,6 @@ We identify variables as missing from the baseline model if those variables expl
 Most of the omitted variables bias the Ordinary Least Squares (OLS) estimates is upwards.\footnote{Exceptions include casual employment status, the presence of a past doctorate qualification, years unemployed, parental child care and dividend and business income.} The upward bias is consistent with the ML-models estimating an economic returns on obtaining a new qualification that is significantly smaller than the returns from an OLS model or a Difference-in-Difference - Fixed Effects (DD-FE)  model. Figure \ref{fig:method} displays the estimated returns from five different models. The first three bars show significantly higher returns based on the OLS (no controls), OLS (with controls) and the DD-FE models compared to the last two bars, which are based on the ML models - Gradient Boosting Regression and Doubly Robust. We discuss these methods in more detail below. 
 
 It is important to highlight that our appraoch to identifying missing variables from the baseline model is a quick, descriptive one. As previously mentioned, the ML algorithm randomly selects variables that are highly correlated thus we may have missed out on reporting the label of important variables omitted from the baseline model.
-
 
 
 \section{Descriptive Figures and Tables}
@@ -382,7 +402,7 @@ To interpret the estimated parameter as a causal relationship, the following ass
 
 This assumption requires that the treatment assignment is independent of the two potential outcomes. Practically, this amounts to assuming that components of the observable characteristics available in our data, or flexible combinations of them, can proxy for unobservable characteristics. Otherwise, unobservable confounding bias remains.
 
-A benefit of using all the features the HILDA dataset has to offer is that we may minimise unobserved confounding effects. Specifically, we rely on the 3,400 covariates and complex interactions between them as well as flexible functional forms to proxy for components of this unobserved heterogeneity. For example, while we do not observe ability or aptitude directly, we may capture components of it with other measures that are observed in HILDA such as past educational attainment or the long list of income and other sources of income variables (see Table 1 for a list of the covariates). 
+A benefit of using all the features the HILDA dataset has to offer is that we may minimise unobserved confounding effects. Specifically, we rely on the 3,400 features and complex interactions between them as well as flexible functional forms to proxy for components of this unobserved heterogeneity. For example, while we do not observe ability or aptitude directly, we may capture components of it with other measures that are observed in HILDA such as past educational attainment or the long list of income and other sources of income variables (see Table 1 for a list of the features). 
 
 The reader is likely to conceptualise other dimensions of unobserved heterogeneity that may not be captured in Table 1. There are two likely scenarios in this case. First, HILDA may not be exhaustive enough, even with its existing richness, to capture all dimensions of unobserved heterogeneity. As a result, our estimates may be biased. 
 
@@ -425,14 +445,14 @@ It also contradicts what we say a few paragraphs later.}
 
 \begin{enumerate}
   \setcounter{enumi}{3}
-  \item \textbf{Exogeneity of covariates} -- the covariates included in the conditioning set are not affected by the treatment. 
+  \item \textbf{Exogeneity of covariates (features)} -- the features included in the conditioning set are not affected by the treatment. 
 \end{enumerate}
 
-To ensure this, we define all of our covariates at a time point before any
+To ensure this, we define all of our features at a time point before any
 individual started studying. Specifically, we use the first wave of HILDA (in
-2001) to define our covariates. We only look at those individuals who completed
+2001) to define our features. We only look at those individuals who completed
 further education in 2002 onwards. Furthermore, we delete any individuals who
-were currently studying in 2001 to ensure the covariates cannot reflect
+were currently studying in 2001 to ensure the features cannot reflect
 downstream effects of current study. 
 
 With the strong ignorability and overlap assumptions in place, treatment effect estimation reduces to estimating two response surfaces – one for treatment and one for control.
@@ -443,14 +463,14 @@ Machine learning methods are well suited to find generalizable predictive patter
 
 To show this, we define our parameter of interest, the CATE, which is formally defined as:
 \begin{align}
-\tau (x) = \mathbb{E}[Y(1) - Y(0) | X = x]
+\tau (x) = \mathbb{E}[Y(1) - Y(0) | X{=}x]
 \end{align}
 which, with the assumptions above, is equivalent to taking the difference between two conditional mean functions $\mu _1(x) - \mu _0(x)$:
-\begin{align*}
-\tau (x) & = \mu _1(x) - \mu _0(x) \\
-& \approx \mathbb{E}[Y | T = 1, X = x] - \mathbb{E}[Y | T = 0, X = x] \\
-& = \mathbb{E}[Y(1) - Y(0) | X = x]
-\end{align*}
+\begin{align}
+\tau (x) & = \mu _1(x) - \mu _0(x) \nonumber \\
+  & \approx \mathbb{E}[Y | T {=} 1, X {=} x] - \mathbb{E}[Y | T {=} 0, X {=} x] \nonumber \\
+& = \mathbb{E}[Y(1) - Y(0) | X {=} x] \label{eq:indTE}
+\end{align}
 In this estimation, we are not interested in the coefficients from regressing
 $Y$ on $X$. What we require is a good approximation of the function $\tau(x)$,
 and hence good estimates from $\mu_1(x)$ and $\mu_0(x)$, which is within the
@@ -485,7 +505,7 @@ but it uses additional information from a propensity score model. In this case
 the propensity score model is a machine learning classifier that attempts
 to estimate the treatment assignment process,
 \begin{align}
-  \mathbb{E}[T=1|X=x] &= \mathbb{P}(T=1|X=x) \approx \rho(x),
+  \mathbb{E}[T{=}1|X{=}x] &= \mathbb{P}(T{=}1|X{=}x) \approx \rho(x),
 \end{align}
 where $\rho(x)$ as a probabilistic machine learning classifier. This allows
 information about the students' background, and the nature and complexity of
@@ -696,7 +716,7 @@ isotropic kernel, but does not have excessive smoothness assumptions on the
 functional forms it can learn -- this kernel leads to the response surface
 being at least once differentiable \citep{williams2006}. A Gaussian process
 with this kernel can learn non-linear and interaction-style relationships
-between input covariates and the outcome. Our composite kernel is not
+between input features and the outcome. Our composite kernel is not
 necessarily stationary however, as we have included a non-stationary term, $t_i
 t_j$. 
 
@@ -841,10 +861,10 @@ Sample splitting is appropriate when the sample size is large. An issue with
 studies that rely on survey-based data is that sample sizes are often not large
 enough to perform sample splitting. For example, there is not enough data to
 split the dataset into train and test datasets such that each of these splits
-would cover all the common and uncommon values of the $X$-covariates that are
+would cover all the common and uncommon values of the $X$-features that are
 observed in the full sample. If we were to use a training dataset that was
 insufficiently sized or non-representative, it would be difficult for the ML
-models to effectively map the $X$-covariates to the outcome surfaces,
+models to effectively map the $X$-features to the outcome surfaces,
 $\mu_1(x)$ and $\mu_0(x)$. There would also not be enough data in the test set
 to effectively estimate the parameters of the model configuration chosen in the
 train set. As a result, our estimate treatment effects are likely to have a
@@ -882,9 +902,10 @@ uncertainty is only over the model parameters, and not the model choice
 %This process allows us to select the best model configurations for the outcome
 %surfaces: $\mu _1(x)$ and $\mu _0(x)$.
 Third, and once we have these predicted outcome surfaces, $\mu_1(x)$ and
-$\mu_0(x)$, we are able to calculate the individual treatment effect,
+$\mu_0(x)$\todo{These are bootstrapped surfaces? So maybe we should denote them
+$\mu_0^{(s)}(x_i)$?}, we are able to calculate the individual treatment effect,
 $\tau(x_i)$, for each person in the original sample (not the individuals from
-the bootstrap sample) by substituting the values of their features into the
+the bootstrap sample)\todo{What does this mean?} by substituting the values of their features into the
 LASSO, Ridge or tree estimators for $\mu_1(x)$ and $\mu_0(x)$. We can obtain a
 sample mean, $\bar{\tau}^{(s)}$, by averaging over all the individual
 $\tau^{(s)}(x_i)$ in the bootstrap sample, $s$. We repeat this procedure over
@@ -905,8 +926,8 @@ this variation we need to use resamples of the same size.
 % 100 bootstrap samples, we have a distribution of (C)ATE estimates. We take the
 % standard deviation of these 100 (C)ATE values to obtain the standard error. 
 
-To obtain confidence intervals for the ATE and CATE estimates, we use standard
-empirical bootstrap confidence interval calculations \citep{efron1986}.
+To obtain confidence intervals for the ATE and CATE estimates we use standard
+empirical bootstrap confidence interval estimators \citep{efron1986}.
 
 % To obtain the confidence intervals from these samples, we undertake the
 % following procedure (e.g. for a 90\% confidence interval):
@@ -938,8 +959,8 @@ The inference process for the Bayesian models a little different since the
 hyper-paramters of the models are either fixed or selected automatically by the
 learning algorithm (maximum likelihood type-II or MCMC). Bayesian inference
 procedures tend to afford some protection against over-fitting since they are
-parsimonious in choosing posterior distributions over model parameters that
-vary from their prior distributions, and so induces a natural model complexity
+parsimonious when choosing posterior distributions over model parameters that
+vary from their prior distributions, which induces a natural model complexity
 penalty\footnote{This point can be understood more thoroughly by examining the
 evidence lower bound in variational Bayesian inference, see Chapter 10 of
 \citet{bishop2006}.}. As such, we use all the available data to learn the model
@@ -955,7 +976,7 @@ The effect sizes from the GBR model are smaller than that of the two linear mode
 
 Age fixed-effects alone are unlikely to capture the differential age effects across other variables such as across different occupations, or by gender, and earnings. The linear ML models include age fixed effects. However, they do not include interactions between age and  other variables whereas GBR does include them.
 
-To illustrate how GBR adequately captures non-linearities we re-estimated our results focusing on those who were aged 25-45 in 2001. This is the same as interacting a binary variable (for age 25-45) with every other covariate in the model. In Appendix Figure \ref{fig:valadle46}, we see that the results across the models are now more similar than when we use the full sample.
+To illustrate how GBR adequately captures non-linearities we re-estimated our results focusing on those who were aged 25-45 in 2001. This is the same as interacting a binary variable (for age 25-45) with every other feature in the model. In Appendix Figure \ref{fig:valadle46}, we see that the results across the models are now more similar than when we use the full sample.
 
 The Doubly Robust (DR) models estimate smaller effects compared to the T-learner. Table \ref{tab:atebslvl} displays a gain of approximately \$62-69 per week in gross earnings across the DR approaches. The estimated effect sizes are statistically different from zero. The confidence intervals for the DR estimates also exclude the point estimates from the T-Learner approach.
 
@@ -984,7 +1005,7 @@ able to more easily capture non-linear relationships than the other models.
 
 Proportionate changes in earnings can be measured by taking the log of the earnings measures. In Appendix Figure \ref{fig:valadlelog}, we see that the proportionate change in earnings was large at 50 percent. This is likely to be because of people entering the labour market as a result of the new qualification. We find that a new qualification increases the likelihood of employment by approximately 8 percent. See Figure \ref{fig:empl}.
 
-As previously mentioned, the ML models estimate smaller returns than the returns estimated in Fixed Effects (FE) or cross-sectional models (OLS with and without controls) where features have been selected based on theory. Figure \ref{fig:method} compares the returns from five different approaches: an ordinary least squares model with no covariates, with covariates selected using theory, a FE model and ML models.\todo{I think we need to define these benchmark models in more detail, either here on the methods section.}
+As previously mentioned, the ML models estimate smaller returns than the returns estimated in Fixed Effects (FE) or cross-sectional models (OLS with and without controls) where features have been selected based on theory. Figure \ref{fig:method} compares the returns from five different approaches: an ordinary least squares model with no features, with features selected using theory, a FE model and ML models.\todo{I think we need to define these benchmark models in more detail, either here on the methods section.}
 
 %The largest earnings gains are associated with acquiring an undergraduate degree or above (including Graduate certificates and Graduate diplomas). As displayed in Figure \ref{fig:degree}, only modest gains are associated with secondary or post-secondary certificates or diplomas. More generally, significant earnings gains are achieved when returning students acquire qualifications above those previously held. In fact, the earnings gains are much higher if students advance their qualification status rather than gaining an additional degree at the same or lower level.
 %
@@ -1008,7 +1029,13 @@ Specifically, we identify the important variables for which we expect to see the
 
 \subsection{Permutation importance feature selection method}
 
-We use a permutation importance selection method \citep{breiman2001,molnar2020} to evaluate the relative importance of individual features. Our aim here is to understand where the heterogeneous treatment effects are most pronounced. In other words, we aim to identify the sub-groups for which the treatment effects differ most significantly. In selecting the important features\todo{again, use feature, covariate etc consistently}, our objective is to understand how to partition the data by the treatment effects as opposed to predicting the outcomes themselves. 
+We use a permutation importance selection method \citep{breiman2001,molnar2020}
+to evaluate the relative importance of individual features. Our aim here is to
+understand where the heterogeneous treatment effects are most pronounced. In
+other words, we aim to identify the sub-groups for which the treatment effects
+differ most significantly. In selecting the important features our objective is
+to understand how to partition the data by the treatment effects as opposed to
+predicting the outcomes themselves. 
 
 The permutation importance proceedure involves testing the performance of a
 model after permuting the order of samples of each individual feature, thereby
@@ -1017,29 +1044,75 @@ predicitve relationship learned by the model with that feature. The model
 performance we are interested in, as previously mentioned, is the one that maps
 the features to the individual treatment effects. 
 
-Specifically, we take each bootstrap sample and train two outcome surfaces - one for $\hat{Y}_0$\todo{we've been using $\mu$ for this right? We should be consistent if possible.} and one for $\hat{Y}_1$ - and compute the individual treatment effects ($\tau$'s in Equation 2) for every person. Note that we train the model on the bootstrapped sample but estimate the individual treatment effects using the feature values for individuals from the original sample. Thus, for every individual we have a distribution of values of their individual treatment effects. 
+Specifically, we take each bootstrap sample, s, and train two outcome surfaces
+-- $\mu^{(s)}_0(x_i)$ and $\mu^{(s)}_1(x_i)$ -- and compute the individual
+treatment effects $\tau^{(s)}(x_i)$ from Equation (\ref{eq:indTE}). Note that
+we train the model on the bootstrapped sample but estimate the individual
+treatment effects using the feature values for individuals from the original
+sample. Thus, for every individual we have a distribution of values of their
+individual treatment effects.\todo{Can we just say we take the individually
+computed treatment effects from one of the approaches outlined previously?}
 
-After obtaining the individual treatment effects for each individual, we train a model that maps the features to the individual treatment effects. We use cross-validation to select our hyperparameters and obtain the optimal model. 
+After obtaining the individual treatment effects, we train another model that
+maps the features to the individual treatment effects. We use cross-validation
+to select our hyperparameters and obtain the optimal model. 
 
-Using the original data, we take a single column amongst the features and permute the order of the data and calculate a new set of individual treatment effects. We compare the new and original individual treatment effects (based on the permuted data and those from the non-permuted data) and calculate the Mean Squared Errors (MSE). 
+Using the original data, we take a single column among the features and
+permute the order of the data and calculate a new set of individual treatment
+effects. We compare the new and original individual treatment effects (based on
+the permuted data and those from the non-permuted data) and calculate the Mean
+Squared Errors (MSE). 
 
-We repeat this for all the features, permuting them individually and evaluating how they change the prediction of the individual treatment effect target. Features that yield the largest MSEs are likely to be more important than those features with lower MSEs. This is because permuting them changed the prediction of the individual treatment effect the most, which suggests that the individual treatment effect prediction relies heavily on those features.
+We repeat this for all the features, permuting them individually and evaluating
+how they change the prediction of the individual treatment effect target.
+Features that yield the largest MSEs are likely to be more important than those
+features with lower MSEs since permuting those features breaks the
+most informative predictive relationships. 
 
-We then repeat the above steps across all the bootstrap samples. Note that a different bootstrap sample will change the value of the individual treatment effects (since we train different outcome surfaces for $\hat{Y}_0$\todo{notation} and $\hat{Y}_1$ for each bootstrap sample).
+We then repeat the above steps across all the bootstrap samples. Note that a
+different bootstrap sample will change the value of the individual treatment
+effects since we train different outcome surfaces for $\mu^{(s)}_0(x)$ and
+$\mu^{(s)}_1(x)$ for each bootstrap sample.
 
-We embed the permutation importance selection method in a bootstrapping procedure in order to capture hyperparameter uncertainty. For example, a different `tree depth' could be chosen between different bootstrap samples. This would affect the type of non-linear/interaction relationships that would be captured by the models, which in turn would affect which features turn out to be important. 
+We embed the permutation importance selection method in a bootstrapping
+procedure in order to capture hyperparameter uncertainty. For example, a
+different `tree depth' could be chosen between different bootstrap samples.
+This would affect the type of non-linear/interaction relationships that would
+be captured by the models, which in turn would affect which features turn out
+to be important. 
 
-Finally, we obtain an average MSE for each feature, averaged across all bootstrap samples. This average value allows us to rank the features by their importance. Again, those with the largest average MSE values are the most important. We can also evaluate the uncertainty of this estimate since we obtain a distribution of MSE values across the different bootstrap samples.
+Finally, we obtain an average MSE for each feature, averaged across all
+bootstrap samples. This average value allows us to rank the features by their
+importance. Again, those with the largest average MSE values are the most
+important. We can also evaluate the uncertainty of this estimate since we
+obtain a distribution of MSE values across the different bootstrap samples.
 
-Figure \ref{fig:featgbrDR} displays the top ten features (based on the permutation importance procedure described above) and a residual category for all the other features. The features that are most important are: weekly gross wages on the main job and income- or wealth-related variables. Together, this class of income/wealth variables accounts for 40\% of the importance of all variables. We focus on these selected features since our Nested CV approach pointed to the better predictive performance of the GBR model over the linear models.
+Figure \ref{fig:featgbrDR} displays the top ten features (based on the
+permutation importance procedure described above) and a residual category for
+all the other features. The features that are most important are: weekly gross
+wages on the main job and income- or wealth-related variables. Together, this
+class of income/wealth variables accounts for 40\% of the importance of all
+variables. We focus on these selected features since our Nested CV approach
+pointed to the better predictive performance of the GBR model over the linear
+models.
 
-Other important features include those related to employment, including occupational status, employment expectations, and employment history. The demographic background of the individual, namely their age, is also important. 
+Other important features include those related to employment, including
+occupational status, employment expectations, and employment history. The
+demographic background of the individual, namely their age, is also important. 
 
 %Appendix Figure \ref{fig:featgbr} reiterates the importance of features related to employment, including occupational status, employment expectations, and employment history. The demographic background of the individual, namely their age, is also important. 
 
-Figure \ref{fig:dengbrlevDR} displays the distribution of the MSE values across the bootstrap samples for the GBR model. It displays the distributions for the top 3 features. The feature with the highest importance score: weekly gross wage in the main job. This suggests that in some of the bootstrap samples, where the MSE is larger, the individual treatment effects from the permuted data differ greatly from the original individual treatment effects.
+Figure \ref{fig:dengbrlevDR} displays the distribution of the MSE values across
+the bootstrap samples for the GBR model. It displays the distributions for the
+top 3 features. The feature with the highest importance score: weekly gross
+wage in the main job. This suggests that in some of the bootstrap samples,
+where the MSE is larger, the individual treatment effects from the permuted
+data differ greatly from the original individual treatment effects.
 
-The results from the T-learner model (using GBR) shows a similar story to the results from the permutation importance procedure using the DR model. Overall, as Appendix Figure \ref{fig:featgbr} shows, income and employment-related variables are the most salient in explaining treatment effect heterogeneity. 
+The results from the T-learner model (using GBR) shows a similar story to the
+results from the permutation importance procedure using the DR model. Overall,
+as Appendix Figure \ref{fig:featgbr} shows, income and employment-related
+variables are the most salient in explaining treatment effect heterogeneity. 
 
 %However, the LASSO and RIDGE models also demonstrate the importance of other demographic characteristics such as the number of and presence of young children in the household, as well as economic-related variables such as previous educational attainment, amount remaining on the home loan and work aspirations. 
 
@@ -1049,21 +1122,81 @@ The results from the T-learner model (using GBR) shows a similar story to the re
 % add HTE from DR                                       Figure \ref{fig:htedr}   
 % add HTE from DR stacked with T-Learner   Figure \ref{fig:htemldr} 
 
-Continuing to focus on the results from the Doubly Robust model, Figure \ref{fig:htedr} shows that there is heterogeneity in the treatment impacts. We have identified the features that were considered most important according to the permutation procedure. For each feature, we divide the sample into two groups. For continuous variables, we take the median value and divide the sample into those who are above and below this median value. 
+Continuing to focus on the results from the Doubly Robust model, Figure
+\ref{fig:htedr} shows that there is heterogeneity in the treatment impacts. We
+have identified the features that were considered most important according to
+the permutation procedure. For each feature, we divide the sample into two
+groups. For continuous variables, we take the median value and divide the
+sample into those who are above and below this median value. 
 
-Weekly personal income has a large impact on the effect size. Those with below median income in 2001 derive more benefits than those with above median income, possibly because high income earners hit an earnings ceiling. Younger people in 2001 also derive more returns, as they may have had more time to accumulate returns. This result aligns with findings from previous studies \citep{polidano2016,dorsett2016,perales2017}. Weekly personal income and age are likely to be highly correlated -- with older individuals tending to earn a higher personal income. We cannot say which variable is the main driver of the heterogeneous treatment effects\todo{we should try to give an explanation of why}, and there may also be interaction effects between them.
+Weekly personal income has a large impact on the effect size. Those with below
+median income in 2001 derive more benefits than those with above median income,
+possibly because high income earners hit an earnings ceiling. Younger people in
+2001 also derive more returns, as they may have had more time to accumulate
+returns. This result aligns with findings from previous studies
+\citep{polidano2016,dorsett2016,perales2017}. Weekly personal income and age
+are likely to be highly correlated -- with older individuals tending to earn a
+higher personal income. We cannot say which variable is the main driver of the
+heterogeneous treatment effects\todo{we should try to give an explanation of
+why}, and there may also be interaction effects between them.
 
-We also investigate if there are heterogeneous treatment effects according to commonly used variables in Figure \ref{fig:htedr}. Females reap slightly higher returns compared to males although this is not statistically significant. Similar treatment effects apply to those with and without a resident children, although the effect sizes widen in favour of parents with older children in the household. 
+We also investigate if there are heterogeneous treatment effects according to
+commonly used variables in Figure \ref{fig:htedr}. Females reap slightly higher
+returns compared to males although this is not statistically significant.
+Similar treatment effects apply to those with and without a resident children,
+although the effect sizes widen in favour of parents with older children in the
+household. 
 %
-%The T-learner (GBR) model is mostly consistent with the Doubly Robust model in the estimates of the CATEs. Figure \ref{fig:htegbr} shows some differences based on age, weekly income and the household income. One reason for the larger effects in the Doubly Robust model is that it places more emphasis in the areas of overlap compared to the T-learner: there may be few treated observations in the extremes of the continuous variables of age and income. 
+%The T-learner (GBR) model is mostly consistent with the Doubly Robust model in
+%the estimates of the CATEs. Figure \ref{fig:htegbr} shows some differences
+%based on age, weekly income and the household income. One reason for the
+%larger effects in the Doubly Robust model is that it places more emphasis in
+%the areas of overlap compared to the T-learner: there may be few treated
+%observations in the extremes of the continuous variables of age and income. 
 \
-%: women appear to benefit more from later-life study than men (see Figure \ref{fig:demo}). The gains to further education for women are likely to stem from the process of completing the degree. By contrast, for men, the difference in earnings (in 2019) between those who do and do not gain an additional qualification appear to emerge due to selection into adult learning: men who completed further education had higher earnings prior to enrolment compared to men who did not acquire an additional degree. Comparing the earnings growth, as opposed to the level differences in 2019 earnings, between these two groups of men shows that the value-add of further study is much smaller and now statistically insignificant.
+%: women appear to benefit more from later-life study than men (see Figure
+%\ref{fig:demo}). The gains to further education for women are likely to stem
+%from the process of completing the degree. By contrast, for men, the
+%difference in earnings (in 2019) between those who do and do not gain an
+%additional qualification appear to emerge due to selection into adult
+%learning: men who completed further education had higher earnings prior to
+%enrolment compared to men who did not acquire an additional degree. Comparing
+%the earnings growth, as opposed to the level differences in 2019 earnings,
+%between these two groups of men shows that the value-add of further study is
+%much smaller and now statistically insignificant.
 %
-%Larger earnings gains are also achieved when qualifications are acquired at older ages. The value-add of an additional degree for older adult learners is more than double that of learners who acquire additional degrees at younger ages. This contrasts with findings from previous studies, which show higher returns when degrees are acquired at younger ages \citep{polidano2016,dorsett2016,perales2017}. A possible reason for the difference is that we analyse older Australians and compared to some of these studies, we consider a broader range of degree types.
+%Larger earnings gains are also achieved when qualifications are acquired at
+%older ages. The value-add of an additional degree for older adult learners is
+%more than double that of learners who acquire additional degrees at younger
+%ages. This contrasts with findings from previous studies, which show higher
+%returns when degrees are acquired at younger ages
+%\citep{polidano2016,dorsett2016,perales2017}. A possible reason for the
+%difference is that we analyse older Australians and compared to some of these
+%studies, we consider a broader range of degree types.
 %
-%On the face of it, the returns to education appear larger for those with lower starting individual earnings in the main job compared to those who start out (in 2001) with a higher weekly salary. Specifically, Figure \ref{fig:ses} shows that individuals who earn less than the median value (of \$425 per week) benefit twice as much from an additional qualification compared to those who start out with a salary below the median rate. However, this is largely driven by selection effects. Among workers with starting salaries below the median rate, those who completed further education had higher earnings prior to enrolment compared to those who did not acquire an additional degree. This positive selection into further education may arise because the base group of those who do not pursue further education includes the long-term unemployed. In other words, the value-add of an additional qualification for those who start out with lower earnings is smaller once we account for selection effects.
+%On the face of it, the returns to education appear larger for those with lower
+%starting individual earnings in the main job compared to those who start out
+%(in 2001) with a higher weekly salary. Specifically, Figure \ref{fig:ses}
+%shows that individuals who earn less than the median value (of \$425 per week)
+%benefit twice as much from an additional qualification compared to those who
+%start out with a salary below the median rate. However, this is largely driven
+%by selection effects. Among workers with starting salaries below the median
+%rate, those who completed further education had higher earnings prior to
+%enrolment compared to those who did not acquire an additional degree. This
+%positive selection into further education may arise because the base group of
+%those who do not pursue further education includes the long-term unemployed.
+%In other words, the value-add of an additional qualification for those who
+%start out with lower earnings is smaller once we account for selection
+%effects.
 %
-%Among workers who begin with higher levels of individual earnings i.e., their weekly gross earnings in the main job are larger than the median rate, the value-add of gaining an additional degree is in fact, larger than the comparison of level earnings in 2019. One potential explanation for this is that among this group, workers with relatively lower earnings than their higher earning counterparts may seek further education in order to improve their earnings capacity. By acquiring an additional degree, they successfully lift their earnings relative to those who did not obtain further education.
+%Among workers who begin with higher levels of individual earnings i.e., their
+%weekly gross earnings in the main job are larger than the median rate, the
+%value-add of gaining an additional degree is in fact, larger than the
+%comparison of level earnings in 2019. One potential explanation for this is
+%that among this group, workers with relatively lower earnings than their
+%higher earning counterparts may seek further education in order to improve
+%their earnings capacity. By acquiring an additional degree, they successfully
+%lift their earnings relative to those who did not obtain further education.
 
 Acquiring an additional qualification may increase earnings through a number of potential mechanisms. We find evidence that, in Figure \ref{fig:empl} for example, it increases the chance that individuals move from being unemployed or out of the labour force to being employed. The increase in employment is approximately 8 percentage points and is statistically significant. We also find evidence pointing to workers switching occupations or industries. This suggests that further education in later life can support the economic goals of a larger workforce as well as a more mobile one.
 
@@ -1090,7 +1223,7 @@ There are clear economic benefits to gaining an additional qualification in late
 
 Qualification advancements do not benefit Australian workers in the same way: those with lower weekly earnings appear to benefit more from later-life study than those with higher earnings. One possible reason is that ceiling effects limit the potential returns from additional education. We also find that younger Australians benefit more than their older counterparts. Again, a ceiling effect phenomenon may apply since age is highly correlated to weekly earnings. 
 
-****Dan, do you have other theories about why we see this result? 
+% ****Dan, do you have other theories about why we see this result? 
 
 Acquiring an additional qualification may increase earnings through a number of potential mechanisms. We find evidence that it increases the chance that individuals move from being unemployed or out of the labour force to being employed. We also find evidence pointing to workers switching occupations or industries. This suggests that further education in later-life can support the economic goals of a larger workforce as well as a more mobile one.
 
@@ -1139,7 +1272,7 @@ Below bachelor 	& 	bbach	 & 	0.209	 & 	0.406	 \\
 Technical degree 	& 	techdeg	 & 	0.151	 & 	0.358	 \\
 Qualitative degree* 	& 	qualdeg	 & 	0.080	 & 	0.272	 \\
 &  & & \\
-\textbf{Covariates} 	& 		 & 		 & 		 \\
+\textbf{Covariates (features)} 	& 		 & 		 & 		 \\
 \textbf{\textit{Demographics}} 	& 		 & 		 & 		 \\
 Sex 	& 	hgsex	 & 	1.536	 & 	0.499	 \\
 Section of State 	& 	hhsos	 & 	0.690	 & 	1.046	 \\
