@@ -94,62 +94,185 @@ Pursuing educational qualifications later in life is an increasingly common
 
 \section{Introduction}
 
-Pursuing educational qualifications later in life is an increasingly common phenomenon within OECD countries \citep{oecd2016}. Technological change and automation continues to drive the evolution of skills needed in many professions, or to oust the human workforce in others. This is particularly true for middle-income workers performing routine tasks \citep{autor2008,acemoglu2011}. Also at the lower end of the income-distribution, such as among welfare recipients, governments are increasingly trying to promote the idea of life-long learning. \todo{More citation fodder if needed: Durrant-Whyte, H., McCalman, L., O’Callaghan, S., Reid, A. and Steinberg, D., 2015. The impact of computerisation and automation on future employment. Australia’s future workforce, pp.56-64.}
+Pursuing educational qualifications later in life is an increasingly common
+phenomenon within OECD countries \citep{oecd2016}. Technological change and
+automation continues to drive the evolution of skills needed in many
+professions, or to oust the human workforce in others. This is particularly
+true for middle-income workers performing routine tasks
+\citep{autor2008,acemoglu2011}. Also at the lower end of the
+income-distribution, such as among welfare recipients, governments are
+increasingly trying to promote the idea of life-long learning.
 
-This paper contributes to understanding one efficacy dimension of these policy and individual choices by estimating the causal effects on earnings and by focusing on mature-age students. We add to previous work on the returns to education for `younger students'. Previous research points to positive and significant wage premiums for younger cohorts with more education, ranging between 5 and 13\% \citep{angrist1991,harmon2003,machin2006} or even higher than 15\% as in the case of \cite{harmon1995}. The wage returns to education may be more uncertain for older students as they face higher opportunity costs to study and need to navigate a more fragmented system in the postsecondary education setting.
+This paper contributes to understanding one efficacy dimension of these policy
+and individual choices by estimating the causal effects on earnings and by
+focusing on mature-age students. We add to previous work on the returns to
+education for `younger students'. Previous research points to positive and
+significant wage premiums for younger cohorts with more education, ranging
+between 5 and 13\% \citep{angrist1991,harmon2003,machin2006} or even higher
+than 15\% as in the case of \cite{harmon1995}. The wage returns to education
+may be more uncertain for older students as they face higher opportunity costs
+to study and need to navigate a more fragmented system in the postsecondary
+education setting.
 
-We also add to the literature that investigates the economic returns for mature-age learners at community or training colleges \citep{jacobson2005,zeiden2015,polidano2016,xu2016,belfield2017,dynarski2016,dynarski2018,mountjoy2022}. The evidence on the labour market returns to vocational and community college education is strong and positive, particularly for female students \citep{belfield2017,zeiden2015,perales2017}. The results are even stronger once authors account for the different earnings-growth profiles of students and non-students before undertaking the degree \citep{dynarski2016,dynarski2018}.
+We also add to the literature that investigates the economic returns for
+mature-age learners at community or training colleges \citep{jacobson2005,
+zeiden2015, polidano2016, xu2016, belfield2017, dynarski2016, dynarski2018,
+mountjoy2022}. The evidence on the labour market returns to vocational and
+community college education is strong and positive, particularly for female
+students \citep{belfield2017, zeiden2015, perales2017}. The results are even
+stronger once authors account for the different earnings-growth profiles of
+students and non-students before undertaking the degree \citep{dynarski2016,
+dynarski2018}.
 
-By focusing on the one institutional setting -- the community or training college -- the results of such studies may not be generalisable to the entire mature-age education market, such as to students who seek different degree types or who study at different institutions \citep{belfield2017model,mountjoy2022}. We add to this literature by estimating the returns across all formal degree-types (post-graduate degrees, training certificates, diplomas etc), and spanning all subjects and institutions at which the study took place. This means we analyse the effects for a group of students with a larger span of demographic and socio-economic background characteristics. The broad remit of students that we analyse also allows our study to compliment studies that evaluate government-run training programs, which tend to enrol low-productivity workers \citep{ashenfelter1978,ashenfelter1985,bloom1990,leigh1990,raaum2002,jacobson2005,card2018,knaus2022}. 
+By focusing on the one institutional setting -- the community or training
+college -- the results of such studies may not be generalisable to the entire
+mature-age education market, such as to students who seek different degree
+types or who study at different institutions \citep{belfield2017model,
+mountjoy2022}. We add to this literature by estimating the returns across all
+formal degree-types (post-graduate degrees, training certificates, diplomas
+etc), and spanning all subjects and institutions at which the study took place.
+This means we analyse the effects for a group of students with a larger span of
+demographic and socio-economic background characteristics. The broad remit of
+students that we analyse also allows our study to compliment studies that
+evaluate government-run training programs, which tend to enrol low-productivity
+workers \citep{ashenfelter1978, ashenfelter1985, bloom1990, leigh1990,
+raaum2002, jacobson2005, card2018, knaus2022}. 
 
-We contribute the first evidence in systematically identifying which groups of mature-age students tend to benefit more from further education. We also compliment previous studies that already find significant heterogeneity by degree-type, institutional setting, and by the background characteristics of the student \citep{blanden2012,zeiden2015,polidano2016,dorsett2016,xu2016,belfield2017,perales2017,bockerman2019}. A benefit of a systematic, data-driven approach to heterogeneity analysis is that it can reduce the risk of overlooking important sub-populations compared to less data-driven approaches \citep{athey2017,knaus2021}. 
+We contribute the first evidence in systematically identifying which groups of
+mature-age students tend to benefit more from further education. We also
+compliment previous studies that already find significant heterogeneity by
+degree-type, institutional setting, and by the background characteristics of
+the student \citep{blanden2012, zeiden2015, polidano2016, dorsett2016, xu2016,
+belfield2017,perales2017, bockerman2019}. A benefit of a systematic,
+data-driven approach to heterogeneity analysis is that it can reduce the risk
+of overlooking important sub-populations compared to less data-driven
+approaches \citep{athey2017, knaus2021}. 
 
-Our Machine Learning (ML) approach indeed identifies new sub-populations for which the treatment effects are different. We document that the starting homeloan amount and employment aspirations are significant factors related to the extent of gain from further study. We also find that the starting levels of and pre-study trends in personal and household income are hugely important. Age and mental health variables also account for variation in estimated effects. All of these variables are consistently selected as being significant for prediction out of a beginning set of 3,400 features per observation, as well as across different ML models (which includes linear and non-linear model classes) and across numerous boostrap draws of the original sample.
+A key challenge in estimating the causal returns to later-life education is
+that factors that enable mature-age learners to pursue and complete a
+qualification may also be precursors to later-life success. Moreover, the
+drivers of degree completion may be numerous and related to other variables in
+complex, unknown ways. We use a machine learning (ML) based methodology in this
+work since it allows us to intensively control for many confounding factors, as
+well as discover sources of treatment heterogeneity. ML algorithms also
+automatically discover nonlinear relationships that may be unknown to the
+researcher. For high-dimensional and complex datasets such as we use in this
+research, these methodological abilities are crucial in
+reducing bias from model mis-specification and confounding (e.g.~selection into
+treatement), and reducing variance from correlation/collinearity.  
 
-The results show that an additional degree in later-life increases total future earnings by more than an average of \$3,000 per year compared to those who do not complete any further study. We consistently estimate this causal effect using a selection-on-observables strategy based on various ML models (T-learner, Doubly Robust and Bayesian models). The estimate is based on 19 years of detailed nationally representative Australian data from the Household Income and Labour Dynamics Australia (HILDA) survey. Two dimensions of these data are important. The first is that they contain a wealth of information about each respondent. For example, we begin with more than 3,400 variables per observation, including information about the respondents' demographic and socio-economic background, and on their attitudes and preferences. Access to this broad range of information means that by controlling for them, we can potentially proxy for unobservable differences between those who do and do not obtain a new qualification. Secondly, this dataset contains many variables that are highly correlated and we require a systematic approach to reduce such information redundancy.
-\todo{a lot of similarity with previous paragraph -- perhaps we can combine them?}
+The results show that an additional degree in later-life increases total future
+earnings by more than an average of \$3,000 per year compared to those who do
+not complete any further study. We consistently estimate this causal effect
+using a selection-on-observables strategy based on T-learner, Doubly Robust and
+Bayesian models. The estimate is based on 19 years of detailed nationally
+representative Australian data from the Household Income and Labour Dynamics
+Australia (HILDA) survey. Two dimensions of these data are important. The first
+is that they contain a wealth of information about each respondent. For
+example, we begin with more than 3,400 variables per observation, including
+information about the respondents' demographic and socio-economic background,
+and on their attitudes and preferences. Access to this broad range of
+information means that by controlling for them, we can potentially proxy for
+unobservable differences between those who do and do not obtain a new
+qualification. Secondly, this dataset contains many variables that are highly
+correlated, so we require a systematic approach to reduce such information
+redundancy -- something that ML models are adept at.
 
-An ML approach is similar to a propensity-score matching method but it more
-intensively controls for confounding factors. An ML approach systematically
-detect patterns and relationships, such as functional forms and important
-variables, that may be unknown to the researcher. This assists with causal
-parameter estimation by reducing bias through \todo{something about non-linear
-models reducing the likelihood of bias from model-misspecification?}automatic
-variable selection and by reducing variance through minimising information
-redundancy from highly correlated variables. A key challenge in estimating the
-causal returns to later-life education is what leads (or enables) mature-age
-learners to pursue and complete a qualification may itself be a precursor to
-later-life success. Moreover, the drivers of degree completion may be numerous
-and related to other variables in complex, unknown ways. A data-driven approach
-can systematically shed light on these unknowns. As a result, ML can help to
-reduce bias from selection into treatment. This is especially useful when
-appropriate instrumental variables are unavailable.\todo{this paragraph is like
-the previous two, I think we have to combine them, or to make their subjects
-distict.}
+Our ML approach also identifies new sub-populations for which the treatment
+effects are different. We document that the starting homeloan amount and
+employment aspirations are significant factors related to the extent of gain
+from further study. We also find that the starting levels of and pre-study
+trends in personal and household income are hugely important. Age and mental
+health variables also account for variation in estimated effects. All of these
+variables are consistently selected as being significant for prediction out of
+the 3,400 features within the HILDA data. This selection is consistent across
+different ML models (which includes linear and non-linear model classes) and
+across numerous boostrap draws of the original sample.
 
-Previous studies have found that individuals who seek a futher degree tend to have slower-growing earnings in the period before their study starts compared to similar individuals who do not seek further study \citep{jacobson2005,dynarski2016,dynarski2018}. By accounting for dynamic selection into obtaining a further degree, we can be confident that we compare the earnings paths of mature-age students to the paths of similar non-students who displayed the same earnings (and other) paths before study began. In this paper, we explicitly control for the trajectories of socio-economic and demographic circumstances before study starts. Standard fixed effects estimation would miss these dynamic confounders. We find that our ML estimates are significantly smaller than the size of the standard fixed effects results. We also estimate lower returns compared to Ordinary Least Squares (OLS) models. We document the additional confounder variables that we include in our models but are usually omitted from standard OLS specifications. These variables suggest there is significant negative selection into mature-age students who undertake a further degree.
+Previous studies have found that individuals who seek a futher degree tend to
+have slower-growing earnings in the period before their study starts compared
+to similar individuals who do not seek further study \citep{jacobson2005,
+dynarski2016, dynarski2018}. By accounting for dynamic selection into obtaining
+a further degree, we can be confident that we compare the earnings paths of
+mature-age students to the paths of similar non-students who displayed the same
+earnings (and other) paths before study began. In this paper, we explicitly
+control for the trajectories of socio-economic and demographic circumstances
+before study starts. Standard fixed effects estimation would miss these dynamic
+confounders. We find that our ML estimates are significantly smaller than the
+size of the standard fixed effects results. We also estimate lower returns
+compared to Ordinary Least Squares (OLS) models. We document the additional
+confounder variables that we include in our models but are usually omitted from
+standard OLS specifications. These variables suggest there is significant
+negative selection into mature-age students who undertake a further degree.
 
-Understanding the different sources of dynamic selection is also important for heterogeneity analyses. This requires us to model the potential sources rather than eliminating them such as through controlling for individual-specific time trends. 
+% Understanding the different sources of dynamic selection is also important for
+% heterogeneity analyses. This requires us to model the potential sources rather
+% than eliminating them such as through controlling for individual-specific time
+% trends. 
+
 %
-%Extending the analysis to other measurements of earnings, we find that further study can in fact reduces hourly wages
-%We aim to estimate the causal impact of obtaining an educational qualification in later-life on earnings  
+%Extending the analysis to other measurements of earnings, we find that further
+%study can in fact reduces hourly wages We aim to estimate the causal impact of
+%obtaining an educational qualification in later-life on earnings  
 %
 %
-%Two other issues need further attention in the literature. The first relates to the measurement of earnings. Prior studies commonly analyse only measures of total earnings. This ignores the likelihood that further education may be sought in order to allow for more flexibility on the job such as in part-time work. This means that the value-add of further education on hourly wages may be obscured by a total earnings measure.
+%Two other issues need further attention in the literature. The first relates
+%to the measurement of earnings. Prior studies commonly analyse only measures
+%of total earnings. This ignores the likelihood that further education may be
+%sought in order to allow for more flexibility on the job such as in part-time
+%work. This means that the value-add of further education on hourly wages may
+%be obscured by a total earnings measure.
 %
 %The second issue relates to dynamic selection. 
 %
-%We fill the gaps in the literature by estimating the impact of further education on earnings (both total and hourly),  
+%We fill the gaps in the literature by estimating the impact of further
+%education on earnings (both total and hourly),  
 %
-%Another key contribution of our research is to systematically identify sources of static and dynamic heterogeneity in the estimated returns of further study. We use several Machine Learning approaches to identify heterogeneity, including the T-learner, Doubly Robust and Bayesian Linear models. These methods can also help to tackle the issue of selection bias and mis-specification error. Thus we also contribute to the literature that estimates the returns across a wider range of qualifications \citep{angrist1991,harmon1995,blanden2012,perales2017,bockerman2019}. 
+%Another key contribution of our research is to systematically identify sources
+%of static and dynamic heterogeneity in the estimated returns of further study.
+%We use several Machine Learning approaches to identify heterogeneity,
+%including the T-learner, Doubly Robust and Bayesian Linear models. These
+%methods can also help to tackle the issue of selection bias and
+%mis-specification error. Thus we also contribute to the literature that
+%estimates the returns across a wider range of qualifications
+%\citep{angrist1991,harmon1995,blanden2012,perales2017,bockerman2019}. 
 %
-%Machine learning methods may provide further insights into the causal question for a number of reasons. The first benefit of a data-driven approach is that it can generate a counterfactual group when we use observational data. A key challenge in estimating the causal returns to later-life education is that: what leads (or enables) mature-age learners to pursue and complete a qualification may itself be a precursor to later-life success. Moreover, the drivers of degree completion may be numerous and related to other variables in complex, unknown ways. A data-driven approach can systematically shed light on these unknowns. As a result, ML can help to reduce bias from selection into treatment. This is especially useful when appropriate instrumental variables are unavailable.
+%Machine learning methods may provide further insights into the causal question
+%for a number of reasons. The first benefit of a data-driven approach is that
+%it can generate a counterfactual group when we use observational data. A key
+%challenge in estimating the causal returns to later-life education is that:
+%what leads (or enables) mature-age learners to pursue and complete a
+%qualification may itself be a precursor to later-life success. Moreover, the
+%drivers of degree completion may be numerous and related to other variables in
+%complex, unknown ways. A data-driven approach can systematically shed light on
+%these unknowns. As a result, ML can help to reduce bias from selection into
+%treatment. This is especially useful when appropriate instrumental variables
+%are unavailable.
 %
-%We use a data-driven (permutation importance) procedure. This exercise can elucidate the potential mechanisms as well as inform different policy targeting and/or compensation strategies. 
+%We use a data-driven (permutation importance) procedure. This exercise can
+%elucidate the potential mechanisms as well as inform different policy
+%targeting and/or compensation strategies. 
 %
-%We argue that ML is well placed to achieve these benefits, especially since we apply it to extremely rich, nationally representative, longitudinal data. We use data from the Household Income and Labour Dynamics Australia survey. Two dimensions of these data are important. The first is that they contain a wealth of information about each respondent. For example, we begin with more than 3,400 variables per observation, including information about the respondents' demographic and socio-economic background, and on their attitudes and preferences. Using this broad range of information as control variables we can reduce selection bias issues, and potentially proxy for unobservable differences between those who do and do not obtain a new qualification. Secondly, this dataset contains many variables that are highly correlated and we require a systematic approach to reduce such information redundancy. 
+%We argue that ML is well placed to achieve these benefits, especially since we
+%apply it to extremely rich, nationally representative, longitudinal data. We
+%use data from the Household Income and Labour Dynamics Australia survey. Two
+%dimensions of these data are important. The first is that they contain a
+%wealth of information about each respondent. For example, we begin with more
+%than 3,400 variables per observation, including information about the
+%respondents' demographic and socio-economic background, and on their attitudes
+%and preferences. Using this broad range of information as control variables we
+%can reduce selection bias issues, and potentially proxy for unobservable
+%differences between those who do and do not obtain a new qualification.
+%Secondly, this dataset contains many variables that are highly correlated and
+%we require a systematic approach to reduce such information redundancy. 
 %
-%An ML approach can achieve these benefits because it can detect patterns and relationships, such as functional forms and control variables, that are unknown to the researcher. This assists with variable selection and with identifying meaningful sub-populations for which the effects differ. Furthermore, as ML models systematically choose control variables to minimise the amount of information redundancy between them, we can improve causal estimation parameters by reducing their variance.
+%An ML approach can achieve these benefits because it can detect patterns and
+%relationships, such as functional forms and control variables, that are
+%unknown to the researcher. This assists with variable selection and with
+%identifying meaningful sub-populations for which the effects differ.
+%Furthermore, as ML models systematically choose control variables to minimise
+%the amount of information redundancy between them, we can improve causal
+%estimation parameters by reducing their variance.
 
 %
 % for which the returns to further education vary. Sub-group analysis is useful because it can inform us about potential mechanisms as well as inform different policy targeting and/ or compensation strategies. We use a permutation importance procedure to identify the key subgroups for which the effects vary the most.
@@ -182,11 +305,28 @@ Understanding the different sources of dynamic selection is also important for h
 %
 %A fourth contribution of our work is that we can identify features that may have been previously overlooked or unanticipated. One way that researchers have addressed confounding issues is to manually select a set of controls, informed by theory and/or past empirical studies. However, as much of the discussions of best practice in empirical research or theory pertains to assessing the returns to education for younger students (who have had little workforce experience) \citep{mincer1974}, it is unclear if this knowledge is generalisable to mature-age students. Furthermore, using a data-driven approach to examine heterogeneous treatment effects can allow researchers to identify meaningful sub-groups that they may not have previously considered.
 
-We adapt ML models for the purpose of estimating causal effects. Standard off-the-shelf ML models are better suited to predictive purposes. When obtaining a prediction, off-the-shelf ML models can find generalisable patterns and minimise overfitting issues, though the use of cross-validation, because the true outcomes are observed. This means that we can optimize a goodness-of-fit criterion. Causal parameters, however, are not observed in the data, which means we cannot directly train and evaluate our models. 
+We adapt ML models for the purpose of estimating causal effects. Standard
+off-the-shelf ML models are better suited to predictive purposes. When
+obtaining a prediction, off-the-shelf ML models can find generalisable patterns
+and minimise overfitting issues, though the use of cross-validation, because
+the true outcomes are observed. This means that we can optimize a
+goodness-of-fit criterion. Causal parameters, however, are not observed in the
+data, which means we cannot directly train and evaluate our models. 
 
-In this paper, we take the difference between the two optimal outcome models, which can achieve the optimum bias-variance trade-off point for the conditional average treatment effect. Specifically, we model the response surfaces for two conditional mean equations - one using the treatment observations and another using the control observations. We estimate these equations with ML methods such as the T-learner and Doubly Robust. Here, we employ both linear (LASSO and Ridge) and non-linear (Gradient Boosting Regression) model classes. We compare and evaluate their comparative performance using nested cross-validation. We then test the statistical significance of our causal parameters by examining the distribution of the estimates through bootstrapping. Last, we use a variety of Bayesian ML models following the formulation presented in \citet{hahn2020} that reduce effect estimation bias within the Bayesian paradigm.
-These models have several properties that may be desirable, such as the ability
-directly parameterise heterogeneous prognostic and treatment models.
+In this paper, we take the difference between the two optimal outcome models,
+which can achieve the optimum bias-variance trade-off point for the conditional
+average treatment effect. Specifically, we model the response surfaces for two
+conditional mean equations -- one using the treatment observations and another
+using the control observations. We estimate these equations with ML methods
+such as the T-learner and Doubly Robust. Here, we employ both linear (LASSO and
+Ridge) and non-linear (Gradient Boosting Regression) model classes. We compare
+and evaluate their comparative performance using nested cross-validation. We
+then test the statistical significance of our causal parameters by examining
+the distribution of the estimates through bootstrapping. Last, we use a variety
+of Bayesian ML models following the formulation presented in \citet{hahn2020}
+that reduce effect estimation bias within the Bayesian paradigm. These models
+have several properties that may be desirable, such as the ability directly
+parameterise heterogeneous prognostic and treatment models.
 
 %
 %A benefit of our set-up is that when we take the difference between the two optimal outcome models, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect.  
@@ -313,9 +453,9 @@ irrelevant for explaining the outcome.
 
 In order to reduce redundancy in this vast amount of information, we next apply a supervised Machine learning model to predict outcomes 5 years ahead of 2001 i.e., in 2006. We then select the top 100 variables that are most predictive of the outcome in 2006.\footnote{Confounders are features that both have an impact on the outcome and on the treatment. \cite{cherno2018} suggest including the union of features kept in the two structural equations (outcome on features and treatment on features). Here, we only include the features that predict the outcome equation because including features that are only predictive of the treatment can erroneously pick up instrumental variables (see \color{red} paper \color{black} for a discussion of this issue). } These variables are listed in Table \ref{tab:sumstats}. 
 
-\subsection{`Missing' variables from the baseline model}
+\subsection{Missing variables from the baseline model}
 
-As a descriptive exercise, Table \ref{tab:mlvars} presents the features that were ‘missed’ by the baseline model\todo{this is the first time we have referred to a baseline model -- does this mean FE and OLS models? We should define them again before this, or at the beginning of this section.}. In the baseline model, we included features such as age, gender, state of residence, household weekly earnings, highest level of education attained, and current work schedule. This collection of variables have been informed by theory or previous empirical results.  
+As a descriptive exercise, Table \ref{tab:mlvars} presents the features that were `missed' by the baseline model\todo{this is the first time we have referred to a baseline model -- does this mean FE and OLS models? We should define them again before this, or at the beginning of this section.}. In the baseline model, we included features such as age, gender, state of residence, household weekly earnings, highest level of education attained, and current work schedule. This collection of variables have been informed by theory or previous empirical results.  
 
 The data-driven model identifies more salient variables compared to the baseline model. Additional variables include employment conditions such as work schedule, casual employment, firm size, tenure or years unemployed; financial measures such as weekly wage, investment income and mortgage debt; health measures such as limited vigorous activity and tobacco expenses; and work-life preferences related to working hours and child care. 
 
@@ -323,7 +463,11 @@ We identify variables as missing from the baseline model if those variables expl
 
 Most of the omitted variables bias the Ordinary Least Squares (OLS) estimates is upwards.\footnote{Exceptions include casual employment status, the presence of a past doctorate qualification, years unemployed, parental child care and dividend and business income.} The upward bias is consistent with the ML-models estimating an economic returns on obtaining a new qualification that is significantly smaller than the returns from an OLS model or a Difference-in-Difference - Fixed Effects (DD-FE)  model. Figure \ref{fig:method} displays the estimated returns from five different models. The first three bars show significantly higher returns based on the OLS (no controls), OLS (with controls) and the DD-FE models compared to the last two bars, which are based on the ML models - Gradient Boosting Regression and Doubly Robust. We discuss these methods in more detail below. 
 
-It is important to highlight that our appraoch to identifying missing variables from the baseline model is a quick, descriptive one. As previously mentioned, the ML algorithm randomly selects variables that are highly correlated thus we may have missed out on reporting the label of important variables omitted from the baseline model.
+It is important to highlight that our approach to identifying missing variables
+from the baseline model is a quick, descriptive one. As previously mentioned,
+the ML algorithm randomly selects variables that are highly correlated thus we
+may have missed out on reporting the label of important variables omitted from
+the baseline model.
 
 
 \section{Descriptive Figures and Tables}
@@ -351,7 +495,6 @@ Figure \ref{fig:yearearnempl} shows an increase in both average earnings and emp
 
 
 \section{Method}
-\todo{We probably need to make the notation a little more consistent in this section.}
 
 We aim to estimate the causal impact of obtaining a new qualification. Our empirical challenge is a missing data one in the sense that we do not observe the counterfactual outcome for each person -- what would have their income been if they had/had not obtained a new qualification?
 
@@ -391,7 +534,8 @@ response $Y$ would differ between hypothetical worlds in which the treatment
 was set to $T=1$ versus $T=0$, and to estimate this across subpopulations
 defined by attributes $X$. 
 
-\emph{Identification assumptions}\todo{aren't these applicable to all of the 
+\subsubsection*{Identification assumptions}
+\todo{aren't these applicable to all of the 
 approaches? Perhaps this should be in the previous section (one level up).}
 
 To interpret the estimated parameter as a causal relationship, the following assumptions are needed:
@@ -980,7 +1124,18 @@ To illustrate how GBR adequately captures non-linearities we re-estimated our re
 
 The Doubly Robust (DR) models estimate smaller effects compared to the T-learner. Table \ref{tab:atebslvl} displays a gain of approximately \$62-69 per week in gross earnings across the DR approaches. The estimated effect sizes are statistically different from zero. The confidence intervals for the DR estimates also exclude the point estimates from the T-Learner approach.
 
-One reason the DR approach differs from the T-learner approach is that the former uses additional information from the propensity score (i.e. we estimate machine learning models to gain a better understanding of the treatment assignment process, the students’ background, and the nature and complexity of their situation that may have led them to pursue further education). Thus, the doubly robust approach can improve upon the T-learner approach because it can reduce misspecification error either through a correctly specified propensity score model or through correctly specified outcome equations. Another feature of the Doubly Robust approach is that it places a higher weight on observations in the area where the relative count of treatment and control observations is more balanced (i.e. the area of overlap)\todo{I also wonder if the T-learners are susceptible to over-stating the ATE since T's contribution is not regularised like other factors?}. A benefit of this is that it can also provide better extrapolations of the predicted outcomes. 
+One reason the DR approach differs from the T-learner approach is that the
+former uses additional information from the propensity score (i.e. we estimate
+machine learning models to gain a better understanding of the treatment
+assignment process, the students’ background, and the nature and complexity of
+their situation that may have led them to pursue further education). Thus, the
+doubly robust approach can improve upon the T-learner approach because it can
+reduce misspecification error either through a correctly specified propensity
+score model or through correctly specified outcome equations. Another feature
+of the Doubly Robust approach is that it places a higher weight on observations
+in the area where the relative count of treatment and control observations is
+more balanced (i.e. the area of overlap). A benefit of this is that it can also
+provide better extrapolations of the predicted outcomes. 
 
 The Bayesian models estimate similar sized effects to the DR models for the
 most part. However, they tend to have more uncertainty associated with their
@@ -1051,7 +1206,8 @@ we train the model on the bootstrapped sample but estimate the individual
 treatment effects using the feature values for individuals from the original
 sample. Thus, for every individual we have a distribution of values of their
 individual treatment effects.\todo{Can we just say we take the individually
-computed treatment effects from one of the approaches outlined previously?}
+computed treatment effects from one of the approaches outlined previously?
+I get the feeling this paragraph is repeating some of the stuff in the methodology.}
 
 After obtaining the individual treatment effects, we train another model that
 maps the features to the individual treatment effects. We use cross-validation
