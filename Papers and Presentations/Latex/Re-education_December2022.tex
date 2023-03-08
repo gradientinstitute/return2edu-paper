@@ -66,19 +66,20 @@
 
 \begin{abstract}
 
-Pursuing educational qualifications later in life is an increasingly common
-  phenomenon within OECD countries. Technological change and automation
-  continues to drive the evolution of skills needed in many professions. Most
-  of the research on the causal impacts of education focus on the early years
-  whereas we focus on degrees completed later in life. Differences in the
-  economic returns to education may appear between these two life stages
-  because the motivations and capabilities to acquire additional education are
-  likely to vary. We use extremely rich and nationally representative
-  longitudinal data from the Household Income and Labour Dynamics Australia
-  survey. To take full advantage of this data and minimise the chance of model
-  mis-specification bias, we tailor Machine Learning (ML) models to estimate
-  the causal effect and to identify which mature-age learners tend to reap more
-  benefits than others.\todo{More about our findings/ contributions here.}
+  Pursuing educational qualifications later in life is an increasingly common
+  phenomenon within OECD countries since technological change and automation
+  continues to drive the evolution of skills needed in many professions. We
+  focus on the causal impacts to economic returns of degrees completed later in
+  life, where motivations and capabilities to acquire additional education may
+  be distinct from education in early years. We find that completing and
+  additional degree leads to more than \$3000 (AUD, 2019) per year compared to
+  those who do not complete additional study. For outcomes, treatment and
+  controls we use the extremely rich and nationally representative longitudinal
+  data from the Household Income and Labour Dynamics Australia survey is used
+  for this work. To take full advantage of the complexity and richness of this
+  data we use a Machine Learning (ML) based methodology to estimate the causal
+  effect. We are also able to use ML to discover sources of heterogeneity in
+  the effects of gaining additional qualifications, for example those younger than 45 years of age when obtaining additional qualifications tend to reap more benefits (as much as \$50 per week more) than others.
 
 \end{abstract}
 
@@ -1354,30 +1355,80 @@ household.
 %their earnings capacity. By acquiring an additional degree, they successfully
 %lift their earnings relative to those who did not obtain further education.
 
-Acquiring an additional qualification may increase earnings through a number of potential mechanisms. We find evidence that, in Figure \ref{fig:empl} for example, it increases the chance that individuals move from being unemployed or out of the labour force to being employed. The increase in employment is approximately 8 percentage points and is statistically significant. We also find evidence pointing to workers switching occupations or industries. This suggests that further education in later life can support the economic goals of a larger workforce as well as a more mobile one.
+Acquiring an additional qualification may increase earnings through a number of
+potential mechanisms. We find evidence that, in Figure \ref{fig:empl} for
+example, it increases the chance that individuals move from being unemployed or
+out of the labour force to being employed. The increase in employment is
+approximately 8 percentage points and is statistically significant. We also
+find evidence pointing to workers switching occupations or industries. This
+suggests that further education in later life can support the economic goals of
+a larger workforce as well as a more mobile one.
 
 
 \section{Conclusions}
 
-\todo{Make this a bit more jazzy...}
+Using a machine learning based methodology and data from the rich and
+representative Household Income and Labour Dynamics Australia survey we have
+shown that completing an additional degree later in life can add \$60-80 (AUD,
+2019) per week to an individual's gross earnings. This represents roughly 7-8
+percent of the weekly gross earning for the average worker in Australia. Our
+machine learning methodology has also uncovered sources of heterogeneity in
+this effect.
+%, in particular those less than 45 years old tend to reap more benefits than
+%others.
 
-With the aim of causal inference in mind, we tailor ML models to examine the degree to which gaining a new qualification provides mature-age learners with economic benefits. We also examine which mature-age learners tend to reap more benefits than others.
+Our methodology has allowed us to exploit the full set of background
+information on individuals from the HILDA survey, beginning with more than
+3,400 variables, to control our analysis. 
+% In particular, the key benefits of our automated feature selection process
+% include the potential to minimise confounding bias while minimising
+% overfitting issues. It can do this by identifying features (and functional
+% forms) that may have been previously overlooked or unanticipated.
+We find that our automated feature selection method selects a set of
+controls/features that include those that have theoretical foundations and/or
+align with those chosen in past empirical studies. However, we also choose
+features that have been traditionally overlooked. These include variables such
+as household debt, wealth, housing, and geographic mobility variables. Other
+important predictors include the ages of both resident and non-resident
+children: non-resident children aged 15 or above matter and resident children
+aged 0-4 are important.
 
-We use data from the Household Income and Labour Dynamics Australia survey, which combined with ML models, allow us to exploit the full set of background information on individuals (beginning with more than 3,400 variables).
+% ML models randomly choose between variables that are highly correlated, which
+% means that our selected features do not suggest any causal relationship
+% between the features and the outcome. However, as the features act as
+% nuisance parameters, helping us to obtain the best prediction of the outcomes
+% (or the response surfaces for treatment and control groups), this random
+% selection of variables does not compromise our primary aim of obtaining the
+% ATE and CATE estimates. We use cross-validation for feature selection.
 
-The key benefits of our automated feature selection process include the potential to minimise confounding bias while minimising overfitting issues. It can do this by identifying features (and functional forms) that may have been previously overlooked or unanticipated.
+% For inference, we use bootstrapping (with replacement), generating 100 samples
+% to produce a distribution of ATE and CATE values. This allows us to derive
+% standard errors for our causal parameters. We also make use of Bayesian models
+% that naturally yield posterior predictive densities, which we can sample to
+% obtain confidence intervals for ATE estimates.
 
-We find that our automated feature selection method selects a set of controls/ features/ variables that include those that have theoretical foundations and/or align with those chosen in past empirical studies. However, we also choose features that have been traditionally overlooked. These include variables such as household debt, wealth, housing, and geographic mobility variables. Other important predictors include the ages of both resident and non-resident children: non-resident children aged 15 or above matter and resident children aged 0-4 are important.
+% There are clear economic benefits to gaining an additional qualification in
+% later life. Analysing those who obtain an additional qualification anytime
+% between 2002 and 2017, we estimate a gain of approximately \todo{We have to
+% still give reasons for not choosing models that fall outside this
+% bound.}\$60-80 per week in gross earnings. This represents roughly 7-8 percent
+% of the Average Weekly Gross Earning for the average worker in Australia.
 
-ML models randomly choose between variables that are highly correlated, which means that our selected features do not suggest any causal relationship between the features and the outcome. However, as the features act as nuisance parameters, helping us to obtain the best prediction of the outcomes (or the response surfaces for treatment and control groups), this random selection of variables does not compromise our primary aim of obtaining the ATE and CATE estimates. We use cross-validation for feature selection.
+%The effects remain strong up to a decade-and-a-half after course completion.
+%The largest earnings gains are associated with acquiring an undergraduate
+%degree or above. Only modest gains are associated with postsecondary
+%certificates or diplomas. Furthermore, the subject-area of study is important:
+%undertaking study in technical subjects such as the STEM or medicine and
+%health-related disciplines yield significantly higher returns that study in
+%the fields of Arts, Humanities or the Social Sciences.
 
-For inference, we use bootstrapping (with replacement), generating 100 samples to produce a distribution of ATE and CATE values. This allows us to derive standard errors for our causal parameters. We also make use of Bayesian models that naturally yield posterior predictive densities, which we can sample to obtain confidence intervals for ATE estimates.
-
-There are clear economic benefits to gaining an additional qualification in later life. Analysing those who obtain an additional qualification anytime between 2002 and 2017, we estimate a gain of approximately \todo{We have to still give reasons for not choosing models that fall outside this bound.}\$60-80 per week in gross earnings. This represents roughly 7-8 percent of the Average Weekly Gross Earning for the average worker in Australia.
-
-%The effects remain strong up to a decade-and-a-half after course completion. The largest earnings gains are associated with acquiring an undergraduate degree or above. Only modest gains are associated with postsecondary certificates or diplomas. Furthermore, the subject-area of study is important: undertaking study in technical subjects such as the STEM or medicine and health-related disciplines yield significantly higher returns that study in the fields of Arts, Humanities or the Social Sciences.
-
-Qualification advancements do not benefit Australian workers in the same way: those with lower weekly earnings appear to benefit more from later-life study than those with higher earnings. One possible reason is that ceiling effects limit the potential returns from additional education. We also find that younger Australians benefit more than their older counterparts. Again, a ceiling effect phenomenon may apply since age is highly correlated to weekly earnings. 
+Qualification advancements do not benefit Australian workers in the same way:
+those with lower weekly earnings appear to benefit more from later-life study
+than those with higher earnings. One possible reason is that ceiling effects
+limit the potential returns from additional education. We also find that
+younger Australians (less than 45 years of age) benefit more than their older
+counterparts. Again, a ceiling effect phenomenon may apply since age is highly
+correlated to weekly earnings.
 
 % ****Dan, do you have other theories about why we see this result? 
 
