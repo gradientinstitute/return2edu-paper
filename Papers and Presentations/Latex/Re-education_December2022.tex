@@ -116,7 +116,7 @@ to study and need to navigate a more fragmented system in the postsecondary
 education setting.
 
 We also add to the literature that investigates the economic returns for
-mature-age learners at community or training colleges \citep{jacobson2005,
+mature-age learners at community or training colleges \citep{jacobson2005, chesters2015, 
 zeiden2015, polidano2016, xu2016, belfield2017, dynarski2016, dynarski2018,
 mountjoy2022}. The evidence on the labour market returns to vocational and
 community college education is strong and positive, particularly for female
@@ -160,7 +160,9 @@ automatically discover nonlinear relationships that may be unknown to the
 researcher. For high-dimensional and complex datasets such as we use in this
 research, these methodological abilities are crucial in
 reducing bias from model mis-specification and confounding (e.g.~selection into
-treatement), and reducing variance from correlation/collinearity.  
+treatment), and reducing variance from correlation/collinearity.  
+
+We adapt ML tools for causal inference purposes. We recognise that, as with all statistical models, we make assumptions when we use ML techniques for causal inference, and these need to be tested. One key assumption is that the controls included in the ML models sufficiently account for selection into treatment. We propose to undertake a replication exercise where we compare the results of the ML model with that of baseline models, using Ordinary Least Squares (OLS) and Fixed Effects. We also contrast the selected control variables in the ML model with those that were manually selected in \cite{chesters2015}, and comment on the potential biases from manual variable selection. We have chosen this published work because it uses the same data (HILDA) and examines the same topic.
 
 The results show that an additional degree in later-life increases total future
 earnings by more than an average of \$3,000 per year compared to those who do
@@ -456,13 +458,15 @@ In order to reduce redundancy in this vast amount of information, we next apply 
 
 \subsection{Missing variables from the baseline model}
 
-As a descriptive exercise, Table \ref{tab:mlvars} presents the features that were `missed' by the baseline model\todo{this is the first time we have referred to a baseline model -- does this mean FE and OLS models? We should define them again before this, or at the beginning of this section.}. In the baseline model, we included features such as age, gender, state of residence, household weekly earnings, highest level of education attained, and current work schedule. This collection of variables have been informed by theory or previous empirical results.  
+As part of a replication exercise, we constrast the results from the ML model with published work using Ordinary Least Squares (OLS) and Fixed Effects models. We also contrast the features selected in the ML model with an approach that manually selects the variables as in the case of \cite{chesters2015}. We call this the `baseline' model.
+
+As a descriptive exercise, Table \ref{tab:mlvars} presents the features that were `missed' by the baseline model. In the baseline model, we included features such as age, gender, state of residence, household weekly earnings, highest level of education attained, and current work schedule. This collection of variables have been informed by theory or previous empirical results.  
 
 The data-driven model identifies more salient variables compared to the baseline model. Additional variables include employment conditions such as work schedule, casual employment, firm size, tenure or years unemployed; financial measures such as weekly wage, investment income and mortgage debt; health measures such as limited vigorous activity and tobacco expenses; and work-life preferences related to working hours and child care. 
 
 We identify variables as missing from the baseline model if those variables explain the residual variation in the outcome. Specifically, we regress the residuals from the baseline models (without the treatment included) on the features included in the data-driven model and train a LASSO model to highlight the salient variables that were missed. The variables that are chosen are listed in Table \ref{tab:mlvars}. We also document how these variables are correlated to the outcome and to the treatment in order to give us a sense of the direction of the bias their omission may induce. 
 
-Most of the omitted variables bias the Ordinary Least Squares (OLS) estimates is upwards.\footnote{Exceptions include casual employment status, the presence of a past doctorate qualification, years unemployed, parental child care and dividend and business income.} The upward bias is consistent with the ML-models estimating an economic returns on obtaining a new qualification that is significantly smaller than the returns from an OLS model or a Difference-in-Difference - Fixed Effects (DD-FE)  model. Figure \ref{fig:method} displays the estimated returns from five different models. The first three bars show significantly higher returns based on the OLS (no controls), OLS (with controls) and the DD-FE models compared to the last two bars, which are based on the ML models - Gradient Boosting Regression and Doubly Robust. We discuss these methods in more detail below. 
+Most of the omitted variables bias the OLS estimates is upwards.\footnote{Exceptions include casual employment status, the presence of a past doctorate qualification, years unemployed, parental child care and dividend and business income.} The upward bias is consistent with the ML-models estimating an economic returns on obtaining a new qualification that is significantly smaller than the returns from an OLS model or a Difference-in-Difference - Fixed Effects (DD-FE)  model. Figure \ref{fig:method} displays the estimated returns from five different models. The first three bars show significantly higher returns based on the OLS (no controls), OLS (with controls) and the DD-FE models compared to the last two bars, which are based on the ML models - Gradient Boosting Regression and Doubly Robust. We discuss these methods in more detail below. 
 
 It is important to highlight that our approach to identifying missing variables
 from the baseline model is a quick, descriptive one. As previously mentioned,
