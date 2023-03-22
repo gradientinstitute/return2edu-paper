@@ -79,7 +79,9 @@
   for this work. To take full advantage of the complexity and richness of this
   data we use a Machine Learning (ML) based methodology to estimate the causal
   effect. We are also able to use ML to discover sources of heterogeneity in
-  the effects of gaining additional qualifications, for example those younger than 45 years of age when obtaining additional qualifications tend to reap more benefits (as much as \$50 per week more) than others.
+  the effects of gaining additional qualifications, for example those younger
+  than 45 years of age when obtaining additional qualifications tend to reap
+  more benefits (as much as \$50 per week more) than others.
 
 \end{abstract}
 
@@ -412,7 +414,14 @@ HILDA covers a long time span of 19 years, starting in 2001. We use the 2019 rel
 
 Our analysis sample contains respondents who were 25 years or above in 2001. This allows us to focus on individuals who obtain a further education – beyond that acquired in their previous degree. 
 
-Our main analysis focuses on measuring the impact of further education using wave 19 outcomes. Here, we define all features in 2001\todo{I'm not sure what this means?}. We delete any individuals who were ‘currently studying’ in 2001. This also ensures that our features, which are defined in 2001 are not contaminated by the impacts of studying but clearly precede the study spell of interest. These sample exclusions result in 7,359 respondents being dropped because they are below the age of 25 in 2001 and a further 1,387 respondents being dropped because they were studying in 2001.
+Our main analysis focuses on measuring the impact of further education using
+wave 19 outcomes. Here, the feature inputs to the models are taken from the
+individuals in 2001. We delete any individuals who were ‘currently studying’ in
+2001. This also ensures that our features, which are defined in 2001 are not
+contaminated by the impacts of studying but clearly precede the study spell of
+interest. These sample exclusions result in 7,359 respondents being dropped
+because they are below the age of 25 in 2001 and a further 1,387 respondents
+being dropped because they were studying in 2001.
 
 We then restrict the sample to those who are present in both 2001 and 2019. This ensures that we observe base characteristics and outcomes for every person in our analysis sample. This results in a further 5,727 respondents being dropped from the sample. Our analysis sample has 5,441 observations.
 
@@ -1367,7 +1376,6 @@ approximately 8 percentage points and is statistically significant. We also
 find evidence pointing to workers switching occupations or industries. This
 suggests that further education in later life can support the economic goals of
 a larger workforce as well as a more mobile one.
-
 
 \section{Conclusions}
 
