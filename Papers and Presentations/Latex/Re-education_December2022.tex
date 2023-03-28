@@ -416,7 +416,7 @@ Our analysis sample contains respondents who were 25 years or above in 2001. Thi
 
 Our main analysis focuses on measuring the impact of further education using
 wave 19 outcomes. Here, the feature inputs to the models are taken from the
-individuals in 2001. We delete any individuals who were ‘currently studying’ in
+individuals in 2001 (and later as a sensitivity test, taken from individuals in the two years before they begin further education). We delete any individuals who were ‘currently studying’ in
 2001. This also ensures that our features, which are defined in 2001 are not
 contaminated by the impacts of studying but clearly precede the study spell of
 interest. These sample exclusions result in 7,359 respondents being dropped
@@ -435,7 +435,9 @@ We then restrict the sample to those who are present in both 2001 and 2019. This
 \subsection{Outcomes}
 
 We measure outcomes in 2019 across the groups of individuals who did and did not get re-educated. We use annual earnings to measure the economic returns to education. We also analyse  outcomes related to the labour market such as employment, changes in earnings, changes in occupation, industry, and jobs.
-%The second is to compare outcomes four years after the start of a study spell.
+
+A second approach is to use outcomes measured four years after the start of a study spell. As sensitivity analysis, we repeat our main estimations using this second approach. Here, as many individuals in our dataset never started a further degree i.e. they are in our control group, we assign a a time stamp to them for the year the control person theoretically started to study. We do this for every year from 2003 to 2019. This implies that control group individuals can be duplicated multiple times in the dataset. We detail our approach in the online Appendix. 
+
 
 
 \subsection{Treatment}
@@ -443,6 +445,7 @@ We measure outcomes in 2019 across the groups of individuals who did and did not
 We define further education as an individual who obtains a further degree in a formal, structured educational program. These programs must be delivered by a certified training, teaching or research institution. Thus, we do not analyse informal on-line degrees (such as Coursera degrees). We also do not consider on-the-job training as obtaining further education.
 
 Our treatment variable is a binary variable that takes the value of 1 if an individual has obtained an additional degree anytime between wave 2 (2002) and wave 17 (2017). As we analyse outcomes in 2019, this means we calculate the average returns between 2 years and up to 17 after course completion. We delete any respondent who obtained a qualification after wave 17. This allows us to analyse outcomes at least two years after course completion.
+
 
 HILDA documents formal degree attainment in two ways. The first is to ask respondents, in every, wave what is their highest level of education. The second way is to ask respondents, in every wave, if they have acquired an additional educational degree since the last time they were interviewed.
 
@@ -455,7 +458,8 @@ These two survey questions thus capture any additional qualification obtained fr
 We define our covariates, or features as they are known in machine learning
 parlance, using 2001 as the base year. Since we delete any respondents who were
 currently studying in 2001, we ensure that all features were defined before a
-respondent begins further study.
+respondent begins further study.\footnote{We also test the sensitivity of our results to using feature inputs that taken from the
+individuals closer to the timing of further study, namely two years before study begins. Here, we use both the year and the two years preceding the start of a study spell to define our features. This allows us to capture both level and growth values in the features.}
 
 A unique approach to our feature selection strategy is that we use all the
 information available to us from the HILDA survey in 2001. This means that we
@@ -463,7 +467,7 @@ have more than 3,400 raw variables per observation. Before using the features
 in a ML model, we delete any features that are identifiers or otherwise deemed
 irrelevant for explaining the outcome.
 
-In order to reduce redundancy in this vast amount of information, we next apply a supervised Machine learning model to predict outcomes 5 years ahead of 2001 i.e., in 2006. We then select the top 100 variables that are most predictive of the outcome in 2006.\footnote{Confounders are features that both have an impact on the outcome and on the treatment. \cite{cherno2018} suggest including the union of features kept in the two structural equations (outcome on features and treatment on features). Here, we only include the features that predict the outcome equation because including features that are only predictive of the treatment can erroneously pick up instrumental variables (see \color{red} paper \color{black} for a discussion of this issue). } These variables are listed in Table \ref{tab:sumstats}. 
+In order to reduce redundancy in this vast amount of information, we next apply a supervised Machine learning model to predict outcomes 5 years ahead of 2001 i.e., in 2006. We then select the top 100 variables that are most predictive of the outcome in 2006.\footnote{Confounders are features that both have an impact on the outcome and on the treatment. \cite{cherno2018} suggest including the union of features kept in the two structural equations (outcome on features and treatment on features). Here, we only include the features that predict the outcome equation because including features that are only predictive of the treatment can erroneously pick up instrumental variables (see \cite{pearl2012class} for a discussion of this issue). } These variables are listed in Table \ref{tab:sumstats}. 
 
 \subsection{Missing variables from the baseline model}
 
@@ -538,15 +542,7 @@ treatment $T$ but only weakly predictive of $Y$ \citep{cherno2018}.
 
 We approach filling the missing data indirectly with three types of ML models
 that have been specially adapted to causal inference. They are: the T-Learner,
-Doubly Robust and Bayesian models. 
-
-
-\subsection{T-Learner model}
-
-The first is the T-learner approach. We aim to measure the amount by which the
-response $Y$ would differ between hypothetical worlds in which the treatment
-was set to $T=1$ versus $T=0$, and to estimate this across subpopulations
-defined by attributes $X$. 
+Doubly Robust and Bayesian models. For all our models, we require the following identification assumptions.
 
 \subsubsection*{Identification assumptions}
 \todo{aren't these applicable to all of the 
@@ -615,6 +611,13 @@ downstream effects of current study.
 
 With the strong ignorability and overlap assumptions in place, treatment effect estimation reduces to estimating two response surfaces – one for treatment and one for control.
 
+\subsection{T-Learner model}
+
+The first adaptation of ML models for causal estimation is the T-learner approach. We aim to measure the amount by which the
+response $Y$ would differ between hypothetical worlds in which the treatment
+was set to $T=1$ versus $T=0$, and to estimate this across subpopulations
+defined by attributes $X$. 
+
 The T-learner is a two-step approach where the conditional mean functions defined in Equations (\ref{eq:T1}) and (\ref{eq:T0}) are estimated separately with any generic machine learning algorithm.
 
 Machine learning methods are well suited to find generalizable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge) and non-linear (Gradient Boosting Regression). Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
@@ -634,7 +637,7 @@ $Y$ on $X$. What we require is a good approximation of the function $\tau(x)$,
 and hence good estimates from $\mu_1(x)$ and $\mu_0(x)$, which is within the
 perview of machine learning methods.
 
-A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect\todo{what do you mean by this? Is there a reference on this, or can we explain this more?}. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).\todo{Does this mean we can use cross-validation to essentially estimate $\tau(x)$?}
+A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).
 
 In practice, however, this indirect way of minimising the mean squared error
 for each separate function to proxy for the minimum mean squared error of the
@@ -680,7 +683,7 @@ the region of overlap. The ATE is estimated from three separate estimators,
   \hat{ATE} = \frac{1}{n} \sum_{i=1}^{n}
     \left[\frac{t_i(y_i - \mu_1(x_i))} {\rho(x_i)} + \mu_1(x_i) \right]
     - \frac{1}{n} \sum_{i=1}^{n} 
-    \left[ \frac{(1-t_i)(y_i - \mu_0(x_i))}{1-\rho(x_i)} + \mu_0(x_i) \right].
+    \left[ \frac{(1-t_i)(y_i - \mu_0(x_i))}{1-\rho(x_i)} + \mu_0(x_i) \right] \label{eq:DR}
 \end{equation}
 % where:
 % \begin{itemize}
@@ -965,8 +968,7 @@ different time point, we obtain a good indication of the features that are
 useful for a model to perform well. Improved model performance here will also
 mean that the selected features are likely to represent the important
 confounders. We have chosen 2006 to ensure there is no overlap with 2019
-outcomes to avoid overfitting issues with subsequent models.\todo{Perhaps we
-need to expand upon this?}
+outcomes to avoid overfitting issues with subsequent models.\footnote{We do not compromise predictive performance when we use the selected subset of features as opposed to the full set of features. For example, the predictive performance from a Gradient Boosted Tree model that predicts earnings in 2006, using 5-fold nested cross-validation, is statistically similar between models that use the 91 feature set and the full, 3,400 feature set (with Root Mean-Squared Errors (RMSEs) of 484.251 and 482.286, respectively). This is a neglible loss in predictive performance and is in fact smaller than the associated loss between the restricted and full feature sets from models predicting earnings in 2019 (RMSEs of 843.548 and 831.931, respectively).}
 
 Using the top 91 predictors, we then apply nested cross validation to evaluate
 the predictive capacity of each model class (LASSO, Ridge, GBR). First, we
@@ -990,7 +992,7 @@ Table \ref{tab:ncvhos} shows that the GBR is the best performing model class.
 It yields the highest out-of-sample R-squared and the lowest MSE. This is true
 for both the outcome surfaces separately.
 
-DR-learner?\todo{what about this, and the propensity score?}
+The DR-learner model, as shown in Equation (\ref{eq:DR}) relies on three components: the treatment and control outcome surfaces - as estimated in the T-learner - along with a propensity score model. For the latter, we implement a regularised logistic regression to predict the likelihood of being treated (to obtain a further degree). Specifically, we use cross validation to fit a Logistic regression and obtain the predictions from the original sample. The holdout performance of the fitted Logistic regression model yields an area under the ROC curve of 0.71.
 
 \subsubsection*{Inference via bootstrapping}
 
@@ -1040,8 +1042,7 @@ any potential pre-test issues.
 As a first step, as shown in Figure \ref{fig:exp_param}, we obtain the 91 top
 predictors from the initial pre-processing of the full dataset. That is, we
 train a supervised machine learning LASSO model to extract which features best
-predict earnings in 2006.\todo{Same as before? Maybe if so we can state this to
-lessen confusion.}
+predict earnings in 2006.
 
 As a second step, we train our models using the 91 top predictors on the first
 bootstrapped sample to select the best models for $\mu_1(x)$ and $\mu_0(x)$.
@@ -1109,7 +1110,7 @@ empirical bootstrap confidence interval estimators \citep{efron1986}.
 % $\tau$ instead of x and $\mu$ since these are overloaded. Or if this is a
 % standard empirical procedure, we can just reference it}
 
-DR-learners?\todo{What about these?}
+For the DR-learners, similar to the T-learner, we train $\mu_1(x)$ and $\mu_0(x)$ models across 100 bootstrap samples and weight these outcome surfaces by the Propensity Score Model, which is estimated using Logistic Regression (as described above). 
 
 \subsubsection*{Inference for the Bayesian models}
 
@@ -1132,9 +1133,11 @@ There are clear economic benefits to gaining an additional qualification in late
 
 The effect sizes from the GBR model are smaller than that of the two linear models. GBR better captures non-linearities. For example, age is likely to exhibit a highly non-linear relationship with earnings in 2019. Those who were aged 46 or above in 2001 will be aged 65 or above in 2019. This means they are more likely to have retired by 2019 compared to those who were aged below 46 in 2001. As a result, we may expect a shift down in earnings at age 46. 
 
-Age fixed-effects alone are unlikely to capture the differential age effects across other variables such as across different occupations, or by gender, and earnings. The linear ML models include age fixed effects. However, they do not include interactions between age and  other variables whereas GBR does include them.
+Age fixed-effects alone are unlikely to capture the differential age effects across other variables such as across different occupations, or by gender, and earnings. The linear ML models include age fixed effects. However, they do not include interactions between age and other variables whereas GBR does include them.
 
 To illustrate how GBR adequately captures non-linearities we re-estimated our results focusing on those who were aged 25-45 in 2001. This is the same as interacting a binary variable (for age 25-45) with every other feature in the model. In Appendix Figure \ref{fig:valadle46}, we see that the results across the models are now more similar than when we use the full sample.
+
+As a sensitivity test, we also repeated the T-learner estimations using feature inputs values taken from individuals two years before they began study. This means that the timing between when the feature input values and the outcomes are measured are closer compared to taking input values in 2001. Our results are similar to that of the main results. Specifically, the gains in gross earnings from further study are: \$74 per week (Ridge), \$117 per week (Lasso) and \$93 per week (GBR). 
 
 The Doubly Robust (DR) models estimate smaller effects compared to the T-learner. Table \ref{tab:atebslvl} displays a gain of approximately \$62-69 per week in gross earnings across the DR approaches. The estimated effect sizes are statistically different from zero. The confidence intervals for the DR estimates also exclude the point estimates from the T-Learner approach.
 
@@ -1174,7 +1177,7 @@ able to more easily capture non-linear relationships than the other models.
 
 Proportionate changes in earnings can be measured by taking the log of the earnings measures. In Appendix Figure \ref{fig:valadlelog}, we see that the proportionate change in earnings was large at 50 percent. This is likely to be because of people entering the labour market as a result of the new qualification. We find that a new qualification increases the likelihood of employment by approximately 8 percent. See Figure \ref{fig:empl}.
 
-As previously mentioned, the ML models estimate smaller returns than the returns estimated in Fixed Effects (FE) or cross-sectional models (OLS with and without controls) where features have been selected based on theory. Figure \ref{fig:method} compares the returns from five different approaches: an ordinary least squares model with no features, with features selected using theory, a FE model and ML models.\todo{I think we need to define these benchmark models in more detail, either here on the methods section.}
+As previously mentioned, the ML models estimate smaller returns than the returns estimated in Fixed Effects (FE) or cross-sectional models (OLS with and without controls) where features have been selected based on theory. Figure \ref{fig:method} compares the returns from five different approaches: an ordinary least squares model with no features, with features selected using theory, a FE model and ML models.
 
 %The largest earnings gains are associated with acquiring an undergraduate degree or above (including Graduate certificates and Graduate diplomas). As displayed in Figure \ref{fig:degree}, only modest gains are associated with secondary or post-secondary certificates or diplomas. More generally, significant earnings gains are achieved when returning students acquire qualifications above those previously held. In fact, the earnings gains are much higher if students advance their qualification status rather than gaining an additional degree at the same or lower level.
 %
@@ -1213,15 +1216,11 @@ predicitve relationship learned by the model with that feature. The model
 performance we are interested in, as previously mentioned, is the one that maps
 the features to the individual treatment effects. 
 
-Specifically, we take each bootstrap sample, s, and train two outcome surfaces
--- $\mu^{(s)}_0(x_i)$ and $\mu^{(s)}_1(x_i)$ -- and compute the individual
-treatment effects $\tau^{(s)}(x_i)$ from Equation (\ref{eq:indTE}). Note that
+Following the approach described above, we compute the individual treatment effects. Note that
 we train the model on the bootstrapped sample but estimate the individual
 treatment effects using the feature values for individuals from the original
 sample. Thus, for every individual we have a distribution of values of their
-individual treatment effects.\todo{Can we just say we take the individually
-computed treatment effects from one of the approaches outlined previously?
-I get the feeling this paragraph is repeating some of the stuff in the methodology.}
+individual treatment effects.
 
 After obtaining the individual treatment effects, we train another model that
 maps the features to the individual treatment effects. We use cross-validation
@@ -1284,6 +1283,9 @@ results from the permutation importance procedure using the DR model. Overall,
 as Appendix Figure \ref{fig:featgbr} shows, income and employment-related
 variables are the most salient in explaining treatment effect heterogeneity. 
 
+The importance of employment-related features such as earnings (individual and household), wages, and hours worked are reiterated in the sensitivity analysis using the panel structure of the data. Namely, when we define our outcomes 4 years after the start of a study spell and where we define features two years before study start, we also see similar results to that of the main results. However, in  \ref{fig:featgbr_panel}, it is clear that the `trend' or `growth' in the values of features such as individual earnings, hours worked and household income are also important. This reflects the finding in the literature that dynamic selection may be an important factor: individuals who pursue further study in later-life are more likely to have slower-growing earnings in the period before their study starts compared
+to similar individuals who do not seek further study \citep{jacobson2005, dynarski2016, dynarski2018}. The feature mental health is also picked, which may reflect that the timing of the measurement of features, treatment and outcomes are all closer together. This means that we  look at short-term effects in these sensitivity results and mental health may be particularly important in explaining heterogeneity of treatment effects in this time scale. 
+
 %However, the LASSO and RIDGE models also demonstrate the importance of other demographic characteristics such as the number of and presence of young children in the household, as well as economic-related variables such as previous educational attainment, amount remaining on the home loan and work aspirations. 
 
 % update dengbrlev fig                                  Done
@@ -1307,8 +1309,7 @@ returns. This result aligns with findings from previous studies
 \citep{polidano2016,dorsett2016,perales2017}. Weekly personal income and age
 are likely to be highly correlated -- with older individuals tending to earn a
 higher personal income. We cannot say which variable is the main driver of the
-heterogeneous treatment effects\todo{we should try to give an explanation of
-why}, and there may also be interaction effects between them.
+heterogeneous treatment effects and there may also be interaction effects between them.
 
 We also investigate if there are heterogeneous treatment effects according to
 commonly used variables in Figure \ref{fig:htedr}. Females reap slightly higher
@@ -1965,6 +1966,16 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 %    \includegraphics{_figures/hte_earnings_GL_100_MLvDR.pdf}
 %\parbox{1\textwidth}{\footnotesize{\textit{Notes}: }}
 %\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\caption{Important Features in Heterogeneous Treatment Effects Estimation using panel sample (GBR): Level Earnings}
+\vspace{0.5cm}
+  \label{fig:featgbr_panel}
+    \includegraphics{_figures/influenceP_GBR_csnopoly.pdf}
+\parbox{1\textwidth}{\footnotesize{\textit{Notes}: Sample who had completed a degree at any point between 2002 and 2015. Outcomes are defined 4 years after a study spell began and features are defined in the two years preceding study start. There were 3,271 individuals who started and completed a further educational degree, and 13,311 unique control observations.}}
+\end{figure}
+
 
 
 \clearpage
