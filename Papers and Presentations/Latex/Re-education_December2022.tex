@@ -50,7 +50,7 @@
 %\geometry{left=1.5in,right=1.5in,top=1.5in,bottom=1.5in}
 
 
-\title{THE ECONOMIC EFFECT OF GAINING A NEW QUALIFICATION IN LATER LIFE\thanks{\scriptsize{Corresponding author: Anna Zhu, RMIT University. Email: anna.zhu@rmit.edu.au. \newline \newline We thank Tim Robinson, Hayley Fisher, Bruce Bradbury and numerous seminar and conference participants for helpful comments. The authors would like to thank Tessa Loriggio, Prabath Abeysekara, and Yin-King Fok for their excellent research assistance. \newline \newline Zhu acknowledges the support of the Australian Research Council Linkage Project (LP170100472). This paper uses unit record data from the Household, Income and Labour Dynamics in Australia (HILDA) Survey. The HILDA Project was initiated and is funded by the Australian Government Department of Social Services (DSS), and is managed by the Melbourne Institute of Applied Economic and Social Research (Melbourne Institute). The findings and views reported in this paper, however, are those of the authors and should not be attributed to either DSS or the Melbourne Institute.}}} \vspace{0.2cm} \author{Finn Lattimore$^1$\thanks{\scriptsize{This work was performed while the author was working at the Gradient Institute. Views expressed in this paper are those of the author and do not reflect those of the Reserve Bank of Australia.}}\vspace{0.2cm} ,  Daniel Steinberg$^2$ and Anna Zhu$^3$ \\\small {$^1$Reserve Bank of Australia} \vspace{0.2cm} \\ {$^2$Gradient Institute} \vspace{0.2cm} \\ {$^3$RMIT University, IZA}}
+\title{THE ECONOMIC EFFECT OF GAINING A NEW QUALIFICATION IN LATER LIFE\thanks{\scriptsize{Corresponding author: Anna Zhu, RMIT University. Email: anna.zhu@rmit.edu.au. \newline \newline We thank Tim Robinson, Hayley Fisher, Bruce Bradbury and numerous seminar and conference participants for helpful comments. The authors would like to thank Tessa Loriggio, Prabath Abeysekara, Michael Duffield, and Yin-King Fok for their excellent research assistance. \newline \newline Zhu acknowledges the support of the Australian Research Council Linkage Project (LP170100472). This paper uses unit record data from the Household, Income and Labour Dynamics in Australia (HILDA) Survey. The HILDA Project was initiated and is funded by the Australian Government Department of Social Services (DSS), and is managed by the Melbourne Institute of Applied Economic and Social Research (Melbourne Institute). The findings and views reported in this paper, however, are those of the authors and should not be attributed to either DSS or the Melbourne Institute.}}} \vspace{0.2cm} \author{Finn Lattimore$^1$\thanks{\scriptsize{This work was performed while the author was working at the Gradient Institute. Views expressed in this paper are those of the author and do not reflect those of the Reserve Bank of Australia.}}\vspace{0.2cm} ,  Daniel Steinberg$^2$ and Anna Zhu$^3$ \\\small {$^1$Reserve Bank of Australia} \vspace{0.2cm} \\ {$^2$Gradient Institute} \vspace{0.2cm} \\ {$^3$RMIT University, IZA}}
 
 
 \begin{document}
@@ -208,7 +208,7 @@ size of the standard fixed effects results. We also estimate lower returns
 compared to Ordinary Least Squares (OLS) models. We document the additional
 confounder variables that we include in our models but are usually omitted from
 standard OLS specifications. These variables suggest there is significant
-negative selection into mature-age students who undertake a further degree.
+selection into mature-age students who undertake a further degree.
 
 % Understanding the different sources of dynamic selection is also important for
 % heterogeneity analyses. This requires us to model the potential sources rather
@@ -324,7 +324,7 @@ average treatment effect. Specifically, we model the response surfaces for two
 conditional mean equations -- one using the treatment observations and another
 using the control observations. We estimate these equations with ML methods
 such as the T-learner and Doubly Robust. Here, we employ both linear (LASSO and
-Ridge) and non-linear (Gradient Boosting Regression) model classes. We compare
+Ridge) and non-linear (Gradient Boosted Regression) model classes. We compare
 and evaluate their comparative performance using nested cross-validation. We
 then test the statistical significance of our causal parameters by examining
 the distribution of the estimates through bootstrapping. Last, we use a variety
@@ -412,32 +412,29 @@ HILDA covers a long time span of 19 years, starting in 2001. We use the 2019 rel
 
 \subsection{Sample exclusions}
 
-Our analysis sample contains respondents who were 25 years or above in 2001. This allows us to focus on individuals who obtain a further education – beyond that acquired in their previous degree. 
+Our main analysis sample contains respondents who were 25 years or above in 2001. This allows us to focus on individuals who obtain a further education – beyond that acquired in their previous degree. 
 
 Our main analysis focuses on measuring the impact of further education using
 wave 19 outcomes. Here, the feature inputs to the models are taken from the
-individuals in 2001 (and later as a sensitivity test, taken from individuals in the two years before they begin further education). We delete any individuals who were ‘currently studying’ in
-2001. This also ensures that our features, which are defined in 2001 are not
+individuals in 2001. We delete any individuals who were ‘currently studying’ in 2001. This also ensures that our features, which are defined in 2001 are not
 contaminated by the impacts of studying but clearly precede the study spell of
 interest. These sample exclusions result in 7,359 respondents being dropped
 because they are below the age of 25 in 2001 and a further 1,387 respondents
 being dropped because they were studying in 2001.
 
-We then restrict the sample to those who are present in both 2001 and 2019. This ensures that we observe base characteristics and outcomes for every person in our analysis sample. This results in a further 5,727 respondents being dropped from the sample. Our analysis sample has 5,441 observations.
+We then restrict the sample to those who are present in both 2001 and 2019. This ensures that we observe base characteristics and outcomes for every person in our analysis sample. This results in a further 5,727 respondents being dropped from the sample. Our analysis sample has 5,441 observations. More details of our main analysis sample and data can be found in the Online Appendix Document 1.\footnote{For sensitivity analysis, a second sample of respondents are examined. They are slightly younger when they began study, their feature values are taken in the two years before study began and their outcomes are measured four years after their study began. In this second sample, there are 1,814 individuals who started and completed a further educational degree, and 60,945 person-wave control observations who never completed a further degree. We detail our second approach in the Online Appendix Document 2.}
 
 %We then extend our main analysis in a number of ways. First, we include dynamic control variables. Specifically, we define the features in the one and two years immediately before study start. With two years of data, we are able to construct variables that measure the trends in socio-economic and demographic characteristics. Second, we measure outcomes fours years after the start of a spell of study. 
 
-%Our second sample requires respondents are: (1) at least 25 years old in the starting year of study, (2) they were present in the two years before the start of study and (3) there were not currently studying in any of the two years before the starting year of further study. If a study event does not satisfy these conditions, we look to the next study event that satisfies these conditions or (if unavailable) delete the person from our sample completely. There are 3,271 individuals who started and completed a further educational degree. 
+%For sensitivity analysis, we also examine a second sample of respondents who are: (1) at least 22 years old in the starting year of study, (2) they were present in the two years before the start of study and (3) there were not currently studying in any of the two years before the starting year of further study. If a study event does not satisfy these conditions, we look to the next study event that satisfies these conditions or (if unavailable) delete the person from our sample completely. There are 3,271 individuals who started and completed a further educational degree. 
 %
-%For control group observations they have not completed further study, which makes it difficult to define their features and outcomes around a study-start date. Thus, we assign to them a time stamp for a theoretical start date to study. We do this for every year from 2003 to 2019.  This implies that control group individuals can be duplicated and used multiple times. Such duplication induces a dependence structure that artificially reduces standard errors. Thus, we account for clustering and heteroskedasticity of any type at the individual level. There are 13,311 unique control observations. 
+%For control group observations they have not completed further study, which makes it difficult to define their features and outcomes around a study-start date. Thus, we assign to them a time stamp for a theoretical start date to study. We do this for every year from 2003 to 2019.  This implies that control group individuals can be duplicated and used multiple times. Such duplication induces a dependence structure that artificially reduces standard errors. Thus, we account for clustering and heteroskedasticity of any type at the individual level. There are 13,311 unique control observations. We detail our approach in the Online Appendix Document 2. 
+
 
 
 \subsection{Outcomes}
 
-We measure outcomes in 2019 across the groups of individuals who did and did not get re-educated. We use annual earnings to measure the economic returns to education. We also analyse  outcomes related to the labour market such as employment, changes in earnings, changes in occupation, industry, and jobs.
-
-A second approach is to use outcomes measured four years after the start of a study spell. As sensitivity analysis, we repeat our main estimations using this second approach. Here, as many individuals in our dataset never started a further degree i.e. they are in our control group, we assign a a time stamp to them for the year the control person theoretically started to study. We do this for every year from 2003 to 2019. This implies that control group individuals can be duplicated multiple times in the dataset. We detail our approach in the online Appendix. 
-
+We measure outcomes in 2019 across the groups of individuals who did and did not get re-educated. We use annual earnings to measure the economic returns to education. We also analyse outcomes related to the labour market such as employment, changes in earnings, changes in occupation, industry, and jobs.\footnote{A second approach is to use outcomes measured four years after the start of a study spell. For sensitivity analysis, we repeat our main estimations using this second approach. Here, as many individuals in our dataset never started a further degree i.e. they are in our control group, we assign a time stamp to them for every year the control person theoretically could have started to study. We do this for every year from 2003 to 2019. This implies that control group individuals can be duplicated multiple times in the dataset. We then measure the control individuals' outcomes 4 years after their theoretical time stamp.}
 
 
 \subsection{Treatment}
@@ -458,8 +455,7 @@ These two survey questions thus capture any additional qualification obtained fr
 We define our covariates, or features as they are known in machine learning
 parlance, using 2001 as the base year. Since we delete any respondents who were
 currently studying in 2001, we ensure that all features were defined before a
-respondent begins further study.\footnote{We also test the sensitivity of our results to using feature inputs that taken from the
-individuals closer to the timing of further study, namely two years before study begins. Here, we use both the year and the two years preceding the start of a study spell to define our features. This allows us to capture both level and growth values in the features.}
+respondent begins further study.\footnote{We also test the sensitivity of our results to using feature inputs that are taken from the individuals closer to the timing of their study, namely two years before study began. Here, we use both the year and the two years preceding the start of a study spell to define our features. This allows us to capture both level and growth values in the features.}
 
 A unique approach to our feature selection strategy is that we use all the
 information available to us from the HILDA survey in 2001. This means that we
@@ -479,10 +475,12 @@ The data-driven model identifies more salient variables compared to the baseline
 
 We identify variables as missing from the baseline model if those variables explain the residual variation in the outcome. Specifically, we regress the residuals from the baseline models (without the treatment included) on the features included in the data-driven model and train a LASSO model to highlight the salient variables that were missed. The variables that are chosen are listed in Table \ref{tab:mlvars}. We also document how these variables are correlated to the outcome and to the treatment in order to give us a sense of the direction of the bias their omission may induce. 
 
-Most of the omitted variables bias the OLS estimates is upwards.\footnote{Exceptions include casual employment status, the presence of a past doctorate qualification, years unemployed, parental child care and dividend and business income.} The upward bias is consistent with the ML-models estimating an economic returns on obtaining a new qualification that is significantly smaller than the returns from an OLS model or a Difference-in-Difference - Fixed Effects (DD-FE)  model. Figure \ref{fig:method} displays the estimated returns from five different models. The first three bars show significantly higher returns based on the OLS (no controls), OLS (with controls) and the DD-FE models compared to the last two bars, which are based on the ML models - Gradient Boosting Regression and Doubly Robust. We discuss these methods in more detail below. 
+Most of the omitted variables bias the OLS estimates is upwards.\footnote{Exceptions include casual employment status, the presence of a past doctorate qualification, years unemployed, parental child care and dividend and business income.} The upward bias is consistent with the ML-models estimating an economic returns on obtaining a new qualification that is significantly smaller than the returns from an OLS model or a Difference-in-Difference - Fixed Effects (DD-FE)  model. In the DD-FE model, we use the same 5,441 individuals as the other methods but they are followed over two waves: 2001 and 2019 (i.e. there are 10,882 person-wave observations). We control for individual and wave fixed-effects. 
+
+Figure \ref{fig:method} displays the estimated returns from six different models. The first three bars show significantly higher returns based on the OLS (no controls), OLS (with controls) and the DD-FE models compared to the last three bars, which are based on the ML models - Gradient Boosted Regression, Doubly Robust and Bayesian Causal Forest. We discuss these methods in more detail below. 
 
 It is important to highlight that our approach to identifying missing variables
-from the baseline model is a quick, descriptive one. As previously mentioned,
+from the baseline model is a descriptive one. As previously mentioned,
 the ML algorithm randomly selects variables that are highly correlated thus we
 may have missed out on reporting the label of important variables omitted from
 the baseline model.
@@ -617,7 +615,7 @@ defined by attributes $X$.
 
 The T-learner is a two-step approach where the conditional mean functions defined in Equations (\ref{eq:T1}) and (\ref{eq:T0}) are estimated separately with any generic machine learning algorithm.
 
-Machine learning methods are well suited to find generalizable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge) and non-linear (Gradient Boosting Regression). Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
+Machine learning methods are well suited to find generalizable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge) and non-linear (Gradient Boosted Regression). Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
 
 To show this, we define our parameter of interest, the CATE, which is formally defined as:
 \begin{align}
@@ -939,7 +937,7 @@ estimation of the ATE and CATE parameters in two procedures. We evaluate the
 predictive capacity of each model class using nested cross-validation. The
 procedure is represented in Figure \ref{fig:exp_model}. Here, our aim is to
 compare the predictive performance of three model classes: LASSO, Ridge and
-Gradient Boosting Regression (GBR). Our second procedure is to estimate the ATE
+Gradient Boosted Regression (GBR). Our second procedure is to estimate the ATE
 and CATE parameters. The procedure is represented in Figure
 \ref{fig:exp_param}. We use bootstrap sampling (with replacement) to generate
 uncertainty estimates for the parameters, which we obtain over several draws of
@@ -989,7 +987,7 @@ Table \ref{tab:ncvhos} shows that the GBR is the best performing model class.
 It yields the highest out-of-sample R-squared and the lowest MSE. This is true
 for both the outcome surfaces separately.
 
-The DR-learner model, as shown in Equation (\ref{eq:DR}) relies on three components: the treatment and control outcome surfaces - as estimated in the T-learner - along with a propensity score model. For the latter, we implement a regularised logistic regression to predict the likelihood of being treated (to obtain a further degree). Specifically, we use cross validation to fit a Logistic regression and obtain the predictions from the original sample. The holdout performance of the fitted Logistic regression model yields an area under the ROC curve of 0.71.
+As the DR-learner model relies on the same treatment and control outcome surfaces estimated in the T-learner, we do not repeat Table \ref{tab:ncvhos} for the DR results. A further component of the DR model, however, is the propensity score. Here, we implement a regularised logistic regression to predict the likelihood of being treated (to obtain a further degree). Specifically, we use cross validation to fit a Logistic regression and obtain the predictions from the original sample. The holdout performance of the fitted Logistic regression model yields an area under the ROC curve of 0.71.
 
 \subsubsection*{Inference via bootstrapping}
 
@@ -1134,9 +1132,7 @@ Age fixed-effects alone are unlikely to capture the differential age effects acr
 
 To illustrate how GBR adequately captures non-linearities we re-estimated our results focusing on those who were aged 25-45 in 2001. This is the same as interacting a binary variable (for age 25-45) with every other feature in the model. In Appendix Figure \ref{fig:valadle46}, we see that the results across the models are now more similar than when we use the full sample.
 
-As a sensitivity test, we also repeated the T-learner estimations using feature inputs values taken from individuals two years before they began study. This means that the timing between when the feature input values and the outcomes are measured are closer compared to taking input values in 2001. Our results are similar to that of the main results. Specifically, the gains in gross earnings from further study are: \$74 per week (Ridge), \$117 per week (Lasso) and \$93 per week (GBR). 
-
-The Doubly Robust (DR) models estimate smaller effects compared to the T-learner. Table \ref{tab:atebslvl} displays a gain of approximately \$62-69 per week in gross earnings across the DR approaches. The estimated effect sizes are statistically different from zero. The confidence intervals for the DR estimates also exclude the point estimates from the T-Learner approach.
+The Doubly Robust (DR) models estimate smaller effects compared to the T-learner models. Table \ref{tab:atebslvl} displays a gain of approximately \$62-69 per week in gross earnings across the DR approaches. The estimated effect sizes are statistically different from zero. The confidence intervals for the DR estimates also exclude the point estimates from the T-Learner approach.
 
 One reason the DR approach differs from the T-learner approach is that the
 former uses additional information from the propensity score (i.e. we estimate
@@ -1163,7 +1159,7 @@ scale is long, and the kernel has a small amplitude and offset ($l_\tau = 243$,
 $\sigma_\tau^2 = 0.0517^2$, and $\tau_0 = 0.0312^2$). Whereas the prognostic
 kernel parameters stay relatively close to their initial settings ($l_{\mu_0} =
 16$, and $\sigma^2_{\mu_0} = 1.42^2$). The Bayesian causal forest estimates a
-slightly higher gain of \$84.5 per week in gross earnings, which is more inline
+slightly higher gain of \$84.50 per week in gross earnings, which is more inline
 with the GBR T-learner. This suggests that the tree ensemble methods may be
 able to more easily capture non-linear relationships than the other models.
 
@@ -1174,7 +1170,17 @@ able to more easily capture non-linear relationships than the other models.
 
 Proportionate changes in earnings can be measured by taking the log of the earnings measures. In Appendix Figure \ref{fig:valadlelog}, we see that the proportionate change in earnings was large at 50 percent. This is likely to be because of people entering the labour market as a result of the new qualification. We find that a new qualification increases the likelihood of employment by approximately 8 percent. See Figure \ref{fig:empl}.
 
-As previously mentioned, the ML models estimate smaller returns than the returns estimated in Fixed Effects (FE) or cross-sectional models (OLS with and without controls) where features have been selected based on theory. Figure \ref{fig:method} compares the returns from five different approaches: an ordinary least squares model with no features, with features selected using theory, a FE model and ML models.
+As previously mentioned, the ML models estimate smaller returns than the returns estimated in DD-FE or cross-sectional models (OLS with and without controls) where features have been selected based on theory or previous empirical learnings. For example, the `OLS Baseline model' uses the features in models estimated in Chesters (2015). The DD-FE eliminates all selection effects that are fixed over time. Figure \ref{fig:method} displays the estimated returns from six different approaches.
+
+A potential reason for the smaller results estimated in the ML models is that the additional features included, as well as the non-linear specifications of the features, more effectively account for selection into treatment. The smaller results suggest individuals positively select into further study i.e. the characteristics that lead one to complete further study are positively correlated to future earnings. Once we control for this upward selection bias, we thus estimate smaller returns to further education.
+
+The smaller estimated results relative to the DD-FE model are likely to stem from the inclusion of key time-varying variables such as the `change in total gross income' in the ML models, as well as other non-linear specifications. For example, the ML models allow the treatment effects to vary in a highly flexible fashion across different parts of the feature distributions rather than making linear extrapolations.
+
+This points to a benefit of using ML models, compared to conventional models, because they can more effectively identify confounders. We show evidence of the types of confounders missed in conventional models in Table \ref{tab:mlvars}, as well as the direction of the bias stemming from their omission. 
+
+In addition, we show evidence that models which allow for more flexible functional-form specifications lead to differences in the ATE. Within our ML models, the GBR tree ensemble tended to perform better (in terms of the nested cv results) compared to the linear-based models. The former yielded a slightly smaller ATE compared to the LASSO and Ridge results, for example, and they were also consistent with results from the Bayesian Causal Forest.
+
+
 
 %The largest earnings gains are associated with acquiring an undergraduate degree or above (including Graduate certificates and Graduate diplomas). As displayed in Figure \ref{fig:degree}, only modest gains are associated with secondary or post-secondary certificates or diplomas. More generally, significant earnings gains are achieved when returning students acquire qualifications above those previously held. In fact, the earnings gains are much higher if students advance their qualification status rather than gaining an additional degree at the same or lower level.
 %
@@ -1213,8 +1219,7 @@ predicitve relationship learned by the model with that feature. The model
 performance we are interested in, as previously mentioned, is the one that maps
 the features to the individual treatment effects. 
 
-Following the approach described above, we compute the individual treatment effects. Note that
-we train the model on the bootstrapped sample but estimate the individual
+Following the approach described above, we compute the individual treatment effects. Note that we train the model on the bootstrapped sample but estimate the individual
 treatment effects using the feature values for individuals from the original
 sample. Thus, for every individual we have a distribution of values of their
 individual treatment effects.
@@ -1280,8 +1285,6 @@ results from the permutation importance procedure using the DR model. Overall,
 as Appendix Figure \ref{fig:featgbr} shows, income and employment-related
 variables are the most salient in explaining treatment effect heterogeneity. 
 
-The importance of employment-related features such as earnings (individual and household), wages, and hours worked are reiterated in the sensitivity analysis using the panel structure of the data. Namely, when we define our outcomes 4 years after the start of a study spell and where we define features two years before study start, we also see similar results to that of the main results. However, in  \ref{fig:featgbr_panel}, it is clear that the `trend' or `growth' in the values of features such as individual earnings, hours worked and household income are also important. This reflects the finding in the literature that dynamic selection may be an important factor: individuals who pursue further study in later-life are more likely to have slower-growing earnings in the period before their study starts compared
-to similar individuals who do not seek further study \citep{jacobson2005, dynarski2016, dynarski2018}. The feature mental health is also picked, which may reflect that the timing of the measurement of features, treatment and outcomes are all closer together. This means that we  look at short-term effects in these sensitivity results and mental health may be particularly important in explaining heterogeneity of treatment effects in this time scale. 
 
 %However, the LASSO and RIDGE models also demonstrate the importance of other demographic characteristics such as the number of and presence of young children in the household, as well as economic-related variables such as previous educational attainment, amount remaining on the home loan and work aspirations. 
 
@@ -1374,6 +1377,19 @@ approximately 8 percentage points and is statistically significant. We also
 find evidence pointing to workers switching occupations or industries. This
 suggests that further education in later life can support the economic goals of
 a larger workforce as well as a more mobile one.
+
+\subsection{Sensitivity Analysis}
+
+For sensitivity analysis, we repeated the T-learner estimations using feature inputs values taken from individuals two years before they began study. Thus we examine if our main results are sensitive to changes in the mapping equations for the treatment and control outcome equations when features are measured closer to the event of study, compared to taking input values in 2001. We also measured outcomes four years after study began. This means that the timing between when the feature input values are measured, when a further degree commenced and was completed, as well as when the outcomes are measured, are all closer together. This necessarily leads us to estimate the short-term returns of obtaining a further degree. 
+
+Our results from the sensitivity analysis are similar to that of the main results. Specifically, the gains in gross earnings from a further degree in the sensitivity analysis are: \$74 per week (Ridge), \$117 per week (LASSO) and \$93 per week (GBR). The key take-away from these results is that the average treatment effects in the main analysis are not sensitive to whether our features use 2001 as the input year or use the two years before study. 
+
+Also, the main results are not sensitive to when outcomes are measured i.e. the returns measured four years after the start of a study spell are comparable to the returns averaged over 2 to 17 years after study completion. This may point to the fact that the returns to further study are accrued in the immediate years following the completion of the degree. It also suggests the returns may not atrophy over time, especially since the majority of people who did complete a degree in the main analysis did so in the earlier years of the survey (Figure \ref{fig:yearcompdeg}). Unfortunately, our sample sizes are not sufficient to explore heterogeneity in treatment effects by the year of completion. 
+
+The importance of employment-related features such as earnings (individual and household), wages, and hours worked are reiterated in the sensitivity analysis using the panel structure of the data. Namely, when we define our outcomes 4 years after the start of a study spell and where we define features two years before study started, we also see similar results to that of the main results. However, in Figure \ref{fig:featgbr_panel}, it is clear that the `trend' or `growth' in the values of features such as individual earnings, hours worked and household income are also important. This finding of dynamic selection is echoed in the literature \citep{jacobson2005, dynarski2016, dynarski2018}. 
+
+In Figure \ref{fig:featgbr_panel}, the feature mental health is also picked. This result may reflect the fact that the timing of the measurement of features, treatment and outcomes are all closer together compared to the main results. This means that mental health is an important factor in explaining the heterogeneity in relatively `short-term' treatment effects. 
+
 
 \section{Conclusions}
 
@@ -1616,7 +1632,7 @@ ID of other responder for HH Questionnaire 	& 	hhp2	 & 	NA	 & 	NA
 % Table 2 
 \clearpage    
 \begin{longtable}{p{0.5\textwidth} C{0.2\textwidth} C{0.2\textwidth} C{0.2\textwidth} C{0.2\textwidth}}
-\caption{ML variables omitted by OLS theory model} \\ 
+\caption{ML variables omitted by OLS Baseline model} \\ 
 \hline 
 Variable label & Variable name & Relationship with re-education (redufl) & Relationship with outcome (y\_wscei) & Bias direction in OLS models \\
 \hline
@@ -1662,7 +1678,7 @@ Tobacco expense in average week 	& 	lstbca	 & 	-	 & 	-	 & 	+	\\
 ID of other responder for HH Questionnaire 	& 	hhp2	 & 	-	 & 	-	 & 	+	
 \label{tab:mlvars}
 \end{longtable}  
-\parbox{1.5\textwidth}{\footnotesize *Notes can be entered here}\\            
+%\parbox{1.5\textwidth}{\footnotesize *Notes can be entered here}\\            
       
       
 
@@ -1688,7 +1704,7 @@ Model   &  Outcome surface  &  Negative MSE  &  NMSE Std  &  R-squared  &  R-squ
 \bottomrule
 \end{tabular}
 \par\medskip
-\parbox{1.1\textwidth}{\footnotesize Notes: 5 fold CV performed on 80\% train sample. All statistics presented in this table are based on the 20\% holdout sample. Ten outer folds are used. See Figure \ref{fig:exp_model} for more details}. \\
+\parbox{1.1\textwidth}{\footnotesize Notes: 5 fold CV performed on 80\% train sample. All statistics presented in this table are based on the 20\% holdout sample. Ten outer folds are used. See Figure \ref{fig:exp_model} for more details.} \\
 \label{tab:ncvhos}
 \end{table}
 
@@ -1876,11 +1892,11 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 
 \begin{figure}[htbp]
 \centering
-\caption{Methodology}
+\caption{Comparison of Treatment Effects across Different Methods}
 \vspace{0.5cm}
   \label{fig:method}
     \includegraphics{_figures/method_v2.pdf}
-\parbox{1\textwidth}{\footnotesize{\textit{Notes}: }}
+\parbox{1\textwidth}{\footnotesize{\textit{Notes}: Unless stated otherwise, the method uses a sample of 25 or older respondents who had completed a degree at any point between 2002 and 2017. Total number of observations 5,441. The OLS Baseline model uses the features manually selected in models by Chesters (2015). The Difference-in-Difference Fixed Effects (DD-FE) model uses the same individuals as the other methods but follows them over two waves: 2001 and 2019 (i.e. there are 10,882 person-wave observations); person and wave fixed effects included. The T-learner and Doubly Robust results are based on the Gradient Boosted Regression. The last bar is based on the Bayesian Causal Forest.}}
 \end{figure}
 
 \begin{figure}[htbp]
@@ -1889,7 +1905,7 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 \vspace{0.5cm}
   \label{fig:empl}
     \includegraphics{_figures/SPRC_fig5_empltr.pdf}
-\parbox{1\textwidth}{\footnotesize{\textit{Notes}: The impact of a new qualification. Sample of people who are 25 or older in 2001. LASSO model.}}
+\parbox{1\textwidth}{\footnotesize{\textit{Notes}: The impact of a new qualification. Sample of people who are 25 or older in 2001. Observation sizes vary depending on the outcome variable. All results are estimated using the LASSO algorithm.}}
 \end{figure}
 
 %\begin{figure}[htbp]
@@ -1963,16 +1979,6 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 %    \includegraphics{_figures/hte_earnings_GL_100_MLvDR.pdf}
 %\parbox{1\textwidth}{\footnotesize{\textit{Notes}: }}
 %\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\caption{Important Features in Heterogeneous Treatment Effects Estimation using panel sample (GBR): Level Earnings}
-\vspace{0.5cm}
-  \label{fig:featgbr_panel}
-    \includegraphics{_figures/influenceP_GBR_csnopoly.pdf}
-\parbox{1\textwidth}{\footnotesize{\textit{Notes}: Sample who had completed a degree at any point between 2002 and 2015. Outcomes are defined 4 years after a study spell began and features are defined in the two years preceding study start. There were 3,271 individuals who started and completed a further educational degree, and 13,311 unique control observations.}}
-\end{figure}
-
 
 
 \clearpage
@@ -2053,6 +2059,16 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
   \label{fig:featgbr}
     \includegraphics{_figures/influenceP_GBR_le_100.pdf}
 \parbox{1\textwidth}{\footnotesize{\textit{Notes}: Sample of 25 or older who had completed a degree at any point between 2002 and 2017. Total number of observations 5,441.}}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+\caption{Important Features in Heterogeneous Treatment Effects Estimation using panel sample (GBR): Level Earnings}
+\vspace{0.5cm}
+  \label{fig:featgbr_panel}
+    \includegraphics{_figures/influenceP_GBR_csnopoly.pdf}
+\parbox{1\textwidth}{\footnotesize{\textit{Notes}: Sample of 21 or older individuals who had completed a degree at any point between 2003 and 2015, inclusive. Outcomes are defined 4 years after a study spell began and features are defined in both the two years preceding the start of a study spell. There were 1,814 individuals who started and completed a further educational degree, and 60,945 non-unique control observations who never completed a further degree.}}
 \end{figure}
 
 
