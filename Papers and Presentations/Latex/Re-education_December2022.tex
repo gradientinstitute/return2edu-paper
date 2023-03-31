@@ -477,7 +477,12 @@ We identify variables as missing from the baseline model if those variables expl
 
 Most of the omitted variables bias the OLS estimates is upwards.\footnote{Exceptions include casual employment status, the presence of a past doctorate qualification, years unemployed, parental child care and dividend and business income.} The upward bias is consistent with the ML-models estimating an economic returns on obtaining a new qualification that is significantly smaller than the returns from an OLS model or a Difference-in-Difference - Fixed Effects (DD-FE)  model. In the DD-FE model, we use the same 5,441 individuals as the other methods but they are followed over two waves: 2001 and 2019 (i.e. there are 10,882 person-wave observations). We control for individual and wave fixed-effects. 
 
-Figure \ref{fig:method} displays the estimated returns from six different models. The first three bars show significantly higher returns based on the OLS (no controls), OLS (with controls) and the DD-FE models compared to the last three bars, which are based on the ML models - Gradient Boosted Regression, Doubly Robust and Bayesian Causal Forest. We discuss these methods in more detail below. 
+Figure \ref{fig:method} displays the estimated returns from six different
+models. The first three bars show significantly higher returns based on the OLS
+(no controls), OLS (with controls) and the DD-FE models compared to the last
+three bars, which are based on the ML models -- Gradient Boosted Regression,
+Doubly Robust and Bayesian Causal Forest. We discuss these methods in more
+detail below. 
 
 It is important to highlight that our approach to identifying missing variables
 from the baseline model is a descriptive one. As previously mentioned,
@@ -560,7 +565,10 @@ Another potential scenario is that the source of unobserved heterogeneity in que
 
 \begin{enumerate}
   \setcounter{enumi}{1}
-  \item \textbf{Stable Unit Treatment Value Assumption} (SUTVA) or counterfactual consistency: $Y = Y(0) +T(Y(1) - Y(0))$. 
+
+  \item \textbf{Stable Unit Treatment Value Assumption} (SUTVA) or
+    counterfactual consistency: $Y = Y(0) + T \cdot (Y(1) - Y(0))$. 
+
 \end{enumerate}  
 
 Assumption 2 ensures that there is no interference, no spill-over effects, and no hidden variation between treated and non-treated observations. SUTVA may be violated if individuals who complete further education influence the labour market outcomes of those who do not complete further education. For example, if the former group absorb resources that would otherwise be channelled to the latter group. Alternatively, the former group may be more competitive in the labour market and reduce the probability of promotions or job-finding for the latter group. As those who complete further education are a relatively small group, it is unlikely that these general equilibrium effects would occur. 
@@ -619,13 +627,14 @@ Machine learning methods are well suited to find generalizable predictive patter
 
 To show this, we define our parameter of interest, the CATE, which is formally defined as:
 \begin{align}
-\tau (x) = \mathbb{E}[Y(1) - Y(0) | X{=}x]
+\tau (x) = \mathbb{E}[Y(1) - Y(0) | X{=}x],
 \end{align}
-which, with the assumptions above, is equivalent to taking the difference between two conditional mean functions $\mu _1(x) - \mu _0(x)$:
+which, with the assumptions outlined previously, is equivalent to taking the
+difference between two conditional mean functions $\mu _1(x) - \mu _0(x)$:
 \begin{align}
 \tau (x) & = \mu _1(x) - \mu _0(x) \nonumber \\
   & \approx \mathbb{E}[Y | T {=} 1, X {=} x] - \mathbb{E}[Y | T {=} 0, X {=} x] \nonumber \\
-& = \mathbb{E}[Y(1) - Y(0) | X {=} x] \label{eq:indTE}
+& = \mathbb{E}[Y(1) - Y(0) | X {=} x]. \label{eq:indTE}
 \end{align}
 In this estimation, we are not interested in the coefficients from regressing
 $Y$ on $X$. What we require is a good approximation of the function $\tau(x)$,
@@ -963,7 +972,17 @@ different time point, we obtain a good indication of the features that are
 useful for a model to perform well. Improved model performance here will also
 mean that the selected features are likely to represent the important
 confounders. We have chosen 2006 to ensure there is no overlap with 2019
-outcomes to avoid overfitting issues with subsequent models.\footnote{We do not compromise predictive performance when we use the selected subset of features as opposed to the full set of features. For example, the predictive performance from a Gradient Boosted Tree model that predicts earnings in 2006, using 5-fold nested cross-validation, is statistically similar between models that use the 91 feature set and the full, 3,400 feature set (with Root Mean-Squared Errors (RMSEs) of 484.251 and 482.286, respectively). This is a neglible loss in predictive performance and is in fact smaller than the associated loss between the restricted and full feature sets from models predicting earnings in 2019 (RMSEs of 843.548 and 831.931, respectively).}
+outcomes to avoid overfitting issues with subsequent models.\footnote{We do not
+compromise predictive performance when we use the selected subset of features
+as opposed to the full set of features. For example, the predictive performance
+from a Gradient Boosted Tree model that predicts earnings in 2006, using 5-fold
+nested cross-validation, is statistically similar between models that use the
+91 feature set and the full, 3,400 feature set (with Root Mean-Squared Errors
+(RMSEs) of 484.251 and 482.286, respectively). This is a negligible loss in
+predictive performance. There is a slightly larger associated loss between the
+restricted and full feature sets from models predicting earnings in 2019 (RMSEs
+of 843.548 and 831.931, respectively), but this is still not statistically
+significant.}
 
 Using the top 91 predictors, we then apply nested cross validation to evaluate
 the predictive capacity of each model class (LASSO, Ridge, GBR). First, we
@@ -992,85 +1011,88 @@ As the DR-learner model relies on the same treatment and control outcome surface
 \subsubsection*{Inference via bootstrapping}
 
 Once we have selected the best performing model class, we turn to the
-estimation of the parameters and parameter uncertainty. We use bootstrapped
-validation for generating uncertainty estimates. This captures the uncertainty
-arising from model hyperparameter selection in addition to that from estimating
-parameters of a fixed model from noisy, finite data. 
+estimation of the parameters and their associated uncertainty. We use a
+bootstrapped validation proceedure to capture the uncertainty arising from
+model hyperparameter selection in addition to that from estimating parameters
+of a fixed model from noisy, finite data. 
 
 %Here, we estimate the same model class on different realisations of the data. 
 
 A common approach to inference in the causal machine learning literature is to
-use sample splitting \citep{athey2019}. Sample splitting ensures that the
-standard errors on the estimators are not underestimated because it avoids
-using the same data point to both select hyperparameters of the model and to
-estimate the parameters. 
-% When the same data point is used to perform both tasks
-% then the standard errors would not reflect both the uncertainty stemming from
-% model selection and that which stems from estimating parameters on noisy,
-% finite data. 
-The result of using common data for model selection and effect estimation is
+use cross-fitting \citep{cherno2018} or sample splitting \citep{athey2019}.
+These methods ensure that the standard errors on the estimators are not
+underestimated because they avoid using the same data point to both select
+hyperparameters of the model and to estimate the parameters of the outcome or
+effect surfaces. 
+% When the same data point is used to perform both tasks then the standard
+% errors would not reflect both the uncertainty stemming from model selection
+% and that which stems from estimating parameters on noisy, finite data. 
+The result of using the same data for model selection and effect estimation is
 that our standard errors would suffer from pre-test bias since the model may
 suffer from overfitting.
 
-Sample splitting is appropriate when the sample size is large. An issue with
-studies that rely on survey-based data is that sample sizes are often not large
-enough to perform sample splitting. For example, there is not enough data to
-split the dataset into train and test datasets such that each of these splits
-would cover all the common and uncommon values of the $X$-features that are
-observed in the full sample. If we were to use a training dataset that was
-insufficiently sized or non-representative, it would be difficult for the ML
-models to effectively map the $X$-features to the outcome surfaces,
-$\mu_1(x)$ and $\mu_0(x)$. There would also not be enough data in the test set
-to effectively estimate the parameters of the model configuration chosen in the
-train set. As a result, our estimate treatment effects are likely to have a
-large degree of uncertainty.
+Sample splitting and cross-fitting are appropriate when the sample size is
+large. An issue with studies that rely on survey-based data is that sample
+sizes are often not large enough to efficiently use these methods. For example,
+there may not enough data to split the dataset into separate train and test
+datasets for each model such that each of these splits would cover all the
+common and uncommon values of the $X$-features that are observed in the full
+sample. Consequently, the ML models may not find representative functional
+forms for $\mu_0(x)$ and $\mu_1(x)$.
+% If we were to use a training dataset that was insufficiently sized or
+% non-representative, it would be difficult for the ML models to effectively map
+% the $X$-features to the outcome surfaces, $\mu_1(x)$ and $\mu_0(x)$. There
+% would also not be enough data in the test set to effectively estimate the
+% parameters of the model configuration chosen in the train set.
+As a result, our estimate treatment effects are likely to have a large degree
+of uncertainty.
 
 A suitable alternate procedure is to use bootstrapping. Bootstrap resampling
 allows us to estimate variation in the point model parameter estimates. In this
-way, we side-step the need to rely on the assumption of asymptotical normality,
+way, we side-step the need to rely on the assumption of asymptotic normality,
 and it is more efficient than sample splitting to generate standard errors. In
 our bootstrapping procedure, we ensure that the standard errors reflect the
 sources of uncertainty stemming from both the selection of the model and the
 estimation of the model. As a result, we generate standard errors that avoid
 any potential pre-test issues.
 
-As a first step, as shown in Figure \ref{fig:exp_param}, we obtain the 91 top
-predictors from the initial pre-processing of the full dataset. That is, we
-train a supervised machine learning LASSO model to extract which features best
-predict earnings in 2006.
+As a first step we obtain the 91 top predictors from the initial
+pre-processing of the full dataset, shown in Figure \ref{fig:exp_param}. That
+is, we train a supervised machine learning LASSO model to extract the features
+that best predict earnings in 2006.
 
-As a second step, we train our models using the 91 top predictors on the first
-bootstrapped sample to select the best models for $\mu_1(x)$ and $\mu_0(x)$.
-Within this bootstrap sample, we divide the dataset into five folds and perform
-cross-validation to select the best model configuration. Similar to the
-cross-validation description above, our model configuration is trained on
-subsets of the data, and then evaluated on holdout samples. We modify the
-5-fold cross validation to ensure bootstrap replicated training data does not
-simultaneously appear in the training and validation set. We perform this model
-selection step within the bootstrapping procedure to capture the uncertainty
-coming from the selection of hyperparameters. If we simply re-estimated the
-same model with a given set of hyperparameters in each bootstrap model then the
-uncertainty is only over the model parameters, and not the model choice
-(e.g.~the GBR tree depth).
+The second step involves training our models using the 91 top predictors on a
+bootstrapped sample, $s$, to select the best models for $\mu^{(s)}_1(x)$ and
+$\mu^{(s)}_0(x)$. Within this bootstrap sample, we divide the dataset into five
+folds and perform cross-validation to select the best model configuration.
+Similar to the cross-validation description above, our model configuration is
+trained on subsets of the data, and then evaluated on holdout samples. We
+modify the 5-fold cross validation to ensure bootstrap replicated training data
+does not simultaneously appear in the training and validation set. We perform
+this model selection step within the bootstrapping procedure to capture the
+uncertainty coming from the selection of hyperparameters. If we simply
+re-estimated the same model with a given set of hyperparameters in each
+bootstrap model then the uncertainty is only over the model parameters, and not
+the model choice (e.g.~the GBR tree depth).
 
 %This process allows us to select the best model configurations for the outcome
 %surfaces: $\mu _1(x)$ and $\mu _0(x)$.
-Third, and once we have these predicted outcome surfaces, $\mu_1(x)$ and
-$\mu_0(x)$\todo{These are bootstrapped surfaces? So maybe we should denote them
-$\mu_0^{(s)}(x_i)$?}, we are able to calculate the individual treatment effect,
-$\tau(x_i)$, for each person in the original sample (not the individuals from
-the bootstrap sample)\todo{What does this mean?} by substituting the values of their features into the
-LASSO, Ridge or tree estimators for $\mu_1(x)$ and $\mu_0(x)$. We can obtain a
-sample mean, $\bar{\tau}^{(s)}$, by averaging over all the individual
-$\tau^{(s)}(x_i)$ in the bootstrap sample, $s$. We repeat this procedure over
-$S=100$ bootstrap samples. This provides an empirical distribution of
-$\bar{\tau}$ and $\tau(x_i)$. The grand mean over the bootstrap sample means,
-$\bar{\tau}_G = \frac{1}{S} \sum_s \bar{\tau}^{(s)}$, will converge to the
-sample treatment effect mean. We use $\bar{\tau}_G$ as an estimate of the ATE,
-and $\frac{1}{S} \sum_s \tau^{(s)}(x_i)$ as an estimate of the individual CATE.
-The bootstrap resample is the same size as the original sample because the
-variation of the ATE depends on the size of the sample. Thus, to approximate
-this variation we need to use resamples of the same size.
+Third, and once we have these predicted outcome surfaces, $\mu^{(s)}_1(x)$ and
+$\mu^{(s)}_0(x)$, we are able to calculate the individual treatment effect,
+$\tau(x_i)$, for each person, $i$, in the original sample (not the individuals
+from the bootstrap sample) by substituting the values of their features into
+the LASSO, Ridge or tree estimators for the outcome surfaces. We can obtain a
+sample mean, $\bar{\tau}^{(s)}$, by averaging
+$\frac{1}{n}\sum^n_{i{=}1}\tau^{(s)}(x_i)$ using the bootstrapped effect model.
+We repeat this procedure over $S=100$ bootstrap samples. This provides an
+empirical distribution of $\bar{\tau}$ and $\tau(x_i)$. The grand mean over the
+bootstrap sample means, $\bar{\tau}_G = \frac{1}{S} \sum^S_{s{=1}}
+\bar{\tau}^{(s)}$, will converge to the sample treatment effect mean. We use
+$\bar{\tau}_G$ as an estimate of the ATE, and $\frac{1}{S} \sum^S_{s{=}1}
+\tau^{(s)}(x_i)$ as an estimate of the individual CATE. The bootstrap resample
+is the same size as the original sample because the variation of the ATE
+depends on the size of the sample. Thus, to approximate this variation we need
+to use resamples of the same size.
 
 % The main goal of repeating over the bootstrap samples is to capture uncertainty
 % coming from the model selection procedure (i.e.\\~the choice of
@@ -1105,7 +1127,10 @@ empirical bootstrap confidence interval estimators \citep{efron1986}.
 % $\tau$ instead of x and $\mu$ since these are overloaded. Or if this is a
 % standard empirical procedure, we can just reference it}
 
-For the DR-learners, similar to the T-learner, we train $\mu_1(x)$ and $\mu_0(x)$ models across 100 bootstrap samples and weight these outcome surfaces by the Propensity Score Model, which is estimated using Logistic Regression (as described above). 
+For the DR-learners, similar to the T-learner, we train $\mu_1(x)$ and
+$\mu_0(x)$ models across 100 bootstrap samples and weight these outcome
+surfaces by the propensity score model, $\rho(x)$, which is estimated using
+logistic regression (as described previously). 
 
 \subsubsection*{Inference for the Bayesian models}
 
@@ -1380,15 +1405,50 @@ a larger workforce as well as a more mobile one.
 
 \subsection{Sensitivity Analysis}
 
-For sensitivity analysis, we repeated the T-learner estimations using feature inputs values taken from individuals two years before they began study. Thus we examine if our main results are sensitive to changes in the mapping equations for the treatment and control outcome equations when features are measured closer to the event of study, compared to taking input values in 2001. We also measured outcomes four years after study began. This means that the timing between when the feature input values are measured, when a further degree commenced and was completed, as well as when the outcomes are measured, are all closer together. This necessarily leads us to estimate the short-term returns of obtaining a further degree. 
+For sensitivity analysis, we repeated the T-learner estimations using feature
+inputs values taken from individuals two years before they began study. Thus, we
+examine if our main results are sensitive to changes in the mapping equations
+for the treatment and control outcome equations when features are measured
+closer to the event of study, compared to taking input values in 2001. We also
+measured outcomes four years after study began. This means that the timing
+between when the feature input values are measured, when a further degree
+commenced and was completed, as well as when the outcomes are measured, are all
+closer together. This necessarily leads us to estimate the short-term returns
+of obtaining a further degree. 
 
-Our results from the sensitivity analysis are similar to that of the main results. Specifically, the gains in gross earnings from a further degree in the sensitivity analysis are: \$74 per week (Ridge), \$117 per week (LASSO) and \$93 per week (GBR). The key take-away from these results is that the average treatment effects in the main analysis are not sensitive to whether our features use 2001 as the input year or use the two years before study. 
+Our results from the sensitivity analysis are similar to that of the main
+results. Specifically, the gains in gross earnings from a further degree in the
+sensitivity analysis are: \$74 per week (Ridge), \$117 per week (LASSO) and
+\$93 per week (GBR). The key take-away from these results is that the average
+treatment effects in the main analysis are not sensitive to whether our
+features use 2001 as the input year or use the two years before study. 
 
-Also, the main results are not sensitive to when outcomes are measured i.e. the returns measured four years after the start of a study spell are comparable to the returns averaged over 2 to 17 years after study completion. This may point to the fact that the returns to further study are accrued in the immediate years following the completion of the degree. It also suggests the returns may not atrophy over time, especially since the majority of people who did complete a degree in the main analysis did so in the earlier years of the survey (Figure \ref{fig:yearcompdeg}). Unfortunately, our sample sizes are not sufficient to explore heterogeneity in treatment effects by the year of completion. 
+Furthermore, the main results are not sensitive to when outcomes are measured
+i.e. the returns measured four years after the start of a study spell are
+comparable to the returns averaged over 2 to 17 years after study completion.
+This may point to the fact that the returns to further study are accrued in the
+immediate years following the completion of the degree. It also suggests the
+returns may not atrophy over time, especially since the majority of people who
+did complete a degree in the main analysis did so in the earlier years of the
+survey (Figure \ref{fig:yearcompdeg}). Unfortunately, our sample sizes are not
+sufficient to explore heterogeneity in treatment effects by the year of
+completion. 
 
-The importance of employment-related features such as earnings (individual and household), wages, and hours worked are reiterated in the sensitivity analysis using the panel structure of the data. Namely, when we define our outcomes 4 years after the start of a study spell and where we define features two years before study started, we also see similar results to that of the main results. However, in Figure \ref{fig:featgbr_panel}, it is clear that the `trend' or `growth' in the values of features such as individual earnings, hours worked and household income are also important. This finding of dynamic selection is echoed in the literature \citep{jacobson2005, dynarski2016, dynarski2018}. 
+The importance of employment-related features such as earnings (individual and
+household), wages, and hours worked are reiterated in the sensitivity analysis
+using the panel structure of the data. Namely, when we define our outcomes 4
+years after the start of a study spell and where we define features two years
+before study started, we also see similar results to that of the main results.
+However, in Figure \ref{fig:featgbr_panel}, it is clear that the `trend' or
+`growth' in the values of features such as individual earnings, hours worked
+and household income are also important. This finding of dynamic selection is
+echoed in the literature \citep{jacobson2005, dynarski2016, dynarski2018}. 
 
-In Figure \ref{fig:featgbr_panel}, the feature mental health is also picked. This result may reflect the fact that the timing of the measurement of features, treatment and outcomes are all closer together compared to the main results. This means that mental health is an important factor in explaining the heterogeneity in relatively `short-term' treatment effects. 
+In Figure \ref{fig:featgbr_panel}, the feature mental health is also picked.
+This result may reflect the fact that the timing of the measurement of
+features, treatment and outcomes are all closer together compared to the main
+results. This means that mental health is an important factor in explaining the
+heterogeneity in relatively `short-term' treatment effects. 
 
 
 \section{Conclusions}
