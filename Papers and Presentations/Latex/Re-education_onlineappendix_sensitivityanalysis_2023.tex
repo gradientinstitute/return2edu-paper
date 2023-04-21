@@ -1,0 +1,405 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{tabls}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{setspace} %for setting line spacing
+\usepackage{lscape} %for using landscape 
+\usepackage[comma]{natbib} %for more flexible referencing
+\usepackage{url} %for website addresses
+\usepackage{dcolumn} %for decimal point alignment
+\usepackage{booktabs} %for professionaly looking tables
+\usepackage{tabularx} % for creating tables
+\usepackage{multirow} % columns spanning multiple rows
+\usepackage[in]{fullpage} % for smaller margins
+\usepackage[multiple, stable, bottom]{footmisc} % for multiple footnotes at the same place
+\usepackage{appendix} % to create separate appendices for each section
+\usepackage{changepage}
+\usepackage{xcolor}
+\usepackage{longtable,pdflscape,booktabs} % to extend tables over multiple pages
+\usepackage{enumerate}
+\urlstyle{same}
+\newcommand{\floatintro}[1]{\vspace*{0.1in} {\footnotesize #1} \vspace*{0.1in}}
+{\def\sym#1{\ifmmode^{#1}\else\(^{#1}\}\fi}
+\raggedbottom % To prevent white spaces between paragraphs
+\widowpenalty=10000
+\clubpenalty=10000
+\setcounter{page}{1}
+
+
+\title{Online Appendix Document 2 \\ \vspace{0.2cm} HILDA Re-education Project: Panel Sample: Sensitivity Analysis}
+\author{ }
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\onehalfspacing
+
+\section{Sample Selection}
+
+\textbf{Treated sample:} For any person in HILDA who ever reported \textit{starting} a degree (determined by taking a person who switches from reporting “not currently studying” in one wave to “currently studying” in the next wave) and/or \textit{completing} a degree, we select their first study event as a treatment observation if it satisfies three other conditions.
+
+They are: (1) at least 21 years old in the starting year of study\footnote{Note that we expanded the age range in this sensitivity analysis to ensure sufficient treatment observations for the estimation of the treatment outcome surfaces.}, (2) they were present in the two years before the start of study (in order to have information on their feature values), (3) there were not currently studying in any of the two years before the starting year of further study (to avoid reverse-causation issues), (4) they completed their further degree and (5) they were present in the survey and had a non-missing outcome 4 years after the start of study. 
+
+If a study event does not satisfy these conditions, we look to the next study event that satisfies these conditions or (if unavailable) delete the person from our sample completely. Conditions (3) and (5) together mean that we analyse a sample of individuals who started their degrees anytime between 2003 and 2015.
+
+In our treated group, 1,814 individuals \textbf{started and completed a further educational degree}. 
+
+\textbf{Control sample:} These are those who had never started re-education throughout HILDA. From these control observations, we assign a time stamp to them for the year the control person theoretically started to study. We do this for every year from 2003 to 2019. This implies that never re-educated individuals can be duplicated and used multiple times. For example, if a control individual is observed throughout the years 2001 to 2016, then they will be a control for the separate treated individuals that started re-education in 2003, in 2004, 2005 and up to 2017 i.e. the control individual will be duplicated 15 times.
+
+There are 60,945 control observations i.e. individuals who never completed a further degree. However, as described above, these are non-unique observations in the sense that a control individual can be duplicated up to 15 times. 
+
+
+\appendix
+
+\section{Variable description}
+
+\subsection{Outcome Variables}
+Weekly earnings from main job in fourth year after the individual started their re-education (\textit{f4\textunderscore{}wscmei}) records the weekly earnings from the main job for the individual in the fourth year after the individual started their re-education. 
+
+\subsection{Treatment Variables: Re-education}
+Re-education completion based on both highest attainment and detailed qualifications (\textit{redufl}) records whether the individual has completed re-education based on a comparison of the highest education attainment and the number of qualifications gained across waves 1 and 17. If either of these have gone up, \textit{redufl} takes a value of 1 and 0 otherwise. 
+
+\subsection{Input Variables}
+
+\underline{Characteristics in the Year Prior to Re-education Start}
+
+\emph{Demographics}
+
+Gender (\textit{p1\textunderscore{}hgsex}) records the gender of the individual. The value of 1 denotes males whereas the value 2 denotes females. 
+
+Age (\textit{p1\textunderscore{}hgage}) records the age of the individual in the year prior to re-education start.
+ 
+Country of birth (\textit{p1\textunderscore{}anbcob}) records whether or not an individual was born in:
+\begin{itemize}
+  \item Australia (value=1) 
+  \item English speaking countries (value=2)
+  \item Non-English speaking countries (value=3)
+\end{itemize}  
+
+Indigenous Status (\textit{p1\textunderscore{}anatsi}) records whether or not an individual is:
+\begin{itemize}
+  \item Not indigenous (value=1)
+  \item Aboriginal (value=2)
+  \item Torres Islander (value=3)
+  \item Both Aboriginal and Torres Islander (value=4) 
+\end{itemize}  
+
+Poor English speaking abilities (\textit{p1\textunderscore{}poeng}) records whether the individual has poor English speaking abilities in the year prior to re-education start. 
+
+State of residence (\textit{p1\textunderscore{}hhstate}) records the state of residence of the individual in the year prior to re-education start:
+\begin{itemize}
+  \item NSW (value=1)
+  \item VIC (value=2)
+  \item QLD (value=3)
+  \item SA (value=4)
+  \item WA (value=5)
+  \item TAS (value=6)
+  \item NT (value=7)
+  \item ACT (value=8) 
+\end{itemize}  
+
+Remoteness (\textit{p1\textunderscore{}hhsos}) records whether, in the year prior to re-education start, the individual lives in:
+\begin{itemize}
+  \item A major city (value=0)
+  \item An inner region (value=1)
+  \item Outer and remote areas (value=2) 
+  \item migratory in nature (value=3)
+\end{itemize}  
+
+Marital status (\textit{p1\textunderscore{}mrcurr}) records whether, in the year prior to re-education start, the individual was:
+\begin{itemize}
+  \item Married (value=1)
+  \item De facto (value=2)
+  \item Separated (value=3)
+  \item Divorced (value=4)
+  \item Widowed (value=5)
+  \item Single and never been married (value=6)
+\end{itemize}  
+
+Household size (\textit{p1\textunderscore{}hhsize}) records the total number of individuals living in the same household as the individual (including the individual) in the year prior to re-education start.
+
+Sexual orientation (\textit{p1\textunderscore{}lgtb}) records that the individual’s sexual orientation is not heterosexual.  The variable is constructed from the Sexual Identity question that is only asked in waves 12 and 16. We combine answers from both waves to create a binary indicator for the individual ever reporting a sexual identity that is not heterosexual, treating sexual orientation as a fixed trait for a given individual. 
+  
+\emph{Parental Status}
+
+Number of dependents (\textit{p1\textunderscore{}totalkids}) records the number of children under 15 the individual had in the household in the year prior to re-education start. 
+
+Having children (\textit{p1\textunderscore{}anykid}) records the individual had any dependents in the household in the year prior to re-education start. 
+
+Children under 5 (\textit{p1\textunderscore{}kidu5}) records the individual had children under 5 in the household in the year prior to re-education start. 
+
+Age of youngest (\textit{p1\textunderscore{}rcyng}) records the age of the youngest children living with the respondent in the year prior to re-education start (including adult children). 
+
+\emph{Physical Health}
+
+Severity of health conditions (\textit{p1\textunderscore{}disdeg}) records whether, in the year prior to re-education start, the individual had:
+\begin{itemize}
+  \item No health conditions (value=0)
+  \item A mild condition (value=1)
+  \item A moderate condition (value=2)
+  \item A severe condition (value=3)
+\end{itemize}  
+  
+\emph{Labour Force Variables}
+
+Labour market status (\textit{p1\textunderscore{}lfs}) records whether the individual was:
+\begin{itemize}
+  \item Employed (value=1)
+  \item Unemployed (value=2)
+  \item Not in the labour market (value=3)
+\end{itemize} 
+
+Extent of working hour match with preferences (\textit{p1\textunderscore{}whpref}) records whether, in the year prior to re-education start, the match between the individual’s total weekly working hours across all jobs and their preferred number of working hours made them:
+\begin{itemize}
+  \item Underemployed by at least 4 hours a week (value=1)
+  \item Roughly Matched: Preferred and Actual Hours Worked differ by less than 4 hours a week (value=2)
+  \item Overemployed by at least 4 hours a week (value=3)
+\end{itemize}  
+
+Employee type (\textit{p1\textunderscore{}emptype}) records whether, in the year prior to re-education start, the individual was:
+\begin{itemize}
+  \item An employee (value=1)
+  \item An employee of own business (value=2)
+  \item Self Employed (value=3)
+  \item Unpaid family worker (value=4)
+\end{itemize}  
+
+Contract type (\textit{p1\textunderscore{}contype}) records whether, in the year prior to re-education start, the individual was:
+\begin{itemize}
+  \item On a fixed term contract (value=1)
+  \item On a casual contract (value=2)
+  \item On a permanent contract (value=3)
+  \item On other types of contracts  (value=4)
+\end{itemize}  
+
+Occupation (\textit{p1\textunderscore{}occ}) records whether, in the year prior to re-education start, the individual was working as:
+\begin{itemize}
+  \item Armed forces (value=0)
+  \item Legislators, Senior Officials and Managers (value=1)
+  \item Professionals (value=2)
+  \item Technicians and Associate Professionals (value=3)
+  \item Clerks (value=4)
+  \item Service Workers and Shop and Market Sales Workers (value=5)
+  \item Skilled Agriculture and Fishery Workers (value=6)
+  \item Craft and Related Trades Workers (value=7)
+  \item Plant and Machine Operators and Assemblers (value=8)
+  \item Elementary Occupations (value=9)
+\end{itemize}  
+
+Union membership (\textit{p1\textunderscore{}union}) records whether the individual was a union member in the year prior to re-education start.
+
+Real household income (\textit{p1\textunderscore{}rhdi}) records the real value of the individual’s total household income indexed at 2012 price levels and adjusted for household size in the year prior to re-education start.
+
+Partner labour force status (\textit{p1\textunderscore{}plfs}) records whether, in the year prior to re-education start, the individual:
+\begin{itemize}
+  \item Had no partner or no resident partner (value=0)
+  \item Had a partner who was employed (value=1)
+  \item Had a partner who was unemployed (value=2)
+  \item Had a partner who was not in the labour force (value=3)
+\end{itemize}  
+
+Years in paid work (\textit{p1\textunderscore{}ehtjb})  records the total number of years in paid work the individual has spent in the year prior to re-education start.
+
+Percent finding as least as good a job (\textit{p1\textunderscore{}jbmpgj})  records, for employees, the percentage that they will find as least as good a job as they currently have in their own estimation in the year prior to re-education start
+
+Occupational scale (\textit{p1\textunderscore{}jbmo6s}) records the Australian Socioeconomic Index 2006 ranking of the individual’s occupation in the year prior to re-education start. It ranges from 0 to 100, with higher scores indicating higher occupational status. 
+
+Tenure with employer (\textit{p1\textunderscore{}jbempt}) records the total years spent with the current employer for the individual in the year prior to starting re-education.
+
+\emph{Parental information}
+
+Father’s country of birth (\textit{p1\textunderscore{}fcob}) records whether or not the individual’s father was born in:
+\begin{itemize}
+  \item Australia (value=1) 
+  \item English speaking countries (value=2)
+  \item Non-English speaking countries or indigenous (value=3)
+\end{itemize}  
+
+Mother’s country of birth (\textit{p1\textunderscore{}mcob}) records whether or not the individual’s mother was born in:
+\begin{itemize}
+  \item Australia (value=1)
+  \item English speaking countries (value=2)
+  \item Non-English speaking countries or indigenous (value=3)
+\end{itemize}  
+
+Father’s education records whether the individual’s father’s highest education, as reported in 2005, was:
+\begin{itemize}
+  \item None (value=1)
+  \item Primary (value=2)
+  \item Below secondary (value=3)
+  \item Secondary (value=4)
+  \item Post-secondary, non-university (value=5)
+  \item Post-secondary, university (value=6)
+\end{itemize}  
+
+Mother’s education records whether the individual’s mother’s highest education, as reported in 2005, was:
+\begin{itemize}
+  \item None (value=1)
+  \item Primary (value=2)
+  \item Below secondary (value=3)
+  \item Secondary (value=4)
+  \item Post-secondary, non-university (value=5)
+  \item Post-secondary, university (value=6)
+\end{itemize}  
+
+Father undertaken post-school qualification through employer or non-tertiary means (\textit{p\textunderscore{}fpsm}) records whether the individual’s father had undertaken his highest qualification through employers or other channels other than tertiary education, as reported in 2005. 
+
+Mother undertaken post-school qualification through employer or non-tertiary means (\textit{p\textunderscore{}mpsm}) records whether the individual’s mother had undertaken his highest qualification through employers or other channels other than tertiary education, as reported in 2005. 
+
+Father’s Employment at age 14 (\textit{p1\textunderscore{}femp}) records whether the individual’s father was working or not when they were aged 14. 
+
+Mother’s Employment at age 14 (\textit{p1\textunderscore{}memp}) records whether the individual’s mother was working or not when they were aged 14.
+
+Father substantially unemployed growing up (\textit{p1\textunderscore{}fsue}) records whether the individual’s father had been unemployed or 6 months or more when they were aged 14. 
+
+Father’s Occupation (\textit{p1\textunderscore{}focc}) records whether at age 14 the individual’s father was last known working as:
+\begin{itemize}
+  \item Armed forces (value=0)
+  \item Legislators, Senior Officials and Managers (value=1)
+  \item Professionals (value=2)
+  \item Technicians and Associate Professionals (value=3)
+  \item Clerks (value=4)
+  \item Service Workers and Shop and Market Sales Workers (value=5)
+  \item Skilled Agriculture and Fishery Workers (value=6)
+  \item Craft and Related Trades Workers (value=7)
+  \item Plant and Machine Operators and Assemblers (value=8)
+  \item Elementary Occupations (value=9)
+\end{itemize}  
+
+Mother’s Occupation (\textit{p1\textunderscore{}mocc}) records whether at age 14 the individual’s mother last known working as:
+\begin{itemize}
+  \item Armed forces (value=0)
+  \item Legislators, Senior Officials and Managers (value=1)
+  \item Professionals (value=2)
+  \item Technicians and Associate Professionals (value=3)
+  \item Clerks (value=4)
+  \item Service Workers and Shop and Market Sales Workers (value=5)
+  \item Skilled Agriculture and Fishery Workers (value=6)
+  \item Craft and Related Trades Workers (value=7)
+  \item Plant and Machine Operators and Assemblers (value=8)
+  \item Elementary Occupations (value=9)
+\end{itemize}  
+
+\emph{Income Support}
+
+On income support (\textit{p1\textunderscore{}onis}) records the individual was on income support in the year prior to starting re-education
+
+On Newstart (\textit{p1\textunderscore{}onnsa}) records the individual was on Newstart Allowance in the year prior to starting re-education
+
+On Age Pension (\textit{p1\textunderscore{}onap}) records the individual was on Age Pension in the year prior to starting re-education
+
+On DSP (\textit{p1\textunderscore{}ondsp}) records the individual was on Disability Support Pension in the year prior to starting re-education
+
+On Carer Payment (\textit{p1\textunderscore{}oncp}) records the individual was on Carer Payment in the year prior to starting re-education
+
+On Widow Allowance/Wife Pension (\textit{p1\textunderscore{}onww}) records the individual was on Widow Allowance/Wife Pension in the year prior to starting re-education
+
+On Youth Allowance (\textit{p1\textunderscore{}onya}) records the individual was on Youth Allowance in the year prior to starting re-education
+
+On Mature Age Allowance (\textit{p1\textunderscore{}onma}) records the individual was on Mature Age Allowance in the year prior to starting re-education
+
+On Mature Age Partner Allowance (\textit{p1\textunderscore{}onmap}) records the individual was on Mature Age Partner Allowance in the year prior to starting re-education
+
+On Ab/Austudy (\textit{p1\textunderscore{}onsdy}) records the individual was on Ab/Austudy in the year prior to starting re-education
+
+On Bereavement Allowance (\textit{p1\textunderscore{}onba}) records the individual was on Bereavement Allowance in the year prior to starting re-education
+
+On Sickness Allowance/Speical Benefits (\textit{p1\textunderscore{}onsab}) records the individual was on Sickness Allowance/Speical Benefits in the year prior to starting re-education
+
+On Partner Allowance (\textit{p1\textunderscore{}onpa}) records the individual was on Partner Allowance in the year prior to starting re-education
+
+On Parenting Payments (\textit{p1\textunderscore{}onpp}) records the individual was on Parenting Payments in the year prior to starting re-education
+
+\emph{Housing situation}
+
+Mortgage balance (\textit{p1\textunderscore{}hsmgowe}) records the amount still owing on the mortgage that the individual had in the year prior to re-education start. For those without a mortgage or not home owner, the mortgage balance is set to 0. 
+
+Non home owners (\textit{p1\textunderscore{}renter}) records whether the individual was renting or not living in their own homes in the year prior to re-education start.
+
+
+\emph{Prior Year Outcomes}
+
+Weekly income from all jobs (\textit{p1\textunderscore{}earning}) records the weekly earnings from all jobs for the individual in the year prior to the individual starting their re-education. 
+
+Weekly income from main job (\textit{p1\textunderscore{}wscmei}) records the weekly earnings from the main job for the individual in the year prior to the individual starting their re-education.
+ 
+Weekly working hours (\textit{p1\textunderscore{}wkhr}) records the total number of hours the individual works in all jobs in a week on average in the year prior to the individual started their re-education. Working hours are set to 0 for those not working. 
+
+Real hourly wage (\textit{p1\textunderscore{}rlwage}) records the real hourly wage of the individual in the year prior to the individual starting their re-education, indexed at 2012 price levels. Hourly wages are set to 0 for those not working and set to missing for those reporting working more than 100 hours a week. All wages have then been adjusted up by \$1 to preserve sample size for the logarithm transformation. 
+
+Log hourly wage (\textit{p1\textunderscore{}lnwage}) records the log of  \textit{p1\textunderscore{}rlwage}. 
+
+Mental health (\textit{p1\textunderscore{}ghmh}) records the transformed mental health scores from the aggregation of mental health items of the SF-36 Health Survey, as reported by the individual in the year prior to the individual started their re-education. It ranges from 0 to 100, with higher scores indicating better mental health.   
+
+Life satisfaction (\textit{p1\textunderscore{}losat}) records the life satisfaction score reported by the individual in the year prior to the individual started their re-education. It ranges from 0 to 10, with higher scores indicating higher life satisfaction. 
+
+\underline{Delta variables}
+
+For all the variables described in the preceding section titled Characteristics in the Year Prior to Re-education Start, we create a further set of change or delta variables. Specifically, each delta variable is the subtracting of the value of a given characteristic in the two years prior to starting re-education from the value of this characteristic in the year prior to re-education start. 
+
+All delta variables are denoted by the d\textunderscore{} prefix. 
+
+\underline{Education-related variables}
+
+Level of re-education completed: Bachelor and above (\textit{bachab}) records whether the individual had completed re-education at bachelor and above. The variable is set to 0 for the control group and missing for those who had completed certificates. 
+
+Level of re-education completed: Below Bachelor (\textit{bbach}) records whether the individual had completed re-education that is below bachelor level. The variable is set to 0 for the control group and missing for those who had completed a bachelor or higher qualification. 
+
+Main field of study: technical degree (\textit{techdeg}) records whether the individual’s main field of study was a technical degree. The variable is set to 0 for the control group and missing for those whose main field of study was a qualitative degree. Technical degrees include:
+\begin{itemize}
+  \item Natural and physical sciences
+  \item Information technology
+  \item Engineering and related technologies
+  \item Architecture and building
+  \item Agriculture, environment and related studies
+  \item Medicine
+  \item Nursing
+  \item Other health-related (e.g. Pharmacy, Dental studies, Rehabilitation therapies, Optical science, Veterinary studies) 
+  \item Management and commerce (e.g. Accounting, Business, Sales and marketing, Banking and finance, Office studies) 
+  \item Law
+\end{itemize}  
+
+Main field of study: qualitative degree (\textit{qualdeg}) records whether the individual’s main field of study was a qualitative degree. The variable is set to 0 for the control group and missing for those whose main field of study was a technical degree. Qualitative degrees include:
+\begin{itemize} 
+  \item Education
+  \item Society and culture (e.g. Economics, Political science, Social work, History, Psychology, Languages, Religion, Sport)
+  \item Creative arts
+  \item Food, hospitality and personal services
+  \item Other
+\end{itemize}  
+
+Study duration (\textit{fsddur}) records the total number of waves an individual had spent studying from the start of their first study event counted in our sample. 
+
+Starting Study intensity (\textit{csftsd}) records whether the individual was studying full time or not when they started their re-education. 
+
+Finishing Study intensity (\textit{fsftsd}) records whether the individual was studying full time or not when they completed their re-education. 
+
+\underline{Other variables}
+
+Number of waves in HILDA (\textit{numwave}) records the number of waves in which the respondent has submitted a valid response for the HILDA survey. 
+
+\subsection{Variables that are not included in the model}
+
+The unique person identifier (\textit{xwaveid})
+
+Wave started re-education (\textit{icswave}) 
+
+Wave completed re-education (\textit{ifswave}) 
+
+Control group indicator (\textit{control}) 
+
+Started but did not complete re-education between 2003-2017 (\textit{ncomp}) 
+
+Starting year of re-education imputed (\textit{impute}) is a binary indicator for individuals for which we observe their re-education completion but they never reported ever starting re-education and so we had to impute a starting wave for these individuals.  
+
+Started re-educaton in wave 2018/19 (\textit{latestart}) is an indicator for those individuals who had started their re-education in 2018 or 2019. 
+
+
+
+\end{document}
+

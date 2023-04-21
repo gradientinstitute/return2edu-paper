@@ -1,0 +1,399 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{tabls}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{amsmath}
+\usepackage{setspace} %for setting line spacing
+\usepackage{lscape} %for using landscape 
+\usepackage[comma]{natbib} %for more flexible referencing
+\usepackage{url} %for website addresses
+\usepackage{dcolumn} %for decimal point alignment
+\usepackage{booktabs} %for professionaly looking tables
+\usepackage{tabularx} % for creating tables
+\usepackage{multirow} % columns spanning multiple rows
+\usepackage[in]{fullpage} % for smaller margins
+\usepackage[multiple, stable, bottom]{footmisc} % for multiple footnotes at the same place
+\usepackage{appendix} % to create separate appendices for each section
+\usepackage{changepage}
+\usepackage{xcolor}
+\usepackage{longtable,pdflscape,booktabs} % to extend tables over multiple pages
+\usepackage{enumerate}
+\urlstyle{same}
+\newcommand{\floatintro}[1]{\vspace*{0.1in} {\footnotesize #1} \vspace*{0.1in}}
+{\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\raggedbottom % To prevent white spaces between paragraphs
+\widowpenalty=10000
+\clubpenalty=10000
+\setcounter{page}{1}
+
+\title{Online Appendix Document 1 \\ \vspace{0.2cm} HILDA Re-education Project: Main Sample}
+\author{ }
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\onehalfspacing
+
+\section{Sample Selection}
+
+Our analysis sample includes everyone who was 25 or above and not currently studying in 2001, who are observed in both 2001 and 2019 in terms of the outcome and treatment variables. 
+
+We delete any individuals who were currently studying in 2001 if:
+\begin{itemize}
+  \item They reported currently studying full part or part time for the main survey 
+  \item According to the calendar, they have undertaken any full time or part time studies
+  \item They are currently receiving Abstudy/Austudy payment or had received these last financial year 
+  \item They have cited study as the reason for not looking for work 
+\end{itemize}
+
+1078 individuals were deleted after applying this sample exclusion.
+
+\appendix
+
+\section{Variable description}
+
+\subsection{Outcome Variables}
+Weekly earnings from main job in 2019 (\textit{w19\textunderscore{}wscmei}) records the weekly earnings from the main job for the individual in 2019. 
+
+Employed in 2019 (\textit{w19\textunderscore{}employed}) records whether the individual is employed in 2019 or not. 
+
+Weekly earnings from all jobs in 2019 (\textit{w19\textunderscore{}earning}) records the weekly earnings from all jobs for the individual in 2019. 
+
+Working hours in 2019 (\textit{w19\textunderscore{}wkhr}) records the total number of hours the individual works in all jobs in a week on average. Working hours are set to 0 for those not working. 
+
+\subsection{Treatment Variables: Re-education}
+Re-education based on highest attainment\footnote{The HILDA variable on highest attainment was constructed using three components: the age the individual left school, the highest education attainment in the previous wave and the current level of secondary school attained or currently studying for.} (\textit{reduhl}) records whether the individual has had re-education between 2002 and 2017, based on whether there was a change in the highest education level attained stated in the two years.  
+
+Re-education completion based on detailed qualifications (\textit{redudl}) records whether the individual has completed any one of the following qualifications since last interviewed between 2002 and 2017\footnote{Refer to https://en.wikipedia.org/wiki/Australian\textunderscore{}Qualifications\textunderscore{}Framework for how most of these degrees are situated relative to each other in a hierarchy and the duration of these qualifications.}:
+
+\begin{itemize}
+  \item Trade certificate or apprenticeship
+  \item Technicians cert/Advanced certificate
+  \item Teaching qualification 
+  \item Nursing qualification 
+  \item Associate Degree
+  \item Advance Diploma (3 years full time or equivalent)
+  \item Bachelor degree but not honours
+  \item Certificate I
+  \item Certificate II
+  \item Certificate III
+  \item Certificate IV
+  \item Certificate of unknown level
+  \item Doctorate
+  \item Diploma NFI
+  \item Diploma (2 years full time or equivalent)
+  \item Graduate Certificate
+  \item Graduate Diploma 
+  \item Honours 
+  \item Masters 
+  \item Other 
+\end{itemize}  
+
+Re-education completion based on both highest attainment and detailed qualifications (\textit{redufl}) records whether the individual has completed re-education based on both the variables \textit{reduhl} and \textit{redudl}. When either of these variables has a value of 1, this variable will take on the value of 1. 
+
+\subsection{Input Variables}
+For each variable, missing values (if any) have been set to zero and a new binary variable has been generated to indicate the observations that are missing. 
+
+\emph{Demographics}
+
+Female (\textit{p\textunderscore{}fem}) records whether the individual is female. 
+
+Age group in 2001 records whether in 2001 the individual was:
+\begin{itemize}
+  \item Aged 25-34 (\textit{p\textunderscore{}age1})
+  \item Aged 35-44 (\textit{p\textunderscore{}age2})
+  \item Aged 45-54 (\textit{p\textunderscore{}age3})
+  \item Aged 55-64 (\textit{p\textunderscore{}age4})
+  \item Aged 65 and above (\textit{p\textunderscore{}age5})
+ \end{itemize} 
+
+Country of birth records whether or not an individual was born in:
+\begin{itemize}
+  \item Australia and not indigenous (\textit{p\textunderscore{}cob1}) 
+  \item English speaking countries (\textit{p\textunderscore{}cob2})
+  \item Non-English speaking countries (\textit{p\textunderscore{}cob3})
+  \item Indigenous (\textit{p\textunderscore{}cob4})
+\end{itemize}  
+  
+Poor English speaking abilities (\textit{p\textunderscore{}poeng}) records whether the individual has poor English speaking abilities. 
+
+Remoteness records whether the individual lives in:
+\begin{itemize}
+  \item A major city (\textit{p\textunderscore{}urdg1})
+  \item An inner region (\textit{p\textunderscore{}urdg2}) 
+  \item Outer and remote areas or migratory in nature (\textit{p\textunderscore{}urdg3})
+\end{itemize}  
+  
+Marital status in 2001 records whether in 2001 the individual was:
+\begin{itemize}
+  \item Married (\textit{p\textunderscore{}mar1})
+  \item De facto (\textit{p\textunderscore{}mar2})
+  \item Separated (\textit{p\textunderscore{}mar3})
+  \item Divorced (\textit{p\textunderscore{}mar4})
+  \item Widowed (\textit{p\textunderscore{}mar5})
+  \item Single and never been married (\textit{p\textunderscore{}mar6})
+\end{itemize}  
+  
+\emph{Parental Status}
+
+Number of dependents in 2001 (\textit{p\textunderscore{}noch}) records the number of dependent children the individual had in 2001. 
+
+\emph{Physical Health}
+
+Severity of health conditions in 2001 records whether the individual had:
+\begin{itemize}
+  \item No health conditions (\textit{p\textunderscore{}ddeg1})
+  \item A mild condition (\textit{p\textunderscore{}ddeg2})
+  \item A moderate condition (\textit{p\textunderscore{}ddeg3})
+  \item A severe condition (\textit{p\textunderscore{}ddeg4})
+\end{itemize}  
+  
+\emph{Labour Force Variables}
+
+Labour market status in 2001 records whether the individual was:
+\begin{itemize}
+  \item Employed (\textit{p\textunderscore{}lfs1})
+  \item Unemployed (\textit{p\textunderscore{}lfs2})
+  \item Not in the labour market (\textit{p\textunderscore{}lfs3})
+\end{itemize} 
+
+Extent of working hour match with preferences in 2001 records whether the match between the individual’s total weekly working hours across all jobs and their preferred number of working hours made them:
+\begin{itemize}
+  \item Not working (\textit{p\textunderscore{}whp1})
+  \item Underemployed by at least 4 hours a week  (\textit{p\textunderscore{}whp2})
+  \item Roughly Matched: Preferred and Actual Hours Worked differ by less than 4 hours a week (\textit{p\textunderscore{}whp3})
+  \item Overemployed by at least 4 hours a week  (\textit{p\textunderscore{}whp4})
+\end{itemize}  
+  
+Employee type in 2001 records whether the individual was:
+\begin{itemize}
+  \item Not working (\textit{p\textunderscore{}emp1})
+  \item An employee (\textit{p\textunderscore{}emp2})
+  \item An employee of own business (\textit{p\textunderscore{}emp3})
+  \item Self Employed (\textit{p\textunderscore{}emp4})
+  \item Unpaid family worker (\textit{p\textunderscore{}emp5})
+\end{itemize}  
+  
+Contract type in 2001 records whether the individual was:
+\begin{itemize}
+  \item Not working (\textit{p\textunderscore{}con1})
+  \item On a fixed term contract (\textit{p\textunderscore{}con2})
+  \item On a casual contract (\textit{p\textunderscore{}con3})
+  \item On a permanent contract (\textit{p\textunderscore{}con4})
+  \item On other types of contracts (\textit{p\textunderscore{}con5})
+\end{itemize}  
+  
+Occupation in 2001 records whether the individual was working as:
+\begin{itemize}
+  \item Not working (\textit{p\textunderscore{}occ1})
+  \item Armed forces (\textit{p\textunderscore{}occ2})
+  \item Legislators, Senior Officials and Managers (\textit{p\textunderscore{}occ3})
+  \item Professionals (\textit{p\textunderscore{}occ4})
+  \item Technicians and Associate Professionals (\textit{p\textunderscore{}occ5})
+  \item Clerks (\textit{p\textunderscore{}occ6})
+  \item Service Workers and Shop and Market Sales Workers (\textit{p\textunderscore{}occ7})
+  \item Skilled Agriculture and Fishery Workers (\textit{p\textunderscore{}occ8})
+  \item Craft and Related Trades Workers (\textit{p\textunderscore{}occ9})
+  \item Plant and Machine Operators and Assemblers (\textit{p\textunderscore{}occ10})
+  \item Elementary Occupations (\textit{p\textunderscore{}occ11})
+\end{itemize}  
+  
+Household income in 2001 (\textit{p\textunderscore{}rehdi}) records the real value of the individual’s total household income indexed at 2012 price levels and adjusted for household size.
+ 
+Partner labour force status in 2001 records whether the individual had:
+\begin{itemize}
+  \item No partner or no resident partner (\textit{p\textunderscore{}plfs1})
+  \item A partner who was employed (\textit{p\textunderscore{}plfs2})
+  \item A partner who was unemployed (\textit{p\textunderscore{}plfs3})
+  \item A partner who was not in the labour force (\textit{p\textunderscore{}plfs4})
+\end{itemize}  
+  
+\emph{Parental information}
+
+Father’s country of birth records whether or not the individual’s father was born in:
+\begin{itemize}
+  \item Australia (\textit{p\textunderscore{}fcob1}) 
+  \item English speaking countries (\textit{p\textunderscore{}fcob2})
+  \item Non-English speaking countries or indigenous (\textit{p\textunderscore{}fcob3})
+\end{itemize}  
+ 
+Mother’s country of birth records whether or not the individual’s mother was born in:
+\begin{itemize}
+  \item Australia (\textit{p\textunderscore{}mcob1}) 
+  \item English speaking countries (\textit{p\textunderscore{}mcob2})
+  \item Non-English speaking countries or indigenous (\textit{p\textunderscore{}mcob3})
+\end{itemize}  
+ 
+Father’s education records whether the individual’s father’s highest education, as reported in 2005, was:
+\begin{itemize}
+  \item None (\textit{p\textunderscore{}fedu1})
+  \item Primary (\textit{p\textunderscore{}fedu2})
+  \item Below secondary (\textit{p\textunderscore{}fedu3})
+  \item Secondary (\textit{p\textunderscore{}fedu4})
+  \item Post-secondary, non-university (\textit{p\textunderscore{}fedu5})
+  \item Post-secondary, university (\textit{p\textunderscore{}fedu6}) 
+\end{itemize}
+ 
+Mother’s education records whether the individual’s mother’s highest education, as reported in 2005, was:
+\begin{itemize}
+  \item None (\textit{p\textunderscore{}medu1})
+  \item Primary (\textit{p\textunderscore{}medu2})
+  \item Below secondary (\textit{p\textunderscore{}medu3})
+  \item Secondary (\textit{p\textunderscore{}medu4})
+  \item Post-secondary, non-university (\textit{p\textunderscore{}medu5})
+  \item Post-secondary, university (\textit{p\textunderscore{}medu6}) 
+\end{itemize}  
+ 
+Father undertaken post-school qualification through employer or non-tertiary means (\textit{p\textunderscore{}fpsm}) records whether the individual’s father had undertaken his highest qualification through employers or other channels other than tertiary education, as reported in 2005. 
+
+Mother undertaken post-school qualification through employer or non-tertiary means (\textit{p\textunderscore{}mpsm}) records whether the individual’s mother had undertaken his highest qualification through employers or other channels other than tertiary education, as reported in 2005. 
+
+Father’s Employment at age 14 records whether the individual’s father was working when they were aged 14, in the following categories:
+\begin{itemize}
+  \item Father deceased or not living with respondent (\textit{p\textunderscore{}femp1})
+  \item Father not employed (\textit{p\textunderscore{}femp2})
+  \item Father employed (\textit{p\textunderscore{}femp3})
+\end{itemize}  
+ 
+Mother’s Employment at age 14 (\textit{p\textunderscore{}memp}) records whether the individual’s mother was working when they were aged 14, in the following categories:
+\begin{itemize}
+  \item Mother deceased or not living with respondent (\textit{p\textunderscore{}memp1})
+  \item Mother not employed (\textit{p\textunderscore{}memp2})
+  \item Mother employed (\textit{p\textunderscore{}memp3})
+\end{itemize}  
+ 
+Father substantially unemployed growing up records whether the individual’s father had been unemployed for 6 months or more when they were growing up, in the following categories:
+\begin{itemize}
+  \item Father not living with respondent (\textit{p\textunderscore{}fsue1})
+  \item Father not substantially unemployed (\textit{p\textunderscore{}fsue2})
+  \item Father substantially unemployed (\textit{p\textunderscore{}fsue3})
+\end{itemize} 
+
+Father’s Occupation records whether at age 14 the individual’s father was last known working as:
+\begin{itemize}
+  \item Father not in household (\textit{p\textunderscore{}focc1})
+  \item Armed forces (\textit{p\textunderscore{}focc2})
+  \item Legislators, Senior Officials and Managers (\textit{p\textunderscore{}focc3})
+  \item Professionals (\textit{p\textunderscore{}focc4})
+  \item Technicians and Associate Professionals (\textit{p\textunderscore{}focc5})
+  \item Clerks (\textit{p\textunderscore{}focc6})
+  \item Service Workers and Shop and Market Sales Workers (\textit{p\textunderscore{}focc7})
+  \item Skilled Agriculture and Fishery Workers (\textit{p\textunderscore{}focc8})
+  \item Craft and Related Trades Workers (\textit{p\textunderscore{}focc9})
+  \item Plant and Machine Operators and Assemblers (\textit{p\textunderscore{}focc10})
+  \item Elementary Occupations (\textit{p\textunderscore{}focc11})
+\end{itemize}  
+ 
+Mother’s Occupation records whether at age 14 the individual’s mother last known working as:
+\begin{itemize}
+  \item Moher not in household (\textit{p\textunderscore{}focc1})
+  \item Armed forces (\textit{p\textunderscore{}mocc2})
+  \item Legislators, Senior Officials and Managers (\textit{p\textunderscore{}mocc3})
+  \item Professionals (\textit{p\textunderscore{}mocc4})
+  \item Technicians and Associate Professionals (\textit{p\textunderscore{}mocc5})
+  \item Clerks (\textit{p\textunderscore{}mocc6})
+  \item Service Workers and Shop and Market Sales Workers (\textit{p\textunderscore{}mocc7})
+  \item Skilled Agriculture and Fishery Workers (\textit{p\textunderscore{}mocc8})
+  \item Craft and Related Trades Workers (\textit{p\textunderscore{}mocc9})
+  \item Plant and Machine Operators and Assemblers (\textit{p\textunderscore{}mocc10})
+  \item Elementary Occupations (\textit{p\textunderscore{}mocc11})
+\end{itemize}  
+  
+\emph{Non-cognitive variables}
+
+Well-being in 2001 (\textit{p\textunderscore{}losat}) records the life satisfaction score, which ranges from 0 to 10, of the individual reported in 2001. A higher score means the individual is more satisfied with his/her life.
+
+Attitude towards having job in 2001 (\textit{p\textunderscore{}jbwk}) records the average score of attitude towards having a job reported by the individual in 2001 across two items (\textit{p\textunderscore{}jadnm} and \textit{p\textunderscore{}jahpj}), in a scale ranging from 1 to 7, with a higher score indicating a more favourable attitude towards having a job. 
+
+Enjoy job without needing money in 2001 (\textit{p\textunderscore{}jadnm}) records the extent the individual agreed with the statement that the person would enjoy having a job even if they did not need the money in 2001, in a scale ranging from 1 to 7, with a higher score indicating more agreement.
+
+Important to have paying job in 2001 (\textit{p\textunderscore{}jahpj}) records the extent the individual agreed with the statement that in order to be happy in life it is important to have a paying job in 2001, in a scale ranging from 1 to 7, with a higher score indicating more agreement.
+
+\emph{Prior Year Outcome variables}
+
+Mental health in 2001 (\textit{p\textunderscore{}mh01}). This is the transformed mental health scores from the aggregation of mental health items of the SF-36 Health Survey, as reported by the individual in 2001. It ranges from 0 to 100, with higher scores indicating better mental health.   
+
+Mental health in 2001 below norm (\textit{p\textunderscore{}mb01}) records whether the individual’s mental health scores for 2001 was below the average of mental health scores across our analytical sample for that year. 
+
+Working hours in 2001 (\textit{p\textunderscore{}wh01}) records the number of hours the individual works across all jobs in a week on average. Working hours are set to 0 for those not working.
+
+Hourly Wages in 2001 (\textit{p\textunderscore{}hrw01}) records the average hourly wage of the individual’s main job in 2001. Hourly wages are set to 0 for those not working and set to missing for those reporting working more than 100 hours a week. 
+
+\subsection{Variables that are not included in the model}
+
+The unique person identifier (\textit{xwaveid}).
+
+Completed re-education after 2017 based on highest education (\textit{rehllt}) records whether the individual had only completed their re-education after 2017, comparing their education level in 2017 and 2019.
+
+Completed re-education after 2017 based on detailed qualifications (\textit{redllt}) records whether the individual has completed any one of the following qualifications since last interviewed between 2018 and 2019:
+
+\begin{itemize}
+  \item Trade certificate or apprenticeship
+  \item Technicians cert/Advanced certificate
+  \item Teaching qualification 
+  \item Nursing qualification 
+  \item Associate Degree
+  \item Advance Diploma (3 years full time or equivalent)
+  \item Bachelor degree but not honours
+  \item Certificate I
+  \item Certificate II
+  \item Certificate III
+  \item Certificate IV
+  \item Certificate of unknown level
+  \item Doctorate
+  \item Diploma NFI
+  \item Diploma (2 years full time or equivalent)
+  \item Graduate Certificate
+  \item Graduate Diploma 
+  \item Honours 
+  \item Masters 
+  \item Other 
+\end{itemize}  
+  
+Completed re-education after 2017 based on both highest attainment and detailed qualifications (\textit{refllt}) records whether the individual has completed re-education after 2017 based on both the variables \textit{rehllt} and \textit{redllt}. When either of these variables has a value of 1, this variable will take on the value of 1. 
+
+\emph{Timing of Education Completion}
+
+Year of first re-education completion records the year of the first reported instance of re-education completion as provided by the detailed qualification variables and include the following categories:
+\begin{itemize}
+  \item 2002 (\textit{p\textunderscore{}rcom1})
+  \item 2003 (\textit{p\textunderscore{}rcom2})
+  \item 2004 (\textit{p\textunderscore{}rcom3})
+  \item 2005 (\textit{p\textunderscore{}rcom4})
+  \item 2006 (\textit{p\textunderscore{}rcom5})
+  \item 2007 (\textit{p\textunderscore{}rcom6})
+  \item 2008 (\textit{p\textunderscore{}rcom7})
+  \item 2009 (\textit{p\textunderscore{}rcom8})
+  \item 2010 (\textit{p\textunderscore{}rcom9})
+  \item 2011 (\textit{p\textunderscore{}rcom10})
+  \item 2012 (\textit{p\textunderscore{}rcom11})
+  \item 2013 (\textit{p\textunderscore{}rcom12})
+  \item 2014 (\textit{p\textunderscore{}rcom13})
+  \item 2015 (\textit{p\textunderscore{}rcom14})
+  \item 2016 (\textit{p\textunderscore{}rcom15})
+  \item 2017 (\textit{p\textunderscore{}rcom16})
+  \item 2018 (\textit{p\textunderscore{}rcom17})
+  \item 2019 (\textit{p\textunderscore{}rcom18})
+\end{itemize}  
+  
+Locus of control in 2003 (\textit{p\textunderscore{}cotrl}) records the transformed composite score\footnote{See Buddlemeyer and Powdthavee (2015) for details of the transformation.} for locus of control items reported by the individual in 2003, the first year in HILDA for which this information becomes available. The transformation results in a variable that is ranged between 7 and 49. Locus of control measures the degree to which individuals attribute outcomes to internal versus external factors or the extent their welfare are in their own control compared to external circumstances. A higher score indicates having a more external locus of control, which is considered as a favourable personality trait. 
+
+Frequency of reading books in 2012 (\textit{p\textunderscore{}rdf}) records the frequency the individual reads books in 2012, the first year in HILDA for which this information becomes available. This is a proxy for love of learning\footnote{HILDA contains a question on reading newspapers and magazines but we feel that reflects a care for or understanding of current issues more than a love of learning.}. This is a categorical variable encompassing the following frequencies:
+\begin{itemize}
+  \item Every day or most days (\textit{p\textunderscore{}rdf1}) 
+  \item Several times a week (\textit{p\textunderscore{}rdf2}) 
+  \item About once a week (\textit{p\textunderscore{}rdf3}) 
+  \item 2 or 3 times a month (\textit{p\textunderscore{}rdf4}) 
+  \item About once a month (\textit{p\textunderscore{}rdf5}) 
+  \item Less than once a month (\textit{p\textunderscore{}rdf6}) 
+  \item Never (\textit{p\textunderscore{}rdf7}) 
+\end{itemize}
+
+
+
+\end{document}
+
