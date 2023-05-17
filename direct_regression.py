@@ -166,10 +166,16 @@ def seperate_and_transform_data(data, treatment, outcome):
     return X0, X1, y0, y1, X, y, t, features
 
 
-def print_unconditional_effects(data, treatment, y0, y1):
+def print_unconditional_effects(data, treatment, y0, y1, logodds=False):
     print(f"Proportion Treated:{100*data[treatment].mean():.0f}%")
     print(f"Average outcome under Control:{y0.mean():.2f}±{y0.std()/np.sqrt(len(y0)):.2f}")
     print(f"Average outcome under Treatment:{y1.mean():.2f}±{y1.std()/np.sqrt(len(y1)):.2f}")
+    if logodds:
+        p0 = y0.mean()
+        p1 = y1.mean()
+        lodds = np.log(p1/p0)
+        print(f"Unadjusted treatment estimate (log-odds) {lodds:.2f}")
+        return
     print(f"Unadjusted treatment estimate {y1.mean() - y0.mean():.2f}")
 
 
