@@ -175,7 +175,6 @@ def print_unconditional_effects(data, treatment, y0, y1, logodds=False):
         p1 = y1.mean()
         lodds = np.log(p1/p0)
         print(f"Unadjusted treatment estimate (log-odds) {lodds:.2f}")
-        return
     print(f"Unadjusted treatment estimate {y1.mean() - y0.mean():.2f}")
 
 
