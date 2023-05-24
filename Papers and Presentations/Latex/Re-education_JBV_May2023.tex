@@ -13,6 +13,13 @@
 %\usepackage{chapterbib} % For a separate bibliography for each section
 %\usepackage[natbib=true,backend=bibtex,style=authoryear]{biblatex}
 \usepackage[comma]{natbib} %for more flexible referencing
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+    }
 
 \usepackage{url} %for website addresses
 \usepackage{dcolumn} %for decimal point alignment
@@ -51,7 +58,7 @@
 %\geometry{left=1.5in,right=1.5in,top=1.5in,bottom=1.5in}
 
 
-\title{THE ECONOMIC EFFECT OF GAINING A NEW QUALIFICATION IN LATER LIFE\thanks{\scriptsize{Corresponding author: Anna Zhu, RMIT University. Email: anna.zhu@rmit.edu.au. \newline We thank Tim Robinson, Hayley Fisher, Bruce Bradbury and numerous seminar and conference participants for helpful comments. The authors would like to thank Tessa Loriggio, Prabath Abeysekara, Michael Duffield, and Yin-King Fok for their excellent research assistance. \newline Zhu acknowledges the support of the Australian Research Council Linkage Project (LP170100472). This paper uses unit record data from the Household, Income and Labour Dynamics in Australia (HILDA) Survey. The HILDA Project was initiated and is funded by the Australian Government Department of Social Services (DSS), and is managed by the Melbourne Institute of Applied Economic and Social Research (Melbourne Institute). The findings and views reported in this paper, however, are those of the authors and should not be attributed to either DSS or the Melbourne Institute.}}} \vspace{0.2cm} \author{Finn Lattimore$^1$\thanks{\scriptsize{This work was performed while the author was working at the Gradient Institute. Views expressed in this paper are those of the author and do not reflect those of the Reserve Bank of Australia.}}\vspace{0.2cm} ,  Daniel Steinberg$^2$ and Anna Zhu$^3$ \\\small {$^1$Reserve Bank of Australia} \vspace{0.2cm} \\ {$^2$Gradient Institute} \vspace{0.2cm} \\ {$^3$RMIT University, IZA}}
+\title{LATE-CAREER ENTREPRENEURSHIP AND EARNINGS: THE ROLE OF FORMAL RETRAINING AND UPSKILLING\thanks{\scriptsize{Corresponding author: Anna Zhu, RMIT University. Email: anna.zhu@rmit.edu.au. \newline We thank Tim Robinson, Hayley Fisher, Bruce Bradbury and numerous seminar and conference participants for helpful comments. The authors would like to thank Tessa LoRiggio, Prabath Abeysekara, Michael Duffield, and Yin-King Fok for their excellent research assistance. \newline Zhu acknowledges the support of the Australian Research Council Linkage Project (LP170100472). This paper uses unit record data from the Household, Income and Labour Dynamics in Australia (HILDA) Survey. The HILDA Project was initiated and is funded by the Australian Government Department of Social Services (DSS), and is managed by the Melbourne Institute of Applied Economic and Social Research (Melbourne Institute). The findings and views reported in this paper, however, are those of the authors and should not be attributed to either DSS or the Melbourne Institute.}}} \vspace{0.2cm} \author{Finn Lattimore$^1$\thanks{\scriptsize{This work was performed while the author was working at the Gradient Institute. Views expressed in this paper are those of the author and do not reflect those of the Reserve Bank of Australia.}}\vspace{0.2cm} ,  Daniel Steinberg$^2$ and Anna Zhu$^3$ \\\small {$^1$Reserve Bank of Australia} \vspace{0.2cm} \\ {$^2$Gradient Institute} \vspace{0.2cm} \\ {$^3$RMIT University, IZA}}
 
 
 \begin{document}
@@ -68,21 +75,16 @@
 
 \begin{abstract}
 
-  Pursuing educational qualifications later in life is an increasingly common
-  phenomenon within OECD countries since technological change and automation
-  continues to drive the evolution of skills needed in many professions. We
-  focus on the causal impacts to economic returns of degrees completed later in
+  Pursuing formal retraining or an additional educational degree may constitute an important ingredient in the the late-career entrepreneurial path, provide a bridge to later retirement and/or increase earnings in later-career. We focus on the causal impacts to economic returns of degrees completed later in
   life, where motivations and capabilities to acquire additional education may
-  be distinct from education in early years. We revisit this long-studied question with new methodological techniques by adapting machine learning models for causal inference. We find that completing an additional degree leads to more than \$3000 (AUD, 2019) per year compared to
-  those who do not complete additional study. For outcomes, treatment and
+  be distinct from education in early years. We revisit this long-studied question with new methodological techniques by adapting machine learning models for causal inference. We find that completing an additional degree increases the probability of being self-employed by 1-2 percentage points and leads to more than \$3000 (AUD, 2019) per year compared to
+  those who do not complete additional study in later-life. For outcomes, treatment and
   controls we use the extremely rich and nationally representative longitudinal
   data from the Household Income and Labour Dynamics Australia survey. 
   To take full advantage of the complexity and richness of these
   data we use a Machine Learning (ML) based methodology to estimate the causal
   effect. We are also able to use ML to discover sources of heterogeneity in
-  the effects of gaining additional qualifications, for example those younger
-  than 45 years of age tend to reap more benefits (as much as \$50 per week) 
-  than others.
+  the effects of gaining additional qualifications.
 
 \end{abstract}
 
@@ -98,85 +100,111 @@
 
 \section{Introduction}
 
-Pursuing educational qualifications later in life is an increasingly common
-phenomenon within OECD countries \citep{oecd2016}. Technological change and
-automation continues to drive the evolution of skills needed in many
-professions, or to oust the human workforce in others. This is particularly
-true for middle-income workers performing routine tasks
-\citep{autor2008,acemoglu2011}. Also at the lower end of the
-income-distribution, such as among welfare recipients, governments are
-increasingly trying to promote the idea of life-long learning.
 
-This paper contributes to understanding the efficacy of these decisions made by governments and individuals to pursue mature-age learning by estimating the causal effect on earnings. Our paper expands on the education literature, which has focused mainly on younger students, by estimating the returns to older cohorts. Previous research points to positive and significant wage premiums for younger cohorts with more education, ranging between 5 and 15\% \citep{angrist1991, harmon2003, machin2006, harmon1995}. The wage returns to education may be more uncertain for older students as they face higher opportunity costs to study and need to navigate a more fragmented system in the post-secondary education setting. Wage premiums from vocational and community college education are also found to be strong and positive \citep{jacobson2005, chesters2015, zeiden2015, polidano2016, xu2016, belfield2017, dynarski2016, dynarski2018, mountjoy2022}, particularly for female students \citep{belfield2017, zeiden2015, perales2017}. The effects are even stronger after accounting for earnings growth prior to enrolment, as workers who earn awards tend to have flatter earnings growth prior to enrolment \citep{dynarski2016, dynarski2018}. 
+Later-career entrepreneurship has been found to extend careers, provide job autonomy and flexibility \citep{hundley2001}, improve health \citep{stephan2010}, increase life satisfaction \citep{parker2007, kautonen2017, lombard2001}, and lift earnings \citep{levine2017, astebro2014}. Such benefits can also improve individuals’ retirement security by delaying pension claiming and increasing savings for retirement \citep{kibler2012}, as well as provide societal benefits via government budget savings in pension payouts and welfare programs \citep{herneas2016, kautonen2017}. On the other hand, later-career entrepreneurship can involve costly barriers to entry, such as the need to obtain an additional qualification. The transition into entrepreneurship can not only take longer than expected but it can present obstacles (age-discrimination) and compete with other commitments (such as caring responsibilities) \citep{kibler2012, weber2004}. For later-career entrepreneurship to be individually rewarding and socially sustainable it is important to understand which transition pathways elevate entrepreneurial and financial success and which transition pathways tend to be counter-productive.
 
-Focusing on one institutional setting i.e. community college may not be generalisable to the entire mature-age education market, as these students seek a range of degree types and institutions \citep{belfield2017model, mountjoy2022}. We contribute to this literature by estimating the returns across all degree-types (post-graduate degrees, training certificates, diplomas
-etc.), spanning all subjects and institutions. As a result, we cover students with a wider set of demographic and socio-economic background characteristics. The broad remit of students that we analyse also allows our study to compliment research that evaluates government-run training programs, which tend to enrol low-productivity workers \citep{ashenfelter1978, ashenfelter1985, bloom1990, leigh1990, raaum2002, jacobson2005, card2018, knaus2022}. 
+In this paper we ask: does formal retraining or upskilling constitute an important ingredient in the late-career entrepreneurial path? And if so, is it economically rewarding for individuals to undertake such formal retraining or upskilling? We also aim to understand which individuals generate higher versus lower returns to formal retraining and upskilling. Specifically, which factors explain the relationship between formal retraining and later-life economic and entrepreneurial success. We depart from the returns to education literature by focusing on education at older ages (25 and over) as opposed to early adulthood. We focus on retraining and upskilling by studying individuals who return to formal education\footnote{We focus on formally recognised degrees ranging from short degrees (6 months to 2 years full-time) to postgraduate degrees such as masters and PhDs. Most degrees undertaken in our sample are Certificate 3 or 4 degrees which take an average of 1-2 years to complete. See Figure 5 for the breakdown of the type of formal degrees considered.} after a break from education acquired in early adulthood. In other words, we focus on degrees that are additional to the first educational degree obtained. 
 
-We contribute the first evidence in systematically identifying which groups of
-mature-age students tend to benefit more from further education. We also
-compliment previous studies that already find significant heterogeneity by
-degree-type, institutional setting, and by the background characteristics of
-the student \citep{blanden2012, zeiden2015, polidano2016, dorsett2016, xu2016,
-belfield2017,perales2017, bockerman2019}. A benefit of a systematic,
-data-driven approach to heterogeneity analysis is that it can reduce the risk
-of overlooking important sub-populations compared to less data-driven
-approaches \citep{athey2017, knaus2021}. 
+Despite the increasing prevalence of formal retraining or upskilling, this is an understudied topic in both the education and entrepreneurship literature. Until now, the literature has focused on the cumulative years of education or early-years educational attainment, such as college or high school degrees. We argue that there is value in focusing on the impact of \textit{re}training separately from cumulative education years, especially since returns to education are more uncertain for older students who face higher opportunity costs and complex entry rules. This also allows us to disentangle formal retraining and upskilling from experience in the workforce (or through, for example, volunteering pursuits), which is an important distinction since there is likely a trade-off between these two ingredients in entrepreneurial success \citep{zacharakis2000}. By doing so we contribute to the strand of literature that examines the human capital impacts on entrepreneurship \citep{unger2011}. 
 
-A key challenge in estimating the causal returns to later-life education is
-that factors that enable mature-age learners to pursue and complete a
-qualification may also be precursors to later-life success. Moreover, the
-drivers of degree completion may be numerous and related to other variables in
-complex, unknown ways. We use a machine learning (ML) based methodology which allows us to intensively control for many confounding factors, as
-well as discover sources of treatment heterogeneity. ML algorithms also
-automatically discover non-linear relationships that may be unknown to the
-researcher. For high-dimensional and complex datasets such as ours, these methodological abilities are crucial in reducing bias from model mis-specification and confounding (e.g. selection into
-treatment), and reducing variance from correlation/collinearity.  
+Despite the significant increase in the uptake of degrees in later life \citep{oecd2016}, it is unclear, a-priori, if formal retraining and upskilling is an entrepreneurial and economically rewarding endeavour. On the one hand, investing in education in later life may be a promising pathway to starting a business. For example, it may assist individuals to update skills that technological change and automation may demand \citep{autor2008, acemoglu2011} or help them to retrain in new skills if self-employment involves an occupational pivot. For others, the transition into entrepreneurship from unemployment may require some formal retraining or upskilling due to their disconnection from the workforce. Older individuals who wish to start a business (after the age of 40) may be more likely to face technology-driven erosion of skills, compared to younger individuals, which creates a greater need for retraining. However, older individuals may not reap the full rewards of retraining as they have less time to accrue gains from educational investment. While the literature finds strong positive returns to education for skilled entrepreneurs \citep{fossen2013}\footnote{The returns are estimated to be higher for opportunity entrepreneurs (those who voluntarily start their own business) versus necessity entrepreneurs (those who lack alternative employment options). We do not make this distinction because the sample size of older entrepreneurs is already small.} and for college degree completion following secondary school \citep{jacobson2005, chesters2015, zeidenberg2015, polidano2016, xu2016, belfield2017, dynarski2016, dynarski2018, mountjoy2022}, the returns for older individuals are unclear given the trade-offs associated with retraining. 
 
-We adapt ML tools for causal inference purposes. We recognise that, as with all statistical models, we make assumptions when we use ML techniques for causal inference, and these need to be tested. We test the assumption that the controls included in the ML models sufficiently account for selection into treatment with a replication exercise. We compare the results of the ML model with baseline models using Ordinary Least Squares (OLS) and Fixed Effects. We also contrast the selected control variables in the ML model with those that were manually selected in \cite{chesters2015}, and comment on the potential biases from manual variable selection. We have chosen this published work because it uses the same data (HILDA) and examines the same topic.
+On the other hand, obtaining an additional education in later life can have large opportunity costs in terms of forgone experience and earnings \citep{haber2007, montgomery2006} and these ingredients may be more important to entrepreneurial success \citep{zhao2021, weber2004}. The financial and time constraints of retraining and upskilling are also likely to be higher in later life than during adolescence\footnote{\cite{abel2014} estimate forgone earnings of a 4-year college degree to be around \$23,000 (2013 USD) while \cite{montgomery2006} estimate forgone earnings of an MBA, a graduate management program, to be higher at around \$28,000 (2013 USD).}, which can explain why drop-out rates among mature-age learners is relatively high \citep{cherastidtham2018, hanson2022, guerra2022}. The costs of financing education, such as higher debt, can itself hinder entrepreneurship \citep{krishnan2019}. The type of retraining is also relevant. Entrepreneurial specific educational programs may have little impact on students’ own self-assessed proficiency of their entrepreneurial skills and can even have a negative impact on their intention to be an entrepreneur \citep{oosterbeek2010}. Thus, for later-life educational attainment to be a worthwhile endeavour, a key unanswered question is whether it is economically rewarding for individuals. 
 
-The results show that an additional degree in later-life increases total future
-earnings by more than \$3,000 per year on average compared to those who do
-not complete further study. We consistently estimate this causal effect
-using a selection-on-observables strategy based on T-learner, Doubly Robust and
-Bayesian models. The estimate is based on 19 years of detailed nationally
-representative Australian data from the Household Income and Labour Dynamics
-Australia (HILDA) survey. Two dimensions of these data are important. The first
-is that they contain a wealth of information about each respondent. For
-example, we begin with more than 3,400 variables per observation, including
-information about the respondents' demographic and socio-economic background,
-and on their attitudes and preferences. Access to this broad range of
-information means that by controlling for them, we can potentially proxy for
-unobservable differences between those who do and do not obtain a new
-qualification. Secondly, this dataset contains many variables that are highly
-correlated, so we require a systematic approach to reduce such information
-redundancy -- something that ML models are adept at.
+This paper contributes to addressing this gap in knowledge by estimating the causal effect of formal retraining and upskilling on earnings and entrepreneurship. We define entrepreneurship as ‘becoming’ self-employed in later life. This includes individuals who transition from being an employee or non-employed to being self-employed after the age of 40 versus those who (1) remain employees, (2) remain self-employed, or (3) remain non-employed. We compare the entrepreneurial success and earnings of individuals who undertook formal retraining after the age of 25 (our treated group) with those who did not obtain a further degree after the age of 25 (our control group). Our retraining variable is defined before entry into entrepreneurship, which overcomes possible reverse causation \citep{cassar2006}. 
 
-Our ML approach also identifies new sub-populations for which the treatment
-effects are different. We document that the starting home loan amount and
-employment aspirations are significant factors related to the extent of gain
-from further study. We also find that the starting levels of and pre-study
-trends in personal and household income are hugely important. Age and mental
-health variables also account for variation in estimated effects. All of these
-variables are consistently selected as being significant for prediction out of
-the 3,400 features within the HILDA data. This selection is consistent across
-different ML models (which includes linear and non-linear model classes) and
-across numerous bootstrap draws of the original sample.
+Our causal and heterogeneity analysis utilises, at the outset, every piece of background information that is asked about an individual\footnote{Variables included span from information about their family and neighbourhood to the individual’s intention to change job or industry, predicted retirement age, caring responsibilities, financial debt, economic circumstances, demographic characteristics and the earnings trajectories prior to retraining.} in a rich, nationally representative survey dataset. Effectively, we begin with over 3,400 characteristics or features about the individual, which enables a stronger like-for-like comparison of treated and control groups, as well as deeper insights into how the estimated returns to formal retraining and upskilling may vary by background or circumstance. Specifically, we use 19 waves of nationally representative panel data (from 2001-2019) from the Household Income and Labour Dynamics Australia (HILDA) survey. Our empirical strategy is to adapt Machine Learning (ML) techniques for the aim of causal analysis. We need to adapt these tools because they are traditionally used for predictive purposes. The three key benefits of the ML approach over traditional methods is (1) it effectively acts as a hyper-propensity-matching technique that utilises as much information as possible to construct similar groups of individuals in the treated and control groups; (2) it systematically reduces information redundancy between variables that are highly correlated, so it addresses overfitting issues; and (3) it identifies new sub-populations for which the treatment effects are different, which means we avoid missing out on important heterogeneities that may arise from pre-specifying sub-groups \citep{athey2017, knaus2021}.
+We use the ML approach combined with the full power of an incredibly rich survey dataset to overcome the main challenge in estimating the causal returns to formal retraining and upskilling: selection. The factors that enable or motivate mature-age learners to pursue and complete retraining or upskilling may also be independent precursors to later-life earnings or entrepreneurial success. For example, those who intend to enter entrepreneurship in later life may invest more in retraining themselves for the role. Alternatively, previous studies have found that individuals who seek a further community college degree tend to have slower growing earnings in the period before their study starts compared to similar individuals who do not seek further study \citep{jacobson2005, dynarski2016, dynarski2018}. 
 
-Previous studies have found that individuals who seek a further degree tend to
-have slower-growing earnings in the period before their study starts compared
-to similar individuals who do not seek further study \citep{jacobson2005,
-dynarski2016, dynarski2018}. By accounting for dynamic selection into obtaining
-a further degree, we can be confident that we compare the earnings paths of
-mature-age students to the paths of similar non-students who displayed the same
-earnings (and other) paths before study began. In this paper, we explicitly
-control for the trajectories of socio-economic and demographic circumstances
-before study starts. Standard fixed effects estimation would miss these dynamic
-confounders. We find that our ML estimates are significantly smaller than the
-size of the standard fixed effects results. We also estimate lower returns
-compared to Ordinary Least Squares (OLS) models. We document the additional
-confounder variables that we include in our models but which are usually omitted from
-standard OLS specifications. These variables suggest there is significant
-selection into mature-age students who undertake a further degree.
+A key empirical contribution of this paper is that we adapt ML tools for causal inference purposes. We recognise that, as with all statistical models, we make assumptions when we use ML techniques for causal inference, and these need to be tested. We test the assumption that the additional controls included in the ML models work to address selection-into-treatment issues described above. First, we replicate the results based on published works by \cite{chesters2015}. Then we contrast the 'systematically' selected control variables in the ML model with those that were manually selected in the Ordinary Least Squares (OLS) model by \cite{chesters2015}, and comment on the potential biases from manual variable selection. We have chosen this published work because it uses the same data (HILDA) and examines the same topic. Second, we compare the results of the ML model with models traditionally used to address unobserved heterogeneity such as a Fixed Effects Difference-in-Difference approach. Across all results, we find that the ML models tend to estimate lower returns to retraining compared to these baseline models.
+
+Human capital theory, employment choice theory, and self-determination theory provide valuable frameworks for examining the impact of retraining and upskilling on earnings and entrepreneurship. Human capital theory \citep{becker1964} recognises that acquiring additional education can improve human capital - an individuals' skills and knowledge – which can enhance productivity and earnings potential. Individuals who engage in retraining and upskilling may acquire new competencies and knowledge that positively impact their suitability for entrepreneurship. Employment choice theory \citep{heckman1993} suggests that retraining and upskilling can influence an individuals' choice to pursue entrepreneurship through the acquisition of new perspectives, specialized knowledge, and expanded networks. It emphasises that the choice of employment type is influenced by a range of factors, such as personal preferences, skills, motivation, financial considerations, and opportunities for growth and fulfilment. Self-determination theory \citep{deci1985} reflects on the psychological needs that promote well-being. Retraining and upskilling that supports autonomy, aligns with personal goals, and provides a sense of competence can provide individuals with the confidence, skills, and motivation necessary to pursue higher-paying positions or start their own business. These theories highlight the complex dynamics involved in later-life education and its potential outcomes for individuals' economic prospects and entrepreneurial pursuits, such as the interplay between human capital investment, individual motivation and personal preferences. 
+
+Our results show that an additional degree in later life increases the probability of being self-employed (at age 40 or older) by 1-2 percentage points and increases total future earnings by more than \$3,000 per year on average, compared to those who do not complete further study. We consistently estimate this causal effect using a selection-on-observables strategy based on T-learner, Doubly Robust and Bayesian models. As entrepreneurship is a binary variable, we also use Logit and Probit transformations to model the non-linearity in parameters. 
+
+Our ML approach also identifies new sub-populations for which the treatment effects are different. For entrepreneurship, we document that behavioural factors, such as the age at which a person left home and the division of labour in the household, are the most significant factors related to benefits from retraining. Household income is also hugely important: those with above median household income tend to benefit more from retraining than those with below median household income. This aligns with the entrepreneur literature that finds higher household income prior to becoming self-employed is associated with more ambitious revenue targets \citep{cassar2006}. For earnings, the most significant factors affecting returns to retraining are the starting levels of and pre-study trends in personal and household income. Age and wealth-related variables also account for variation in estimated effects. All of these variables are consistently selected as being significant for prediction out of the 3,400 features within the HILDA data. This selection is consistent across different ML models (which includes linear and non-linear model classes) and across numerous bootstrap draws of the original sample. 
+
+
+
+%Pursuing educational qualifications later in life is an increasingly common
+%phenomenon within OECD countries \citep{oecd2016}. Technological change and
+%automation continues to drive the evolution of skills needed in many
+%professions, or to oust the human workforce in others. This is particularly
+%true for middle-income workers performing routine tasks
+%\citep{autor2008,acemoglu2011}. Also at the lower end of the
+%income-distribution, such as among welfare recipients, governments are
+%increasingly trying to promote the idea of life-long learning.
+%
+%This paper contributes to understanding the efficacy of these decisions made by governments and individuals to pursue mature-age learning by estimating the causal effect on earnings. Our paper expands on the education literature, which has focused mainly on younger students, by estimating the returns to older cohorts. Previous research points to positive and significant wage premiums for younger cohorts with more education, ranging between 5 and 15\% \citep{angrist1991, harmon2003, machin2006, harmon1995}. The wage returns to education may be more uncertain for older students as they face higher opportunity costs to study and need to navigate a more fragmented system in the post-secondary education setting. Wage premiums from vocational and community college education are also found to be strong and positive \citep{jacobson2005, chesters2015, zeidenberg2015, polidano2016, xu2016, belfield2017, dynarski2016, dynarski2018, mountjoy2022}, particularly for female students \citep{belfield2017, zeidenberg2015, perales2017}. The effects are even stronger after accounting for earnings growth prior to enrolment, as workers who earn awards tend to have flatter earnings growth prior to enrolment \citep{dynarski2016, dynarski2018}. 
+%
+%Focusing on one institutional setting i.e. community college may not be generalisable to the entire mature-age education market, as these students seek a range of degree types and institutions \citep{belfield2017model, mountjoy2022}. We contribute to this literature by estimating the returns across all degree-types (post-graduate degrees, training certificates, diplomas
+%etc.), spanning all subjects and institutions. As a result, we cover students with a wider set of demographic and socio-economic background characteristics. The broad remit of students that we analyse also allows our study to compliment research that evaluates government-run training programs, which tend to enrol low-productivity workers \citep{ashenfelter1978, ashenfelter1985, bloom1990, leigh1990, raaum2002, jacobson2005, card2018, knaus2022}. 
+%
+%We contribute the first evidence in systematically identifying which groups of
+%mature-age students tend to benefit more from further education. We also
+%compliment previous studies that already find significant heterogeneity by
+%degree-type, institutional setting, and by the background characteristics of
+%the student \citep{blanden2012, zeidenberg2015, polidano2016, dorsett2016, xu2016,
+%belfield2017,perales2017, bockerman2019}. A benefit of a systematic,
+%data-driven approach to heterogeneity analysis is that it can reduce the risk
+%of overlooking important sub-populations compared to less data-driven
+%approaches \citep{athey2017, knaus2021}. 
+%
+%A key challenge in estimating the causal returns to later-life education is
+%that factors that enable mature-age learners to pursue and complete a
+%qualification may also be precursors to later-life success. Moreover, the
+%drivers of degree completion may be numerous and related to other variables in
+%complex, unknown ways. We use a machine learning (ML) based methodology which allows us to intensively control for many confounding factors, as
+%well as discover sources of treatment heterogeneity. ML algorithms also
+%automatically discover non-linear relationships that may be unknown to the
+%researcher. For high-dimensional and complex datasets such as ours, these methodological abilities are crucial in reducing bias from model mis-specification and confounding (e.g. selection into
+%treatment), and reducing variance from correlation/collinearity.  
+%
+%We adapt ML tools for causal inference purposes. We recognise that, as with all statistical models, we make assumptions when we use ML techniques for causal inference, and these need to be tested. We test the assumption that the controls included in the ML models sufficiently account for selection into treatment with a replication exercise. We compare the results of the ML model with baseline models using Ordinary Least Squares (OLS) and Fixed Effects. We also contrast the selected control variables in the ML model with those that were manually selected in \cite{chesters2015}, and comment on the potential biases from manual variable selection. We have chosen this published work because it uses the same data (HILDA) and examines the same topic.
+%
+%The results show that an additional degree in later-life increases total future
+%earnings by more than \$3,000 per year on average compared to those who do
+%not complete further study. We consistently estimate this causal effect
+%using a selection-on-observables strategy based on T-learner, Doubly Robust and
+%Bayesian models. The estimate is based on 19 years of detailed nationally
+%representative Australian data from the Household Income and Labour Dynamics
+%Australia (HILDA) survey. Two dimensions of these data are important. The first
+%is that they contain a wealth of information about each respondent. For
+%example, we begin with more than 3,400 variables per observation, including
+%information about the respondents' demographic and socio-economic background,
+%and on their attitudes and preferences. Access to this broad range of
+%information means that by controlling for them, we can potentially proxy for
+%unobservable differences between those who do and do not obtain a new
+%qualification. Secondly, this dataset contains many variables that are highly
+%correlated, so we require a systematic approach to reduce such information
+%redundancy -- something that ML models are adept at.
+%
+%Our ML approach also identifies new sub-populations for which the treatment
+%effects are different. We document that the starting home loan amount and
+%employment aspirations are significant factors related to the extent of gain
+%from further study. We also find that the starting levels of and pre-study
+%trends in personal and household income are hugely important. Age and mental
+%health variables also account for variation in estimated effects. All of these
+%variables are consistently selected as being significant for prediction out of
+%the 3,400 features within the HILDA data. This selection is consistent across
+%different ML models (which includes linear and non-linear model classes) and
+%across numerous bootstrap draws of the original sample.
+%
+%Previous studies have found that individuals who seek a further degree tend to
+%have slower-growing earnings in the period before their study starts compared
+%to similar individuals who do not seek further study \citep{jacobson2005,
+%dynarski2016, dynarski2018}. By accounting for dynamic selection into obtaining
+%a further degree, we can be confident that we compare the earnings paths of
+%mature-age students to the paths of similar non-students who displayed the same
+%earnings (and other) paths before study began. In this paper, we explicitly
+%control for the trajectories of socio-economic and demographic circumstances
+%before study starts. Standard fixed effects estimation would miss these dynamic
+%confounders. We find that our ML estimates are significantly smaller than the
+%size of the standard fixed effects results. We also estimate lower returns
+%compared to Ordinary Least Squares (OLS) models. We document the additional
+%confounder variables that we include in our models but which are usually omitted from
+%standard OLS specifications. These variables suggest there is significant
+%selection into mature-age students who undertake a further degree.
 
 % Understanding the different sources of dynamic selection is also important for
 % heterogeneity analyses. This requires us to model the potential sources rather
@@ -257,7 +285,7 @@ selection into mature-age students who undertake a further degree.
 %
 %We argue that a data-driven approach is useful to generate a plausible counterfactual when we use observational data. It is especially useful in our case because (1) the form of the confounding and its relationship to outcomes, are unclear, (2) we have access to large swathes of information per observation – variables that can help to minimise confounding but much of which is redundant because the variables are highly correlated, and (3) a-priori, it is unclear which groups of individuals may benefit more or less from an additional qualification. The benefit of a data-driven approach is that it can detect patterns and relationships, such as functional forms and control variables, that are unknown to the researcher, which assists with variable selection and with identifying meaningful sub-populations for which the effects differ. Furthermore, as ML models systematically choose control variables to minimise the amount of information redundancy between them, we can improve causal estimation parameters (both in terms of bias and variance).
 %
-%Over the last few decades, education-economics researchers have made several innovations in minimising confounding bias, including implementing fixed effects estimation (especially including person-specific linear trends) \citep{dynarski2018,wang2018,perales2017,xu2016,polidano2016,zeiden2015,jacobson2005} instrumental variables \citep{harmon1999,card1999,card1995,ashenfelter1997,angrist1991}, and regression discontinuity designs \citep{melguizo2016,jacob2004,duchini2017}. These approaches, in order to be implemented, require specific sources of variation or datasets with a large number of observations (in order to estimate person-specific linear time trends for example). However, researchers often lack these attributes in their data. In this paper, we take a different approach to minimising confounding bias. 
+%Over the last few decades, education-economics researchers have made several innovations in minimising confounding bias, including implementing fixed effects estimation (especially including person-specific linear trends) \citep{dynarski2018,wang2018,perales2017,xu2016,polidano2016,zeidenberg2015,jacobson2005} instrumental variables \citep{harmon1999,card1999,card1995,ashenfelter1997,angrist1991}, and regression discontinuity designs \citep{melguizo2016,jacob2004,duchini2017}. These approaches, in order to be implemented, require specific sources of variation or datasets with a large number of observations (in order to estimate person-specific linear time trends for example). However, researchers often lack these attributes in their data. In this paper, we take a different approach to minimising confounding bias. 
 %
 %We use an automated feature selection process. We begin with a dataset containing an enormous amount of information per observation. Specifically, we leverage all the information available to us in a rich nation-based survey data set, beginning with 3,400 untransformed variables. Many of these variables are highly correlated with each other. 
 %
@@ -278,28 +306,28 @@ selection into mature-age students who undertake a further degree.
 %
 %A fourth contribution of our work is that we can identify features that may have been previously overlooked or unanticipated. One way that researchers have addressed confounding issues is to manually select a set of controls, informed by theory and/or past empirical studies. However, as much of the discussions of best practice in empirical research or theory pertains to assessing the returns to education for younger students (who have had little workforce experience) \citep{mincer1974}, it is unclear if this knowledge is generalisable to mature-age students. Furthermore, using a data-driven approach to examine heterogeneous treatment effects can allow researchers to identify meaningful sub-groups that they may not have previously considered.
 
-We adapt ML models for the purpose of estimating causal effects. Standard
-off-the-shelf ML models are better suited to predictive purposes. When
-obtaining a prediction, off-the-shelf ML models can find generalisable patterns
-and minimise overfitting issues through the use of cross-validation because
-the true outcomes are observed. This means that we can optimize a
-goodness-of-fit criterion. Causal parameters, however, are not observed in the
-data, which means we cannot directly train and evaluate our models. 
-
-In this paper, we take the difference between the two optimal outcome models
-which can achieve the optimum bias-variance trade-off point for the conditional
-average treatment effect. Specifically, we model the response surfaces for two
-conditional mean equations -- one using the treatment observations and another
-using the control observations. We estimate these equations with ML methods
-such as the T-learner and Doubly Robust. Here, we employ both linear (LASSO and
-Ridge) and non-linear (Gradient Boosted Regression) model classes. We compare
-and evaluate their comparative performance using nested cross-validation. We
-then test the statistical significance of our causal parameters by examining
-the distribution of the estimates through bootstrapping. Last, we use a variety
-of Bayesian ML models following the formulation presented in \citet{hahn2020}
-that reduce effect estimation bias within the Bayesian paradigm. These models
-have several properties that may be desirable, such as the ability to directly
-parameterise heterogeneous prognostic and treatment models.
+%We adapt ML models for the purpose of estimating causal effects. Standard
+%off-the-shelf ML models are better suited to predictive purposes. When
+%obtaining a prediction, off-the-shelf ML models can find generalisable patterns
+%and minimise overfitting issues through the use of cross-validation because
+%the true outcomes are observed. This means that we can optimize a
+%goodness-of-fit criterion. Causal parameters, however, are not observed in the
+%data, which means we cannot directly train and evaluate our models. 
+%
+%In this paper, we take the difference between the two optimal outcome models
+%which can achieve the optimum bias-variance trade-off point for the conditional
+%average treatment effect. Specifically, we model the response surfaces for two
+%conditional mean equations -- one using the treatment observations and another
+%using the control observations. We estimate these equations with ML methods
+%such as the T-learner and Doubly Robust. Here, we employ both linear (LASSO and
+%Ridge) and non-linear (Gradient Boosted Regression) model classes. We compare
+%and evaluate their comparative performance using nested cross-validation. We
+%then test the statistical significance of our causal parameters by examining
+%the distribution of the estimates through bootstrapping. Last, we use a variety
+%of Bayesian ML models following the formulation presented in \citet{hahn2020}
+%that reduce effect estimation bias within the Bayesian paradigm. These models
+%have several properties that may be desirable, such as the ability to directly
+%parameterise heterogeneous prognostic and treatment models.
 
 %
 %A benefit of our set-up is that when we take the difference between the two optimal outcome models, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect.  
@@ -319,7 +347,7 @@ parameterise heterogeneous prognostic and treatment models.
 %
 %In comparison, the evidence on the returns to post-secondary education has grown enormously since the 1990’s, spurred on by the availability of linked administrative data on student records and earnings. The transition from cross-sectional data to longitudinal data helped to resolve some of the selection bias associated with comparing those with a qualification to those without, as concerns over motivation, ability and other unobserved time-invariant characteristics can be controlled with an individual fixed-effects model. However, some selection bias remains as fixed-effects models cannot fully account for the fact that individuals who expect their prospects to improve by gaining a new qualification ‘select into’ education.
 %
-%Vocational and community college degrees have received particular attention in the literature since they tend to attract returning students who have employment earnings prior to attaining a new qualification. This has allowed researchers to compare individuals’ earnings before and after a qualification, and to compare the size of this change between students who receive a qualification and those who leave without one. In addition, since students enrolled in sub-bachelor programs are disproportionately low-income and low-performing students, the absence of individual characteristics in cross-sectional samples can bias the estimated returns downward \citep{xu2016}. Studies that compare individual fixed-effects methods with cross-sectional methods using the same sample find opposing effects. Fixed-effects methods show positive returns while cross-sectional methods show negative returns, suggesting that individual fixed-effects models can capture biases resulting from omitted time-invariant characteristics \citep{xu2016}. In the absence of prior earnings histories, researchers have exploited the student records and earnings of non-completers, as they are a more valid control group for those with qualifications, as opposed to secondary school graduates who never attend TAFE/college. The use of student records has also allowed researchers to disaggregate the effects by length, field of study and type of qualification. Associate degrees in nursing and health tend to yield the highest returns \citep{zeiden2015,xu2016}. While these methods may still suffer from some selection bias – related to potential unobservable differences between those who choose to leave versus stay in their degree – the results have proved to be highly robust and minimally biased \citep{zeiden2015}. Based on these new data and methods, the evidence on the labour market returns to vocational and community college education is strong and positive, particularly for female students \citep{belfield2017,zeiden2015,perales2017}.
+%Vocational and community college degrees have received particular attention in the literature since they tend to attract returning students who have employment earnings prior to attaining a new qualification. This has allowed researchers to compare individuals’ earnings before and after a qualification, and to compare the size of this change between students who receive a qualification and those who leave without one. In addition, since students enrolled in sub-bachelor programs are disproportionately low-income and low-performing students, the absence of individual characteristics in cross-sectional samples can bias the estimated returns downward \citep{xu2016}. Studies that compare individual fixed-effects methods with cross-sectional methods using the same sample find opposing effects. Fixed-effects methods show positive returns while cross-sectional methods show negative returns, suggesting that individual fixed-effects models can capture biases resulting from omitted time-invariant characteristics \citep{xu2016}. In the absence of prior earnings histories, researchers have exploited the student records and earnings of non-completers, as they are a more valid control group for those with qualifications, as opposed to secondary school graduates who never attend TAFE/college. The use of student records has also allowed researchers to disaggregate the effects by length, field of study and type of qualification. Associate degrees in nursing and health tend to yield the highest returns \citep{zeidenberg2015,xu2016}. While these methods may still suffer from some selection bias – related to potential unobservable differences between those who choose to leave versus stay in their degree – the results have proved to be highly robust and minimally biased \citep{zeidenberg2015}. Based on these new data and methods, the evidence on the labour market returns to vocational and community college education is strong and positive, particularly for female students \citep{belfield2017,zeidenberg2015,perales2017}.
 %
 %
 %
@@ -331,13 +359,13 @@ parameterise heterogeneous prognostic and treatment models.
 %
 %\cite{polidano2016} explore vocational education in more depth using the same data and methods as \cite{perales2017}. Instead of aggregating sub-bachelor qualifications together, \cite{polidano2016} assess each level individually. They found that women who acquire any certificate (level 1-4) after Year 12 showed the largest increase in wages, of about 10\%. Men, on the other hand, experienced similar wage gains by acquiring a certificate 3, 4 or diploma without Year 12. In short, men do not increase their earnings by completing Year 12 first. In general, women showed larger improvements in labour market outcomes following the completion of a vocational qualification. However, qualifications that were not of higher order did not generate benefits. The effects remained 5 years after course completion and suggest strong long-term benefits to vocational education. By comparison, when \cite{polidano2016} analyse the data as pooled cross-sections they found the returns to be around half the size of the fixed effects estimates. However, men showed substantially smaller returns when gaining a university degree in the fixed effects model while women showed similar returns when gaining sub-bachelor qualifications. In general, though, the cross-sectional results doubled the estimated earnings effects, but they also switched which gender benefited most. The fixed effects estimates showed larger qualification effects for women, supporting the general finding in the literature.
 %
-%\cite{zeiden2015} link community college non-completers with completers according to their field of study to identify differences in their labour market returns. Based on the finding by Jacobson et al. (2005) that non-completers can achieve earnings gains from as little as one semester of credits, \cite{zeiden2015} question whether all credits are equally rewarding i.e., do those who almost complete a course have higher returns than those who progressed less. Matching US community college transcripts between 2002 and 2004 with earnings data in 2011 they find that among non-completers, students who progressed further in their course earned less. Specifically, students who progressed twice as far as the average non-completer earned 4-5\% less. The penalty for progression was similar for females and males.\cite{jacobson2005} found a similar pattern among male displaced workers: those who completed 12-18 months of community college earned more than those who studied beyond this. However, they estimated the opposite effect for female displaced workers. \cite{zeiden2015} posit that after taking the relatively valuable foundation courses, students may lack the motivation, time, or funds for the upper-level courses, which are no more valuable in the labor market but are required for graduation. Grouping all students together, \cite{zeiden2015} find that non-completers earn 32\% less than those who graduate with a diploma and 37\% less than those who complete an associate degree, revealing large returns for those who obtain a qualification. Certificates holders and non-completers were found to earn about the same, possibly because they acquire a similar number of credits. \cite{xu2016} analysis illustrates that many adult learners use short-term certificates to switch to a new industry and may explain why certificate holders do not experience an immediate boost in earnings. By subject, earnings differences were not substantial except for nursing, where earnings gains were disproportionately large at 104\%. In general, earnings appear to differ more by qualification than by subject \citep{zeiden2015}.
+%\cite{zeidenberg2015} link community college non-completers with completers according to their field of study to identify differences in their labour market returns. Based on the finding by Jacobson et al. (2005) that non-completers can achieve earnings gains from as little as one semester of credits, \cite{zeidenberg2015} question whether all credits are equally rewarding i.e., do those who almost complete a course have higher returns than those who progressed less. Matching US community college transcripts between 2002 and 2004 with earnings data in 2011 they find that among non-completers, students who progressed further in their course earned less. Specifically, students who progressed twice as far as the average non-completer earned 4-5\% less. The penalty for progression was similar for females and males.\cite{jacobson2005} found a similar pattern among male displaced workers: those who completed 12-18 months of community college earned more than those who studied beyond this. However, they estimated the opposite effect for female displaced workers. \cite{zeidenberg2015} posit that after taking the relatively valuable foundation courses, students may lack the motivation, time, or funds for the upper-level courses, which are no more valuable in the labor market but are required for graduation. Grouping all students together, \cite{zeidenberg2015} find that non-completers earn 32\% less than those who graduate with a diploma and 37\% less than those who complete an associate degree, revealing large returns for those who obtain a qualification. Certificates holders and non-completers were found to earn about the same, possibly because they acquire a similar number of credits. \cite{xu2016} analysis illustrates that many adult learners use short-term certificates to switch to a new industry and may explain why certificate holders do not experience an immediate boost in earnings. By subject, earnings differences were not substantial except for nursing, where earnings gains were disproportionately large at 104\%. In general, earnings appear to differ more by qualification than by subject \citep{zeidenberg2015}.
 %
 %These findings are consolidated in \cite{belfield2017} extensive review of community college returns in the US between 1996 and 2013, spanning 8 states. The studies follow the individual fixed effects approach established in Jacobson et al. (2005). The estimated average earnings were 26\% (18\%) higher than non-completers for females (males) with an associate degree, amounting to approximately \$7,000\footnote{US dollars in 2014.} (\$5,000) per year, with the gains persisting overtime. Returns to certificate holders were more mixed but in general show positive, albeit modest, returns relative to non-completers. Again, females outperformed males in their returns and on average earned around \$3,000 per year more than non-completers while males earn around \$2,000 per year more than non-completers. In general, certificates that required more credits had higher earnings gains. Credits were also associated with earnings gains, even for those who didn’t complete an award. The accumulation of credits with no award, however, does not appear to be as valuable as the award itself, although in some states the difference in returns between an award and an equivalent number of credits was negligible.
 %
 %Given that students need time to realise the full benefits of training, accounting for this substantially increases estimates of long-term earnings gains. \cite{jacobson2005} showed that displaced workers were worse off immediately after leaving college relative to what they would have been without returning to school, but that earnings tended to rise quickly in the following year, before leveling out to a new, higher level. This highlights the need for long follow-up periods in the data when assessing the returns to education.
 %
-\section{Context: Higher education and Vocational study in Australia}
+\section{Context: Higher education and Vocational Study in Australia}
 
 Mature-age education in Australia is among the highest in the world. In 2014, Australia's participation in vocational education by those aged 25-64 was the highest among OECD countries. The tertiary education rate for those aged 30-64 was the second highest \citep{perales2017}. Mature-age Australians are increasingly enrolling in university or college to change employers, change careers, gain extra skills, improve their promotion prospects and earning capability or search for better work/life balance. Redundancy and unemployment have also been driving forces for individuals to return to education later in life \citep{coelli2012}.
 
@@ -1062,13 +1090,20 @@ able to more easily capture non-linear relationships than the other models.
 
 Proportionate changes in earnings can be measured by taking the log of the earnings measures. In Appendix Figure \ref{fig:valadlelog}, we see that the proportionate change in earnings was large at 50 percent. This is likely to be because of people entering the labour market as a result of the new qualification. We find that a new qualification increases the likelihood of employment by approximately 8 percent (see Figure \ref{fig:empl}).
 
-
+Acquiring an additional qualification may increase earnings through a number of
+potential mechanisms. We find evidence that, in Figure \ref{fig:empl} for
+example, it increases the chance that individuals move from being unemployed or
+out of the labour force to being employed. The increase in employment is
+approximately 8 percentage points and is statistically significant. We also
+find evidence pointing to workers switching occupations or industries. This
+suggests that further education in later life can support the economic goals of
+a larger workforce as well as a more mobile one.
 
 %The largest earnings gains are associated with acquiring an undergraduate degree or above (including Graduate certificates and Graduate diplomas). As displayed in Figure \ref{fig:degree}, only modest gains are associated with secondary or post-secondary certificates or diplomas. More generally, significant earnings gains are achieved when returning students acquire qualifications above those previously held. In fact, the earnings gains are much higher if students advance their qualification status rather than gaining an additional degree at the same or lower level.
 %
 %The magnitude of the returns to education also differs depending on the type of subject studied. Obtaining a degree in a technical subject is likely to yield a return that is twice as high as obtaining a degree in a nontechnical degree. The returns are statistically significant for the former but estimated with a high variance for the latter. Technical subjects are STEM subjects, medicine, and health-related fields whereas nontechnical subjects encompass those in the creative arts, arts, humanities, and social science disciplines. These results are also displayed in Figure \ref{fig:degree}.
 
-\section{Sub-group analysis}
+\section{Sub-group Analysis}
 
 Qualification advancements may not benefit individuals in the same way. In this section we analyse if there is heterogeneity in the treatment impacts. We use a data-driven approach to select the sub-groups. Specifically, we identify the important variables for which we expect to see the largest changes in the treatment effects. This involves using a Permutation Importance procedure.
 %
@@ -1079,21 +1114,15 @@ Qualification advancements may not benefit individuals in the same way. In this 
 % Figure \ref{fig:htelasso} 
 % Figure \ref{fig:hteridge} 
 
-\subsection{Permutation importance feature selection method}
+\subsection{Permutation Importance Feature Selection Method}
 
 We use a permutation importance selection method \citep{breiman2001,molnar2020}
 to evaluate the relative importance of individual features. Our aim here is to
 understand where the heterogeneous treatment effects are most pronounced. In
 other words, we aim to identify the sub-groups for which the treatment effects
-differ most significantly. In selecting the important features our objective is
-to understand how to partition the data by the treatment effects as opposed to
-predicting the outcomes themselves. Appendix \ref{app:perm} describes this procedure in detail.
+differ most significantly. Figures \ref{fig:featgbrDRe} and \ref{fig:featgbrDR} display the top ten features and a residual category for all the other features. In selecting the important features our objective is to understand how to partition the data by the treatment effects as opposed to predicting the outcomes themselves. Appendix \ref{app:perm} describes this procedure in detail.
 
-
-Figures \ref{fig:featgbrDRe} and \ref{fig:featgbrDR} display the top ten features and a residual category for
-all the other features. 
-
-For entry into entrepreneurship, interestingly, the two most important features are: Age first left home and Do fair share of child care. Together, these two factors explain 27\% of the importance of all the variables. This points to behavioural and historical factors - rather than current economic conditions - being the key determinants of entrepreneurial returns from retraining. Although, the other categories point to more income- and financial-wealth based factors as also being important. 
+For entry into entrepreneurship, interestingly, the two most important features are: Age first left home and Do fair share of child care. Together, these two factors explain 27\% of the importance of all the variables. This points to behavioural and childhood factors - rather than current economic conditions - being the top determinants of entrepreneurial returns from retraining. Although, the other categories point to more income- and financial-wealth based factors as also being important. 
 
 For earnings, the features that are most important are: weekly gross
 wages on the main job and income- or wealth-related variables. Together, this
@@ -1109,8 +1138,7 @@ demographic background of the individual, namely their age, is also important.
 
 Figures \ref{fig:dengbrlevDR} and \ref{fig:dengbrlevDRe} display the distribution of the MSE values across
 the bootstrap samples for the GBR model. It displays the distributions for the
-top 3 features. The feature with the highest importance score is weekly gross
-wage in the main job. This suggests that in some of the bootstrap samples,
+top 3 features for the respective outcomes. This suggests that in some of the bootstrap samples,
 where the MSE is larger, the individual treatment effects from the permuted
 data differ greatly from the original individual treatment effects.
 %Figure\ref{fig:dengbrlevDRe} displays the distribution of the MSE values for entry into entrepreneurship
@@ -1126,28 +1154,21 @@ We present the results for the DR (GBR) model, however, similar features are cho
 % add HTE from DR                                       Figure \ref{fig:htedr}   
 % add HTE from DR stacked with T-Learner   Figure \ref{fig:htemldr} 
 
-Figure \ref{fig:htedr} shows that there is heterogeneity in the treatment impacts. We
-have identified the features that were considered most important according to
+Figures \ref{fig:htedr} and \ref{fig:htedrent} show that there is heterogeneity in the treatment impacts. We display heterogeneity by features that are both commonly used in such analysis and which are considered most important according to
 the permutation procedure. For each feature, we divide the sample into two
 groups. For continuous variables, we take the median value and divide the
 sample into those who are above and below this median value. 
 
-Weekly personal income has a large impact on the effect size. Those with below
-median income in 2001 derive more benefits than those with above median income,
-possibly because high income earners hit an earnings ceiling. Younger people in
-2001 also derive more returns, as they may have had more time to accumulate
-returns. This result aligns with findings from previous studies
-\citep{polidano2016,dorsett2016,perales2017}. Weekly personal income and age
-are likely to be highly correlated, with older individuals tending to earn a
-higher personal income. We cannot say which variable is the main driver of the
+Larger entrepreneurial gains are achieved when qualifications are acquired at
+older ages. Younger learners may be more likely to seek re-training in order to become employees. These age-heterogeneity results contrast with the outcome of earnings, where mature-age learners are less likely to gain.\footnote{Younger people have had more time to accumulate returns and this result aligns with findings from previous studies
+\citep{polidano2016,dorsett2016,perales2017}}. This may point to the different aspirations of those mature-age learners who do and do not become entrepreneurs in the late-career stage.  
+
+Weekly personal income has a large impact on the effect size for the outcome of earnings but little impact on whether or not retraining lifts the chance of being an entrepreneur. For earnings, those with below median income in 2001 derive more benefits than those with above median income, possibly because high income earners hit an earnings ceiling. Weekly personal income and age are likely to be highly correlated, with older individuals tending to earn a higher personal income. We cannot say which variable is the main driver of the
 heterogeneous treatment effects and there may also be interaction effects between them.
 
 We also investigate if there are heterogeneous treatment effects according to
-commonly used variables in Figure \ref{fig:htedr}. Females reap slightly higher
-returns compared to males although this is not statistically significant.
-Similar treatment effects apply to those with and without a resident children,
-although the effect sizes widen in favour of parents with older children in the
-household. 
+commonly used variables in Figures \ref{fig:htedr} and \ref{fig:htedrent}. Males are far more likely to reap entrepreneurial gains compared to females when they retrain; whereas females are slightly more likely to reap earnings gains.
+Those with resident children are more likely to reap entrepreneurship-rewards when they retrain, compared to those without resident children. For earnings, however, similar treatment effects apply to those with and without a resident children. The gaps in these effects widen when we consider parents who have younger children in the household, although the gap widens in their favour when we consider earnings gains and tends to work against them for entrepreneurship. This suggests that entrepreneurship in the late-career stage involves time-commitments that prevent relatively time-poor individuals (with higher caring responsibilities) from entry - and that retraining or an additional degree provide less buffer against barriers to entry for them - compared to those with less caring responsibilities.
 %
 %The T-learner (GBR) model is mostly consistent with the Doubly Robust model in
 %the estimates of the CATEs. Figure \ref{fig:htegbr} shows some differences
@@ -1200,14 +1221,7 @@ household.
 %their earnings capacity. By acquiring an additional degree, they successfully
 %lift their earnings relative to those who did not obtain further education.
 
-Acquiring an additional qualification may increase earnings through a number of
-potential mechanisms. We find evidence that, in Figure \ref{fig:empl} for
-example, it increases the chance that individuals move from being unemployed or
-out of the labour force to being employed. The increase in employment is
-approximately 8 percentage points and is statistically significant. We also
-find evidence pointing to workers switching occupations or industries. This
-suggests that further education in later life can support the economic goals of
-a larger workforce as well as a more mobile one.
+
 
 \subsection{Sensitivity Analysis}
 
@@ -1307,8 +1321,8 @@ heterogeneity in relatively `short-term' treatment effects.
 
 Using a machine learning based methodology and data from the rich and
 representative Household Income and Labour Dynamics Australia survey we have
-shown that completing an additional degree later in life can add \$60-80 (AUD,
-2019) per week to an individual's gross earnings. This represents roughly 7-8
+shown that completing an additional degree later in life can increase the chance of becoming self-employed by 1-2 percentage points. It can also adds \$55-110 (AUD,
+2019) per week to an individual's gross earnings, which represents roughly 5-8
 percent of the weekly gross earning for the average worker in Australia. Our
 machine learning methodology has also uncovered sources of heterogeneity in
 this effect.
@@ -1362,17 +1376,16 @@ aged 0-4 are important.
 %health-related disciplines yield significantly higher returns that study in
 %the fields of Arts, Humanities or the Social Sciences.
 
-Qualification advancements do not benefit Australian workers in the same way:
-those with lower weekly earnings appear to benefit more from later-life study
+Qualification advancements do not benefit Australian workers in the same way. Those with lower weekly earnings appear to benefit more from later-life study
 than those with higher earnings. One possible reason is that ceiling effects
-limit the potential returns from additional education. We also find that
+limit the potential returns from additional education. However, for entrepreneurship, the reverse is true: those with lower personal and household earnings tend to benefit less from retraining in later life compared to those with higher earnings. This likely reflects the fact that entrepreneurship requires higher start-up costs, compared to being an employee, and thus higher starting incomes provide a boost to the returns to retraining. We also find that
 younger Australians (less than 45 years of age) benefit more than their older
-counterparts. Again, a ceiling effect phenomenon may apply since age is highly
-correlated to weekly earnings.
+counterparts in terms of earnings gains from education. Similarly to our previous interpretation, a ceiling effect phenomenon may apply since age is highly
+correlated to weekly earnings. Again, by contrast, the reverse is true for entrepreneurship where it appears that older individuals are more likely to benefit from retraining.
 
 % ****Dan, do you have other theories about why we see this result? 
 
-Acquiring an additional qualification may increase earnings through a number of potential mechanisms. We find evidence that it increases the chance that individuals move from being unemployed or out of the labour force to being employed. We also find evidence pointing to workers switching occupations or industries. This suggests that further education in later-life can support the economic goals of a larger workforce as well as a more mobile one.
+Acquiring an additional qualification may increase earnings through a number of potential mechanisms. The first is that it lifts the chance an individual becomes an entrpreneur in later-life. The earnings gains here may arise because becoming self-employed extends one's career into later-retirement. We also find evidence that it increases the chance that individuals move from being unemployed or out of the labour force to being employed, which also aligns with the entrepreneuship channel for individuals who are made unemployed before retirement age. We also find evidence pointing to workers switching occupations or industries. This suggests that further education in later-life can support the economic goals of a larger workforce as well as a more mobile one.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1542,12 +1555,9 @@ Relationship to person 03 	& 	rg03	 & 	NA	 & 	NA	 \\
 ID of other responder for HH Questionnaire 	& 	hhp2	 & 	NA	 & 	NA
 \label{tab:sumstats}
 \end{longtable}
-\parbox{1.05\textwidth}{\footnotesize *Definition of technical and qualitative degree: Technical: STEM, Architecture, Agriculture and Environment, Medicine, Other Health-related Studies and Nursing, Management and Commerce and Law. Non-technical: Education, Society and Culture (includes economics!), Creative Arts, and Food, Hospitality and Personal Services. }\\  
-
-
+\parbox{1.05\textwidth}{\footnotesize *Definition of technical and qualitative degree: Technical: STEM, Architecture, Agriculture and Environment, Medicine, Other Health-related Studies and Nursing, Management and Commerce and Law. Non-technical: Education, Society and Culture (includes economics!), Creative Arts, and Food, Hospitality and Personal Services.}  \\
 
 % Entrepreneurship 
-%% LAST 3 ROWS TO BE ADDED %%
 \clearpage
 \begin{table}[H]
 \centering
@@ -1557,16 +1567,16 @@ ID of other responder for HH Questionnaire 	& 	hhp2	 & 	NA	 & 	NA
 \toprule
 Model  &  N  &  ATE  &  CI (ATE)  \\
 \midrule 	   						
-OLS (S-learner)	 & 5441 & 0.0155 & [0.001 , 0.030] \\
-Probit (S-learner)	 & 5441 & 0.0131 & [0.000 , 0.026] \\
-Logit (S-learner)	 & 5441 & 0.0122 & [-0.001 , 0.025] \\
+OLS (S-learner)	 & 5441 & 0.0155 & [0.001, 0.030] \\
+Probit (S-learner)	 & 5441 & 0.0131 & [0.000, 0.026] \\
+Logit (S-learner)	 & 5441 & 0.0122 & [-0.001, 0.025] \\
 T-learner (GBR) & 5441 & 0.0235 & [0.010, 0.037]	 \\
 T-learner (LASSO) & 5441 & 0.0235 & [0.012, 0.037]	 \\
 T-learner (Ridge)	 & 5441 & 0.0223 & [0.008, 0.036]	 \\
 Doubly Robust (GBR) & 5441 & 0.0187 & [0.0161, 0.0212] \\
 Doubly Robust (LASSO) & 5441 & 0.0191 & [0.0177, 0.0207]	 \\
 Doubly Robust (Ridge)	 & 5441 & 0.0178 & [0.0166, 0.0195]	 \\
-Hierarchical Logit Model	 & 5441 & 0.0131 & [0.000 , 0.029]  \\
+Hierarchical Logit Model	 & 5441 & 0.0131 & [0.000, 0.029]  \\
 Hierarchical approx Gaussian Process  & 5441 & 0.0136 & [0.0002, 0.0275] \\
 \bottomrule
 \end{tabular}
@@ -1607,8 +1617,6 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 \end{table}
 
 
-
-
 % \includegraphics[scale=0.7]{_figures/figname.pdf}
 % \includegraphics[width=1\textwidth]{_figures/figname.pdf}
 
@@ -1618,14 +1626,14 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 \centering
 \caption{Selecting and Evaluating Model Class}
   \label{fig:exp_model}
-    \includegraphics[scale=0.48]{_figures/explainer1.pdf}
+    \includegraphics[scale=0.5]{_figures/explainer1.pdf}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \caption{Generating Uncertainty Parameters}
   \label{fig:exp_param}
-    \includegraphics[scale=0.48]{_figures/explainer2.pdf}
+    \includegraphics[scale=0.5]{_figures/explainer2.pdf}
 \end{figure}
 
 
@@ -1887,8 +1895,14 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 
 
 % Define the "Appendix" chapter style
-\titleformat{\section}[display]
-  {\normalfont\Large\bfseries}{\appendixname\ \thesection}{0.2em}{}
+
+% appendix title and section title on separate lines:
+	%\titleformat{\section}[display]
+  		%{\normalfont\Large\bfseries}{\appendixname\ \thesection}{0.2em}{}
+  		
+% appendix title and section title on one line: 
+  \titleformat{\section}[hang]
+  {\normalfont\Large\bfseries}{\appendixname\ \thesection: }{0pt}{}
 
 % Define the "Online Appendix" chapter style
 \titleformat{name=\section,numberless}[display]
@@ -1896,16 +1910,16 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 
 \section{Tables}
 \label{app:tables}
-% Table 2   
-\begin{longtable}{p{0.39\textwidth} C{0.1\textwidth} C{0.15\textwidth} C{0.15\textwidth} C{0.1\textwidth}}
+% Table 2  
+\begin{longtable}{p{0.39\textwidth} C{0.1\textwidth} C{0.15\textwidth} C{0.15\textwidth} C{0.15\textwidth}}
 \caption{ML variables omitted by OLS Baseline model} \\ 
 \hline 
-Variable label & Variable name & Relationship with re-education (redufl) & Relationship with outcome (y\_wscei) & Bias direction in OLS models \\
+Variable label & Variable name & Relationship with retraining (redufl) & Relationship with outcome (y\_wscei) & Bias direction in OLS models \\
 \hline
 \endfirsthead
 \multicolumn{5}{c}{\textit{Continued from previous page}} \\
 \hline
-Variable label & Variable name & Relationship with re-education (redufl) & Relationship with outcome (y\_wscei) & Bias direction in OLS models \\
+Variable label & Variable name & Relationship with retraining (redufl) & Relationship with outcome (y\_wscei) & Bias direction in OLS models \\
 \hline
 \endhead
 \hline \multicolumn{5}{r}{\textit{Continued on next page}} \\
@@ -1919,11 +1933,11 @@ Tenure with current employer 	& 	jbempt	 & 	-	 & 	-	 & 	+	\\
 Current work schedule 	& 	jbmsch	 & 	-	 & 	-	 & 	+	\\
 Casual worker 	& 	jbcasab	 & 	-	 & 	+	 & 	-	\\
 Occupational status - current main job 	& 	jbmo6s	 & 	+	 & 	+	 & 	+	\\
-No.  persons employed at place of work 	& 	jbmwpsz	 & 	+	 & 	+	 & 	+	\\
-Prob.  of accepting similar/better job 	& 	jbmpgj	 & 	+	 & 	+	 & 	+	\\
+No. persons employed at place of work 	& 	jbmwpsz	 & 	+	 & 	+	 & 	+	\\
+Prob. of accepting similar/better job 	& 	jbmpgj	 & 	+	 & 	+	 & 	+	\\
 Years unemployed and looking for work	& 	ehtujyr	 & 	+	 & 	-	 & 	-	\\
 \textbf{\textit{Work-life balance}} 	& 		 & 		 & 		 & 		\\
-Total hours per week would choose to work 	& 	jbprhr	 & 	+	 & 	+	 & 	+	\\
+Hours per week would choose to work 	& 	jbprhr	 & 	+	 & 	+	 & 	+	\\
 Parent provides child care 	& 	cpu\_me 	 & 		 & 		 & 	-	\\
 Do fair share of looking after children 	& 	pashare	 & 	-	 & 	+	 & 	-	\\
 Miss out on home/family activities 	& 	pawkmfh	 & 	+	 & 	+	 & 	+	\\
@@ -1931,17 +1945,17 @@ Miss out on home/family activities 	& 	pawkmfh	 & 	+	 & 	+	 & 	+	\\
 Current weekly gross wages - main job 	& 	wscme	 & 	+	 & 	+	 & 	+	\\
 Imputation flag: current weekly gross wages - all jobs 	& 	wscef	 & 	+	 & 	+	 & 	+	\\
 Change in total gross income since 1 year ago 	& 	wslya	 & 	+	 & 	+	 & 	+	\\
-Financial year investments 	& 	oifinvp	 & 	-	 & 	-	 & 	+	\\
-Financial year business income (profit) 	& 	bifip	 & 	-	 & 	-	 & 	+	\\
+Fin year investments 	& 	oifinvp	 & 	-	 & 	-	 & 	+	\\
+Fin year business income (profit) 	& 	bifip	 & 	-	 & 	-	 & 	+	\\
 Amount outstanding on home loans 	& 	hsmgowe	 & 	+	 & 	+	 & 	+	\\
-Imputation flag: financial year dividends 	& 	oidvryf	 & 	+	 & 	-	 & 	-	\\
-Imputation flag: financial year rental income 	& 	oirntf	 & 	+	 & 	+	 & 	+	\\
-Imputation flag: financial year business income 	& 	biff	 & 	+	 & 	-	 & 	-	\\
+Imputation flag: fin year dividends 	& 	oidvryf	 & 	+	 & 	-	 & 	-	\\
+Imputation flag: fin year rental income 	& 	oirntf	 & 	+	 & 	+	 & 	+	\\
+Imputation flag: fin year business income 	& 	biff	 & 	+	 & 	-	 & 	-	\\
 \textbf{\textit{Health}} 	& 		 & 		 & 		 & 		\\
 Health limits vigorous activities 	& 	gh3a	 & 	+	 & 	+	 & 	+	\\
 Tobacco expense in average week 	& 	lstbca	 & 	-	 & 	-	 & 	+	\\
 \textbf{\textit{Identifiers}} 	& 		 & 		 & 		 & 		\\
-ID of other responder for HH Questionnaire 	& 	hhp2	 & 	-	 & 	-	 & 	+	
+ID of other responder in HH qnn 	& 	hhp2	 & 	-	 & 	-	 & 	+	
 \label{tab:mlvars}
 \end{longtable}  
 %\parbox{1.5\textwidth}{\footnotesize *Notes can be entered here}\\            
@@ -2148,7 +2162,7 @@ ID of other responder for HH Questionnaire 	& 	hhp2	 & 	-	 & 	-	 & 	+
 
 \clearpage
 
-\section{Bootstrapping procedure}
+\section{Bootstrapping Procedure}
 \label{app:boot}
 
 To estimate the parameters and their associated uncertainty we use a bootstrapped validation procedure.
@@ -2232,7 +2246,7 @@ logistic regression (as described previously).
 
 \clearpage
 
-\section{Permutation importance procedure}
+\section{Permutation Importance Procedure}
 \label{app:perm}
 
 The permutation importance procedure involves testing the performance of a
@@ -2314,10 +2328,10 @@ Weekly earnings from all jobs in 2019 (\textit{w19\textunderscore{}earning}) rec
 
 Working hours in 2019 (\textit{w19\textunderscore{}wkhr}) records the total number of hours the individual works in all jobs in a week on average. Working hours are set to 0 for those not working. 
 
-\subsubsection{Treatment Variables: Re-education}
-Re-education based on highest attainment\footnote{The HILDA variable on highest attainment was constructed using three components: the age the individual left school, the highest education attainment in the previous wave and the current level of secondary school attained or currently studying for.} (\textit{reduhl}) records whether the individual has had re-education between 2002 and 2017, based on whether there was a change in the highest education level attained stated in the two years.  
+\subsubsection{Treatment Variables: Retraining}
+Retraining based on highest attainment\footnote{The HILDA variable on highest attainment was constructed using three components: the age the individual left school, the highest education attainment in the previous wave and the current level of secondary school attained or currently studying for.} (\textit{reduhl}) records whether the individual has had retraining between 2002 and 2017, based on whether there was a change in the highest education level attained stated in the two years.  
 
-Re-education completion based on detailed qualifications (\textit{redudl}) records whether the individual has completed any one of the following qualifications since last interviewed between 2002 and 2017\footnote{Refer to https://en.wikipedia.org/wiki/Australian\textunderscore{}Qualifications\textunderscore{}Framework for how most of these degrees are situated relative to each other in a hierarchy and the duration of these qualifications.}:
+Retraining completion based on detailed qualifications (\textit{redudl}) records whether the individual has completed any one of the following qualifications since last interviewed between 2002 and 2017\footnote{Refer to https://en.wikipedia.org/wiki/Australian\textunderscore{}Qualifications\textunderscore{}Framework for how most of these degrees are situated relative to each other in a hierarchy and the duration of these qualifications.}:
 
 \begin{itemize}
   \item Trade certificate or apprenticeship
@@ -2342,7 +2356,7 @@ Re-education completion based on detailed qualifications (\textit{redudl}) recor
   \item Other 
 \end{itemize}  
 
-Re-education completion based on both highest attainment and detailed qualifications (\textit{redufl}) records whether the individual has completed re-education based on both the variables \textit{reduhl} and \textit{redudl}. When either of these variables has a value of 1, this variable will take on the value of 1. 
+Retraining completion based on both highest attainment and detailed qualifications (\textit{redufl}) records whether the individual has completed retraining based on both the variables \textit{reduhl} and \textit{redudl}. When either of these variables has a value of 1, this variable will take on the value of 1. 
 
 \subsubsection{Input Variables}
 For each variable, missing values (if any) have been set to zero and a new binary variable has been generated to indicate the observations that are missing. 
@@ -2576,9 +2590,9 @@ Hourly Wages in 2001 (\textit{p\textunderscore{}hrw01}) records the average hour
 
 The unique person identifier (\textit{xwaveid}).
 
-Completed re-education after 2017 based on highest education (\textit{rehllt}) records whether the individual had only completed their re-education after 2017, comparing their education level in 2017 and 2019.
+Completed retraining after 2017 based on highest education (\textit{rehllt}) records whether the individual had only completed their retraining after 2017, comparing their education level in 2017 and 2019.
 
-Completed re-education after 2017 based on detailed qualifications (\textit{redllt}) records whether the individual has completed any one of the following qualifications since last interviewed between 2018 and 2019:
+Completed retraining after 2017 based on detailed qualifications (\textit{redllt}) records whether the individual has completed any one of the following qualifications since last interviewed between 2018 and 2019:
 
 \begin{itemize}
   \item Trade certificate or apprenticeship
@@ -2603,11 +2617,11 @@ Completed re-education after 2017 based on detailed qualifications (\textit{redl
   \item Other 
 \end{itemize}  
   
-Completed re-education after 2017 based on both highest attainment and detailed qualifications (\textit{refllt}) records whether the individual has completed re-education after 2017 based on both the variables \textit{rehllt} and \textit{redllt}. When either of these variables has a value of 1, this variable will take on the value of 1. 
+Completed retraining after 2017 based on both highest attainment and detailed qualifications (\textit{refllt}) records whether the individual has completed retraining after 2017 based on both the variables \textit{rehllt} and \textit{redllt}. When either of these variables has a value of 1, this variable will take on the value of 1. 
 
 \emph{Timing of Education Completion}
 
-Year of first re-education completion records the year of the first reported instance of re-education completion as provided by the detailed qualification variables and include the following categories:
+Year of first retraining completion records the year of the first reported instance of retraining completion as provided by the detailed qualification variables and include the following categories:
 \begin{itemize}
   \item 2002 (\textit{p\textunderscore{}rcom1})
   \item 2003 (\textit{p\textunderscore{}rcom2})
@@ -2657,27 +2671,27 @@ If a study event does not satisfy these conditions, we look to the next study ev
 
 In our treated group, 1,814 individuals \textbf{started and completed a further educational degree}. 
 
-\textbf{Control sample:} These are those who had never started re-education throughout HILDA. From these control observations, we assign a time stamp to them for the year the control person theoretically started to study. We do this for every year from 2003 to 2019. This implies that never re-educated individuals can be duplicated and used multiple times. For example, if a control individual is observed throughout the years 2001 to 2016, then they will be a control for the separate treated individuals that started re-education in 2003, in 2004, 2005 and up to 2017 i.e. the control individual will be duplicated 15 times.
+\textbf{Control sample:} These are those who had never started retraining throughout HILDA. From these control observations, we assign a time stamp to them for the year the control person theoretically started to study. We do this for every year from 2003 to 2019. This implies that never re-educated individuals can be duplicated and used multiple times. For example, if a control individual is observed throughout the years 2001 to 2016, then they will be a control for the separate treated individuals that started retraining in 2003, in 2004, 2005 and up to 2017 i.e. the control individual will be duplicated 15 times.
 
 There are 60,945 control observations i.e. individuals who never completed a further degree. However, as described above, these are non-unique observations in the sense that a control individual can be duplicated up to 15 times. 
 
 \subsection{Variable description}
 
 \subsubsection{Outcome Variables}
-Weekly earnings from main job in fourth year after the individual started their re-education (\textit{f4\textunderscore{}wscmei}) records the weekly earnings from the main job for the individual in the fourth year after the individual started their re-education. 
+Weekly earnings from main job in fourth year after the individual started their retraining (\textit{f4\textunderscore{}wscmei}) records the weekly earnings from the main job for the individual in the fourth year after the individual started their retraining. 
 
-\subsubsection{Treatment Variables: Re-education}
-Re-education completion based on both highest attainment and detailed qualifications (\textit{redufl}) records whether the individual has completed re-education based on a comparison of the highest education attainment and the number of qualifications gained across waves 1 and 17. If either of these have gone up, \textit{redufl} takes a value of 1 and 0 otherwise. 
+\subsubsection{Treatment Variables: Retraining}
+Retraining completion based on both highest attainment and detailed qualifications (\textit{redufl}) records whether the individual has completed retraining based on a comparison of the highest education attainment and the number of qualifications gained across waves 1 and 17. If either of these have gone up, \textit{redufl} takes a value of 1 and 0 otherwise. 
 
 \subsubsection{Input Variables}
 
-\underline{Characteristics in the Year Prior to Re-education Start}
+\underline{Characteristics in the Year Prior to Retraining Start}
 
 \emph{Demographics}
 
 Gender (\textit{p1\textunderscore{}hgsex}) records the gender of the individual. The value of 1 denotes males whereas the value 2 denotes females. 
 
-Age (\textit{p1\textunderscore{}hgage}) records the age of the individual in the year prior to re-education start.
+Age (\textit{p1\textunderscore{}hgage}) records the age of the individual in the year prior to retraining start.
  
 Country of birth (\textit{p1\textunderscore{}anbcob}) records whether or not an individual was born in:
 \begin{itemize}
@@ -2694,9 +2708,9 @@ Indigenous Status (\textit{p1\textunderscore{}anatsi}) records whether or not an
   \item Both Aboriginal and Torres Islander (value=4) 
 \end{itemize}  
 
-Poor English speaking abilities (\textit{p1\textunderscore{}poeng}) records whether the individual has poor English speaking abilities in the year prior to re-education start. 
+Poor English speaking abilities (\textit{p1\textunderscore{}poeng}) records whether the individual has poor English speaking abilities in the year prior to retraining start. 
 
-State of residence (\textit{p1\textunderscore{}hhstate}) records the state of residence of the individual in the year prior to re-education start:
+State of residence (\textit{p1\textunderscore{}hhstate}) records the state of residence of the individual in the year prior to retraining start:
 \begin{itemize}
   \item NSW (value=1)
   \item VIC (value=2)
@@ -2708,7 +2722,7 @@ State of residence (\textit{p1\textunderscore{}hhstate}) records the state of re
   \item ACT (value=8) 
 \end{itemize}  
 
-Remoteness (\textit{p1\textunderscore{}hhsos}) records whether, in the year prior to re-education start, the individual lives in:
+Remoteness (\textit{p1\textunderscore{}hhsos}) records whether, in the year prior to retraining start, the individual lives in:
 \begin{itemize}
   \item A major city (value=0)
   \item An inner region (value=1)
@@ -2716,7 +2730,7 @@ Remoteness (\textit{p1\textunderscore{}hhsos}) records whether, in the year prio
   \item migratory in nature (value=3)
 \end{itemize}  
 
-Marital status (\textit{p1\textunderscore{}mrcurr}) records whether, in the year prior to re-education start, the individual was:
+Marital status (\textit{p1\textunderscore{}mrcurr}) records whether, in the year prior to retraining start, the individual was:
 \begin{itemize}
   \item Married (value=1)
   \item De facto (value=2)
@@ -2726,23 +2740,23 @@ Marital status (\textit{p1\textunderscore{}mrcurr}) records whether, in the year
   \item Single and never been married (value=6)
 \end{itemize}  
 
-Household size (\textit{p1\textunderscore{}hhsize}) records the total number of individuals living in the same household as the individual (including the individual) in the year prior to re-education start.
+Household size (\textit{p1\textunderscore{}hhsize}) records the total number of individuals living in the same household as the individual (including the individual) in the year prior to retraining start.
 
 Sexual orientation (\textit{p1\textunderscore{}lgtb}) records that the individual’s sexual orientation is not heterosexual.  The variable is constructed from the Sexual Identity question that is only asked in waves 12 and 16. We combine answers from both waves to create a binary indicator for the individual ever reporting a sexual identity that is not heterosexual, treating sexual orientation as a fixed trait for a given individual. 
   
 \emph{Parental Status}
 
-Number of dependents (\textit{p1\textunderscore{}totalkids}) records the number of children under 15 the individual had in the household in the year prior to re-education start. 
+Number of dependents (\textit{p1\textunderscore{}totalkids}) records the number of children under 15 the individual had in the household in the year prior to retraining start. 
 
-Having children (\textit{p1\textunderscore{}anykid}) records the individual had any dependents in the household in the year prior to re-education start. 
+Having children (\textit{p1\textunderscore{}anykid}) records the individual had any dependents in the household in the year prior to retraining start. 
 
-Children under 5 (\textit{p1\textunderscore{}kidu5}) records the individual had children under 5 in the household in the year prior to re-education start. 
+Children under 5 (\textit{p1\textunderscore{}kidu5}) records the individual had children under 5 in the household in the year prior to retraining start. 
 
-Age of youngest (\textit{p1\textunderscore{}rcyng}) records the age of the youngest children living with the respondent in the year prior to re-education start (including adult children). 
+Age of youngest (\textit{p1\textunderscore{}rcyng}) records the age of the youngest children living with the respondent in the year prior to retraining start (including adult children). 
 
 \emph{Physical Health}
 
-Severity of health conditions (\textit{p1\textunderscore{}disdeg}) records whether, in the year prior to re-education start, the individual had:
+Severity of health conditions (\textit{p1\textunderscore{}disdeg}) records whether, in the year prior to retraining start, the individual had:
 \begin{itemize}
   \item No health conditions (value=0)
   \item A mild condition (value=1)
@@ -2759,14 +2773,14 @@ Labour market status (\textit{p1\textunderscore{}lfs}) records whether the indiv
   \item Not in the labour market (value=3)
 \end{itemize} 
 
-Extent of working hour match with preferences (\textit{p1\textunderscore{}whpref}) records whether, in the year prior to re-education start, the match between the individual’s total weekly working hours across all jobs and their preferred number of working hours made them:
+Extent of working hour match with preferences (\textit{p1\textunderscore{}whpref}) records whether, in the year prior to retraining start, the match between the individual’s total weekly working hours across all jobs and their preferred number of working hours made them:
 \begin{itemize}
   \item Underemployed by at least 4 hours a week (value=1)
   \item Roughly Matched: Preferred and Actual Hours Worked differ by less than 4 hours a week (value=2)
   \item Overemployed by at least 4 hours a week (value=3)
 \end{itemize}  
 
-Employee type (\textit{p1\textunderscore{}emptype}) records whether, in the year prior to re-education start, the individual was:
+Employee type (\textit{p1\textunderscore{}emptype}) records whether, in the year prior to retraining start, the individual was:
 \begin{itemize}
   \item An employee (value=1)
   \item An employee of own business (value=2)
@@ -2774,7 +2788,7 @@ Employee type (\textit{p1\textunderscore{}emptype}) records whether, in the year
   \item Unpaid family worker (value=4)
 \end{itemize}  
 
-Contract type (\textit{p1\textunderscore{}contype}) records whether, in the year prior to re-education start, the individual was:
+Contract type (\textit{p1\textunderscore{}contype}) records whether, in the year prior to retraining start, the individual was:
 \begin{itemize}
   \item On a fixed term contract (value=1)
   \item On a casual contract (value=2)
@@ -2782,7 +2796,7 @@ Contract type (\textit{p1\textunderscore{}contype}) records whether, in the year
   \item On other types of contracts  (value=4)
 \end{itemize}  
 
-Occupation (\textit{p1\textunderscore{}occ}) records whether, in the year prior to re-education start, the individual was working as:
+Occupation (\textit{p1\textunderscore{}occ}) records whether, in the year prior to retraining start, the individual was working as:
 \begin{itemize}
   \item Armed forces (value=0)
   \item Legislators, Senior Officials and Managers (value=1)
@@ -2796,11 +2810,11 @@ Occupation (\textit{p1\textunderscore{}occ}) records whether, in the year prior 
   \item Elementary Occupations (value=9)
 \end{itemize}  
 
-Union membership (\textit{p1\textunderscore{}union}) records whether the individual was a union member in the year prior to re-education start.
+Union membership (\textit{p1\textunderscore{}union}) records whether the individual was a union member in the year prior to retraining start.
 
-Real household income (\textit{p1\textunderscore{}rhdi}) records the real value of the individual’s total household income indexed at 2012 price levels and adjusted for household size in the year prior to re-education start.
+Real household income (\textit{p1\textunderscore{}rhdi}) records the real value of the individual’s total household income indexed at 2012 price levels and adjusted for household size in the year prior to retraining start.
 
-Partner labour force status (\textit{p1\textunderscore{}plfs}) records whether, in the year prior to re-education start, the individual:
+Partner labour force status (\textit{p1\textunderscore{}plfs}) records whether, in the year prior to retraining start, the individual:
 \begin{itemize}
   \item Had no partner or no resident partner (value=0)
   \item Had a partner who was employed (value=1)
@@ -2808,13 +2822,13 @@ Partner labour force status (\textit{p1\textunderscore{}plfs}) records whether, 
   \item Had a partner who was not in the labour force (value=3)
 \end{itemize}  
 
-Years in paid work (\textit{p1\textunderscore{}ehtjb})  records the total number of years in paid work the individual has spent in the year prior to re-education start.
+Years in paid work (\textit{p1\textunderscore{}ehtjb})  records the total number of years in paid work the individual has spent in the year prior to retraining start.
 
-Percent finding as least as good a job (\textit{p1\textunderscore{}jbmpgj})  records, for employees, the percentage that they will find as least as good a job as they currently have in their own estimation in the year prior to re-education start
+Percent finding as least as good a job (\textit{p1\textunderscore{}jbmpgj})  records, for employees, the percentage that they will find as least as good a job as they currently have in their own estimation in the year prior to retraining start
 
-Occupational scale (\textit{p1\textunderscore{}jbmo6s}) records the Australian Socioeconomic Index 2006 ranking of the individual’s occupation in the year prior to re-education start. It ranges from 0 to 100, with higher scores indicating higher occupational status. 
+Occupational scale (\textit{p1\textunderscore{}jbmo6s}) records the Australian Socioeconomic Index 2006 ranking of the individual’s occupation in the year prior to retraining start. It ranges from 0 to 100, with higher scores indicating higher occupational status. 
 
-Tenure with employer (\textit{p1\textunderscore{}jbempt}) records the total years spent with the current employer for the individual in the year prior to starting re-education.
+Tenure with employer (\textit{p1\textunderscore{}jbempt}) records the total years spent with the current employer for the individual in the year prior to starting retraining.
 
 \emph{Parental information}
 
@@ -2892,68 +2906,68 @@ Mother’s Occupation (\textit{p1\textunderscore{}mocc}) records whether at age 
 
 \emph{Income Support}
 
-On income support (\textit{p1\textunderscore{}onis}) records the individual was on income support in the year prior to starting re-education
+On income support (\textit{p1\textunderscore{}onis}) records the individual was on income support in the year prior to starting retraining
 
-On Newstart (\textit{p1\textunderscore{}onnsa}) records the individual was on Newstart Allowance in the year prior to starting re-education
+On Newstart (\textit{p1\textunderscore{}onnsa}) records the individual was on Newstart Allowance in the year prior to starting retraining
 
-On Age Pension (\textit{p1\textunderscore{}onap}) records the individual was on Age Pension in the year prior to starting re-education
+On Age Pension (\textit{p1\textunderscore{}onap}) records the individual was on Age Pension in the year prior to starting retraining
 
-On DSP (\textit{p1\textunderscore{}ondsp}) records the individual was on Disability Support Pension in the year prior to starting re-education
+On DSP (\textit{p1\textunderscore{}ondsp}) records the individual was on Disability Support Pension in the year prior to starting retraining
 
-On Carer Payment (\textit{p1\textunderscore{}oncp}) records the individual was on Carer Payment in the year prior to starting re-education
+On Carer Payment (\textit{p1\textunderscore{}oncp}) records the individual was on Carer Payment in the year prior to starting retraining
 
-On Widow Allowance/Wife Pension (\textit{p1\textunderscore{}onww}) records the individual was on Widow Allowance/Wife Pension in the year prior to starting re-education
+On Widow Allowance/Wife Pension (\textit{p1\textunderscore{}onww}) records the individual was on Widow Allowance/Wife Pension in the year prior to starting retraining
 
-On Youth Allowance (\textit{p1\textunderscore{}onya}) records the individual was on Youth Allowance in the year prior to starting re-education
+On Youth Allowance (\textit{p1\textunderscore{}onya}) records the individual was on Youth Allowance in the year prior to starting retraining
 
-On Mature Age Allowance (\textit{p1\textunderscore{}onma}) records the individual was on Mature Age Allowance in the year prior to starting re-education
+On Mature Age Allowance (\textit{p1\textunderscore{}onma}) records the individual was on Mature Age Allowance in the year prior to starting retraining
 
-On Mature Age Partner Allowance (\textit{p1\textunderscore{}onmap}) records the individual was on Mature Age Partner Allowance in the year prior to starting re-education
+On Mature Age Partner Allowance (\textit{p1\textunderscore{}onmap}) records the individual was on Mature Age Partner Allowance in the year prior to starting retraining
 
-On Ab/Austudy (\textit{p1\textunderscore{}onsdy}) records the individual was on Ab/Austudy in the year prior to starting re-education
+On Ab/Austudy (\textit{p1\textunderscore{}onsdy}) records the individual was on Ab/Austudy in the year prior to starting retraining
 
-On Bereavement Allowance (\textit{p1\textunderscore{}onba}) records the individual was on Bereavement Allowance in the year prior to starting re-education
+On Bereavement Allowance (\textit{p1\textunderscore{}onba}) records the individual was on Bereavement Allowance in the year prior to starting retraining
 
-On Sickness Allowance/Speical Benefits (\textit{p1\textunderscore{}onsab}) records the individual was on Sickness Allowance/Speical Benefits in the year prior to starting re-education
+On Sickness Allowance/Speical Benefits (\textit{p1\textunderscore{}onsab}) records the individual was on Sickness Allowance/Speical Benefits in the year prior to starting retraining
 
-On Partner Allowance (\textit{p1\textunderscore{}onpa}) records the individual was on Partner Allowance in the year prior to starting re-education
+On Partner Allowance (\textit{p1\textunderscore{}onpa}) records the individual was on Partner Allowance in the year prior to starting retraining
 
-On Parenting Payments (\textit{p1\textunderscore{}onpp}) records the individual was on Parenting Payments in the year prior to starting re-education
+On Parenting Payments (\textit{p1\textunderscore{}onpp}) records the individual was on Parenting Payments in the year prior to starting retraining
 
 \emph{Housing situation}
 
-Mortgage balance (\textit{p1\textunderscore{}hsmgowe}) records the amount still owing on the mortgage that the individual had in the year prior to re-education start. For those without a mortgage or not home owner, the mortgage balance is set to 0. 
+Mortgage balance (\textit{p1\textunderscore{}hsmgowe}) records the amount still owing on the mortgage that the individual had in the year prior to retraining start. For those without a mortgage or not home owner, the mortgage balance is set to 0. 
 
-Non home owners (\textit{p1\textunderscore{}renter}) records whether the individual was renting or not living in their own homes in the year prior to re-education start.
+Non home owners (\textit{p1\textunderscore{}renter}) records whether the individual was renting or not living in their own homes in the year prior to retraining start.
 
 
 \emph{Prior Year Outcomes}
 
-Weekly income from all jobs (\textit{p1\textunderscore{}earning}) records the weekly earnings from all jobs for the individual in the year prior to the individual starting their re-education. 
+Weekly income from all jobs (\textit{p1\textunderscore{}earning}) records the weekly earnings from all jobs for the individual in the year prior to the individual starting their retraining. 
 
-Weekly income from main job (\textit{p1\textunderscore{}wscmei}) records the weekly earnings from the main job for the individual in the year prior to the individual starting their re-education.
+Weekly income from main job (\textit{p1\textunderscore{}wscmei}) records the weekly earnings from the main job for the individual in the year prior to the individual starting their retraining.
  
-Weekly working hours (\textit{p1\textunderscore{}wkhr}) records the total number of hours the individual works in all jobs in a week on average in the year prior to the individual started their re-education. Working hours are set to 0 for those not working. 
+Weekly working hours (\textit{p1\textunderscore{}wkhr}) records the total number of hours the individual works in all jobs in a week on average in the year prior to the individual started their retraining. Working hours are set to 0 for those not working. 
 
-Real hourly wage (\textit{p1\textunderscore{}rlwage}) records the real hourly wage of the individual in the year prior to the individual starting their re-education, indexed at 2012 price levels. Hourly wages are set to 0 for those not working and set to missing for those reporting working more than 100 hours a week. All wages have then been adjusted up by \$1 to preserve sample size for the logarithm transformation. 
+Real hourly wage (\textit{p1\textunderscore{}rlwage}) records the real hourly wage of the individual in the year prior to the individual starting their retraining, indexed at 2012 price levels. Hourly wages are set to 0 for those not working and set to missing for those reporting working more than 100 hours a week. All wages have then been adjusted up by \$1 to preserve sample size for the logarithm transformation. 
 
 Log hourly wage (\textit{p1\textunderscore{}lnwage}) records the log of  \textit{p1\textunderscore{}rlwage}. 
 
-Mental health (\textit{p1\textunderscore{}ghmh}) records the transformed mental health scores from the aggregation of mental health items of the SF-36 Health Survey, as reported by the individual in the year prior to the individual started their re-education. It ranges from 0 to 100, with higher scores indicating better mental health.   
+Mental health (\textit{p1\textunderscore{}ghmh}) records the transformed mental health scores from the aggregation of mental health items of the SF-36 Health Survey, as reported by the individual in the year prior to the individual started their retraining. It ranges from 0 to 100, with higher scores indicating better mental health.   
 
-Life satisfaction (\textit{p1\textunderscore{}losat}) records the life satisfaction score reported by the individual in the year prior to the individual started their re-education. It ranges from 0 to 10, with higher scores indicating higher life satisfaction. 
+Life satisfaction (\textit{p1\textunderscore{}losat}) records the life satisfaction score reported by the individual in the year prior to the individual started their retraining. It ranges from 0 to 10, with higher scores indicating higher life satisfaction. 
 
 \underline{Delta variables}
 
-For all the variables described in the preceding section titled Characteristics in the Year Prior to Re-education Start, we create a further set of change or delta variables. Specifically, each delta variable is the subtracting of the value of a given characteristic in the two years prior to starting re-education from the value of this characteristic in the year prior to re-education start. 
+For all the variables described in the preceding section titled Characteristics in the Year Prior to Retraining Start, we create a further set of change or delta variables. Specifically, each delta variable is the subtracting of the value of a given characteristic in the two years prior to starting retraining from the value of this characteristic in the year prior to retraining start. 
 
 All delta variables are denoted by the d\textunderscore{} prefix. 
 
 \underline{Education-related variables}
 
-Level of re-education completed: Bachelor and above (\textit{bachab}) records whether the individual had completed re-education at bachelor and above. The variable is set to 0 for the control group and missing for those who had completed certificates. 
+Level of retraining completed: Bachelor and above (\textit{bachab}) records whether the individual had completed retraining at bachelor and above. The variable is set to 0 for the control group and missing for those who had completed certificates. 
 
-Level of re-education completed: Below Bachelor (\textit{bbach}) records whether the individual had completed re-education that is below bachelor level. The variable is set to 0 for the control group and missing for those who had completed a bachelor or higher qualification. 
+Level of retraining completed: Below Bachelor (\textit{bbach}) records whether the individual had completed retraining that is below bachelor level. The variable is set to 0 for the control group and missing for those who had completed a bachelor or higher qualification. 
 
 Main field of study: technical degree (\textit{techdeg}) records whether the individual’s main field of study was a technical degree. The variable is set to 0 for the control group and missing for those whose main field of study was a qualitative degree. Technical degrees include:
 \begin{itemize}
@@ -2980,9 +2994,9 @@ Main field of study: qualitative degree (\textit{qualdeg}) records whether the i
 
 Study duration (\textit{fsddur}) records the total number of waves an individual had spent studying from the start of their first study event counted in our sample. 
 
-Starting Study intensity (\textit{csftsd}) records whether the individual was studying full time or not when they started their re-education. 
+Starting Study intensity (\textit{csftsd}) records whether the individual was studying full time or not when they started their retraining. 
 
-Finishing Study intensity (\textit{fsftsd}) records whether the individual was studying full time or not when they completed their re-education. 
+Finishing Study intensity (\textit{fsftsd}) records whether the individual was studying full time or not when they completed their retraining. 
 
 \underline{Other variables}
 
@@ -2992,17 +3006,17 @@ Number of waves in HILDA (\textit{numwave}) records the number of waves in which
 
 The unique person identifier (\textit{xwaveid})
 
-Wave started re-education (\textit{icswave}) 
+Wave started retraining (\textit{icswave}) 
 
-Wave completed re-education (\textit{ifswave}) 
+Wave completed retraining (\textit{ifswave}) 
 
 Control group indicator (\textit{control}) 
 
-Started but did not complete re-education between 2003-2017 (\textit{ncomp}) 
+Started but did not complete retraining between 2003-2017 (\textit{ncomp}) 
 
-Starting year of re-education imputed (\textit{impute}) is a binary indicator for individuals for which we observe their re-education completion but they never reported ever starting re-education and so we had to impute a starting wave for these individuals.  
+Starting year of retraining imputed (\textit{impute}) is a binary indicator for individuals for which we observe their retraining completion but they never reported ever starting retraining and so we had to impute a starting wave for these individuals.  
 
-Started re-educaton in wave 2018/19 (\textit{latestart}) is an indicator for those individuals who had started their re-education in 2018 or 2019. 
+Started re-educaton in wave 2018/19 (\textit{latestart}) is an indicator for those individuals who had started their retraining in 2018 or 2019. 
 
 
 \section{Nested CV Holdout Sample}

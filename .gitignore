@@ -157,3 +157,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+earnings-bayesian.ipynb
+selfemp-bayesian.ipynb
