@@ -1,0 +1,83 @@
+\documentclass[12pt, a4paper]{article}
+%\documentclass[AEJ, reviewmode]{AEA}
+\usepackage{authblk}
+\usepackage{float}
+\usepackage{tabls}
+\usepackage{graphicx}
+\usepackage{parskip}
+\usepackage{amsmath,amsfonts}
+\usepackage{setspace} %for setting line spacing
+
+\usepackage{lscape} %for using landscape 
+%\usepackage[sectionbib]{natbib} %for more flexible referencing
+%\usepackage{chapterbib} % For a separate bibliography for each section
+%\usepackage[natbib=true,backend=bibtex,style=authoryear]{biblatex}
+\usepackage[comma]{natbib} %for more flexible referencing
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    urlcolor=blue
+    }
+
+\usepackage{url} %for website addresses
+\usepackage{dcolumn} %for decimal point alignment
+\usepackage{booktabs} %for professionaly looking tables
+\usepackage{tabularx} % for creating tables
+\usepackage{multirow} % columns spanning multiple rows
+%\usepackage{geometry} % for setting margins
+\usepackage[in]{fullpage} % for smaller margins
+%\usepackage[pdftex,bookmarks=true]{hyperref} % for creating links within the document (to references, tables, equations) or to websites and creating bookmarks
+\usepackage[multiple, stable, bottom]{footmisc}% for multiple footnotes at the same place
+\usepackage{appendix} % to create separate appendices for each section
+\usepackage{chngcntr} % to reset table and figure counters
+% Reset table counter for each appendix
+\counterwithin{table}{section}
+% Reset figure counter for each appendix
+\counterwithin{figure}{section}
+\usepackage{titlesec}
+\usepackage{changepage}
+\usepackage{xcolor}
+\usepackage{longtable,pdflscape,booktabs} % to extend tables over multiple pages
+\usepackage{enumerate}
+
+\usepackage[textsize=tiny]{todonotes} % todos and comments
+
+\urlstyle{same}
+%\floatstyle{plaintop} 
+%\restylefloat{table}
+%\floatstyle{plain} 
+%\restylefloat{figure}
+\newcommand{\floatintro}[1]{\vspace*{0.1in} {\footnotesize #1} \vspace*{0.1in}}
+\newcolumntype{d}[1]{D{.}{\cdot}{#1}}
+\newcolumntype{.}{D{.}{.}{-1}}
+\newcolumntype{,}{D{,}{,}{2}}
+{\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\raggedbottom % To prevent white spaces between paragraphs
+
+\widowpenalty=10000
+\clubpenalty=10000
+%\hyphenpenalty=1000
+\setcounter{page}{1}
+%\geometry{left=1.5in,right=1.5in,top=1.5in,bottom=1.5in}
+
+
+\title{LATE-CAREER ENTREPRENEURSHIP AND EARNINGS: THE ROLE OF FORMAL RETRAINING AND UPSKILLING\thanks{\scriptsize{Corresponding author: Anna Zhu, RMIT University, 800 Swanston St, Melbourne, Australia. Email: anna.zhu@rmit.edu.au. \newline We thank Tim Robinson, Hayley Fisher, Bruce Bradbury and numerous seminar and conference participants for helpful comments. The authors would like to thank Tessa LoRiggio, Prabath Abeysekara, Michael Duffield, and Yin-King Fok for their excellent research assistance. \newline Zhu acknowledges the support of the Australian Research Council Linkage Project (LP170100472). This paper uses unit record data from the Household, Income and Labour Dynamics in Australia (HILDA) Survey. The HILDA Project was initiated and is funded by the Australian Government Department of Social Services (DSS), and is managed by the Melbourne Institute of Applied Economic and Social Research (Melbourne Institute). The findings and views reported in this paper, however, are those of the authors and should not be attributed to either DSS or the Melbourne Institute.}}} \vspace{0.2cm} \author{Finn Lattimore$^1$\thanks{\scriptsize{This work was performed while the author was working at the Gradient Institute. Views expressed in this paper are those of the author and do not reflect those of the Reserve Bank of Australia.}}\vspace{0.2cm} ,  Daniel Steinberg$^2$ and Anna Zhu$^3$ \\\small {$^1$Reserve Bank of Australia} \vspace{0.2cm} \\ {$^2$Gradient Institute} \vspace{0.2cm} \\ {$^3$RMIT University, IZA}}
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+
+Formal retraining in later-life may provide a range of benefits to both individuals and society by extending careers, increasing earnings and spurring entrepreneurship. We focus on the economic returns of degrees completed later in life, distinct from early years, where motivations and capabilities may differ. We revisit this long-studied question with new methodological techniques by adapting Machine Learning (ML) models for causal inference. We showcase the ability of ML methods to take full advantage of complex and rich data to estimate causal effects and sources of heterogeneity. We find that completing an additional degree increases the probability of being self-employed by 1-2 percentage points and increases earnings by more than \$3000 (AUD, 2019) per year compared to those who do not complete additional study in later-life. 
+
+\end{abstract}
+
+\emph{JEL: J12, J18, H53}
+
+\emph{Keywords: Machine Learning, education, mature-age learners, causal impacts}
+
+\end{document}
