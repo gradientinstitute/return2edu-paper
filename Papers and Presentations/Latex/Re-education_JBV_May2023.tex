@@ -509,7 +509,7 @@ Doubly Robust and Bayesian models.
 
 \subsubsection*{Identification assumptions}
 
-To interpret the estimated parameter as a causal relationship, we require the following identification assumptions\footnote{See the arxiv version for a detailed description of each assumption: https://doi.org/10.48550/arXiv.2304.01490}:
+To interpret the estimated parameter as a causal relationship, we require the following identification assumptions:
 Conditional independence ($Y(0)$ and $Y(1)$ are independent of $T$ conditional on $X$); SUTVA: Stable Unit Treatment Value Assumption ($Y = Y(0) + T \cdot (Y(1) - Y(0))$); Overlap Assumption (no subpopulation defined by $X = x$ is entirely located in the treatment or control group); Exogeneity of features (the features included in the conditioning set are not affected by the treatment). With the strong ignorability and overlap assumptions in place, treatment effect estimation reduces to estimating two response surfaces, one for treatment and one for control.
 
 %\begin{enumerate}
@@ -1254,7 +1254,7 @@ Figures \ref{fig:dengbrlevDR} and \ref{fig:dengbrlevDRe} display the distributio
 the bootstrap samples for the GBR model. They display the distributions for the
 top 3 features for the respective outcomes. This suggests that in some of the bootstrap samples,
 where the MSE is larger, the individual treatment effects from the permuted
-data differ greatly from the original individual treatment effects.\todo{I think more  explanation may be needed here? It seems like something has been lost by moving the PI description to the appendix.}
+data differ greatly from the original individual treatment effects.\todo{I think more  explanation may be needed here? Add some of the permutation importance description from  the appendix back in here.}
 %Figure\ref{fig:dengbrlevDRe} displays the distribution of the MSE values for entry into entrepreneurship
 %
 We present the results for the DR (GBR) model, however, similar features are chosen from the T-learner models. Results are available upon request. 
@@ -1275,7 +1275,7 @@ sample into those who are above and below this median value.
 
 Larger entrepreneurial gains are achieved when qualifications are acquired at
 older ages. Younger learners may be more likely to seek re-training in order to become employees. These age-heterogeneity results contrast with the outcome of earnings, where mature-age learners are less likely to gain.\footnote{Younger people have had more time to accumulate returns and this result aligns with findings from previous studies
-\citep{polidano2016,dorsett2016,perales2017}}. This may point to the different aspirations of those mature-age learners who do and do not become entrepreneurs in the late-career stage.  
+\citep{polidano2016,dorsett2016,perales2017.}} This may point to the different aspirations of those mature-age learners who do and do not become entrepreneurs in the late-career stage.  
 
 Weekly personal income has a large impact on the effect size for the outcome of earnings but little impact on whether or not retraining lifts the chance of being an entrepreneur. For earnings, those with below median income in 2001 derive more benefits than those with above median income, possibly because high income earners hit an earnings ceiling. Weekly personal income and age are likely to be highly correlated, with older individuals tending to earn a higher personal income. We cannot say which variable is the main driver of the
 heterogeneous treatment effects and there may also be interaction effects between them.
@@ -1681,17 +1681,17 @@ ID of other responder for HH Questionnaire 	& 	hhp2	 & 	NA	 & 	NA
 \toprule
 Model  &  N  &  ATE  &  CI (ATE)  \\
 \midrule 	   						
-OLS (S-learner)	 & 5441 & 0.0155 & [0.001, 0.030] \\
-Probit (S-learner)	 & 5441 & 0.0131 & [0.000, 0.026] \\
-Logit (S-learner)	 & 5441 & 0.0122 & [-0.001, 0.025] \\
-T-learner (GBR) & 5441 & 0.0235 & [0.010, 0.037]	 \\
-T-learner (LASSO) & 5441 & 0.0235 & [0.012, 0.037]	 \\
-T-learner (Ridge)	 & 5441 & 0.0223 & [0.008, 0.036]	 \\
-Doubly Robust (GBR) & 5441 & 0.0187 & [0.0161, 0.0212] \\
-Doubly Robust (LASSO) & 5441 & 0.0191 & [0.0177, 0.0207]	 \\
-Doubly Robust (Ridge)	 & 5441 & 0.0178 & [0.0166, 0.0195]	 \\
-Hierarchical Logistic Model	 & 5441 & 0.0135 & [0.0000, 0.0295]  \\
-Approximate Gaussian Process  & 5441 & 0.0127 & [-0.0008, 0.0272] \\
+OLS (S-learner)	 & 5441 & 0.016 & [0.001, 0.030] \\
+Probit (S-learner)	 & 5441 & 0.013 & [0.000, 0.026] \\
+Logit (S-learner)	 & 5441 & 0.012 & [-0.001, 0.025] \\
+T-learner (GBR) & 5441 & 0.024 & [0.010, 0.037]	 \\
+T-learner (LASSO) & 5441 & 0.024 & [0.012, 0.037]	 \\
+T-learner (Ridge)	 & 5441 & 0.022 & [0.008, 0.036]	 \\
+Doubly Robust (GBR) & 5441 & 0.019 & [0.016, 0.021] \\
+Doubly Robust (LASSO) & 5441 & 0.019 & [0.018, 0.021]	 \\
+Doubly Robust (Ridge)	 & 5441 & 0.018 & [0.017, 0.020]	 \\
+Hierarchical Logistic Model	 & 5441 & 0.014 & [0.000, 0.030]  \\
+Approximate Gaussian Process  & 5441 & 0.013 & [-0.001, 0.027] \\
 \bottomrule
 \end{tabular}
 \par\medskip
@@ -2411,8 +2411,6 @@ obtain a distribution of MSE values across the different bootstrap samples.
 
 \section{Bayesian Model Details}
 \label{app:bayes}
-
-\todo{I have to fill this out. Is this okay, and if so, is this placement okay?}
 
 \clearpage
 
