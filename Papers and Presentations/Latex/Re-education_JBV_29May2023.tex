@@ -1414,7 +1414,7 @@ T-learner (Ridge)	 & 5441 & 0.022 & [0.008, 0.036]	 \\
 Doubly Robust (GBR) & 5441 & 0.019 & [0.016, 0.021] \\
 Doubly Robust (LASSO) & 5441 & 0.019 & [0.018, 0.021]	 \\
 Doubly Robust (Ridge)	 & 5441 & 0.018 & [0.017, 0.020]	 \\
-Hierarchical Logistic Model	 & 5441 & 0.014 & [0.000, 0.030]  \\
+Hierarchical Logistic Model	 & 5441 & 0.012 & [-0.0002, 0.028]  \\
 Approximate Gaussian Process  & 5441 & 0.013 & [-0.001, 0.027] \\
 \bottomrule
 \end{tabular}
@@ -2458,17 +2458,14 @@ y_i &\sim \mathcal{N}\!\left(
 \mu_0(x_i, \rho(x_i)) &= w_0 + w_x^\top x_i + w_\rho \rho(x_i), \\
 \tau(x_i) &= w_t + w_{tx}^\top x_i.
 \end{align*}
-For the hierarchical Logistic model the above likelihood is modified to,
+For the hierarchical logistic model the above likelihood is modified to,
 \begin{align*}
 y_i &\sim \mathrm{Binomial}\!\left(
   \sigma\!\left(\mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i \right) \right)
   \quad\textrm{where}, \\
   \sigma(z) &= \frac{1}{1 + e^{-z}}.
 \end{align*}
-
-following
-hierarchical priors,
-
+We use the following hierarchical priors,
 \begin{align*}
   \{\lambda_0, \lambda_x, \lambda_\rho\} &\sim \textrm{Uniform}(0, 100) \\
   \{\lambda_t, \lambda_{tx}\} &\sim \textrm{Uniform}(0, 1000) \\
@@ -2482,11 +2479,14 @@ hierarchical priors,
 where $I_d$ is the identity matrix of dimension $d$, which is the number of
 control factors. The propensity score, $\rho(x_i)$, is obtained from the
 logistic regression model. 
-The choice of an uniform improper and non-informative prior over the regression
+The choice of a uniform improper and non-informative prior over the regression
 weight scales, $\lambda_*$, is motivated by the advice in \citet{gelman2006}
 where we desire a non-informative prior that admits large values. We choose a
 broader prior for the treatment component of the model to minimise bias as
-suggested by \cite{hahn2020}. 
+suggested by \cite{hahn2020}. Similarly we follow the advice of
+\citet{gelman2006} in using a HalfCauchy for the prior on the likelihood
+scale, $\gamma$, though we find the model is fairly insensitive to the
+choice of this prior.
 
 
 \subsection{Gaussian Process Models}
@@ -2499,12 +2499,12 @@ function,
   \mathbb{E}[Y_i \cdot Y_j] &= k(x_i, x_j) + \gamma^2 \delta_{ij},
 \end{align*}
 where $\delta_{ij}$ is a Kroneker delta, and is one iff $i=j$, otherwise zero,
-and $\gamma^2$ is the standard deviation of the process noise, $\epsilon$,
-such that $y_i = f(x_i) + \epsilon_i$.
-This formulation also assumes $\mathbb{E}[Y] = \mathbb{E}[f(x)] = 0$ for 
-simplicity -- and can be used directly if the outcomes are transformed to be
-zero mean, or we can model an additional mean function (see \citet{williams2006}
-for details). The Gaussian process can be written as,
+and $\gamma^2$ is the variance of the process noise, $\epsilon$, such that $y_i
+= f(x_i) + \epsilon_i$. This formulation also assumes $\mathbb{E}[Y] =
+\mathbb{E}[f(x)] = 0$ for simplicity -- and can be used directly if the
+outcomes are transformed to be zero mean, or we can model an additional mean
+function (see \citet{williams2006} for details). The Gaussian process can be
+written as,
 \begin{align*}
   \mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{K} + \gamma^2 \mathbf{I}_n),
 \end{align*}
@@ -2541,20 +2541,20 @@ likelihood type-II procedure outlined in Section 5.4.1 of \citet{williams2006}.
 The final length scales learned by the GP are $l_{\mu_0} = 16$ and $l_\tau = 243$.
 
 As mentioned in Section \ref{sub:gp}, for a Gaussian process with a binary
-outcome and a Bernoulli=logistic likelihood, we need to resort to approximation
-since the prior and likelihood are not conjugate. We opt to use the
-Hierarchical logistic model from previously, but with a Nystr\"om basis applied
-to the model controls, $x \to \phi(x)$, which approximates the non-linear
-relationships that would be modelled by a kernel function. The prognostic and
-treatment components become,
+outcome and a Bernoulli-logistic likelihood we need to resort to approximation
+for inference, since the prior and likelihood are not conjugate. We opt to use
+the hierarchical logistic model from previously, but with a Nystr\"om basis
+applied to the model controls, $x \to \phi(x)$, which approximates the
+non-linear relationships that would be modelled by a kernel function. The
+prognostic and treatment components become,
 \begin{align*}
   \mu_0(x_i, \rho(x_i)) &= w_0 + w_x^\top \phi_{\mu_0}(x_i) + w_\rho \rho(x_i), \\
   \tau(x_i) &= w_t + w_{tx}^\top \phi_{\tau}(x_i).
 \end{align*}
-otherwise we use the same Bernoulli-logistic likelihood.
-We choose a smooth radial basis function (RBF) kernel for the
-Nystr\"om approximation, with fixed length-scales informed from those learned
-by the earnings Gaussian process model,
+otherwise we use the same Bernoulli-logistic likelihood and priors. We choose a
+smooth radial basis function (RBF) kernel for the Nystr\"om approximation, with
+fixed length-scales informed from those learned by the earnings Gaussian
+process model,
 \begin{align*}
   k_{\text{RBF}}(x_i, x_j) = \exp\left(-\frac{\|x_i - x_j\|^2_2}{2 l^2}\right). 
 \end{align*}
