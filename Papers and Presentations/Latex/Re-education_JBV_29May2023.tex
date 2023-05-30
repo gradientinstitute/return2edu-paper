@@ -1028,7 +1028,7 @@ model weights, the forms of which we have detailed in Appendix \ref{app:bayes}.
 
 For model inference, we use the no U-turn MCMC sampler \citep{hoffman2014} in
 the numpyro software package \citep{bingham2019, phan2019}. We first burn-in
-the Markov chain for 2,000-30,000 samples depending on the model, then draw 1000
+the Markov chain for 5,000-30,000 samples depending on the model, then draw 1000
 samples from the posterior parameters to approximate the ATE,
 \begin{align}
   \hat{ATE}_\text{earnings} &= \frac{1}{Sn} \sum^S_{s=1} \sum^n_{i=1} \tau^{(s)}(x_i), 
@@ -1153,7 +1153,7 @@ ATE approximation in Equation (\ref{eq:hlcATE}), but with $x_i \to \phi(x_i)$
 where $\phi$ is the Nystr\"om transformation. We give more details of this
 transformation in Appendix \ref{app:bayes}.
 
-\subsubsection*{Bayesian Causal Forests}
+\subsubsection*{Bayesian Causal Forest}
 \label{sub:bcf}
 
 The last Bayesian model we use is the Bayesian causal forest introduced in
@@ -1415,7 +1415,7 @@ Doubly Robust (GBR) & 5441 & 0.019 & [0.016, 0.021] \\
 Doubly Robust (LASSO) & 5441 & 0.019 & [0.018, 0.021]	 \\
 Doubly Robust (Ridge)	 & 5441 & 0.018 & [0.017, 0.020]	 \\
 Hierarchical Logistic Model	 & 5441 & 0.012 & [-0.0002, 0.028]  \\
-Approximate Gaussian Process  & 5441 & 0.013 & [-0.001, 0.027] \\
+Approximate Gaussian Process  & 5441 & 0.016 & [0.003, 0.030] \\
 \bottomrule
 \end{tabular}
 \par\medskip
@@ -1473,7 +1473,7 @@ Doubly Robust (Ridge)	 & 	5441	 & 	61.74	 & 	[45.7, 78.86]	 \\
 %Bayesian Ridge (counterfactual sampling)	 & 	5441	 & 	44.64	 & 	[2.24, 87.04]	 \\
 Hierarchical Linear Model	 & 	5441	 & 	63.22 & [0.63, 121.70]  \\
 Gaussian Process  & 	5441	 & 	61.01	 & 	[12.63, 109.51]	 \\
-Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
+Bayesian Causal Forest & 5441 & 84.51 & [26.28, 141.17] \\
 % Hierarchical Bayesian Linear Model & 	5441	 & 	45.74	 & [-9.50, 113.53]  \\ Gamma(1,1) priors
 \bottomrule
 \end{tabular}
