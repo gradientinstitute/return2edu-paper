@@ -689,7 +689,7 @@ Figure \ref{fig:yearearnent} shows an increase in average earnings of around \$3
 We aim to estimate the causal impact of obtaining a new qualification. Our empirical challenge is a missing data one in the sense that we do not observe the counterfactual outcome for each person -- what would have their income been if they had/had not obtained a new qualification?
 
 We use capitalisation to denote random variables, where $Y \in \mathbb{R}^+$ is
-the outcome variable for income and $Y \in \{0, 1\}$ for entrepreneurship, $T
+the outcome variable for earnings and $Y \in \{0, 1\}$ for entrepreneurship, $T
 \in \{0, 1\}$ is the binary treatment indicator, and $X \in \mathcal{X}$ are
 the conditioning variables (which can be a mix of continuous or categorical in
 type). Small case is used to denote realisations of these random variables,
@@ -902,43 +902,45 @@ Average treatment effect is then just simply estimated as,
 \begin{align*}
   \hat{ATE} = \frac{1}{n}\sum^n_{i=1} \tau(x_i).
 \end{align*}
-This approach allows us to place explicit and separate priors on the prognostic and treatment
-components of the models. This minimises bias in the form of
-regularisation induced confounding (RIC) which is discussed in more detail in
-\cite{hahn2018, hahn2020}. It is also a very natural way to estimate
-heterogeneous treatment effects, since we can parameterise $\tau(x_i)$
-directly as an additive effect on $\mu_0$, rather than having to separately 
+This approach allows us to place explicit and separate priors on the prognostic
+and treatment components of the models. Bias in the form of regularisation
+induced confounding (RIC), which is discussed in detail in \cite{hahn2018,
+hahn2020}, is minimised using this model. It is also a very natural way to
+estimate heterogeneous treatment effects, since we can parameterise $\tau(x_i)$
+directly as an additive effect on $\mu_0$, rather than having to separately
 parameterise control and treatment surfaces.
 
-However, since the entrepreneurial outcome is binary we had to modify Equation
-(\ref{eq:bayesmods}) to have a sigmoid curve to keep the model likelihood in
-the range $[0, 1]$. This also ensures the model's posterior distribution over
-parameters reflects the true range of the outcome. So our Bayesian model
-becomes, \begin{align} \mathbb{E}[Y|X{=}x_i, T{=}t_i] \approx \sigma\!\left(
-\mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i\right), \label{eq:bayesmods_clf}
-\end{align} where $\sigma(\cdot)$ is a logistic sigmoid. Unfortunately this
-nonlinear sigmoid breakes the seperability of the prognostic and treatment
-models when computing the ATE, which we no compute as, 
+However, the entrepreneurial outcome is binary so we have to modify Equation
+(\ref{eq:bayesmods}) to have a sigmoid transformation that keeps the expected
+outcome in $[0, 1]$. This also ensures the model's posterior distribution over
+parameters reflects the true range of the outcome. Our model for binary
+outcomes is, 
+\begin{align}
+  \mathbb{E}[Y|X{=}x_i, T{=}t_i] \approx \sigma\!\left(
+  \mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i\right), \label{eq:bayesmods_clf}
+\end{align}
+where $\sigma(z) = 1 / (1 + e^{-z})$ is a logistic sigmoid. Unfortunately this
+nonlinear sigmoid breaks the separability of the prognostic and treatment
+models when computing the ATE, which we now compute as, 
 \begin{align*} \hat{ATE} =
   \frac{1}{n}\sum^n_{i=1} \sigma\!\left( \mu_0(x_i, \rho(x_i)) + \tau(x_i)
   \right) - \sigma\!\left( \mu_0(x_i, \rho(x_i)) \right).
 \end{align*}
-%
-  %The advantage of this approach are manifold. From a Bayesian perspective, it
-  %allows us to place explicit and separate priors on the prognostic and
-  %treatment components of the models. For example, it may be sensible to
-  %expect the prognostic component to be flexible and strongly predictive of
-  %the outcome, while me may expect that the treatment component is relatively
-  %simple and small
-  %in magnitude \citep{hahn2020}. Furthermore, this separation of model
-  %components and inclusion of the propensity score minimises bias in the form
-  %of regularisation induced confounding (RIC) which is discussed in more
-  %detain in \citep{hahn2018, hahn2020}. And finally, it is a very natural way
-  %to estimate heterogeneous treatment effects, since we can parameterise
-  %$\tau(x_i)$
-  %directly as an additive effect on $\mu_0$, rather than having to separately
-  %parameterise control and treatment surfaces.
-%
+%The advantage of this approach are manifold. From a Bayesian perspective, it
+%allows us to place explicit and separate priors on the prognostic and
+%treatment components of the models. For example, it may be sensible to
+%expect the prognostic component to be flexible and strongly predictive of
+%the outcome, while me may expect that the treatment component is relatively
+%simple and small
+%in magnitude \citep{hahn2020}. Furthermore, this separation of model
+%components and inclusion of the propensity score minimises bias in the form
+%of regularisation induced confounding (RIC) which is discussed in more
+%detain in \citep{hahn2018, hahn2020}. And finally, it is a very natural way
+%to estimate heterogeneous treatment effects, since we can parameterise
+%$\tau(x_i)$
+%directly as an additive effect on $\mu_0$, rather than having to separately
+%parameterise control and treatment surfaces.
+
 We explore three different model classes for $\mu_0$ and $\tau$. The first is a
 linear model for both prognostic and treatment models. The next uses a Gaussian
 process (GP) for the earnings outcome, and an approximate GP for the
@@ -979,6 +981,7 @@ sections.
 % single dummy variable.
 
 \subsubsection*{Hierarchical Linear/Logistic Models}
+\label{sub:hlm}
 
 The first Bayesian model uses linear prognostic and treatment components,
 \begin{align*}
@@ -1020,19 +1023,13 @@ score.
 %score.
 For the earnings outcome we use a Normal likelihood, and for the
 entrepreneurship outcome we use a Bernoulli likelihood with a logistic sigmoid,
-as in Equation (\ref{eq:bayesmods_clf}).
-We place hierarchical priors over all model weights. %, the forms of which we have detailed in Appendix \ref{app:bayes}.
+as in Equation (\ref{eq:bayesmods_clf}). We place hierarchical priors over all
+model weights, the forms of which we have detailed in Appendix \ref{app:bayes}.
 
 For model inference, we use the no U-turn MCMC sampler \citep{hoffman2014} in
-the numpyro software package \citep{bingham2019, phan2019}. 
-% The choice of an
-% uniform improper and non-informative prior over the regression weight scales,
-% $\lambda_*$, is motivated by the advice in \citet{gelman2006} where we desire a
-% non-informative prior that admits large values. We choose a broader 
-% prior for the treatment component of the model to minimise bias as suggested by
-% \cite{hahn2020}. 
-We first burn in the Markov chain for 2,000 samples, then draw
-1000 samples from the posterior parameters to approximate the ATE,
+the numpyro software package \citep{bingham2019, phan2019}. We first burn-in
+the Markov chain for 2,000-30,000 samples depending on the model, then draw 1000
+samples from the posterior parameters to approximate the ATE,
 \begin{align}
   \hat{ATE}_\text{earnings} &= \frac{1}{Sn} \sum^S_{s=1} \sum^n_{i=1} \tau^{(s)}(x_i), 
   \label{eq:hlrATE} \\
@@ -1045,6 +1042,7 @@ where $(s)$ denotes a sample from the posterior parameters has been used to
 construct a random realisation of the treatment model component, and $S = 1000$.
 
 \subsubsection*{Gaussian Process Regression}
+\label{sub:gp}
 
 Gaussian process (GP) regression can be viewed as a non-linear generalisation
 of Bayesian linear regression that makes use of the kernel trick
@@ -1119,7 +1117,7 @@ $\tau_0$ permits a constant treatment effect.
 %being at least once differentiable \citep{williams2006}. 
 %
 We chose a Gaussian process with a Mat\'{e}rn kernel which can learn non-linear and 
-interaction-style relationships between input features and the outcome. %The kernel parameters are given in Appendix \ref{app:bayes}. 
+interaction-style relationships between input features and the outcome. The kernel parameters are given in Appendix \ref{app:bayes}. 
 %Our composite kernel is not
 %necessarily stationary however, as we have included a non-stationary term, $t_i
 %t_j$. 
@@ -1143,16 +1141,20 @@ of \citet{williams2006}.} with kernel inputs $k_*(\langle x_i, t \rangle, \langl
 \rangle)$, which is equivalent to sampling from the distribution over
 $\tau(\cdot)$. We use $S=100$ samples.
 
-Unfortunately inference is more difficult in a Gaussian process that models
-the binary entrepreneurship outcome in Equation (\ref{eq:bayesmods_clf}), and
-so we must resort to approximation. There are numerous ways we can approximate
-a Gaussian process classifier, the most simple of which is to use the hierarchical
-Bernoulli-logisitc model from the previous section but to transform the inputs,
-$x_i$, with a Nystr\"om basis expansion~\citep{williams2006}. We can then use the same
-Monte-Carlo inference proceedure and ATE approximation in Equation (\ref{eq:hlcATE}),
-but with $x_i \to \phi(x_i)$ where $\phi$ is the Nystr\"om transformation. %We give more details of this transformation in Appendix \ref{app:bayes}.
+Unfortunately inference is more difficult in a Gaussian process that models the
+binary entrepreneurship outcome in Equation (\ref{eq:bayesmods_clf}), and so we
+must resort to approximation. There are numerous ways we can approximate a
+Gaussian process classifier, the most simple of which is to use the
+hierarchical Bernoulli-logistic model from the previous section but to
+transform the inputs, $x_i$, with a Nystr\"om basis
+expansion~\citep{williams2000} that will approximate the non-linear nature of a
+kernel function. We can then use the same Monte-Carlo inference procedure and
+ATE approximation in Equation (\ref{eq:hlcATE}), but with $x_i \to \phi(x_i)$
+where $\phi$ is the Nystr\"om transformation. We give more details of this
+transformation in Appendix \ref{app:bayes}.
 
 \subsubsection*{Bayesian Causal Forests}
+\label{sub:bcf}
 
 The last Bayesian model we use is the Bayesian causal forest introduced in
 \citet{hahn2020}. Broadly it models the prognostic and treatment components as
@@ -1164,7 +1166,7 @@ capture complex relationships that can otherwise confound effect estimation.
 ATE is estimated in the same way as for the linear model in Equation
 (\ref{eq:hlrATE}), but where the BART posterior is used for the treatment
 effect distribution. 
-% We give more information about this model in Appendix \ref{app:bayes}. 
+We give more information about this model in Appendix \ref{app:bayes}. 
 Unfortunately there exists no implementation of the Bayesian
 causal forest for binary outcomes, and so we only use this model for the
 earnings outcome.
@@ -1357,7 +1359,7 @@ any potential pre-test issues. Appendix \ref{app:boot} describes the bootstrappi
 \subsubsection*{Inference for the Bayesian models}
 
 The inference process for the Bayesian models is a little different since the
-hyper-paramters of the models are either fixed or selected automatically by the
+hyperparameters of the models are either fixed or selected automatically by the
 learning algorithm (maximum likelihood type-II or MCMC). Bayesian inference
 procedures tend to afford some protection against over-fitting since they are
 parsimonious when choosing posterior distributions over model parameters that
@@ -1384,14 +1386,14 @@ and the GLMs are S-learners, in that they simply take the treatment variable as
 a single input feature. We find the results based on the marginal effects (the
 difference in the predicted probabilities evaluated at $t_i = 1$ and $0$ for
 all $i$ with all other $x_i$ unchanged) are consistent across these three
-models. This suggests the linearity-in-parameters assumption is valid. We use
-regression models for the T-learner and Doubly Robust analyses, and logistic
-transformations for the Bayesian models. The T-learner and Doubly Robust models
-are relatively similar in terms of magnitude (a 2 percentage point increase in
-the probability of entrepreneurship) and statistical significance. The
-S-Learners and Bayesian models estimate a slightly smaller effect size, although
-their confidence intervals include the values estimated in the former
-approaches.
+models. This suggests the linearity-in-parameters assumption is valid, and so
+for simplicity we use regression models for the T-learner and Doubly Robust
+analyses. Logistic transformations and Bernoulli likelihoods are used for the
+Bayesian models. The T-learner and Doubly Robust models are relatively similar
+in terms of magnitude (a 2 percentage point increase in the probability of
+entrepreneurship) and statistical significance. The S-Learners and Bayesian
+models estimate a slightly smaller effect size, although their confidence
+intervals include the values estimated in the former approaches.
 
 % Entrepreneurship 
 \singlespacing
@@ -1404,8 +1406,8 @@ approaches.
 Model  &  N  &  ATE  &  CI (ATE)  \\
 \midrule 	   						
 OLS (S-learner)	 & 5441 & 0.016 & [0.001, 0.030] \\
-Probit (S-learner)	 & 5441 & 0.013 & [0.000, 0.026] \\
-Logit (S-learner)	 & 5441 & 0.012 & [-0.001, 0.025] \\
+GLM-Probit (S-learner)	 & 5441 & 0.013 & [0.000, 0.026] \\
+GLM-Logit (S-learner)	 & 5441 & 0.012 & [-0.001, 0.025] \\
 T-learner (GBR) & 5441 & 0.024 & [0.010, 0.037]	 \\
 T-learner (LASSO) & 5441 & 0.024 & [0.012, 0.037]	 \\
 T-learner (Ridge)	 & 5441 & 0.022 & [0.008, 0.036]	 \\
@@ -1517,16 +1519,16 @@ able to more easily capture non-linear relationships than the other models.
 
 Proportionate changes in earnings can be measured by taking the log of the earnings measures. In Appendix Figure \ref{fig:valadlelog}, we see that the proportionate change in earnings was large at 50 percent. This is likely to be because of people entering the labour market as a result of the new qualification. We find that a new qualification increases the likelihood of employment by approximately 8 percent (see Figure \ref{fig:empl}).
 
-\singlespacing
 \begin{figure}[htbp]
+\singlespacing
 \centering
 \caption{Other Employment Outcomes}
 \vspace{0.5cm}
   \label{fig:empl}
     \includegraphics[width=0.75\textwidth]{_figures/SPRC_fig5_empltr.pdf}
 \parbox{1\textwidth}{\footnotesize{\textit{Notes}: The impact of a new qualification. Sample of people who are 25 or older in 2001. Observation sizes vary depending on the outcome variable. All results are estimated using the LASSO algorithm.}}
-\end{figure}
 \doublespacing
+\end{figure}
 
 Acquiring an additional qualification may increase earnings through a number of
 potential mechanisms. We find evidence that, in Figure \ref{fig:empl} for
@@ -1804,7 +1806,7 @@ heterogeneity in relatively `short-term' treatment effects.
 
 Using a machine learning based methodology and data from the rich and
 representative Household Income and Labour Dynamics Australia survey we have
-shown that completing an additional degree later in life can increase the chance of becoming self-employed by 1-2 percentage points. It can also adds \$55-110 (AUD,
+shown that completing an additional degree later in life can increase the chance of becoming self-employed by 1-2 percentage points. It can also add \$55-110 (AUD,
 2019) per week to an individual's gross earnings, which represents roughly 5-8
 percent of the weekly gross earning for the average worker in Australia. Our
 machine learning methodology has also uncovered sources of heterogeneity in
@@ -2442,8 +2444,149 @@ importance. Again, those with the largest average MSE values are the most
 important. We can also evaluate the uncertainty of this estimate since we
 obtain a distribution of MSE values across the different bootstrap samples.
 
-%\section{Bayesian Model Details}
-%\label{app:bayes}
+\section{Bayesian Model Details}
+\label{app:bayes}
+
+\subsection{Hierarchical Linear Models}
+
+For the heirarchical linear model in Section \ref{sub:hlm} we have the likelihood,
+\begin{align*}
+y_i &\sim \mathcal{N}\!\left(
+  \mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i, 
+  \gamma^2\right) 
+  \quad\textrm{where}, \\
+\mu_0(x_i, \rho(x_i)) &= w_0 + w_x^\top x_i + w_\rho \rho(x_i), \\
+\tau(x_i) &= w_t + w_{tx}^\top x_i.
+\end{align*}
+For the hierarchical Logistic model the above likelihood is modified to,
+\begin{align*}
+y_i &\sim \mathrm{Binomial}\!\left(
+  \sigma\!\left(\mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i \right) \right)
+  \quad\textrm{where}, \\
+  \sigma(z) &= \frac{1}{1 + e^{-z}}.
+\end{align*}
+
+following
+hierarchical priors,
+
+\begin{align*}
+  \{\lambda_0, \lambda_x, \lambda_\rho\} &\sim \textrm{Uniform}(0, 100) \\
+  \{\lambda_t, \lambda_{tx}\} &\sim \textrm{Uniform}(0, 1000) \\
+  \gamma &\sim \textrm{HalfCauchy}(25) \\
+  w_0 &\sim \mathcal{N}(0,\lambda_0^2) \\
+  w_x &\sim \mathcal{N}(0,\lambda_x^2 \textrm{I}_d) \\
+  w_\rho &\sim \mathcal{N}(0,\lambda_\rho^2) \\
+  w_t &\sim \mathcal{N}(0,\lambda_t^2) \\
+  w_{tx} &\sim \mathcal{N}(0,\lambda^2_{tx} \textrm{I}_d),
+\end{align*}
+where $I_d$ is the identity matrix of dimension $d$, which is the number of
+control factors. The propensity score, $\rho(x_i)$, is obtained from the
+logistic regression model. 
+The choice of an uniform improper and non-informative prior over the regression
+weight scales, $\lambda_*$, is motivated by the advice in \citet{gelman2006}
+where we desire a non-informative prior that admits large values. We choose a
+broader prior for the treatment component of the model to minimise bias as
+suggested by \cite{hahn2020}. 
+
+
+\subsection{Gaussian Process Models}
+
+Say we have the regression function, $\mathbb{E}[Y|X{=}x_i] = f(x_i)$, a
+Gaussian process models the covariance of $f(x)$ directly using a kernel 
+function,
+\begin{align*}
+  \mathbb{E}[f(x_i) \cdot f(x_j)] &= k(x_i, x_j) \qquad \textrm{or}, \\
+  \mathbb{E}[Y_i \cdot Y_j] &= k(x_i, x_j) + \gamma^2 \delta_{ij},
+\end{align*}
+where $\delta_{ij}$ is a Kroneker delta, and is one iff $i=j$, otherwise zero,
+and $\gamma^2$ is the standard deviation of the process noise, $\epsilon$,
+such that $y_i = f(x_i) + \epsilon_i$.
+This formulation also assumes $\mathbb{E}[Y] = \mathbb{E}[f(x)] = 0$ for 
+simplicity -- and can be used directly if the outcomes are transformed to be
+zero mean, or we can model an additional mean function (see \citet{williams2006}
+for details). The Gaussian process can be written as,
+\begin{align*}
+  \mathbf{y} \sim \mathcal{N}(\mathbf{0}, \mathbf{K} + \gamma^2 \mathbf{I}_n),
+\end{align*}
+where $\mathbf{y} = [y_1, \ldots, y_i, \ldots, y_n]^\top$ is the vector of all
+outcome samples, $\mathbf{K}$ is the covariance matrix with elements
+$\mathbf{K}_{ij} = k(x_i, x_j)$, and $\mathbf{I}_n$ the $n$-dimensional
+identity matrix. 
+
+In Section \ref{sub:gp} we have chosen isotropic Mat\'{e}rn $\frac{3}{2}$
+kernel functions for $k_{\mu_0}$ and $k_\tau$, 
+\begin{align*}
+  k_{\nu=3/2}(x_i, x_j) = 
+    \left(1 + \frac{\sqrt{3}|x_i - x_j|}{l} \right)
+    \exp\left(\frac{-\sqrt{3}|x_i - x_j|}{l}\right),
+\end{align*}
+where $l$ is the length scale parameter, and controls the width of the kernel
+function. Smaller length scales allow for more high-frequency variation in the
+resulting function $f(x_i)$. The Mat\'{e}rn kernel is a stationary and
+isotropic kernel, but does not have excessive smoothness assumptions on the
+functional forms it can learn -- this kernel leads to the response surface
+being at least once differentiable \citep{williams2006}. A Gaussian process
+with this kernel can learn non-linear and interaction-style relationships
+between input features and the outcome. Our composite kernel is not
+necessarily stationary however, as we have included a non-stationary term, $t_i
+t_j$. 
+
+A-priori, we expect reasonably smooth variation $\mathbb{E}[Y_i \cdot Y_j]$ so
+we choose a long length-scale for the prognostic kernel function, $l_{\mu_0}$ =
+10, and an amplitude, $\sigma^2_{\mu_0} = 1$. We expect an even smoother
+relationship with less contribution for the treatment, and set the
+corresponding kernel parameters as; $l_\tau = 50$, $\sigma^2_\tau = 0.1$ and
+$\tau_0 = .001$. These parameters are then optimised using the maximum
+likelihood type-II procedure outlined in Section 5.4.1 of \citet{williams2006}.
+The final length scales learned by the GP are $l_{\mu_0} = 16$ and $l_\tau = 243$.
+
+As mentioned in Section \ref{sub:gp}, for a Gaussian process with a binary
+outcome and a Bernoulli=logistic likelihood, we need to resort to approximation
+since the prior and likelihood are not conjugate. We opt to use the
+Hierarchical logistic model from previously, but with a Nystr\"om basis applied
+to the model controls, $x \to \phi(x)$, which approximates the non-linear
+relationships that would be modelled by a kernel function. The prognostic and
+treatment components become,
+\begin{align*}
+  \mu_0(x_i, \rho(x_i)) &= w_0 + w_x^\top \phi_{\mu_0}(x_i) + w_\rho \rho(x_i), \\
+  \tau(x_i) &= w_t + w_{tx}^\top \phi_{\tau}(x_i).
+\end{align*}
+otherwise we use the same Bernoulli-logistic likelihood.
+We choose a smooth radial basis function (RBF) kernel for the
+Nystr\"om approximation, with fixed length-scales informed from those learned
+by the earnings Gaussian process model,
+\begin{align*}
+  k_{\text{RBF}}(x_i, x_j) = \exp\left(-\frac{\|x_i - x_j\|^2_2}{2 l^2}\right). 
+\end{align*}
+For the prognostic basis, $\phi_{\mu_0}$, we choose $l=10$, and for the treatment
+basis, $\phi_\tau$, we choose $l=100$. Both basis transformations have an output
+dimension of 500 (with an input of 91). 
+
+
+\subsection{Bayesian Causal Forest Model}
+
+The Bayesian causal forest in Section \ref{sub:bcf} uses the BART trees
+for the prognostic and treatment components,
+\begin{align*}
+y_i &\sim \mathcal{N}\!\left(
+  \mu_0(x_i, \rho(x_i)) + \tau(x_i)\cdot t_i, 
+  \gamma^2\right) 
+  \quad\textrm{where}, \\
+\mu_0(x_i, \rho(x_i)) &= \textrm{BART}(x_i, \rho(x_i)), \\
+\tau(x_i) &= \textrm{BART}(x_i).
+\end{align*}
+We follow \cite{hahn2020} in our choice of BART priors,
+\begin{align*}
+  \alpha_{\mu_0} = 0.95,&~
+  \alpha_{\tau} = 0.25, \\
+  \beta_{\mu_0} = 2,&~
+  \beta_{\tau} = 3.
+\end{align*}
+This choice prefers a more simple treatment effect model, $\tau(x_i)$, that is
+less likely to branch, and more likely to have shallower trees 
+than the prognostic model. Similarly, we use 200 trees for the prognostic model,
+and 50 for the treatment. We take 500 burn-in sweeps, and then 2000 sweeps
+to estimate the posterior BART distributions.
 
 \clearpage
 
