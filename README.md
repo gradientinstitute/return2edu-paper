@@ -1,6 +1,10 @@
 # Impact of returning to education
 Research project estimating the causal impact of further education on employment and wellbeing outcomes. 
 
+This code depends on the use having access to the [Household, Income and Labour
+Dynamics in Australia (HILDA)](https://melbourneinstitute.unimelb.edu.au/hilda)
+dataset. Please see the website for access conditions and procedures.
+
 
 ## Install required python packages
    - install conda (https://docs.conda.io/projects/conda/en/latest/user-guide/install/windows.html)
