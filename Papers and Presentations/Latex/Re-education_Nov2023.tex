@@ -99,12 +99,12 @@ much as \$50 per week more) than others.
 \section{Introduction}
 
 Retraining in later-life is pursued by adults as a transition pathway into a job, a promotion or a career change \citep{oecd2016}. Technological change and
-automation may require some individuals - especially middle-income workers performing routine tasks - to retrain \citep{autor2008,acemoglu2011}. Also at the lower end of the
+automation may require some individuals -- especially middle-income workers performing routine tasks -- to retrain \citep{autor2008,acemoglu2011}. Also at the lower end of the
 income-distribution, such as among welfare recipients, governments continue to promote retraining opportunities. Adults may be made worse-off economically, however, when they re-enter formal education because of the significant direct and indirect costs associated with formal study and if the skills they gain are divorced from those demanded in the labour market \citep{midtsundstad2019review}. 
 
 We aim to assess the long-term impact of obtaining a formal educational degree on earnings,
 focusing on mature-age students. Previous researchers have estimated positive and significant wage premiums for `younger students', ranging between 5 and 13\% \citep{angrist1991,harmon2003,machin2006} or even higher than 15\% as in the case of \cite{harmon1995}. Among those who look at mature-age learners, the focus has been on those studying at a specific educational institution, such as at a community or training college \citep{jacobson2005, chesters2015, 
-zeiden2015, polidano2016, xu2016, belfield2017, dynarski2016, dynarski2018,
+zeidenberg2015, polidano2016, xu2016, belfield2017, dynarski2016, dynarski2018,
 mountjoy2022}, those who undergo a government training program (and are relatively low-productivity workers) \citep{ashenfelter1978, ashenfelter1985, bloom1990, leigh1990, raaum2002, jacobson2005, STENBERG200854, card2018, knaus2022}, or those who return to high school \citep{bennett2020second}. Again, the impacts are estimated to be strong and positive, particularly for female students and once modelling takes into account the different pre-study earnings-growth profiles of students and non-students. The majority of studies look at the impacts in the short to medium term.
 
 We complement the above two strands of the literature by estimating the long-run returns for adults (aged 25 or above) undertaking a broader remit of formal degrees (post-graduate degrees, training certificates, diplomas etc) and spanning different institutions at which the study took place. This means we analyse the effects for a more diverse group of students, which then allows us to measure how the impact of increasing human capital may vary across a broader range of sub-populations.
@@ -118,7 +118,7 @@ research, these methodological abilities are crucial in reducing bias from model
 
 We adapt ML tools for causal inference purposes. Standard off-the-shelf ML models are better suited to predictive purposes. When
 obtaining a prediction, off-the-shelf ML models can find generalisable patterns
-and minimise overfitting issues, though the use of cross-validation, because
+and minimise overfitting issues, through the use of cross-validation, because
 the true outcomes are observed. This means that we can optimize a
 goodness-of-fit criterion. Causal parameters, however, are not observed in the
 data, which means we cannot directly train and evaluate our models. 
@@ -158,13 +158,13 @@ correlated, so we require a systematic approach to reduce such information
 redundancy -- something that ML models are adept at.
 
 Our ML approach also identifies new sub-populations for which the treatment
-effects are different. We document that the starting homeloan amount and
+effects are different. We document that the starting home loan amount and
 employment aspirations are significant factors related to the extent of gain
 from further study. We also find that the starting levels of and pre-study
 trends in personal and household income are hugely important. Age and mental
 health variables also account for variation in estimated effects. All of these
 variables are consistently selected across different ML models (which includes linear and non-linear model classes) and
-across numerous boostrap draws of the original sample.
+across numerous bootstrap draws of the original sample.
 
 
 % Understanding the different sources of dynamic selection is also important for
@@ -306,23 +306,23 @@ across numerous boostrap draws of the original sample.
 %
 \section{Context: Higher education and Vocational study in Australia}
 
-Mature-age education in Australia is among the highest in the world. In 2014, Australia’s participation in vocational education by those aged 25-64 was the highest among OECD countries. The tertiary education rate for those aged 30-64 was the second highest \citep{perales2017}. Mature-age Australians are increasingly enrolling in university or college to change employers, change careers, gain extra skills, improve their promotion prospects and earning capability or search for better work/life balance. Redundancy and unemployment have also been driving forces for individuals to return to education later in life \citep{coelli2012}.
+Mature-age education in Australia is among the highest in the world. In 2014, Australia's participation in vocational education by those aged 25-64 was the highest among OECD countries. The tertiary education rate for those aged 30-64 was the second highest \citep{perales2017}. Mature-age Australians are increasingly enrolling in university or college to change employers, change careers, gain extra skills, improve their promotion prospects and earning capability or search for better work/life balance. Redundancy and unemployment have also been driving forces for individuals to return to education later in life \citep{coelli2012}.
 
-The increase in mature-age learners accessing higher education has in part been driven by government policy. In 2009, the Australian government adopted a national target of at least 40\% of 25-34-year-olds having attained a qualification at bachelor level or above by 2025 \citep{oshea2015}. This was part of a policy that transitioned Australia to a demand-driven system \citep{ua2020}. The policy had a large effect on access to higher education, as it removed the cap on the number of university student places. By 2017, 39\% of 25-34-year-olds had a bachelor’s degree or higher \citep{caruso2018}.
+The increase in mature-age learners accessing higher education has in part been driven by government policy. In 2009, the Australian government adopted a national target of at least 40\% of 25-34-year-olds having attained a qualification at bachelor level or above by 2025 \citep{oshea2015}. This was part of a policy that transitioned Australia to a demand-driven system \citep{ua2020}. The policy had a large effect on access to higher education, as it removed the cap on the number of university student places. By 2017, 39\% of 25-34-year-olds had a bachelor's degree or higher \citep{caruso2018}.
 
 %The transition to a demand-driven system in Australia in 2009 \citep{ua2020} also had a large effect on access to higher education, as it removed the cap on the number of university student places. As a result, the number of Commonwealth Supported Places (CSPs) increased by 150\% between 2008 and 2017\footnote{From approximately 4,000 places to 12,000 places.} \citep{ua2020} as more students could access university at a subsidised rate. The introduction of the Higher Education Participation and Partnerships Program (HEPPP) in 2010 helped to improve access for disadvantaged students as higher education providers were granted funding according to their share of domestic undergraduate students from low SES backgrounds \citepalias{department2021}. In 2021, the definition of disadvantage was expanded to include the share of students from regional and remote areas and Indigenous backgrounds. The Higher Education Loan Program (HELP), introduced in 1989 as ‘HECS’ and originally designed to support CSP (undergraduate) students by offering income-contingent loans, was expanded in 2005 to support full-fee paying domestic students, and again in 2007 to support students undertaking higher education VET courses \citep{parliament2017}. This broadened access to loans to students undertaking courses other than a university bachelor’s degree. Since most CSPs are awarded for undergraduate degrees, the majority of CSP students are under 25 years old (78\% in 2018) \citep{ua2020}. Students pursuing post-graduate or vocational courses generally do not qualify for a CSP place. Instead, they can defer their tuition fees through HELP loans, allowing the mature-age cohort to access higher education while juggling other financial commitments.
 %
-While the initial uptake of university places in the demand-driven system was strong, especially among mature-age students\footnote{Between 2010 and 2012, growth in mature-age enrolments in undergraduate courses doubled for the 30-39 age group and tripled for the 40+ age group.} \citep{ua2019}, growth in undergraduate enrolments slowed since 2012. In 2018, mature-age enrolments even dropped below the previous year. The 40+ age group showed the worst growth, receding by 10\%, while the 25-29’s and 30-39’s showed growth of around -4\% \citep{ua2020}. The decline of enrolments coincided with the freezing of the Commonwealth Grant Scheme (CGS) which capped funding at 2017 levels, effectively ending the demand-driven system \citep{ua2020}. 
+While the initial uptake of university places in the demand-driven system was strong, especially among mature-age students\footnote{Between 2010 and 2012, growth in mature-age enrollments in undergraduate courses doubled for the 30-39 age group and tripled for the 40+ age group.} \citep{ua2019}, growth in undergraduate enrollments slowed since 2012. In 2018, mature-age enrollments even dropped below the previous year. The 40+ age group showed the worst growth, receding by 10\%, while the 25-29’s and 30-39's showed growth of around -4\% \citep{ua2020}. The decline of enrollments coincided with the freezing of the Commonwealth Grant Scheme (CGS) which capped funding at 2017 levels, effectively ending the demand-driven system \citep{ua2020}. 
 
-Access to Commonwealth Supported Places (CSPs) have since been limited to 2017 levels, with cap raises from 2020 subject to performance measures \citep{uasystem}. As a proportion of the working age population, mature-age students also participated less in vocational education and training (VET) over the same period. It appears the introduction of the demand-driven system also increased VET participation between 2010 and 2012, before continuing its decline \citep{atkinson2016}. Total VET enrolments since 2018 stabilised, with 2019 and 2020 enrolments slightly above 2018 levels\footnote{Total VET enrolments 2016-2020.} \citep{ncver2021}. The impact of COVID-19 on 2021 enrolments is yet to be fully determined. So far, VET enrolments for the first half of 2021 are well above the previous 4 years across all age groups, with $\sim$1 million enrolments in 2021 compared to $\sim$870 thousand enrolments in 2017\footnote{Government funded program enrolments Jan-June 2017-2021.} \citep{ncver2021}.
+Access to Commonwealth Supported Places (CSPs) have since been limited to 2017 levels, with cap raises from 2020 subject to performance measures \citep{uasystem}. As a proportion of the working age population, mature-age students also participated less in vocational education and training (VET) over the same period. It appears the introduction of the demand-driven system also increased VET participation between 2010 and 2012, before continuing its decline \citep{atkinson2016}. Total VET enrollments since 2018 stabilised, with 2019 and 2020 enrollments slightly above 2018 levels\footnote{Total VET enrollments 2016-2020.} \citep{ncver2021}. The impact of COVID-19 on 2021 enrollments is yet to be fully determined. So far, VET enrollments for the first half of 2021 are well above the previous 4 years across all age groups, with $\sim$1 million enrollments in 2021 compared to $\sim$870 thousand enrollments in 2017\footnote{Government funded program enrollments Jan-June 2017-2021.} \citep{ncver2021}.
 
 %
-%The demand-driven system almost doubled the number of undergraduate enrolments from underrepresented groups between 2008 and 2018, including students from low socio-economic backgrounds, regional and remote areas, Indigenous backgrounds, and students with a disability \citep{ua2020}. Despite the large increase in enrolments, attrition and completion rates have not changed dramatically over the same period and show mixed results. Low SES students show lower rates of attrition at TAFE\footnote{Table C and NUHEI (non-university higher education institutions) providers, includes private universities, colleges, and TAFEs.} in both postgraduate (-14pp) and bachelor courses (-5pp) \citepalias{department2019a}. While low SES students also improved their attrition at university\footnote{Table A and B providers, includes public universities and self-accredited private universities.} at post-graduate level (-1pp), this group had higher attrition at the bachelor level (2pp). Completion rates followed a similar trend (in the opposite direction) \citepalias{department2019b}. The pattern is very similar for remote and regional students, with attrition rates falling in all categories except for a slight increase for regional bachelor students. Post-graduate Indigenous students show large drops in attrition at both the university and TAFE level, by between 7 and 11pp, while bachelor students at both institution types show a slight increase in attrition (0-1pp). Mature-age cohorts, across all students and not just disadvantaged groups, reveal the same trend, with attrition and completion rates improving across all categories except university bachelor’s degrees. However, compared with 20-24-year-olds, mature-age students have lower completion rates in general, regardless of level or institution, but this has not changed overtime. Similar to the 20-24 age group, mature-age students have twice as much success completing postgraduate degrees than bachelor’s degrees ($\sim$ 30\% vs 60\%). The same is true for advantaged groups\footnote{Medium \& High SES, Metropolitan, and Non-indigenous students.} , with bachelor students at university also showing slightly higher attrition ($\sim$2pp) over the same period. Since all groups of students are less likely to complete university-level bachelor courses, it appears that broadening the student cohort to disadvantaged groups has not reduced the success rates in higher education, and in fact, disadvantaged groups have improved their rates of completion and attrition in the last 10 years since 2008 in all other courses.
+%The demand-driven system almost doubled the number of undergraduate enrollments from underrepresented groups between 2008 and 2018, including students from low socio-economic backgrounds, regional and remote areas, Indigenous backgrounds, and students with a disability \citep{ua2020}. Despite the large increase in enrollments, attrition and completion rates have not changed dramatically over the same period and show mixed results. Low SES students show lower rates of attrition at TAFE\footnote{Table C and NUHEI (non-university higher education institutions) providers, includes private universities, colleges, and TAFEs.} in both postgraduate (-14pp) and bachelor courses (-5pp) \citepalias{department2019a}. While low SES students also improved their attrition at university\footnote{Table A and B providers, includes public universities and self-accredited private universities.} at post-graduate level (-1pp), this group had higher attrition at the bachelor level (2pp). Completion rates followed a similar trend (in the opposite direction) \citepalias{department2019b}. The pattern is very similar for remote and regional students, with attrition rates falling in all categories except for a slight increase for regional bachelor students. Post-graduate Indigenous students show large drops in attrition at both the university and TAFE level, by between 7 and 11pp, while bachelor students at both institution types show a slight increase in attrition (0-1pp). Mature-age cohorts, across all students and not just disadvantaged groups, reveal the same trend, with attrition and completion rates improving across all categories except university bachelor’s degrees. However, compared with 20-24-year-olds, mature-age students have lower completion rates in general, regardless of level or institution, but this has not changed overtime. Similar to the 20-24 age group, mature-age students have twice as much success completing postgraduate degrees than bachelor’s degrees ($\sim$ 30\% vs 60\%). The same is true for advantaged groups\footnote{Medium \& High SES, Metropolitan, and Non-indigenous students.} , with bachelor students at university also showing slightly higher attrition ($\sim$2pp) over the same period. Since all groups of students are less likely to complete university-level bachelor courses, it appears that broadening the student cohort to disadvantaged groups has not reduced the success rates in higher education, and in fact, disadvantaged groups have improved their rates of completion and attrition in the last 10 years since 2008 in all other courses.
 %
 %The Australian government introduced an additional scheme in 2019 to support workers aged 45-70 looking to reskill or upskill in order to remain employed \citepalias{department2022a}. Workers must be at risk of entering the income support system or recently unemployed to be eligible for support. The Skills and Training Incentive program subsidises accredited and non-accredited courses as long as the training is linked to their current job, a future job opportunity or an industry/skill in national shortage. Eligible courses are identified when individuals complete a Skills Checkpoint assessment and can be subsidised up to \$2200, regardless of the number of courses taken. Within this limit, up to 75\% of course fees can be subsidised when they relate to skills in national shortage, while all others can receive up to 50\% of course fees. The number of incentives available per year are capped at increasing levels up to 2024 (between 1,800 and 7,500) when the scheme is set to end \citepalias{department2022b}.
 %
 
-The cost of a bachelor’s degree for domestic students in Australia is the sixth highest among OECD countries \citep{ua2020}. In 2018, the average annual cost of a bachelor’s degree was around \$5,000 in Australia, about half of the top 2 most expensive countries where it costs around \$9,000 in the US and \$12,000 in the UK\footnote{Values are in US dollars.}. VET and TAFE courses in Australia cost a minimum of \$4,000 per year on average while post-graduate courses cost a minimum of \$20,000 per year on average\footnote{Values are in Australian dollars.} \citep{studies2018}.
+The cost of a bachelor’s degree for domestic students in Australia is the sixth highest among OECD countries \citep{ua2020}. In 2018, the average annual cost of a bachelor’s degree was around \$5,000 in Australia, about half of the top 2 most expensive countries where it costs around \$9,000 in the US and \$12,000 in the UK\footnote{Values are in US dollars.}. VET and TAFE courses in Australia cost a minimum of \$4,000 per year on average while postgraduate courses cost a minimum of \$20,000 per year on average\footnote{Values are in Australian dollars.} \citep{studies2018}.
 
 Mature-age students can cover the cost of further study themselves or they can receive support from the government. Students at university or approved higher education providers can access financial support from the Higher Education Loan Program (HELP) scheme, which provides income-contingent loans. This allows students to defer their tuition fees until their earnings reach the compulsory repayment threshold, upon which repayments are deducted from their pay throughout the year at a set rate. Postgraduate students can access the Commonwealth Supported Place (CSP) scheme, which subsidises tuition fees for those studying at public universities and some private higher education providers. However, most CSPs are for undergraduate study. 
 
@@ -347,17 +347,17 @@ HILDA covers a long time span of 19 years, starting in 2001. We use the 2019 rel
 
 \subsection{Sample exclusions}
 
-Our main analysis sample contains respondents who were 25 years or above in 2001. This allows us to focus on individuals who obtain a further education – beyond that acquired in their previous degree. 
+Our main analysis sample contains respondents who were 25 years or above in 2001. This allows us to focus on individuals who obtain a further education -- beyond that acquired in their previous degree. 
 
 Our main analysis focuses on measuring the impact of further education using
 wave 19 outcomes. Here, the feature inputs to the models are taken from the
-individuals in 2001. We delete any individuals who were ‘currently studying’ in 2001. This also ensures that our features, which are defined in 2001 are not
+individuals in 2001. We delete any individuals who were `currently studying' in 2001. This also ensures that our features, which are defined in 2001 are not
 contaminated by the impacts of studying but clearly precede the study spell of
 interest. These sample exclusions result in 7,359 respondents being dropped
 because they are below the age of 25 in 2001 and a further 1,387 respondents
 being dropped because they were studying in 2001.
 
-We then restrict the sample to those who are present in both 2001 and 2019. This ensures that we observe base characteristics and outcomes for every person in our analysis sample. This results in a further 5,727 respondents being dropped from the sample. Our analysis sample has 5,441 observations. More details of our main analysis sample and data can be found in the Online Appendix Document 1.\footnote{For sensitivity analysis, a second sample of respondents are examined. They are slightly younger when they began study, their feature values are taken in the two years before study began and their outcomes are measured four years after their study began. In this second sample, there are 1,814 individuals who started and completed a further educational degree, and 60,945 person-wave control observations who never completed a further degree. We detail our second approach in the Online Appendix Document 2.}
+We then restrict the sample to those who are present in both 2001 and 2019. This ensures that we observe base characteristics and outcomes for every person in our analysis sample. This results in a further 5,727 respondents being dropped from the sample. Our analysis sample has 5,441 observations. More details of our main analysis sample and data can be found in the Online Appendix Document 1.\footnote{For sensitivity analysis, a second sample of respondents is examined. They are slightly younger when they began study, their feature values are taken in the two years before study began and their outcomes are measured four years after their study began. In this second sample, there are 1,814 individuals who started and completed a further educational degree, and 60,945 person-wave control observations who never completed a further degree. We detail our second approach in the Online Appendix Document 2.}
 
 %We then extend our main analysis in a number of ways. First, we include dynamic control variables. Specifically, we define the features in the one and two years immediately before study start. With two years of data, we are able to construct variables that measure the trends in socio-economic and demographic characteristics. Second, we measure outcomes fours years after the start of a spell of study. 
 
@@ -374,7 +374,7 @@ We measure outcomes in 2019 across the groups of individuals who did and did not
 
 \subsection{Treatment}
 
-We define further education as an individual who obtains a further degree in a formal, structured educational program. These programs must be delivered by a certified training, teaching or research institution. Thus, we do not analyse informal on-line degrees (such as Coursera degrees). We also do not consider on-the-job training as obtaining further education.
+We define further education as an individual who obtains a further degree in a formal, structured educational program. These programs must be delivered by a certified training, teaching or research institution. Thus, we do not analyse informal online degrees (such as Coursera degrees). We also do not consider on-the-job training as obtaining further education.
 
 Our treatment variable is a binary variable that takes the value of 1 if an individual has obtained an additional degree anytime between wave 2 (2002) and wave 17 (2017). As we analyse outcomes in 2019, this means we calculate the average returns between 2 years and up to 17 after course completion. We delete any respondent who obtained a qualification after wave 17. This allows us to analyse outcomes at least two years after course completion.
 
@@ -402,7 +402,7 @@ In order to reduce redundancy in this vast amount of information, we next apply 
 
 \subsection{Missing variables from the baseline model}
 
-As part of a replication exercise, we constrast the results from the ML model with published work using Ordinary Least Squares (OLS) and Fixed Effects models. We also contrast the features selected in the ML model with an approach that manually selects the variables as in the case of \cite{chesters2015}. We call this the `baseline' model.
+As part of a replication exercise, we contrast the results from the ML model with published work using Ordinary Least Squares (OLS) and Fixed Effects models. We also contrast the features selected in the ML model with an approach that manually selects the variables as in the case of \cite{chesters2015}. We call this the `baseline' model.
 
 As a descriptive exercise, Table \ref{tab:mlvars} presents the features that were `missed' by the baseline model. In the baseline model, we included features such as age, gender, state of residence, household weekly earnings, highest level of education attained, and current work schedule. This collection of variables have been informed by theory or previous empirical results.  
 
@@ -558,7 +558,7 @@ defined by attributes $X$.
 
 The T-learner is a two-step approach where the conditional mean functions defined in Equations (\ref{eq:T1}) and (\ref{eq:T0}) are estimated separately with any generic machine learning algorithm.
 
-Machine learning methods are well suited to find generalizable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge) and non-linear (Gradient Boosted Regression). Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
+Machine learning methods are well suited to find generalisable predictive patterns, and we employ a range of model classes including linear (LASSO and Ridge) and non-linear (Gradient Boosted Regression). Once we obtain the two conditional mean functions, for each observation, we can predict the outcome under treatment and control by plugging each observation into both functions. Taking the difference between the two outcomes results in the Conditional Average Treatment Effect (CATE).
 
 To show this, we define our parameter of interest, the CATE, which is formally defined as:
 \begin{align}
@@ -574,7 +574,7 @@ difference between two conditional mean functions $\mu _1(x) - \mu _0(x)$:
 In this estimation, we are not interested in the coefficients from regressing
 $Y$ on $X$. What we require is a good approximation of the function $\tau(x)$,
 and hence good estimates from $\mu_1(x)$ and $\mu_0(x)$, which is within the
-perview of machine learning methods.
+purview of machine learning methods.
 
 A benefit of our set-up is that when we take the difference between the two conditional mean functions, we coincidently find the optimum bias-variance trade-off point for the conditional average treatment effect. This means that we have an indirect way to obtain the best prediction of the CATE through two predictive equations, where we observe the true outcomes (and thus are able to regularise).
 
@@ -611,7 +611,7 @@ where $\rho(x)$ as a probabilistic machine learning classifier. This allows
 information about the students' background, and the nature and complexity of
 their situation that may have led them to pursue further education to be
 incorporated into the model. Thus, the doubly robust approach can improve upon
-the T-learner approach because it can reduce misspecification error either
+the T-learner approach because it can reduce mis-specification error either
 through a correctly specified propensity score model or through correctly
 specified outcome equations. Another feature of the Doubly Robust approach is
 that it places a higher weight on observations in the area where the relative
@@ -947,7 +947,7 @@ As the DR-learner model relies on the same treatment and control outcome surface
 
 Once we have selected the best performing model class, we turn to the
 estimation of the parameters and their associated uncertainty. We use a
-bootstrapped validation proceedure to capture the uncertainty arising from
+bootstrapped validation procedure to capture the uncertainty arising from
 model hyperparameter selection in addition to that from estimating parameters
 of a fixed model from noisy, finite data. 
 
@@ -1100,7 +1100,7 @@ machine learning models to gain a better understanding of the treatment
 assignment process, the students’ background, and the nature and complexity of
 their situation that may have led them to pursue further education). Thus, the
 doubly robust approach can improve upon the T-learner approach because it can
-reduce misspecification error either through a correctly specified propensity
+reduce mis-specification error either through a correctly specified propensity
 score model or through correctly specified outcome equations. Another feature
 of the Doubly Robust approach is that it places a higher weight on observations
 in the area where the relative count of treatment and control observations is
@@ -1130,7 +1130,7 @@ able to more easily capture non-linear relationships than the other models.
 
 Proportionate changes in earnings can be measured by taking the log of the earnings measures. In Appendix Figure \ref{fig:valadlelog}, we see that the proportionate change in earnings was large at 50 percent. This is likely to be because of people entering the labour market as a result of the new qualification. We find that a new qualification increases the likelihood of employment by approximately 8 percent. See Figure \ref{fig:empl}.
 
-As previously mentioned, the ML models estimate smaller returns than the returns estimated in DD-FE or cross-sectional models (OLS with and without controls) where features have been selected based on theory or previous empirical learnings. For example, the `OLS Baseline model' uses the features in models estimated in Chesters (2015). The DD-FE eliminates all selection effects that are fixed over time. Figure \ref{fig:method} displays the estimated returns from six different approaches.
+As previously mentioned, the ML models estimate smaller returns than the returns estimated in DD-FE or cross-sectional models (OLS with and without controls) where features have been selected based on theory or previous empirical learnings. For example, the `OLS Baseline model' uses the features in models estimated in \citet{chesters2015}. The DD-FE eliminates all selection effects that are fixed over time. Figure \ref{fig:method} displays the estimated returns from six different approaches.
 
 A potential reason for the smaller results estimated in the ML models is that the additional features included, as well as the non-linear specifications of the features, more effectively account for selection into treatment. The smaller results suggest individuals positively select into further study i.e. the characteristics that lead one to complete further study are positively correlated to future earnings. Once we control for this upward selection bias, we thus estimate smaller returns to further education.
 
@@ -1138,7 +1138,7 @@ The smaller estimated results relative to the DD-FE model are likely to stem fro
 
 This points to a benefit of using ML models, compared to conventional models, because they can more effectively identify confounders. We show evidence of the types of confounders missed in conventional models in Table \ref{tab:mlvars}, as well as the direction of the bias stemming from their omission. 
 
-In addition, we show evidence that models which allow for more flexible functional-form specifications lead to differences in the ATE. Within our ML models, the GBR tree ensemble tended to perform better (in terms of the nested cv results) compared to the linear-based models. The former yielded a slightly smaller ATE compared to the LASSO and Ridge results, for example, and they were also consistent with results from the Bayesian Causal Forest.
+In addition, we show evidence that models which allow for more flexible functional-form specifications lead to differences in the ATE. Within our ML models, the GBR tree ensemble tended to perform better (in terms of the nested cross validation results) compared to the linear-based models. The former yielded a slightly smaller ATE compared to the LASSO and Ridge results, for example, and they were also consistent with results from the Bayesian Causal Forest.
 
 
 
@@ -1172,10 +1172,10 @@ differ most significantly. In selecting the important features our objective is
 to understand how to partition the data by the treatment effects as opposed to
 predicting the outcomes themselves. 
 
-The permutation importance proceedure involves testing the performance of a
+The permutation importance procedure involves testing the performance of a
 model after permuting the order of samples of each individual feature, thereby
 keeping the underlying distribution of that feature intact but breaking the
-predicitve relationship learned by the model with that feature. The model
+predictive relationship learned by the model with that feature. The model
 performance we are interested in, as previously mentioned, is the one that maps
 the features to the individual treatment effects. 
 
@@ -1273,8 +1273,8 @@ heterogeneous treatment effects and there may also be interaction effects betwee
 
 We also investigate if there are heterogeneous treatment effects according to
 commonly used variables in Figure \ref{fig:htedr}. Females reap slightly higher
-returns compared to males although this is not statistically significant.
-Similar treatment effects apply to those with and without a resident children,
+returns compared to males, although this is not statistically significant.
+Similar treatment effects apply to those with and without resident children,
 although the effect sizes widen in favour of parents with older children in the
 household. 
 %
@@ -1750,14 +1750,14 @@ Bayesian Causal Forests  & 5441 & 84.51 & [26.28, 141.17] \\
 \centering
 \caption{Selecting and Evaluating Model Class}
   \label{fig:exp_model}
-    \includegraphics[scale=0.65]{_figures/explainer1.pdf}
+    \includegraphics[width=\linewidth]{_figures/explainer1.pdf}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \caption{Generating Uncertainty Parameters}
   \label{fig:exp_param}
-    \includegraphics[scale=0.65]{_figures/explainer2.pdf}
+    \includegraphics[width=\linewidth]{_figures/explainer2.pdf}
 \end{figure}
 
 
